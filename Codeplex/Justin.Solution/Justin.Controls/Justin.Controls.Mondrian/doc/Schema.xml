@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Cube>
+    <Table>     </Table>
+    <View></View>
+    <Inlinetable></Inlinetable>
+
+    <DimensionUsage>
+    </DimensionUsage>
+
+    <Dimension>
+      <Hierarchy >
+        <Join></Join>
+        <Table>     </Table>
+        <View></View>
+        <Inlinetable></Inlinetable>
+        <Level>
+          <Property>
+            <PropertyFormatter></PropertyFormatter>
+          </Property>
+          <KeyExpression></KeyExpression>
+          <NameExpression></NameExpression>
+          <OrdinalExpression></OrdinalExpression>
+          <CaptionExpression></CaptionExpression>
+          <ParentExpression></ParentExpression>
+          <Closure></Closure>
+          <MemberFormatter></MemberFormatter>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+
+    <Measure name="Warehouse Profit" formatString="Standard" aggregator="sum">
+      <Annotations>
+        <Annotation name="New Annotation 0">
+          <![CDATA[]]>
+        </Annotation>
+      </Annotations>
+      <MeasureExpression>
+        <SQL dialect="mysql">
+          <![CDATA[`warehouse_sales` - `inventory_fact_1997`.`warehouse_cost`]]>
+        </SQL>
+      </MeasureExpression>
+      <CellFormatter>
+        <Script>
+          <![CDATA[]]>
+        </Script>
+      </CellFormatter>
+      <CalculatedMemberProperty name="New Property 0">
+      </CalculatedMemberProperty>
+    </Measure>
+
+    <CalculatedMember>
+
+    </CalculatedMember>
+
+    <NamedSet></NamedSet>
+
+    <Annotations>
+    </Annotations>
+  </Cube>
+  <SharedDimension>
+  </SharedDimension>
+  <VirtualCube>
+    <VirtualCubeDimension>  </VirtualCubeDimension>
+    <VirtualCubeMeasure></VirtualCubeMeasure>
+    <CalculatedMember>
+      <CalculatedMemberProperty></CalculatedMemberProperty>
+    </CalculatedMember>
+  </VirtualCube>
+  <Role>
+    <SchemaGrant>
+      <CubeGrant>
+        <DimensionGrant>
+
+        </DimensionGrant>
+        <HierarchyGrant>
+          <MemberGrant>
+
+          </MemberGrant>
+        </HierarchyGrant>
+      </CubeGrant>
+    </SchemaGrant>
+  </Role>
+  <NamedSet></NamedSet>
+  <UserDefinedFunction></UserDefinedFunction>
+  <Parameter></Parameter>
+  <Annotations></Annotations>
+</Schema>
