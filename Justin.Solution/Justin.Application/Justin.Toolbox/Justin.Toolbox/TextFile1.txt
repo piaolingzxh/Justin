@@ -4,4 +4,5 @@ select * from Student where str(id)+'-'+name not in(select str(id)+'-'+name from
 
 git
 
-git 2 
+git 2
+git home
