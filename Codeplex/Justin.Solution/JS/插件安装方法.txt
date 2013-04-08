@@ -1,0 +1,2 @@
+
+C:\Users\XXXX\AppData\Local\Google\Chrome\Application\chrome.exe -enable-easy-off-store-extension-install
