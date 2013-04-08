@@ -1,3 +1,5 @@
 ﻿select * from Student where str(id)+'-'+name in(select str(id)+'-'+name from Student2 )
 
 select * from Student where str(id)+'-'+name not in(select str(id)+'-'+name from Student2 )
+
+git 
