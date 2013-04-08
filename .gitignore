@@ -1,0 +1,9 @@
+bin
+obj
+*.pdb
+*.user
+*.suo
+/Justin.Solution/Release
+/Justin.Solution/Common/Library/*.xml
+/Justin.Solution/Common/Library/*.XML
+/Justin.Solution/Common/Library/*.lastcodeanalysissucceeded
