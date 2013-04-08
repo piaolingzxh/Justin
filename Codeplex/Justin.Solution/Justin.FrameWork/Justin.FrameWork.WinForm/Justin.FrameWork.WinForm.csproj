@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1BA0A66-6D68-4142-83D8-C96A81A6862E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Justin.FrameWork.WinForm</RootNamespace>
+    <AssemblyName>Justin.FrameWork.WinForm</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Justin.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.TextEditor">
+      <HintPath>..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\FormEx.cs" />
+    <Compile Include="Extensions\TreeViewEx.cs" />
+    <Compile Include="FormUI\NumberedTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FormUI\NumberedTextBox.designer.cs">
+      <DependentUpon>NumberedTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUI\NotifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUI\NotifyForm.Designer.cs">
+      <DependentUpon>NotifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUI\PropertyGrid\ObjectDescriptionProvider.cs" />
+    <Compile Include="FormUI\SharpCodeTextEditor\TextEditorControlEx.cs" />
+    <Compile Include="FormUI\SharpCodeTextEditor\HighlightGroup.cs" />
+    <Compile Include="FormUI\SharpCodeTextEditor\TextEditorSearcher.cs" />
+    <Compile Include="FormUI\SharpCodeTextEditor\TextRange.cs" />
+    <Compile Include="FormUI\SharpCodeTextEditor\XmlFoldingStrategy.cs" />
+    <Compile Include="Helper\NotifyHelper.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\UserControlEx.cs" />
+    <Compile Include="Utility\AutoStart.cs" />
+    <Compile Include="Helper\HotkeyHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormUI\NumberedTextBox.resx">
+      <DependentUpon>NumberedTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUI\NotifyForm.resx">
+      <DependentUpon>NotifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Justin.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\closed.gif" />
+    <Content Include="Images\opened.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Justin.Log\Justin.Log.csproj">
+      <Project>{fb90c580-4e99-4921-b352-7704032ae2f7}</Project>
+      <Name>Justin.Log</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
