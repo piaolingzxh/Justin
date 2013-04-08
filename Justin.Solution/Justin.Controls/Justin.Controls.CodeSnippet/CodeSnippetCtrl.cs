@@ -1,0 +1,194 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
+using ICSharpCode.TextEditor;
+using ICSharpCode.TextEditor.Document;
+using Justin.Controls.WordView;
+using Microsoft.Win32;
+namespace Justin.Controls.CodeSnippet
+{
+    public partial class CodeSnippetCtrl : UserControl
+    {
+        public CodeSnippetCtrl()
+        {
+            InitializeComponent();
+            CreateDSOFramer();
+        }
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeSnippetCtrl));
+
+        private TextEditorControl txtCode = new TextEditorControl();
+        private WordDocVieCtrl docView = new WordDocVieCtrl();
+        private AxDSOFramer.AxFramerControl axFramerControl1 = new AxDSOFramer.AxFramerControl();
+
+        private WebBrowser webBrower = new WebBrowser();
+        private string fileDirectory = ConfigurationManager.AppSettings["CodeSnippet"];
+
+        private void CodeViewCtrl_Load(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(fileDirectory))
+                return;
+            txtFolder.Text = fileDirectory;
+            InitTree();
+        }
+        private void InitTree()
+        {
+            DirectoryInfo dir = new DirectoryInfo(fileDirectory);
+            if (!dir.Exists) return;
+            TreeNode rootNode = new TreeNode("我的代码段");
+            tvDirectory.Nodes.Clear();
+            tvDirectory.Nodes.Add(rootNode);
+            BindTree(rootNode, dir);
+            CreateSharpEditor();
+            CreateDocView();
+            CreateWebBrower();
+
+        }
+        private void BindTree(TreeNode node, DirectoryInfo dir)
+        {
+            foreach (var subdir in dir.GetDirectories())
+            {
+                TreeNode childNode = new TreeNode(subdir.Name) { Tag = subdir.FullName };
+                node.Nodes.Add(childNode);
+                BindTree(childNode, subdir);
+            }
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                node.Nodes.Add(new TreeNode(file.Name) { Tag = file.FullName });
+            }
+        }
+
+        private void tvDirectory_DoubleClick(object sender, EventArgs e)
+        {
+            string dsoFramerExtensionString = ".doc,.docx,.rtf,.ppt,.odt,.docm,.dotx,.dotm,.dot,";
+            string generalExtensionString = ".txt,.cs,.vb,.java,.cpp,.il,.xml,config,";
+            string webBrowerExtensionString = ".htm,.html,.mht,.pdf,";
+
+            string[] generalExtensions = generalExtensionString.Split(',');
+            string[] dsoFramerExtensions = dsoFramerExtensionString.Split(',');
+            string[] webBrowerExtensions = webBrowerExtensionString.Split(',');
+            string[] extensions = (dsoFramerExtensionString + webBrowerExtensionString + generalExtensions).Split(',');
+            TreeNode selectNode = tvDirectory.SelectedNode;
+            if (selectNode != null && selectNode.Tag != null)
+            {
+                string path = selectNode.Tag.ToString();
+                //try
+                //{
+                txtFileName.Text = path.ToString();
+                if (extensions.Contains(Path.GetExtension(path)))
+                {
+                    if (dsoFramerExtensions.Contains(Path.GetExtension(path)))
+                    {
+                        this.editorContainer.Controls.Clear();
+                        //dsoFramer必须先把控件Add上，再打开文件
+                        this.editorContainer.Controls.Add(this.axFramerControl1);
+                        this.axFramerControl1.Open(path);
+                        //this.axFramerControl1.Focus();
+                    }
+                    else if (webBrowerExtensions.Contains(Path.GetExtension(path)))
+                    {
+                        this.editorContainer.Controls.Clear();
+                        this.webBrower.Navigate(path);
+                        this.editorContainer.Controls.Add(this.webBrower);
+                        this.webBrower.Focus();
+                    }
+                    else
+                    {
+                        string content = File.ReadAllText(path);
+                        this.editorContainer.Controls.Clear();
+                        txtCode.LoadFile(path);
+                        this.editorContainer.Controls.Add(this.txtCode);
+                        txtCode.Focus();
+                    }
+                }
+                //}
+                //finally
+                //{
+                //    ShowOpenFileWithDialog(path);
+                //}
+
+            }
+        }
+
+        private void CreateSharpEditor()
+        {
+            this.txtCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCode.IsReadOnly = false;
+            this.txtCode.Location = new System.Drawing.Point(0, 0);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.ShowEOLMarkers = true;
+            this.txtCode.ShowSpaces = true;
+            this.txtCode.ShowTabs = true;
+            this.txtCode.Size = new System.Drawing.Size(621, 431);
+            this.txtCode.TabIndex = 22;
+            this.txtCode.Text = resources.GetString("txtCode.Text");
+
+            txtCode.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
+            txtCode.Encoding = Encoding.Default;
+        }
+        private void CreateDSOFramer()
+        {
+            ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).BeginInit();
+            this.axFramerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axFramerControl1.Enabled = true;
+            this.axFramerControl1.Location = new System.Drawing.Point(0, 0);
+            this.axFramerControl1.Name = "axFramerControl1";
+            this.axFramerControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axFramerControl1.OcxState")));
+            this.axFramerControl1.Size = new System.Drawing.Size(75, 23);
+            this.axFramerControl1.TabIndex = 0;
+            ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
+        }
+        private void CreateDocView()
+        {
+            docView.Dock = DockStyle.Fill;
+        }
+        private void CreateWebBrower()
+        {
+            this.webBrower.Dock = DockStyle.Fill;
+            this.webBrower.ScriptErrorsSuppressed = true;
+        }
+
+        private void openWithToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tvDirectory.SelectedNode.Tag == null) return;
+            ShowOpenFileWithDialog(tvDirectory.SelectedNode.Tag.ToString());
+        }
+
+        private void tvDirectory_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            tvDirectory.SelectedNode = e.Node;
+        }
+        private void ShowOpenFileWithDialog(string filename)
+        {
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.EnableRaisingEvents = false;
+            proc.StartInfo.FileName = "rundll32.exe";
+            proc.StartInfo.Arguments = string.Format("shell32,OpenAs_RunDLL {0}", filename);
+            proc.Start();
+        }
+
+
+        private void btnCloseOpen_Click(object sender, EventArgs e)
+        {
+
+            this.splitContainer1.Panel1Collapsed = !this.splitContainer1.Panel1Collapsed;
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                txtFolder.Text = fileDirectory = folderBrowserDialog1.SelectedPath;
+                InitTree();
+            }
+        }
+    }
+}

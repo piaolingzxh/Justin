@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E9A9747F-21E7-46AF-B2CC-9B9D54740FCB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Justin.Toolbox</RootNamespace>
+    <AssemblyName>Justin.Toolbox</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>images\ImportDatabaseProject.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AssociationManager">
+      <HintPath>..\..\..\Common\Library\AssociationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.TextEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.ConnectionUI.Dialog">
+      <HintPath>..\..\..\Common\Library\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Common\Library\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Common\Library\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abount.Designer.cs">
+      <DependentUpon>Abount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JDBDcokForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JDBDcokForm.Designer.cs">
+      <DependentUpon>JDBDcokForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JDockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JDockForm.Designer.cs">
+      <DependentUpon>JDockForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Customization\DockHelper.cs" />
+    <Compile Include="Customization\Extender.cs" />
+    <Compile Include="Customization\InertButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Customization\Resources.Designer.cs" />
+    <Compile Include="Customization\Strings.Designer.cs" />
+    <Compile Include="Customization\VS2003AutoHideStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Customization\VS2003DockPaneCaption.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Customization\VS2003DockPaneStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\CodeSnippetMgr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\CodeSnippetMgr.Designer.cs">
+      <DependentUpon>CodeSnippetMgr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\FileAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FileAssociation.Designer.cs">
+      <DependentUpon>FileAssociation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OutPutWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutPutWindow.Designer.cs">
+      <DependentUpon>OutPutWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\FormDBField.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FormDBField.Designer.cs">
+      <DependentUpon>FormDBField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\JCodeCompiler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\JCodeCompiler.Designer.cs">
+      <DependentUpon>JCodeCompiler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\JsonViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\JsonViewer.Designer.cs">
+      <DependentUpon>JsonViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\MdxExecutor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\MdxExecutor.Designer.cs">
+      <DependentUpon>MdxExecutor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\MondrianSchemaWorkbench.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\MondrianSchemaWorkbench.Designer.cs">
+      <DependentUpon>MondrianSchemaWorkbench.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\SqlExecuteor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\SqlExecuteor.Designer.cs">
+      <DependentUpon>SqlExecuteor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\SqlExecuteorTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\SqlExecuteorTool.Designer.cs">
+      <DependentUpon>SqlExecuteorTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\TableConfigurator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\TableConfigurator.Designer.cs">
+      <DependentUpon>TableConfigurator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\TestDataGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\TestDataGenerator.Designer.cs">
+      <DependentUpon>TestDataGenerator.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
+    <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Hotspot.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_HotspotIndex.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Left.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Right.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Top.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelBottom.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelBottom_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelFill.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelFill_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelLeft.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelLeft_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelRight.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelRight_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelTop.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelTop_Active.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_AutoHideNo.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_AutoHideYes.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_CloseDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_CloseEnabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_CloseDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_CloseEnabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftEnabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightEnabled.bmp" />
+    <Content Include="images\ArrowDown.bmp" />
+    <Content Include="images\ArrowUp.bmp" />
+    <Content Include="images\Bitmap.ico" />
+    <Content Include="images\BlankIcon.ico" />
+    <Content Include="images\CalMeasure.png" />
+    <Content Include="images\ClosedFolder.ICO" />
+    <Content Include="images\config.png" />
+    <Content Include="images\CSFile.ico" />
+    <Content Include="images\CSProject.ico" />
+    <Content Include="images\Cube.png" />
+    <Content Include="images\date.png" />
+    <Content Include="images\DB2Config.ico" />
+    <Content Include="images\Dim.png" />
+    <Content Include="images\dimUse.png" />
+    <Content Include="images\edit.png" />
+    <Content Include="images\edit1.png" />
+    <Content Include="images\execute.png" />
+    <Content Include="images\ExecuteAll.png" />
+    <Content Include="images\ExecuteByLine.png" />
+    <Content Include="images\Field.png" />
+    <Content Include="images\Field1.png" />
+    <Content Include="images\File.ico" />
+    <Content Include="images\find.png" />
+    <Content Include="images\fk.png" />
+    <Content Include="images\Form.ico" />
+    <None Include="images\help.png" />
+    <Content Include="images\GTP_date.png" />
+    <Content Include="images\GTP_number.png" />
+    <Content Include="images\GTP_wait.png" />
+    <Content Include="images\hie.png" />
+    <Content Include="images\ImportDatabaseProject.ico" />
+    <Content Include="images\LineNum.png" />
+    <Content Include="images\mdx.ico" />
+    <Content Include="images\Measure.png" />
+    <Content Include="images\Mouse.bmp" />
+    <Content Include="images\msenv22.ico" />
+    <Content Include="images\namedset.png" />
+    <Content Include="images\New.ico" />
+    <Content Include="images\num.ico" />
+    <Content Include="images\Open.ico" />
+    <Content Include="images\OpenFolder.ICO" />
+    <Content Include="images\OutputWindow.ico" />
+    <Content Include="images\pk.png" />
+    <Content Include="images\property.png" />
+    <Content Include="images\PropertyWindow.ico" />
+    <Content Include="images\Reference.ico" />
+    <Content Include="images\References.ico" />
+    <Content Include="images\role.png" />
+    <Content Include="images\save.png" />
+    <Content Include="images\script.png" />
+    <Content Include="images\SolutionExplorer.ico" />
+    <Content Include="images\sql1.png" />
+    <Content Include="images\sql2.png" />
+    <Content Include="images\SQLTool.ico" />
+    <Content Include="images\Ssms.ico" />
+    <Content Include="images\string.ico" />
+    <Content Include="images\table.ico" />
+    <Content Include="images\TaskListWindow.ico" />
+    <Content Include="images\ToolboxWindow.ico" />
+    <Content Include="images\xml.png" />
+    <Content Include="images\XmlFile.ico" />
+    <Content Include="images\zhineng.png" />
+    <Content Include="images\zhineng1.png" />
+    <Content Include="images\zhineng2.png" />
+    <Content Include="TextFile1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.BI.DBLibrary\Justin.BI.DBLibrary.csproj">
+      <Project>{b58020eb-6ec4-42f1-a81d-3004481b9b8d}</Project>
+      <Name>Justin.BI.DBLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CodeCompiler\Justin.Controls.CodeCompiler.csproj">
+      <Project>{6941552a-4fd4-4f07-98e2-f8a10fcc0086}</Project>
+      <Name>Justin.Controls.CodeCompiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CodeSnippet\Justin.Controls.CodeSnippet.csproj">
+      <Project>{BCE992B5-1055-4531-A1C6-E15209D27270}</Project>
+      <Name>Justin.Controls.CodeSnippet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.Executer\Justin.Controls.Executer.csproj">
+      <Project>{6ee7e46d-dc3a-45ab-a696-18e1c7489748}</Project>
+      <Name>Justin.Controls.Executer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.JsonView\Justin.Controls.JsonView.csproj">
+      <Project>{bb49de23-c34d-4457-9f25-34ca6277813d}</Project>
+      <Name>Justin.Controls.JsonView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.Mondrian\Justin.Controls.Mondrian.csproj">
+      <Project>{D6701E81-57AA-4348-8AE7-7BB2BB94C826}</Project>
+      <Name>Justin.Controls.Mondrian</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.TestDataGenerator\Justin.Controls.TestDataGenerator.csproj">
+      <Project>{c8130a39-3c8c-40c5-9955-c1bc871ad981}</Project>
+      <Name>Justin.Controls.TestDataGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
+      <Project>{f1ba0a66-6d68-4142-83d8-c96a81a6862e}</Project>
+      <Name>Justin.FrameWork.WinForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.Log\Justin.Log.csproj">
+      <Project>{fb90c580-4e99-4921-b352-7704032ae2f7}</Project>
+      <Name>Justin.Log</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Abount.resx">
+      <DependentUpon>Abount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JDBDcokForm.resx">
+      <DependentUpon>JDBDcokForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JDockForm.resx">
+      <DependentUpon>JDockForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customization\Resources.resx" />
+    <EmbeddedResource Include="Customization\Strings.resx" />
+    <EmbeddedResource Include="Tools\CodeSnippetMgr.resx">
+      <DependentUpon>CodeSnippetMgr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FileAssociation.resx">
+      <DependentUpon>FileAssociation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutPutWindow.resx">
+      <DependentUpon>OutPutWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FormDBField.resx">
+      <DependentUpon>FormDBField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\JCodeCompiler.resx">
+      <DependentUpon>JCodeCompiler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\JsonViewer.resx">
+      <DependentUpon>JsonViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\MdxExecutor.resx">
+      <DependentUpon>MdxExecutor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\MondrianSchemaWorkbench.resx">
+      <DependentUpon>MondrianSchemaWorkbench.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\SqlExecuteor.resx">
+      <DependentUpon>SqlExecuteor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\SqlExecuteorTool.resx">
+      <DependentUpon>SqlExecuteorTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\TableConfigurator.resx">
+      <DependentUpon>TableConfigurator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\TestDataGenerator.resx">
+      <DependentUpon>TestDataGenerator.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

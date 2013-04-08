@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<InsurancePolicy xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Years>
+    <Year Value="2012">
+      <ResidenceTypes>
+        <ResidenceType Value="OutsideTownCitizen">
+          <InsuranceTypes>
+            <InsuranceType Value="EndowmentInsurance" CompanyPayPercent="0.2" PersonPayPercent="0.08" />
+            <InsuranceType Value="UnEmployInsurance" CompanyPayPercent="0.015" PersonPayPercent="0.005" />
+            <InsuranceType Value="InjuryInsurance" CompanyPayPercent="0.005" PersonPayPercent="0" />
+            <InsuranceType Value="MaternityInsurance" CompanyPayPercent="0.008" PersonPayPercent="0" />
+            <InsuranceType Value="MedicalInsurance" CompanyPayPercent="0.09" PersonPayPercent="0.02" />
+            <InsuranceType Value="MedicalInsurance" CompanyPayPercent="0.01" PersonPayPercent="0" />
+            <InsuranceType Value="AccumulationFund" CompanyPayPercent="0.12" PersonPayPercent="0.12" />
+          </InsuranceTypes>
+        </ResidenceType>
+      </ResidenceTypes>
+    </Year>
+  </Years>
+</InsurancePolicy>
