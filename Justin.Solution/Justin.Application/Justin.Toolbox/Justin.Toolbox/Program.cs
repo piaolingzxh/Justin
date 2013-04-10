@@ -16,15 +16,16 @@ namespace Justin.Toolbox
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MainForm form = null;
+            Workspace form;
             if (args.Length > 0)
             {
-                form = new MainForm(args[0]);
+                form = new Workspace(args);
             }
             else
             {
-                form = new MainForm(); 
+                form = new Workspace();
             }
+
             Application.Run(form);
         }
     }

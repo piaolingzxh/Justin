@@ -13,6 +13,7 @@ using Justin.FrameWork.Extensions;
 using Justin.BI.DBLibrary.TestDataGenerate;
 using Justin.BI.DBLibrary.Utility;
 using Justin.BI.DBLibrary.Controls;
+using Justin.Core;
 namespace Justin.Toolbox.Controls
 {
     public partial class SqlExecuteorTool : JDBDcokForm

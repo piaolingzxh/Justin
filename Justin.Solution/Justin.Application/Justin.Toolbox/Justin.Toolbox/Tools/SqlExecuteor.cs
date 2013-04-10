@@ -13,6 +13,7 @@ using Justin.FrameWork.Helper;
 using Justin.Log;
 using Justin.FrameWork.Settings;
 using Justin.BI.DBLibrary.Utility;
+using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {

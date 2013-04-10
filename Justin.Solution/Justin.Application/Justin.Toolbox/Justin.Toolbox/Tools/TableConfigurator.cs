@@ -18,6 +18,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.Extensions;
+using Justin.Core;
 
 
 namespace Justin.Toolbox.Tools

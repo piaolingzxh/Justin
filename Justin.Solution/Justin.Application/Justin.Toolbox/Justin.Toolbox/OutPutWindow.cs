@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.Core;
 using Justin.FrameWork.WinForm.Utility;
 using Justin.Log;
 using WeifenLuo.WinFormsUI.Docking;

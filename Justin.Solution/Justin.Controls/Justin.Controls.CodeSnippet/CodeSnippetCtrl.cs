@@ -11,7 +11,6 @@ using System.Text;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
-using Justin.Controls.WordView;
 using Microsoft.Win32;
 namespace Justin.Controls.CodeSnippet
 {
@@ -20,12 +19,10 @@ namespace Justin.Controls.CodeSnippet
         public CodeSnippetCtrl()
         {
             InitializeComponent();
-            CreateDSOFramer();
         }
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeSnippetCtrl));
 
         private TextEditorControl txtCode = new TextEditorControl();
-        private WordDocVieCtrl docView = new WordDocVieCtrl();
         private AxDSOFramer.AxFramerControl axFramerControl1 = new AxDSOFramer.AxFramerControl();
 
         private WebBrowser webBrower = new WebBrowser();
@@ -47,9 +44,8 @@ namespace Justin.Controls.CodeSnippet
             tvDirectory.Nodes.Add(rootNode);
             BindTree(rootNode, dir);
             CreateSharpEditor();
-            CreateDocView();
             CreateWebBrower();
-
+            CreateDSOFramer();
         }
         private void BindTree(TreeNode node, DirectoryInfo dir)
         {
@@ -145,10 +141,7 @@ namespace Justin.Controls.CodeSnippet
             this.axFramerControl1.TabIndex = 0;
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
         }
-        private void CreateDocView()
-        {
-            docView.Dock = DockStyle.Fill;
-        }
+         
         private void CreateWebBrower()
         {
             this.webBrower.Dock = DockStyle.Fill;

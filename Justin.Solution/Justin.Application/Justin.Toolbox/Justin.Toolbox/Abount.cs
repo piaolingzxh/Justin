@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Justin.Core;
 
 namespace Justin.Toolbox
 {
-    public partial class Abount : Form
+    public partial class Abount : JDockForm
     {
         public Abount()
         {

@@ -15,6 +15,7 @@ using Justin.FrameWork.Helper;
 using Justin.FrameWork.WinForm.FormUI.SharpCodeTextEditor;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.FormUI.PropertyGrid;
+using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {

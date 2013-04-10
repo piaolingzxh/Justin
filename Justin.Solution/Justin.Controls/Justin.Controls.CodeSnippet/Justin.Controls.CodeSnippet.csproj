@@ -78,10 +78,6 @@
       <Project>{D6701E81-57AA-4348-8AE7-7BB2BB94C826}</Project>
       <Name>Justin.Controls.Mondrian</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Justin.Controls.WordView\Justin.Controls.WordView.csproj">
-      <Project>{69463078-58bf-47a8-9464-fb3c3b1af449}</Project>
-      <Name>Justin.Controls.WordView</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Common\Library\dsoframer.ocx">

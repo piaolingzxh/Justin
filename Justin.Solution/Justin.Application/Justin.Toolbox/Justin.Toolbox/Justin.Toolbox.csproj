@@ -47,6 +47,31 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Justin.Controls.CodeCompiler">
+      <HintPath>..\..\..\Release\Justin.Controls.CodeCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.Controls.CodeSnippet">
+      <HintPath>..\..\..\Release\Justin.Controls.CodeSnippet.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.Controls.Executer">
+      <HintPath>..\..\..\Release\Justin.Controls.Executer.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.Controls.JsonView">
+      <HintPath>..\..\..\Release\Justin.Controls.JsonView.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.Controls.WordView">
+      <HintPath>..\..\..\Release\Justin.Controls.WordView.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.FrameWork">
+      <HintPath>..\..\..\Release\Justin.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.FrameWork.WinForm">
+      <HintPath>..\..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.Log, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d146da2c886820c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Release\Justin.Log.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
@@ -75,40 +100,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abount.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abount.Designer.cs">
-      <DependentUpon>Abount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="JDBDcokForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="JDBDcokForm.Designer.cs">
-      <DependentUpon>JDBDcokForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="JDockForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="JDockForm.Designer.cs">
-      <DependentUpon>JDockForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Customization\DockHelper.cs" />
-    <Compile Include="Customization\Extender.cs" />
-    <Compile Include="Customization\InertButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Customization\Resources.Designer.cs" />
-    <Compile Include="Customization\Strings.Designer.cs" />
-    <Compile Include="Customization\VS2003AutoHideStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Customization\VS2003DockPaneCaption.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Customization\VS2003DockPaneStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Tools\CodeSnippetMgr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,12 +117,6 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OutPutWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OutPutWindow.Designer.cs">
-      <DependentUpon>OutPutWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -194,36 +179,14 @@
     <Compile Include="Tools\TestDataGenerator.Designer.cs">
       <DependentUpon>TestDataGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Workspace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Workspace.Designer.cs">
+      <DependentUpon>Workspace.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
-    <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Hotspot.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_HotspotIndex.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Left.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Right.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Top.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelBottom.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelBottom_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelFill.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelFill_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelLeft.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelLeft_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelRight.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelRight_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelTop.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelTop_Active.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_AutoHideNo.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_AutoHideYes.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_CloseDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_CloseEnabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_CloseDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_CloseEnabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftEnabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightEnabled.bmp" />
     <Content Include="images\ArrowDown.bmp" />
     <Content Include="images\ArrowUp.bmp" />
     <Content Include="images\Bitmap.ico" />
@@ -295,22 +258,6 @@
       <Project>{b58020eb-6ec4-42f1-a81d-3004481b9b8d}</Project>
       <Name>Justin.BI.DBLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CodeCompiler\Justin.Controls.CodeCompiler.csproj">
-      <Project>{6941552a-4fd4-4f07-98e2-f8a10fcc0086}</Project>
-      <Name>Justin.Controls.CodeCompiler</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CodeSnippet\Justin.Controls.CodeSnippet.csproj">
-      <Project>{BCE992B5-1055-4531-A1C6-E15209D27270}</Project>
-      <Name>Justin.Controls.CodeSnippet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.Executer\Justin.Controls.Executer.csproj">
-      <Project>{6ee7e46d-dc3a-45ab-a696-18e1c7489748}</Project>
-      <Name>Justin.Controls.Executer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.JsonView\Justin.Controls.JsonView.csproj">
-      <Project>{bb49de23-c34d-4457-9f25-34ca6277813d}</Project>
-      <Name>Justin.Controls.JsonView</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.Mondrian\Justin.Controls.Mondrian.csproj">
       <Project>{D6701E81-57AA-4348-8AE7-7BB2BB94C826}</Project>
       <Name>Justin.Controls.Mondrian</Name>
@@ -319,31 +266,12 @@
       <Project>{c8130a39-3c8c-40c5-9955-c1bc871ad981}</Project>
       <Name>Justin.Controls.TestDataGenerator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
-      <Project>{f1ba0a66-6d68-4142-83d8-c96a81a6862e}</Project>
-      <Name>Justin.FrameWork.WinForm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
-      <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
-      <Name>Justin.FrameWork</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.Log\Justin.Log.csproj">
-      <Project>{fb90c580-4e99-4921-b352-7704032ae2f7}</Project>
-      <Name>Justin.Log</Name>
+    <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
+      <Project>{2fa07381-d81f-4ba2-a9de-f084529d835c}</Project>
+      <Name>Justin.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Abount.resx">
-      <DependentUpon>Abount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="JDBDcokForm.resx">
-      <DependentUpon>JDBDcokForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="JDockForm.resx">
-      <DependentUpon>JDockForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Customization\Resources.resx" />
-    <EmbeddedResource Include="Customization\Strings.resx" />
     <EmbeddedResource Include="Tools\CodeSnippetMgr.resx">
       <DependentUpon>CodeSnippetMgr.cs</DependentUpon>
     </EmbeddedResource>
@@ -352,9 +280,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OutPutWindow.resx">
-      <DependentUpon>OutPutWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -386,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\TestDataGenerator.resx">
       <DependentUpon>TestDataGenerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Workspace.resx">
+      <DependentUpon>Workspace.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

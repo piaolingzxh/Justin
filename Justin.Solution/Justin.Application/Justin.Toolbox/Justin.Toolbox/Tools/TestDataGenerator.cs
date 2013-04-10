@@ -20,12 +20,17 @@ using Justin.Toolbox.Tools;
 using Justin.FrameWork.Settings;
 using Justin.BI.DBLibrary.Utility;
 using Justin.BI.DBLibrary.DAL;
+using Justin.Core;
 
 
 namespace Justin.Toolbox.Tools
 {
     public partial class TestDataGenerator : JDBDcokForm
     {
+        public TestDataGenerator()
+            : this("")
+        { }
+
         public TestDataGenerator(string connStr)
         {
             InitializeComponent();
@@ -193,15 +198,13 @@ namespace Justin.Toolbox.Tools
 
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}", Constants.Splitor,GetType().ToString(), this.ConnStr);
+            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.ConnStr);
         }
 
         private void tvAllTables_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             tvAllTables.SelectedNode = e.Node;
         }
-
-
 
 
     }

@@ -12,6 +12,7 @@ using AssociationManager;
 using Justin.BI.DBLibrary.TestDataGenerate;
 using Microsoft.Win32;
 using Justin.BI.DBLibrary.Utility;
+using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {

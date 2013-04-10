@@ -15,6 +15,7 @@ using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Utility;
 using Microsoft.CSharp;
 using Justin.FrameWork.Settings;
+using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
