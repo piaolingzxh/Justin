@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2FA07381-D81F-4BA2-A9DE-F084529D835C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Justin.Core</RootNamespace>
+    <AssemblyName>Justin.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Justin.FrameWork">
+      <HintPath>..\..\..\Release\Justin.FrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.FrameWork.WinForm">
+      <HintPath>..\..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
+    </Reference>
+    <Reference Include="Justin.Log">
+      <HintPath>..\..\..\Release\Justin.Log.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\..\..\Common\Library\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abount.Designer.cs">
+      <DependentUpon>Abount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddinConfig.cs" />
+    <Compile Include="Customization\DockHelper.cs" />
+    <Compile Include="Customization\Extender.cs" />
+    <Compile Include="Customization\InertButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Customization\Resources.Designer.cs" />
+    <Compile Include="Customization\Strings.Designer.cs" />
+    <Compile Include="Customization\VS2003AutoHideStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Customization\VS2003DockPaneCaption.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Customization\VS2003DockPaneStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="JDBDcokForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JDBDcokForm.Designer.cs">
+      <DependentUpon>JDBDcokForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JDockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JDockForm.Designer.cs">
+      <DependentUpon>JDockForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OutPutWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutPutWindow.Designer.cs">
+      <DependentUpon>OutPutWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkbenchXXX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkbenchXXX.Designer.cs">
+      <DependentUpon>WorkbenchXXX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorkspaceBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkspaceBase.Designer.cs">
+      <DependentUpon>WorkspaceBase.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Abount.resx">
+      <DependentUpon>Abount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Customization\Resources.resx" />
+    <EmbeddedResource Include="Customization\Strings.resx" />
+    <EmbeddedResource Include="JDBDcokForm.resx">
+      <DependentUpon>JDBDcokForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JDockForm.resx">
+      <DependentUpon>JDockForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutPutWindow.resx">
+      <DependentUpon>OutPutWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkbenchXXX.resx">
+      <DependentUpon>WorkbenchXXX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkspaceBase.resx">
+      <DependentUpon>WorkspaceBase.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Addin.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
+    <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Hotspot.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_HotspotIndex.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Left.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Right.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Top.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelBottom.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelBottom_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelFill.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelFill_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelLeft.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelLeft_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelRight.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelRight_Active.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelTop.bmp" />
+    <Content Include="Customization\Resources\DockIndicator_PanelTop_Active.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_AutoHideNo.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_AutoHideYes.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_CloseDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneCaption_CloseEnabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_CloseDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_CloseEnabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftEnabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightDisabled.bmp" />
+    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightEnabled.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

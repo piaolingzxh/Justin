@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<AddinConfig>
+  <Menu>
+    <New>
+      <MenuItem Name="Compiler" Text="Compiler" IsFile="false" Class="Justin.Toolbox.Tools.JCodeCompiler,,"/>
+      <MenuItem Name="TestDataGenerator" Text="TestDataGenerator" IsFile="true" Class="Justin.Toolbox.Tools.TestDataGenerator,,"/>
+      <MenuItem Name="Compiler3" Text="Compiler3" IsFile="true" />
+    </New>
+    <Open>
+      <MenuItem Name="Compiler1" Text="Compiler1" IsFile="false" />
+      <MenuItem Name="Compiler2" Text="Compiler2" IsFile="true" />
+      <MenuItem Name="Compiler3" Text="Compiler3" IsFile="true" />
+    </Open>
+    <Tools>
+      <MenuItem Name="Compiler1" Text="Compiler1" IsFile="false" />
+    </Tools>
+  </Menu>
+</AddinConfig>
