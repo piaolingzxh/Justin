@@ -19,9 +19,14 @@ namespace Justin.Core
         [XmlArray("Tools")]
         public List<MenuItem> ToolsItems { get; set; }
     }
-
     public class MenuItem
     {
+        public MenuItem()
+        {
+            this.Type = MenuType.Menu;
+        }
+        [XmlAttribute]
+        public MenuType Type { get; set; }
         [XmlAttribute]
         public string Icon { get; set; }
         [XmlAttribute]
@@ -34,5 +39,10 @@ namespace Justin.Core
         public string Extensions { get; set; }
         [XmlAttribute]
         public string Class { get; set; }
+    }
+    public enum MenuType
+    {
+        Menu,
+        Splitor,
     }
 }

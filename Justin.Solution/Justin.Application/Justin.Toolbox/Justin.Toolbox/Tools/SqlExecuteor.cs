@@ -9,17 +9,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Justin.BI.DBLibrary.TestDataGenerate;
-using Justin.FrameWork.Helper;
-using Justin.Log;
-using Justin.FrameWork.Settings;
 using Justin.BI.DBLibrary.Utility;
 using Justin.Core;
+using Justin.FrameWork.Helper;
+using Justin.FrameWork.Settings;
+using Justin.Log;
 
 namespace Justin.Toolbox.Tools
 {
     public delegate void AsyncDelegate();
     public partial class SqlExecuteor : JDBDcokForm
     {
+        public SqlExecuteor()
+            : this("", "")
+        {
+
+        }
+
         public SqlExecuteor(string fileName, string connStr)
         {
             InitializeComponent();

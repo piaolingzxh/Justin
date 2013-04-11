@@ -37,7 +37,7 @@
             this.schemaViewerCtrl1.Location = new System.Drawing.Point(0, 0);
             this.schemaViewerCtrl1.Name = "schemaViewerCtrl1";
             this.schemaViewerCtrl1.SaveSchemaFileName = "";
-            this.schemaViewerCtrl1.SchemaFileName = "foodmart.xml";
+            this.schemaViewerCtrl1.SchemaFileName = "";
             this.schemaViewerCtrl1.Size = new System.Drawing.Size(768, 460);
             this.schemaViewerCtrl1.TabIndex = 6;
             // 

@@ -432,9 +432,17 @@ namespace Justin.Core
             //menuItemNew.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.NewItems)
             {
-                ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
-                tsItem.Click += subItemOfNew_Click;
-                newToolStripMenuItem.DropDownItems.Add(tsItem);
+                if (item.Type == MenuType.Menu)
+                {
+                    ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
+                    tsItem.Click += subItemOfNew_Click;
+                    newToolStripMenuItem.DropDownItems.Add(tsItem);
+                }
+                else
+                {
+                    ToolStripSeparator splitor = new ToolStripSeparator();
+                    newToolStripMenuItem.DropDownItems.Add(splitor);
+                }
             }
 
         }
@@ -445,9 +453,21 @@ namespace Justin.Core
             openToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.OpenItems)
             {
-                ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
-                tsItem.Click += subItemOfNew_Click;
-                openToolStripMenuItem.DropDownItems.Add(tsItem);
+                //ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
+                //tsItem.Click += subItemOfNew_Click;
+                //openToolStripMenuItem.DropDownItems.Add(tsItem);
+
+                if (item.Type == MenuType.Menu)
+                {
+                    ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
+                    tsItem.Click += subItemOfNew_Click;
+                    openToolStripMenuItem.DropDownItems.Add(tsItem);
+                }
+                else
+                {
+                    ToolStripSeparator splitor = new ToolStripSeparator();
+                    openToolStripMenuItem.DropDownItems.Add(splitor);
+                }
             }
 
         }
@@ -458,9 +478,21 @@ namespace Justin.Core
             toolsToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.ToolsItems)
             {
-                ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
-                tsItem.Click += subItemOfNew_Click;
-                toolsToolStripMenuItem.DropDownItems.Add(tsItem);
+                //ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
+                //tsItem.Click += subItemOfNew_Click;
+                //toolsToolStripMenuItem.DropDownItems.Add(tsItem);
+
+                if (item.Type == MenuType.Menu)
+                {
+                    ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
+                    tsItem.Click += subItemOfNew_Click;
+                    toolsToolStripMenuItem.DropDownItems.Add(tsItem);
+                }
+                else
+                {
+                    ToolStripSeparator splitor = new ToolStripSeparator();
+                    toolsToolStripMenuItem.DropDownItems.Add(splitor);
+                }
             }
 
         }
@@ -474,16 +506,20 @@ namespace Justin.Core
                 this.ShowMessage("请检查Class设置");
                 return;
             }
-            Assembly assembly;
-            if (!string.IsNullOrEmpty(classInfo[2]))
+            Type type;
+            if (!string.IsNullOrEmpty(classInfo[2]))//单独dll存放在插件文件夹
             {
-                assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + classInfo[2]));
+                Assembly assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + classInfo[2]));
+                type = assembly.GetType(classInfo[0]);
             }
             else
             {
-                assembly = Assembly.GetEntryAssembly();
+                type = Assembly.GetEntryAssembly().GetType(classInfo[0]);       //dll为Exe所在程序集
+                if (type == null)
+                {
+                    type = Assembly.GetEntryAssembly().GetType(classInfo[0]);      //dll为当前程序集
+                }
             }
-            Type type = assembly.GetType(classInfo[0]);
 
             object obj = Activator.CreateInstance(type);
 

@@ -105,12 +105,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WorkbenchXXX.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WorkbenchXXX.Designer.cs">
-      <DependentUpon>WorkbenchXXX.cs</DependentUpon>
-    </Compile>
     <Compile Include="WorkspaceBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,17 +131,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkbenchXXX.resx">
-      <DependentUpon>WorkbenchXXX.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WorkspaceBase.resx">
       <DependentUpon>WorkspaceBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Addin.xml">
+    <Content Include="Addin.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
     <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
