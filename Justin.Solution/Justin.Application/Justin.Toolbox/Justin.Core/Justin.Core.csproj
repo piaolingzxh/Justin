@@ -138,6 +138,7 @@
   <ItemGroup>
     <None Include="Justin.Toolbox.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />

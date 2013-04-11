@@ -429,7 +429,7 @@ namespace Justin.Core
         {
             if (addinConfig == null && addinConfig.Menu == null && addinConfig.Menu.NewItems == null)
                 return;
-            //menuItemNew.DropDownItems.Clear();
+            newToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.NewItems)
             {
                 if (item.Type == MenuType.Menu)
