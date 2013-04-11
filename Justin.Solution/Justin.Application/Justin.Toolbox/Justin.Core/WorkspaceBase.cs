@@ -81,7 +81,24 @@ namespace Justin.Core
 
         protected virtual IDockContent NewToolAccrodingPersistString(string[] parsedStrings)
         {
-            return null;
+            if (parsedStrings.Length < 1 || parsedStrings[0] == typeof(OutPutWindow).ToString())
+                return null;
+            string[] args = null;
+            if (parsedStrings.Length > 1)
+            {
+                args = new string[parsedStrings.Length - 1];
+
+                for (int i = 1; i <= parsedStrings.Length - 1; i++)
+                {
+                    args[i - 1] = parsedStrings[i];
+                }
+            }
+            string className = parsedStrings[0];
+            var query = addinConfig.Tools.First(row => row.ClassName == className);
+            string dllName = query != null ? query.DllFileName : "";
+
+            JDockForm form = CreateJDockForm(className, dllName, args == null ? null : new object[] { args });
+            return form;
         }
         protected virtual void OpenFileAccordingToFile(string fileName) { }
 
@@ -201,9 +218,17 @@ namespace Justin.Core
         //Open
         private void subItemOfOpen_Click(object sender, EventArgs e)
         {
-            //TestDataGenerator tdgtool = new TestDataGenerator("");
-            //tdgtool.MdiParent = this;
-            //tdgtool.Show(dockPanel);
+            ToolStripMenuItem tsItem = sender as ToolStripMenuItem;
+            MenuItem data = tsItem.Tag as MenuItem;
+            openFileDialog1.InitialDirectory = Constants.ConfigFileFolder;//注意这里写路径时要用c:\\而不是c:\
+            openFileDialog1.Filter = GetOpenFileDialogFilter(data.Extensions);
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.FilterIndex = 1;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog1.FileName;
+                ActiveContent(data, fileName);
+            }
         }
 
         //关闭当前、关闭所有、关闭所有（当前除外）
@@ -405,25 +430,14 @@ namespace Justin.Core
         #region 动态菜单
 
         string fileNameOfAddin = "Justin.Toolbox.addin";
-        string addinFolder = @"\Addins\";
+        string addinFolder = @"\";
         protected AddinConfig addinConfig;
 
         protected void DynamicMenuGenerate()
         {
-            if (File.Exists(fileNameOfAddin))
-            {
-                try
-                {
-                    addinConfig = SerializeHelper.XmlDeserializeFromFile<AddinConfig>(fileNameOfAddin);
-                }
-                catch (Exception ex)
-                {
-                    string msg = ex.ToString();
-                }
-                GenerateSubMenuForNew();
-                GenerateSubMenuForOpen();
-                GenerateSubMenuForTools();
-            }
+            GenerateSubMenuForNew();
+            GenerateSubMenuForOpen();
+            GenerateSubMenuForTools();
         }
         protected void GenerateSubMenuForNew()
         {
@@ -453,14 +467,10 @@ namespace Justin.Core
             openToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.OpenItems)
             {
-                //ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
-                //tsItem.Click += subItemOfNew_Click;
-                //openToolStripMenuItem.DropDownItems.Add(tsItem);
-
                 if (item.Type == MenuType.Menu)
                 {
                     ToolStripMenuItem tsItem = new ToolStripMenuItem(item.Text) { Name = item.Name, Tag = item };
-                    tsItem.Click += subItemOfNew_Click;
+                    tsItem.Click += subItemOfOpen_Click;
                     openToolStripMenuItem.DropDownItems.Add(tsItem);
                 }
                 else
@@ -497,7 +507,7 @@ namespace Justin.Core
 
         }
 
-        private void ActiveContent(MenuItem data)
+        private void ActiveContent(MenuItem data, string fileName = "")
         {
             string classStr = data.Class;
             string[] classInfo = classStr.Trim().Split(',');
@@ -506,28 +516,44 @@ namespace Justin.Core
                 this.ShowMessage("请检查Class设置");
                 return;
             }
+            JDockForm form = CreateJDockForm(classInfo[0], classInfo[2], new object[] { new string[] { fileName } });
+            form.Show(dockPanel);
+        }
+
+        protected JDockForm CreateJDockForm(string typeStr, string dllName, params object[] constructArgs)
+        {
             Type type;
-            if (!string.IsNullOrEmpty(classInfo[2]))//单独dll存放在插件文件夹
+            if (!string.IsNullOrEmpty(dllName))//单独dll存放在插件文件夹
             {
-                Assembly assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + classInfo[2]));
-                type = assembly.GetType(classInfo[0]);
+                Assembly assembly = Assemblies.ContainsKey(dllName) ? Assemblies[dllName] : null; ;
+                type = assembly.GetType(typeStr);
             }
             else
             {
-                type = Assembly.GetEntryAssembly().GetType(classInfo[0]);       //dll为Exe所在程序集
+                type = Assembly.GetEntryAssembly().GetType(typeStr);       //dll为Exe所在程序集
                 if (type == null)
                 {
-                    type = Assembly.GetEntryAssembly().GetType(classInfo[0]);      //dll为当前程序集
+                    type = Assembly.GetExecutingAssembly().GetType(typeStr);      //dll为当前程序集
                 }
             }
-
-            object obj = Activator.CreateInstance(type);
+            if (type == null)
+            {
+                this.ShowMessage(string.Format("工具{0}找不到入口函数", typeStr));
+            }
+            object obj;
+            if (constructArgs.Length == 0)
+            {
+                obj = Activator.CreateInstance(type);
+            }
+            else
+            {
+                obj = Activator.CreateInstance(type, constructArgs);
+            }
 
             JDockForm formToShow = (JDockForm)obj;
             formToShow.MdiParent = this;
-            formToShow.Show(dockPanel);
+            return formToShow;
         }
-
         #endregion
 
         #region 通知区域
@@ -545,6 +571,29 @@ namespace Justin.Core
 
         private void WorkspaceBase_Load(object sender, EventArgs e)
         {
+            if (File.Exists(fileNameOfAddin))
+            {
+                try
+                {
+                    addinConfig = SerializeHelper.XmlDeserializeFromFile<AddinConfig>(fileNameOfAddin);
+
+                    if (addinConfig != null && addinConfig.Tools != null)
+                    {
+                        foreach (var item in addinConfig.Tools)
+                        {
+                            if (!Assemblies.ContainsKey(item.DllFileName))
+                            {
+                                Assembly assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + item.DllFileName));
+                                Assemblies.Add(item.DllFileName, assembly);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this.ShowMessage(ex);
+                }
+            }
             if (!specialFile) //加载上次打开的文件
             {
                 string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
@@ -557,17 +606,17 @@ namespace Justin.Core
                 {
                     File.Delete(configFile);
                 }
+
             }
             else   //右键文件名，进行打开
             {
                 OpenFileAccordingToFile(rightContextMenuFileName);
             }
+
             dockPanel.ShowDocumentIcon = true;
             OutPutWin.Show(dockPanel, DockState.DockBottom);
             DynamicMenuGenerate();
         }
-
-
         private void WorkspaceBase_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!forceClose)
@@ -591,6 +640,25 @@ namespace Justin.Core
             }
         }
 
+        private string GetOpenFileDialogFilter(string extensionsString)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(extensionsString))
+            {
+                string[] extensions = extensionsString.Split(',');
+                if (extensions != null)
+                {
+                    foreach (var item in extensions)
+                    {
+                        sb.AppendFormat(Constants.OpenFileDialogFilterFormart, item.TrimStart('.'), item.TrimStart('.'));
+                    }
+                }
+            }
+            sb.AppendFormat(Constants.OpenFileDialogFilterFormart, "*", "所有");
+            return sb.ToString().TrimEnd('|');
+        }
+
+        public static Dictionary<string, Assembly> Assemblies = new Dictionary<string, Assembly>();
 
 
     }

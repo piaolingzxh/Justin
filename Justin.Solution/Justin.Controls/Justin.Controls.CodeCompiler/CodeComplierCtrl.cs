@@ -31,9 +31,9 @@ namespace Justin.Controls.CodeCompiler
         private void btnCompiler_Click(object sender, EventArgs e)
         {
             SetFilePath();
-            if (!string.IsNullOrEmpty(csFileName))
+            if (!string.IsNullOrEmpty(FileName))
             {
-                jcc.SourceFileName = csFileName;
+                jcc.SourceFileName = FileName;
                 jcc.Complier();
             }
         }
@@ -41,9 +41,9 @@ namespace Justin.Controls.CodeCompiler
         private void btnRun_Click(object sender, EventArgs e)
         {
             SetFilePath();
-            if (!string.IsNullOrEmpty(csFileName))
+            if (!string.IsNullOrEmpty(FileName))
             {
-                jcc.SourceFileName = csFileName;
+                jcc.SourceFileName = FileName;
                 jcc.Run();
             }
         }
@@ -51,9 +51,9 @@ namespace Justin.Controls.CodeCompiler
         private void btnShowILCode_Click(object sender, EventArgs e)
         {
             SetFilePath();
-            if (!string.IsNullOrEmpty(csFileName))
+            if (!string.IsNullOrEmpty(FileName))
             {
-                jcc.SourceFileName = csFileName;
+                jcc.SourceFileName = FileName;
                 string ilFileName = jcc.IL();
                 if (File.Exists(ilFileName))
                 {
@@ -93,6 +93,12 @@ namespace Justin.Controls.CodeCompiler
             txtMSILCode.Encoding = Encoding.GetEncoding("GB2312");
 
             saveFileDialog1.Filter = "cs 文件(*.cs)|*.cs|vb 文件(*.vb)|*.vb|java 文件(*.java)|*.java|所有文件(*.*)|*.*";
+
+            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
+            {
+                string content = File.ReadAllText(FileName);
+                txtCode.SetText(content);            
+            }
         }
         public void ShowMsg(string msg)
         {
@@ -101,41 +107,39 @@ namespace Justin.Controls.CodeCompiler
 
         private void SetFilePath()
         {
-            if (string.IsNullOrEmpty(csFileName))
+            if (string.IsNullOrEmpty(FileName))
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    csFileName = Path.Combine(Path.GetDirectoryName(saveFileDialog1.FileName), Path.GetFileNameWithoutExtension(saveFileDialog1.FileName) + Path.GetExtension(saveFileDialog1.FileName).ToLower());
+                    FileName = Path.Combine(Path.GetDirectoryName(saveFileDialog1.FileName), Path.GetFileNameWithoutExtension(saveFileDialog1.FileName) + Path.GetExtension(saveFileDialog1.FileName).ToLower());
                 }
 
             }
-            if (!string.IsNullOrEmpty(csFileName))
+            if (!string.IsNullOrEmpty(FileName))
             {
-                if (File.Exists(csFileName))
+                if (File.Exists(FileName))
                 {
-                    File.Delete(csFileName);
+                    File.Delete(FileName);
                 }
-                File.AppendAllText(csFileName, txtCode.Text);
+                File.AppendAllText(FileName, txtCode.Text);
                 InitComplier();
             }
         }
 
-        private string csFileName = "";
-
         private void InitComplier()
         {
-            if (!string.IsNullOrEmpty(csFileName))
+            if (!string.IsNullOrEmpty(FileName))
             {
                 jcc = null;
-                if (csFileName.EndsWith("cs", StringComparison.CurrentCultureIgnoreCase))
+                if (FileName.EndsWith("cs", StringComparison.CurrentCultureIgnoreCase))
                 {
                     jcc = new NetCodeComplier(NetDialect.CSharp);
                 }
-                else if (csFileName.EndsWith("vb", StringComparison.CurrentCultureIgnoreCase))
+                else if (FileName.EndsWith("vb", StringComparison.CurrentCultureIgnoreCase))
                 {
                     jcc = new NetCodeComplier(NetDialect.VB);
                 }
-                else if (csFileName.EndsWith("java", StringComparison.CurrentCultureIgnoreCase))
+                else if (FileName.EndsWith("java", StringComparison.CurrentCultureIgnoreCase))
                 {
                     jcc = new JavaCodeComplier();
                 }
@@ -239,7 +243,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnSaveCodeToFile_Click(object sender, EventArgs e)
         {
-            csFileName = "";
+            FileName = "";
             SetFilePath();
         }
 
@@ -250,7 +254,7 @@ namespace Justin.Controls.CodeCompiler
 		System.out.println(""hello word"");
         }
 }");
-            csFileName = "";
+            FileName = "";
             saveFileDialog1.DefaultExt = "java";
             saveFileDialog1.FileName = "";
         }
@@ -269,7 +273,7 @@ namespace ConsoleApplication1
         }
     }
 }");
-            csFileName = "";
+            FileName = "";
             saveFileDialog1.DefaultExt = "cs";
             saveFileDialog1.FileName = "";
 
@@ -282,11 +286,14 @@ namespace ConsoleApplication1
         Console.WriteLine(""hello VB!"")
     End Sub
 End Module");
-            csFileName = "";
+            FileName = "";
             saveFileDialog1.DefaultExt = "vb";
             saveFileDialog1.FileName = "";
 
         }
+
+        public string FileName { get; set; }
+         
     }
 
 

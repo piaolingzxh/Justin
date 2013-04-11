@@ -22,14 +22,18 @@ namespace Justin.Toolbox.Tools
     public partial class MondrianSchemaWorkbench : JDockForm
     {
         public MondrianSchemaWorkbench()
+            : this(null)
+        {
+        }
+        public MondrianSchemaWorkbench(string[] args)
         {
             InitializeComponent();
-        }
-        public MondrianSchemaWorkbench(string fileName, string dstFileName)
-            : this()
-        {
-            schemaViewerCtrl1.SchemaFileName = fileName;
-            schemaViewerCtrl1.SaveSchemaFileName = dstFileName;
+            if (args != null)
+            {
+                schemaViewerCtrl1.SchemaFileName = args[0];
+                this.FileName = args[0];
+                
+            }
         }
 
         #region 继承
@@ -37,9 +41,23 @@ namespace Justin.Toolbox.Tools
 
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), schemaViewerCtrl1.SchemaFileName, schemaViewerCtrl1.SaveSchemaFileName);
+            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName);
         }
+        protected override bool IsFile { get { return true; } }
 
+        protected override string FileName
+        {
+            get
+            {
+                return schemaViewerCtrl1.FileName;
+            }
+            set
+            {
+                schemaViewerCtrl1.FileName = value;
+                base.FileName = value;
+
+            }
+        }
         #endregion
     }
 

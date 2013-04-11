@@ -21,21 +21,31 @@ namespace Justin.Toolbox.Tools
     public partial class SqlExecuteor : JDBDcokForm
     {
         public SqlExecuteor()
-            : this("", "")
+            : this(null)
         {
 
         }
-
-        public SqlExecuteor(string fileName, string connStr)
+        /// <summary>
+        ///     
+        /// </summary>
+        /// <param name="args" type="string[]">
+        ///     <para>
+        ///           0:fileName
+        ///           1:ConnStr
+        ///     </para>
+        /// </param>
+        public SqlExecuteor(string[] args)
         {
             InitializeComponent();
-            this.sqlExecuterCtrl1.FileName = fileName;
-            this.ConnStr = connStr;
-            if (!string.IsNullOrEmpty(fileName))
+            if (args != null)
             {
-                this.Text = Path.GetFileName(fileName);
+                this.FileName = args[0]; ;
+                this.ConnStr = args.Length > 1 ? args[1] : "";
+
             }
         }
+
+        #region 继承
         protected override string ConnStr
         {
             get
@@ -50,8 +60,26 @@ namespace Justin.Toolbox.Tools
         }
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.sqlExecuterCtrl1.FileName, this.sqlExecuterCtrl1.ConnStr);
+            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
         }
+        protected override bool IsFile { get { return true; } }
+
+        protected override string FileName
+        {
+            get
+            {
+                return sqlExecuterCtrl1.FileName;
+            }
+            set
+            {
+                sqlExecuterCtrl1.FileName = value;
+                base.FileName = value;
+
+            }
+        }
+
+        #endregion
+
 
 
     }

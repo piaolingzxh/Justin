@@ -2,20 +2,38 @@
 <AddinConfig>
   <Menu>
     <New>
-      <MenuItem Name="TestDataGenerator" Text="TestDataGenerator" IsFile="true" Class="Justin.Toolbox.Tools.TestDataGenerator,,"/>
-      <MenuItem Name="SqlExecuteor" Text="SqlExecuteor" IsFile="false" Class="Justin.Toolbox.Tools.SqlExecuteor,,"/>
-      <MenuItem Name="MdxExecutor" Text="MdxExecutor" IsFile="true" Class="Justin.Toolbox.Tools.MdxExecutor,,"/>
-      <MenuItem Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.Tools.MondrianSchemaWorkbench,,"/>
-      <MenuItem Type="Splitor"></MenuItem>
-      <MenuItem Name="JsonViewer" Text="JsonViewer" IsFile="true" Class="Justin.Toolbox.Tools.JsonViewer,,"/>
-      <MenuItem Name="Compiler" Text="Compiler" IsFile="false" Class="Justin.Toolbox.Tools.JCodeCompiler,,"/>
-      <MenuItem Name="CodeSnippetMgr" Text="CodeSnippetMgr" IsFile="false" Class="Justin.Toolbox.Tools.CodeSnippetMgr,,"/>
+      <MenuItem Type="Menu" Name="TestDataGenerator" Text="TestDataGenerator" IsFile="false" Class="Justin.Toolbox.Tools.TestDataGenerator,," />
+      <MenuItem Type="Menu" Name="SqlExecuteor" Text="SqlExecuteor" IsFile="false" Class="Justin.Toolbox.Tools.SqlExecuteor,," />
+      <MenuItem Type="Menu" Name="MdxExecutor" Text="MdxExecutor" IsFile="false" Class="Justin.Toolbox.Tools.MdxExecutor,," />
+      <MenuItem Type="Menu" Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.Tools.MondrianSchemaWorkbench,," />
+      <MenuItem Type="Splitor" IsFile="false" />
+      <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.Tools.JsonViewer,," />
+      <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Class="Justin.Toolbox.Tools.JCodeCompiler,," />
+      <MenuItem Type="Menu" Name="CodeSnippetMgr" Text="CodeSnippetMgr" IsFile="false" Class="Justin.Toolbox.Tools.CodeSnippetMgr,," />
     </New>
     <Open>
+      <MenuItem Type="Menu" Name="TableConfigurator" Text="TableConfigurator" IsFile="false" Class="Justin.Toolbox.Tools.TableConfigurator,," Extensions=".config,.xml" />
+      <MenuItem Type="Menu" Name="SqlExecuteor" Text="SqlExecuteor" IsFile="false" Class="Justin.Toolbox.Tools.SqlExecuteor,," Extensions=".sql"/>
+      <MenuItem Type="Menu" Name="MdxExecutor" Text="MdxExecutor" IsFile="false" Class="Justin.Toolbox.Tools.MdxExecutor,," Extensions=".mdx"/>
+      <MenuItem Type="Menu" Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.Tools.MondrianSchemaWorkbench,," Extensions=".xml" />
+      <MenuItem Type="Splitor" IsFile="false" />
+      <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.Tools.JsonViewer,," Extensions=".json" />
+      <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java" Class="Justin.Toolbox.Tools.JCodeCompiler,," />
     </Open>
     <Tools>
-      <MenuItem Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.Tools.FileAssociation,,"/>
-      <MenuItem Type="Splitor"></MenuItem>
+      <MenuItem Type="Menu" Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.Tools.FileAssociation,," />
+      <MenuItem Type="Splitor" IsFile="false" />
     </Tools>
   </Menu>
+  <Tools>
+    <Tool ClassName="Justin.Toolbox.Tools.TestDataGenerator" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.TableConfigurator" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.SqlExecuteor" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.MdxExecutor" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.MondrianSchemaWorkbench" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.JsonViewer" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.JCodeCompiler" DllFileName="" />
+    <Tool ClassName="Justin.Toolbox.Tools.CodeSnippetMgr" DllFileName="" />
+
+  </Tools>
 </AddinConfig>

@@ -10,6 +10,7 @@ using Microsoft.AnalysisServices.AdomdClient;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using System.IO;
 namespace Justin.Controls.Executer
 {
     public partial class MdxExecuterCtrl : UserControl
@@ -70,6 +71,11 @@ namespace Justin.Controls.Executer
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
             //this.txtMdx.SetText(this._mdx);
+            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
+            {
+                string content = File.ReadAllText(FileName);
+                this.txtMdx.SetText(content);
+            }
         }
 
         public string ConnStr
@@ -83,6 +89,7 @@ namespace Justin.Controls.Executer
                 txtConnectionString.Text = value;
             }
         }
+        public string FileName { get; set; }
         public string Mdx
         {
             get

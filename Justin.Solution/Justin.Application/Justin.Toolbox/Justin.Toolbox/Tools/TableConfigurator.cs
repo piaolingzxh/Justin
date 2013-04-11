@@ -25,7 +25,21 @@ namespace Justin.Toolbox.Tools
 {
     public partial class TableConfigurator : JDBDcokForm
     {
-
+        public TableConfigurator(string[] args)
+        {
+            InitializeComponent();
+            this.FileName = args[0];
+            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
+            {
+                JTable table = SerializeHelper.XmlDeserializeFromFile<JTable>(this.FileName);
+                if (table != null)
+                {
+                    this.tableConfigCtrl1.TableSetting = table;
+                    this.ConnStr = args.Length > 1 ? args[1] : "";
+                    this.Text = table.TableName;
+                }
+            }
+        }
         public TableConfigurator(JTable table)
         {
             InitializeComponent();
@@ -63,7 +77,7 @@ namespace Justin.Toolbox.Tools
 
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.tableConfigCtrl1.TableSetting.TableName, this.tableConfigCtrl1.ConnStr);
+            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
         }
 
         protected override string ConnStr

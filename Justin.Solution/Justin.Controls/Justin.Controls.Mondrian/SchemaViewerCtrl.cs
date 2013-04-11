@@ -541,6 +541,18 @@ namespace Justin.Controls.Mondrian
         #endregion
 
 
+        public string FileName
+        {
+            get
+            {
+                return txtFileName.Text;
+            }
+            set
+            {
+                txtFileName.Text = value;
+            }
+        }
+
         private void ChangeTreeNodesIcon(TreeNodeCollection nodes)
         {
             if (nodes != null && nodes.Count > 0)

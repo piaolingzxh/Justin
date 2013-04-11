@@ -9,6 +9,8 @@ namespace Justin.Core
     public class AddinConfig
     {
         public MenuConfig Menu { get; set; }
+
+        public List<Tool> Tools { get; set; }
     }
     public class MenuConfig
     {
@@ -44,5 +46,13 @@ namespace Justin.Core
     {
         Menu,
         Splitor,
+    }
+
+    public class Tool
+    {
+        [XmlAttribute]
+        public string ClassName { get; set; }
+        [XmlAttribute]
+        public string DllFileName { get; set; }
     }
 }

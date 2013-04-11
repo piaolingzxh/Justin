@@ -43,26 +43,26 @@
             this.menuItemCloseOthers,
             this.menuItemCLoseAll});
             this.contextMenuTabPage.Name = "contextMenuTabPage";
-            this.contextMenuTabPage.Size = new System.Drawing.Size(153, 92);
+            this.contextMenuTabPage.Size = new System.Drawing.Size(142, 70);
             // 
             // menuItemCloseMe
             // 
             this.menuItemCloseMe.Name = "menuItemCloseMe";
-            this.menuItemCloseMe.Size = new System.Drawing.Size(152, 22);
+            this.menuItemCloseMe.Size = new System.Drawing.Size(141, 22);
             this.menuItemCloseMe.Text = "Close";
             this.menuItemCloseMe.Click += new System.EventHandler(this.menuItemCloseMe_Click);
             // 
             // menuItemCloseOthers
             // 
             this.menuItemCloseOthers.Name = "menuItemCloseOthers";
-            this.menuItemCloseOthers.Size = new System.Drawing.Size(152, 22);
+            this.menuItemCloseOthers.Size = new System.Drawing.Size(141, 22);
             this.menuItemCloseOthers.Text = "Close Others";
             this.menuItemCloseOthers.Click += new System.EventHandler(this.menuItemCloseOthers_Click);
             // 
             // menuItemCLoseAll
             // 
             this.menuItemCLoseAll.Name = "menuItemCLoseAll";
-            this.menuItemCLoseAll.Size = new System.Drawing.Size(152, 22);
+            this.menuItemCLoseAll.Size = new System.Drawing.Size(141, 22);
             this.menuItemCLoseAll.Text = "Close All";
             this.menuItemCLoseAll.Click += new System.EventHandler(this.menuItemCLoseAll_Click);
             // 
@@ -75,6 +75,7 @@
             this.Name = "JDockForm";
             this.TabPageContextMenuStrip = this.contextMenuTabPage;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.JDockForm_Load);
             this.contextMenuTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 

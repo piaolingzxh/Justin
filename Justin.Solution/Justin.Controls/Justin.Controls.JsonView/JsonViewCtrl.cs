@@ -138,7 +138,13 @@ namespace Justin.Controls.JsonView
         private void JsonViewCtrl_Load(object sender, EventArgs e)
         {
             txtJson.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
-            txtJson.Encoding = Encoding.GetEncoding("GB2312");
+            txtJson.Encoding = Encoding.Default;
+
+            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
+            {
+                string content = File.ReadAllText(FileName);
+                this.txtJson.SetText(content);
+            }
         }
 
         public bool FindNext(string text, bool includeSelected)
@@ -330,5 +336,7 @@ namespace Justin.Controls.JsonView
                 this.ShowMessage(ex);
             }
         }
+
+        public string FileName { get; set; }
     }
 }

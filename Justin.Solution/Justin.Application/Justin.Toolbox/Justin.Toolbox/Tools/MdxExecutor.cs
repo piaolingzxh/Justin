@@ -17,16 +17,31 @@ namespace Justin.Toolbox.Tools
     public partial class MdxExecutor : JDBDcokForm
     {
         public MdxExecutor()
+            : this(null)
+        {
+        }
+        /// <summary>
+        ///     
+        /// </summary>
+        /// <param name="args" type="string[]">
+        ///     <para>
+        ///           0:fileName
+        ///           1:Connection
+        ///     </para>
+        /// </param>
+        public MdxExecutor(string[] args)
         {
             InitializeComponent();
+
+            if (args != null)
+            {
+                this.FileName = args[0];
+                if (args.Length > 1 && !string.IsNullOrEmpty(args[1]))
+                    this.ConnStr = args[1];
+               
+            }
         }
-        public MdxExecutor(string connectionString, string mdx)
-            : this()
-        {
-            if (!string.IsNullOrEmpty(connectionString))
-                this.ConnStr = connectionString;
-            this.mdxExecuterCtrl1.Mdx = mdx;
-        }
+        #region 继承
         protected override bool NeedChooseDataSource
         {
             get
@@ -48,7 +63,25 @@ namespace Justin.Toolbox.Tools
         }
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.mdxExecuterCtrl1.ConnStr, this.mdxExecuterCtrl1.Mdx);
+            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
         }
+
+        protected override bool IsFile { get { return true; } }
+
+        protected override string FileName
+        {
+            get
+            {
+                return mdxExecuterCtrl1.FileName;
+            }
+            set
+            {
+                mdxExecuterCtrl1.FileName = value;
+                base.FileName = value;
+
+            }
+        }
+        #endregion
+
     }
 }

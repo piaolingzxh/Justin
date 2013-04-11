@@ -22,8 +22,26 @@ namespace Justin.Toolbox.Tools
     public partial class JCodeCompiler : JDockForm
     {
         public JCodeCompiler()
+            : this(null)
+        {
+
+        }
+        /// <summary>
+        ///     
+        /// </summary>
+        /// <param name="args" type="string[]">
+        ///     <para>
+        ///          0:fileName
+        ///     </para>
+        /// </param>
+        public JCodeCompiler(string[] args)
         {
             InitializeComponent();
+            if (args != null)
+            {
+                this.FileName = args[0];
+                
+            }
         }
 
         private void JCodeCompiler_Load(object sender, EventArgs e)
@@ -31,8 +49,23 @@ namespace Justin.Toolbox.Tools
         }
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), "");
+            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName);
         }
-       
+
+        protected override bool IsFile { get { return true; } }
+
+        protected override string FileName
+        {
+            get
+            {
+                return codeComplierCtrl1.FileName;
+            }
+            set
+            {
+                codeComplierCtrl1.FileName = value;
+                base.FileName = value;
+            }
+        }
+
     }
 }
