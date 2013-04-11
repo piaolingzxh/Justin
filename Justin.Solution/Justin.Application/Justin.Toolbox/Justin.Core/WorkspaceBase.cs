@@ -404,7 +404,7 @@ namespace Justin.Core
 
         #region 动态菜单
 
-        string fileNameOfAddin = "Addin.xml";
+        string fileNameOfAddin = "Justin.Toolbox.addin";
         string addinFolder = @"\Addins\";
         protected AddinConfig addinConfig;
 

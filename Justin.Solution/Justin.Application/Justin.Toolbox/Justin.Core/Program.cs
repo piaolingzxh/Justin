@@ -13,14 +13,14 @@ namespace Justin.Core
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            WorkbenchXXX form = null;
+            WorkspaceBase form = null;
             if (args.Length > 0)
             {
-                form = new WorkbenchXXX(args[0]);
+                form = new WorkspaceBase(args);
             }
             else
             {
-                form = new WorkbenchXXX();
+                form = new WorkspaceBase();
             }
             Application.Run(form);
         }

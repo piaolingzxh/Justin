@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<AddinConfig>
+  <Menu>
+    <New>
+      <MenuItem Name="TestDataGenerator" Text="TestDataGenerator" IsFile="true" Class="Justin.Toolbox.Tools.TestDataGenerator,,"/>
+      <MenuItem Name="SqlExecuteor" Text="SqlExecuteor" IsFile="false" Class="Justin.Toolbox.Tools.SqlExecuteor,,"/>
+      <MenuItem Name="MdxExecutor" Text="MdxExecutor" IsFile="true" Class="Justin.Toolbox.Tools.MdxExecutor,,"/>
+      <MenuItem Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.Tools.MondrianSchemaWorkbench,,"/>
+      <MenuItem Type="Splitor"></MenuItem>
+      <MenuItem Name="JsonViewer" Text="JsonViewer" IsFile="true" Class="Justin.Toolbox.Tools.JsonViewer,,"/>
+      <MenuItem Name="Compiler" Text="Compiler" IsFile="false" Class="Justin.Toolbox.Tools.JCodeCompiler,,"/>
+      <MenuItem Name="CodeSnippetMgr" Text="CodeSnippetMgr" IsFile="false" Class="Justin.Toolbox.Tools.CodeSnippetMgr,,"/>
+    </New>
+    <Open>
+    </Open>
+    <Tools>
+      <MenuItem Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.Tools.FileAssociation,,"/>
+      <MenuItem Type="Splitor"></MenuItem>
+    </Tools>
+  </Menu>
+</AddinConfig>

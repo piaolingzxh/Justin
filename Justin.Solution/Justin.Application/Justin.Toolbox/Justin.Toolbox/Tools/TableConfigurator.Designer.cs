@@ -1,5 +1,4 @@
-﻿using Justin.Toolbox.Controls;
-namespace Justin.Toolbox.Tools
+﻿namespace Justin.Toolbox.Tools
 {
     partial class TableConfigurator
     {

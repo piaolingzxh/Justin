@@ -136,9 +136,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Addin.addin">
+    <None Include="Justin.Toolbox.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
     <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
