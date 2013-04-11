@@ -23,11 +23,15 @@ using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class TableConfigurator : JDBDcokForm
+    public partial class TableConfigurator : JDBForm
     {
-        public TableConfigurator(string[] args)
+        private TableConfigurator()
         {
             InitializeComponent();
+        }
+        public TableConfigurator(string[] args)
+            : this()
+        {
             this.FileName = args[0];
             if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
             {
@@ -41,8 +45,8 @@ namespace Justin.Toolbox.Tools
             }
         }
         public TableConfigurator(JTable table)
+            : this()
         {
-            InitializeComponent();
             this.tableConfigCtrl1.TableSetting = table;
             this.ConnStr = ConnStr;
             this.Text = table.TableName;
@@ -50,6 +54,7 @@ namespace Justin.Toolbox.Tools
 
         private void ConfigTableForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (this.tableConfigCtrl1.TableSetting == null) return;
             if (this.tableConfigCtrl1.TableSetting.Modified)
             {
                 if (this.tableConfigCtrl1.ConnStr != this.tableConfigCtrl1.TableSetting.ConnStr)
@@ -60,7 +65,7 @@ namespace Justin.Toolbox.Tools
                 if (result == DialogResult.OK)
                 {
 
-                    this.tableConfigCtrl1.TableSetting.SaveSettings();
+                    this.tableConfigCtrl1.TableSetting.SaveSettings(this.FileName);
                     this.ShowMessage(string.Format("表【{0}】配置保存成功!", this.tableConfigCtrl1.TableSetting.TableName));
                 }
             }
@@ -69,13 +74,13 @@ namespace Justin.Toolbox.Tools
                 if (this.tableConfigCtrl1.ConnStr != this.tableConfigCtrl1.TableSetting.ConnStr)
                 {
                     this.tableConfigCtrl1.TableSetting.ConnStr = this.tableConfigCtrl1.ConnStr;
-                    this.tableConfigCtrl1.TableSetting.SaveSettings();
+                    this.tableConfigCtrl1.TableSetting.SaveSettings(this.FileName);
                 }
             }
         }
+        #region 继承
 
-
-        protected override string GetPersistString()
+         protected override string GetPersistString()
         {
             return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
         }
@@ -92,5 +97,25 @@ namespace Justin.Toolbox.Tools
                 base.ConnStr = value;
             }
         }
+
+
+        protected override bool IsFile { get { return true; } }
+
+        protected override string FileName
+        {
+            get
+            {
+                return this.tableConfigCtrl1.FileName;
+            }
+            set
+            {
+                this.tableConfigCtrl1.FileName = value;
+                base.FileName = value;
+            }
+        }
+
+        #endregion
+
+       
     }
 }

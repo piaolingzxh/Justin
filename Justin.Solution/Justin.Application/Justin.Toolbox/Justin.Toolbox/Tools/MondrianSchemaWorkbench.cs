@@ -19,15 +19,14 @@ using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class MondrianSchemaWorkbench : JDockForm
+    public partial class MondrianSchemaWorkbench : JForm
     {
         public MondrianSchemaWorkbench()
-            : this(null)
-        {
-        }
-        public MondrianSchemaWorkbench(string[] args)
         {
             InitializeComponent();
+        }
+        public MondrianSchemaWorkbench(string[] args):this()
+        {
             if (args != null)
             {
                 schemaViewerCtrl1.SchemaFileName = args[0];

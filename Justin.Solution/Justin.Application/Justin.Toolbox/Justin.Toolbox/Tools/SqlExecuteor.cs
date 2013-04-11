@@ -18,12 +18,11 @@ using Justin.Log;
 namespace Justin.Toolbox.Tools
 {
     public delegate void AsyncDelegate();
-    public partial class SqlExecuteor : JDBDcokForm
+    public partial class SqlExecuteor : JDBForm
     {
         public SqlExecuteor()
-            : this(null)
         {
-
+            InitializeComponent();
         }
         /// <summary>
         ///     
@@ -34,14 +33,12 @@ namespace Justin.Toolbox.Tools
         ///           1:ConnStr
         ///     </para>
         /// </param>
-        public SqlExecuteor(string[] args)
+        public SqlExecuteor(string[] args):this()
         {
-            InitializeComponent();
             if (args != null)
             {
                 this.FileName = args[0]; ;
                 this.ConnStr = args.Length > 1 ? args[1] : "";
-
             }
         }
 

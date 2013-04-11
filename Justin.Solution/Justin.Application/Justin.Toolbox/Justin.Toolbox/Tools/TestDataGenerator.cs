@@ -25,15 +25,16 @@ using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class TestDataGenerator : JDBDcokForm
+    public partial class TestDataGenerator : JDBForm
     {
         public TestDataGenerator()
-            : this("")
-        { }
-
-        public TestDataGenerator(string connStr)
         {
             InitializeComponent();
+        }
+
+        public TestDataGenerator(string connStr)
+            : this()
+        {
             this.ConnStr = connStr;
         }
 

@@ -12,11 +12,11 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Justin.Core
 {
-    public partial class OutPutWindow : JDockForm
+    public partial class OutPutWindow : JForm
     {
         private const int msgMaxLength = 4096000;//2147483647
 
-        public OutPutWindow()
+        private OutPutWindow()
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
@@ -26,6 +26,9 @@ namespace Justin.Core
                 OutPutService.Instance.MessageReceived += MessageReceived;
             }
         }
+        private static OutPutWindow win = new OutPutWindow();
+        public static OutPutWindow Instance { get { return win; } }
+         
         public delegate void AppendTextCallback(MessageReceivedEventArgs e);
 
         public void ProcessMessageObj(MessageReceivedEventArgs e)

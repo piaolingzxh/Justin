@@ -475,9 +475,8 @@ namespace Justin.BI.DBLibrary.TestDataGenerate
             throw new NotSupportedException(string.Format("{0}不支持{1},Filed:{2}", valueType.ToString(), sourceValueCategroy.ToString(), filedName));
         }
 
-        public void SaveSettings()
+        public void SaveSettings(string fileName)
         {
-            string fileName = JTools.GetFileName(this.TableName, FileType.TableConfig);
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);

@@ -16,7 +16,7 @@ using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class FileAssociation : JDockForm
+    public partial class FileAssociation : JForm
     {
         public FileAssociation()
         {

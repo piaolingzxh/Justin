@@ -293,6 +293,11 @@ End Module");
         }
 
         public string FileName { get; set; }
+
+        public void Save()
+        {
+            File.AppendAllText(this.FileName,txtCode.Text);
+        }
          
     }
 

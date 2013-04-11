@@ -11,7 +11,7 @@ using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class CodeSnippetMgr : JDockForm
+    public partial class CodeSnippetMgr : JForm
     {
         public CodeSnippetMgr()
         {

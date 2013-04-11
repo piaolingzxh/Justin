@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Justin.Core
 {
-    public partial class Abount : JDockForm
+    public partial class Abount : JForm
     {
         public Abount()
         {

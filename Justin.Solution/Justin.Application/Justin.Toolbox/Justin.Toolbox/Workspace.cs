@@ -18,6 +18,7 @@ namespace Justin.Toolbox
     public partial class Workspace : WorkspaceBase
     {
         public Workspace()
+            : base()
         {
             InitializeComponent();
         }
@@ -139,26 +140,26 @@ namespace Justin.Toolbox
         //    return null;
         //}
         //右键打开不同类型的文件
-        protected override void OpenFileAccordingToFile(string fileName)
-        {
-            //string fileExtension = Path.GetExtension(fileName).ToLower().TrimStart('.');
-            //if (FileType.TableConfig.GetAllowFileExtensions().Contains(fileExtension, true))
-            //{
-            //    OpenTableConfigFile(fileName);
-            //}
-            //else if (FileType.SQL.GetAllowFileExtensions().Contains(fileExtension, true))
-            //{
-            //    OpenSQLFile(fileName);
-            //}
-            //else if (FileType.MDX.GetAllowFileExtensions().Contains(fileExtension, true))
-            //{
-            //    OpenMDXFile(fileName);
-            //}
-            //else
-            //{
-            //    this.ShowMessage("不支持此文件类型", "不支持此文件类型");
-            //}
-        }
+        //protected override void OpenFileAccordingToFile(string fileName)
+        //{
+        //string fileExtension = Path.GetExtension(fileName).ToLower().TrimStart('.');
+        //if (FileType.TableConfig.GetAllowFileExtensions().Contains(fileExtension, true))
+        //{
+        //    OpenTableConfigFile(fileName);
+        //}
+        //else if (FileType.SQL.GetAllowFileExtensions().Contains(fileExtension, true))
+        //{
+        //    OpenSQLFile(fileName);
+        //}
+        //else if (FileType.MDX.GetAllowFileExtensions().Contains(fileExtension, true))
+        //{
+        //    OpenMDXFile(fileName);
+        //}
+        //else
+        //{
+        //    this.ShowMessage("不支持此文件类型", "不支持此文件类型");
+        //}
+        //}
 
         //private void OpenTableConfigFile(string fileName)
         //{

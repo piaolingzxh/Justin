@@ -20,12 +20,12 @@ namespace Justin.Controls.TestDataGenerator
     {
         public string ConnStr { get; set; }
         public JTable TableSetting { get; set; }
-
+        public string FileName { get; set; }
         public TableConfigCtrl()
         {
             InitializeComponent();
         }
-        
+
 
         #region tvDst事件
 
@@ -143,7 +143,7 @@ namespace Justin.Controls.TestDataGenerator
 
         #endregion
 
-        
+
 
         private void btnSaveFieldInfo_Click(object sender, EventArgs e)
         {
@@ -195,7 +195,8 @@ namespace Justin.Controls.TestDataGenerator
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
-            TableSetting.SaveSettings();
+
+            TableSetting.SaveSettings(this.FileName);
             this.ShowMessage(string.Format("表【{0}】配置保存成功!", TableSetting.TableName));
             TableSetting.Modified = false;
         }
@@ -263,7 +264,7 @@ namespace Justin.Controls.TestDataGenerator
                 DialogResult result = MessageBox.Show("是否保存设置？", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.OK)
                 {
-                    TableSetting.SaveSettings();
+                    TableSetting.SaveSettings(this.FileName);
                     this.ShowMessage(string.Format("表【{0}】配置保存成功!", TableSetting.TableName));
                 }
             }

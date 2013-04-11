@@ -13,19 +13,18 @@ using Justin.FrameWork.Settings;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class JsonViewer : JDockForm
+    public partial class JsonViewer : JForm
     {
         public JsonViewer()
-            : this(null)
-        {
-        }
-        public JsonViewer(string[] args)
         {
             InitializeComponent();
+        }
+        public JsonViewer(string[] args)
+            : this()
+        {
             if (args != null)
             {
                 this.FileName = args[0];
-                
             }
         }
 

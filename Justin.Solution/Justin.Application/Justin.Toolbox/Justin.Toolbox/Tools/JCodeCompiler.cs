@@ -19,12 +19,11 @@ using Justin.Core;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class JCodeCompiler : JDockForm
+    public partial class JCodeCompiler : JForm
     {
         public JCodeCompiler()
-            : this(null)
         {
-
+            InitializeComponent();
         }
         /// <summary>
         ///     
@@ -35,12 +34,11 @@ namespace Justin.Toolbox.Tools
         ///     </para>
         /// </param>
         public JCodeCompiler(string[] args)
+            : this()
         {
-            InitializeComponent();
             if (args != null)
             {
                 this.FileName = args[0];
-                
             }
         }
 
@@ -67,5 +65,10 @@ namespace Justin.Toolbox.Tools
             }
         }
 
+        protected override void Save()
+        {
+            base.Save();
+            this.codeComplierCtrl1.Save();
+        }
     }
 }

@@ -50,9 +50,13 @@ namespace Justin.Core
 
     public class Tool
     {
-        [XmlAttribute]
+        [XmlAttribute("Class")]
         public string ClassName { get; set; }
-        [XmlAttribute]
+        [XmlAttribute("DLL")]
         public string DllFileName { get; set; }
+        [XmlAttribute]
+        public string Extensions { get; set; }
+        [XmlAttribute]
+        public bool SaveFileWhenExit { get; set; }
     }
 }

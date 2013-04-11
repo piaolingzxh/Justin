@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E9A9747F-21E7-46AF-B2CC-9B9D54740FCB}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Justin.Toolbox</RootNamespace>
     <AssemblyName>Justin.Toolbox</AssemblyName>
@@ -112,7 +112,6 @@
     <Compile Include="Tools\FileAssociation.Designer.cs">
       <DependentUpon>FileAssociation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -166,12 +165,6 @@
     </Compile>
     <Compile Include="Tools\TestDataGenerator.Designer.cs">
       <DependentUpon>TestDataGenerator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Workspace.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Workspace.Designer.cs">
-      <DependentUpon>Workspace.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +286,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\TestDataGenerator.resx">
       <DependentUpon>TestDataGenerator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Workspace.resx">
-      <DependentUpon>Workspace.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

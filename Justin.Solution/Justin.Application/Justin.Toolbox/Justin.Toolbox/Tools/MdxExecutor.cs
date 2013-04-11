@@ -14,11 +14,11 @@ using Microsoft.AnalysisServices.AdomdClient;
 
 namespace Justin.Toolbox.Tools
 {
-    public partial class MdxExecutor : JDBDcokForm
+    public partial class MdxExecutor : JDBForm
     {
         public MdxExecutor()
-            : this(null)
         {
+            InitializeComponent();
         }
         /// <summary>
         ///     
@@ -29,10 +29,8 @@ namespace Justin.Toolbox.Tools
         ///           1:Connection
         ///     </para>
         /// </param>
-        public MdxExecutor(string[] args)
+        public MdxExecutor(string[] args):this()
         {
-            InitializeComponent();
-
             if (args != null)
             {
                 this.FileName = args[0];
