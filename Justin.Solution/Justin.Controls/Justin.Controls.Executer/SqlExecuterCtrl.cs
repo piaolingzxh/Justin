@@ -221,7 +221,7 @@ namespace Justin.Controls.Executer
                 txtSQLFileName.Text = value;
             }
         }
-
+         
         private void txtSQLPreview_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))

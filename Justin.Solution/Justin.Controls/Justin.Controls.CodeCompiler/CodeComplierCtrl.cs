@@ -94,11 +94,7 @@ namespace Justin.Controls.CodeCompiler
 
             saveFileDialog1.Filter = "cs 文件(*.cs)|*.cs|vb 文件(*.vb)|*.vb|java 文件(*.java)|*.java|所有文件(*.*)|*.*";
 
-            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
-            {
-                string content = File.ReadAllText(FileName);
-                txtCode.SetText(content);            
-            }
+            LoadFile();
         }
         public void ShowMsg(string msg)
         {
@@ -297,6 +293,15 @@ End Module");
         public void Save()
         {
             File.AppendAllText(this.FileName,txtCode.Text);
+        }
+
+        public void LoadFile()
+        {
+            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
+            {
+                string content = File.ReadAllText(FileName);
+                txtCode.SetText(content);
+            }
         }
          
     }

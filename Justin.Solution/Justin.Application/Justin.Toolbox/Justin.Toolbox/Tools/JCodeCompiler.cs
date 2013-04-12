@@ -67,8 +67,17 @@ namespace Justin.Toolbox.Tools
 
         protected override void Save()
         {
+            this.FileName = this.codeComplierCtrl1.FileName;
             base.Save();
             this.codeComplierCtrl1.Save();
         }
+
+        protected override void ReloadFile()
+        {
+            this.FileName = this.codeComplierCtrl1.FileName;
+            this.codeComplierCtrl1.LoadFile();
+            base.ReloadFile();
+        }
+
     }
 }

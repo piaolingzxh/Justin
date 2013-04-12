@@ -64,7 +64,7 @@
       <DependentUpon>Abount.cs</DependentUpon>
     </Compile>
     <Compile Include="AddinConfig.cs" />
-    <Compile Include="Class1.cs">
+    <Compile Include="JUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Customization\DockHelper.cs" />
@@ -135,6 +135,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\Common\Library\AStyle.exe">
+      <Link>AStyle.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="TextFile1.txt" />
     <None Include="Justin.Toolbox.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

@@ -75,6 +75,12 @@ namespace Justin.Toolbox.Tools
             }
         }
 
+        protected override void ReloadFile()
+        {
+            this.sqlExecuterCtrl1.ReadFile();
+            base.ReloadFile();
+        }
+
         #endregion
 
 

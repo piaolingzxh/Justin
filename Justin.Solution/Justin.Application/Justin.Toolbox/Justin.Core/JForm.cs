@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.WinForm.Utility;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Justin.Core
@@ -16,6 +17,10 @@ namespace Justin.Core
     {
         private ToolStripMenuItem OpenFileLocationToolStripMenuItem;
         private ToolStripMenuItem SaveFileToolStripMenuItem;
+        private ToolStripMenuItem ReloadFileToolStripMenuItem;
+        private ToolStripMenuItem FormatFileToolStripMenuItem;
+
+
 
         public WorkbenchBase WorkspaceBase
         {
@@ -107,6 +112,20 @@ namespace Justin.Core
                 this.OpenFileLocationToolStripMenuItem.Click += OpenFileLocationToolStripMenuItem_Click;
                 this.TopContextMenu.Items.Add(this.OpenFileLocationToolStripMenuItem);
 
+                this.ReloadFileToolStripMenuItem = new ToolStripMenuItem();
+                this.ReloadFileToolStripMenuItem.Name = "reloadFileToolStripMenuItem";
+                this.ReloadFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.ReloadFileToolStripMenuItem.Text = "Reload File";
+                this.ReloadFileToolStripMenuItem.Click += ReloadFileToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Add(this.ReloadFileToolStripMenuItem);
+
+                this.FormatFileToolStripMenuItem = new ToolStripMenuItem();
+                this.FormatFileToolStripMenuItem.Name = "formatFileToolStripMenuItem";
+                this.FormatFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.FormatFileToolStripMenuItem.Text = "Format File";
+                this.FormatFileToolStripMenuItem.Click += FormatFileToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Add(this.FormatFileToolStripMenuItem);
+
                 this.SaveFileToolStripMenuItem = new ToolStripMenuItem();
                 this.SaveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
                 this.SaveFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
@@ -133,11 +152,42 @@ namespace Justin.Core
             this.Save();
         }
 
+        private void ReloadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ReloadFile();
+        }
+        private void FormatFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.FormatFile();
+        }
+        private void FormatFile()
+        {
+            ProcessBackground pbg = new SyncProcessBackground(Path.Combine(Application.StartupPath, "AStyle.exe"));
+            string args = string.Format("--style=allman -N {0}", this.fileName);
+            pbg.MsgReceivedEvent += this.DisplayMessage;
+            pbg.ExecuteCommand(args);
+
+            this.ReloadFile();
+        }
+
+        public void DisplayMessage(string msg)
+        {
+            this.ShowMessage(msg);
+        }
+
         protected virtual void Save()
         {
             if (File.Exists(this.fileName))
             {
                 File.Delete(fileName);
+            }
+        }
+        protected virtual void ReloadFile()
+        {
+            if (!File.Exists(this.fileName))
+            {
+                this.ShowMessage("文件不存在");
+                return;
             }
         }
     }
