@@ -64,9 +64,6 @@
       <DependentUpon>Abount.cs</DependentUpon>
     </Compile>
     <Compile Include="AddinConfig.cs" />
-    <Compile Include="JUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Customization\DockHelper.cs" />
     <Compile Include="Customization\Extender.cs" />
     <Compile Include="Customization\InertButton.cs">

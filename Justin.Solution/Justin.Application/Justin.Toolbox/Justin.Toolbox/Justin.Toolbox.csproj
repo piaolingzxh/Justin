@@ -130,6 +130,12 @@
     <Compile Include="Tools\JCodeCompiler.Designer.cs">
       <DependentUpon>JCodeCompiler.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\JEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\JEditor.Designer.cs">
+      <DependentUpon>JEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\JsonViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,6 +253,10 @@
       <Project>{c8130a39-3c8c-40c5-9955-c1bc871ad981}</Project>
       <Name>Justin.Controls.TestDataGenerator</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.TextEditor\Justin.Controls.TextEditor.csproj">
+      <Project>{8e9d5fd9-41a8-4d2e-b239-2d64f7ea7684}</Project>
+      <Name>Justin.Controls.TextEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
       <Project>{2fa07381-d81f-4ba2-a9de-f084529d835c}</Project>
       <Name>Justin.Core</Name>
@@ -268,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\JCodeCompiler.resx">
       <DependentUpon>JCodeCompiler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\JEditor.resx">
+      <DependentUpon>JEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\JsonViewer.resx">
       <DependentUpon>JsonViewer.cs</DependentUpon>

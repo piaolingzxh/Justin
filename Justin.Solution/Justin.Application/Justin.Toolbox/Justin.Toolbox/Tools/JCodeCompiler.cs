@@ -44,7 +44,13 @@ namespace Justin.Toolbox.Tools
 
         private void JCodeCompiler_Load(object sender, EventArgs e)
         {
+            this.codeComplierCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
+
         }
+
+        #region override
+        
+       
         protected override string GetPersistString()
         {
             return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName);
@@ -61,23 +67,22 @@ namespace Justin.Toolbox.Tools
             set
             {
                 codeComplierCtrl1.FileName = value;
-                base.FileName = value;
             }
         }
 
-        protected override void Save()
+        protected override void Save(string fileName)
         {
-            this.FileName = this.codeComplierCtrl1.FileName;
-            base.Save();
-            this.codeComplierCtrl1.Save();
+            base.Save(fileName);
+            this.codeComplierCtrl1.Save(fileName);
         }
 
         protected override void ReloadFile()
         {
-            this.FileName = this.codeComplierCtrl1.FileName;
-            this.codeComplierCtrl1.LoadFile();
             base.ReloadFile();
+            this.codeComplierCtrl1.LoadFile();
         }
 
+
+        #endregion
     }
 }

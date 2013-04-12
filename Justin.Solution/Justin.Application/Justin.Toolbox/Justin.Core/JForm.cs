@@ -19,6 +19,8 @@ namespace Justin.Core
         private ToolStripMenuItem SaveFileToolStripMenuItem;
         private ToolStripMenuItem ReloadFileToolStripMenuItem;
         private ToolStripMenuItem FormatFileToolStripMenuItem;
+        private ToolStripMenuItem SaveFileAsToolStripMenuItem;
+
 
 
 
@@ -103,6 +105,33 @@ namespace Justin.Core
         {
             if (IsFile)
             {
+                ToolStripSeparator splitor1 = new ToolStripSeparator();
+                this.TopContextMenu.Items.Insert(0, splitor1);
+
+                this.SaveFileAsToolStripMenuItem = new ToolStripMenuItem();
+                this.SaveFileAsToolStripMenuItem.Name = "saveFileAsToolStripMenuItem";
+                this.SaveFileAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.SaveFileAsToolStripMenuItem.Text = "Save As";
+                this.SaveFileAsToolStripMenuItem.Click += SaveFileAsToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Insert(0, this.SaveFileAsToolStripMenuItem);
+
+                this.SaveFileToolStripMenuItem = new ToolStripMenuItem();
+                this.SaveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
+                this.SaveFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.SaveFileToolStripMenuItem.Text = "Save";
+                this.SaveFileToolStripMenuItem.Click += SaveFileToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Insert(0, this.SaveFileToolStripMenuItem);
+
+
+                this.FormatFileToolStripMenuItem = new ToolStripMenuItem();
+                this.FormatFileToolStripMenuItem.Name = "formatFileToolStripMenuItem";
+                this.FormatFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.FormatFileToolStripMenuItem.Text = "Format File";
+                this.FormatFileToolStripMenuItem.Click += FormatFileToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Insert(0, this.FormatFileToolStripMenuItem);
+
+
+
                 ToolStripSeparator splitor = new ToolStripSeparator();
                 this.TopContextMenu.Items.Add(splitor);
                 this.OpenFileLocationToolStripMenuItem = new ToolStripMenuItem();
@@ -119,19 +148,7 @@ namespace Justin.Core
                 this.ReloadFileToolStripMenuItem.Click += ReloadFileToolStripMenuItem_Click;
                 this.TopContextMenu.Items.Add(this.ReloadFileToolStripMenuItem);
 
-                this.FormatFileToolStripMenuItem = new ToolStripMenuItem();
-                this.FormatFileToolStripMenuItem.Name = "formatFileToolStripMenuItem";
-                this.FormatFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-                this.FormatFileToolStripMenuItem.Text = "Format File";
-                this.FormatFileToolStripMenuItem.Click += FormatFileToolStripMenuItem_Click;
-                this.TopContextMenu.Items.Add(this.FormatFileToolStripMenuItem);
 
-                this.SaveFileToolStripMenuItem = new ToolStripMenuItem();
-                this.SaveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
-                this.SaveFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-                this.SaveFileToolStripMenuItem.Text = "Save";
-                this.SaveFileToolStripMenuItem.Click += SaveFileToolStripMenuItem_Click;
-                this.TopContextMenu.Items.Add(this.SaveFileToolStripMenuItem);
 
             }
         }
@@ -149,7 +166,16 @@ namespace Justin.Core
 
         private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Save();
+            this.Save(this.FileName);
+        }
+        private void SaveFileAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.Save(saveFileDialog1.FileName);
+                this.FileName = saveFileDialog1.FileName;
+            }
+
         }
 
         private void ReloadFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,7 +189,7 @@ namespace Justin.Core
         private void FormatFile()
         {
             ProcessBackground pbg = new SyncProcessBackground(Path.Combine(Application.StartupPath, "AStyle.exe"));
-            string args = string.Format("--style=allman -N {0}", this.fileName);
+            string args = string.Format("--style=allman -N {0}", this.FileName);
             pbg.MsgReceivedEvent += this.DisplayMessage;
             pbg.ExecuteCommand(args);
 
@@ -175,16 +201,23 @@ namespace Justin.Core
             this.ShowMessage(msg);
         }
 
-        protected virtual void Save()
+        protected virtual void Save(string fileName)
         {
-            if (File.Exists(this.fileName))
+            if (File.Exists(this.FileName))
             {
-                File.Delete(fileName);
+                File.Delete(FileName);
+            }
+            else
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    this.FileName = saveFileDialog1.FileName;
+                }
             }
         }
         protected virtual void ReloadFile()
         {
-            if (!File.Exists(this.fileName))
+            if (!File.Exists(this.FileName))
             {
                 this.ShowMessage("文件不存在");
                 return;

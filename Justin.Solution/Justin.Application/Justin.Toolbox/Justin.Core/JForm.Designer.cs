@@ -33,6 +33,7 @@
             this.menuItemCloseMe = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCloseOthers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCLoseAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,13 +67,13 @@
             this.menuItemCLoseAll.Text = "Close All";
             this.menuItemCLoseAll.Click += new System.EventHandler(this.menuItemCLoseAll_Click);
             // 
-            // JDockForm
+            // JForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 308);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Name = "JDockForm";
+            this.Name = "JForm";
             this.TabPageContextMenuStrip = this.contextMenuTabPage;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.JDockForm_Load);
@@ -87,5 +88,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemCloseMe;
         private System.Windows.Forms.ToolStripMenuItem menuItemCloseOthers;
         private System.Windows.Forms.ToolStripMenuItem menuItemCLoseAll;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

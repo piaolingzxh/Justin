@@ -19,6 +19,8 @@
       <MenuItem Type="Splitor" IsFile="false" />
       <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.Tools.JsonViewer,,Justin.Toolbox" Extensions=".json" />
       <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java" Class="Justin.Toolbox.Tools.JCodeCompiler,,Justin.Toolbox" />
+      <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java" Class="Justin.Toolbox.Tools.JEditor,,Justin.Toolbox" />
+
     </Open>
     <Tools>
       <MenuItem Type="Menu" Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.Tools.FileAssociation,," />
@@ -34,6 +36,6 @@
     <Tool Class="Justin.Toolbox.Tools.JsonViewer" DLL="Justin.Toolbox"   Extensions=".mdx"/>
     <Tool Class="Justin.Toolbox.Tools.JCodeCompiler" DLL="Justin.Toolbox"  Extensions=".cs,.vb,.java"/>
     <Tool Class="Justin.Toolbox.Tools.CodeSnippetMgr" DLL="Justin.Toolbox" />
-
+    <Tool Class="Justin.Toolbox.Tools.JEditor" DLL="Justin.Toolbox" />
   </Tools>
 </AddinConfig>

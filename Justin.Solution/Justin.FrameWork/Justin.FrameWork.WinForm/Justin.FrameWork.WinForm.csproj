@@ -57,6 +57,9 @@
   <ItemGroup>
     <Compile Include="Extensions\FormEx.cs" />
     <Compile Include="Extensions\TreeViewEx.cs" />
+    <Compile Include="FormUI\JUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="FormUI\NumberedTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

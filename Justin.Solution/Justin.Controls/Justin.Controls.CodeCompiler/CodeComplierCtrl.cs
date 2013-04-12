@@ -15,11 +15,12 @@ using System.Reflection;
 using Justin.Log;
 using ICSharpCode.TextEditor.Document;
 using System.Threading;
+using Justin.FrameWork.WinForm.FormUI;
 
 namespace Justin.Controls.CodeCompiler
 {
     public delegate void AppendTextCallback(string text);
-    public partial class CodeComplierCtrl : UserControl
+    public partial class CodeComplierCtrl : JUserControl
     {
         public CodeComplierCtrl()
         {
@@ -113,11 +114,7 @@ namespace Justin.Controls.CodeCompiler
             }
             if (!string.IsNullOrEmpty(FileName))
             {
-                if (File.Exists(FileName))
-                {
-                    File.Delete(FileName);
-                }
-                File.AppendAllText(FileName, txtCode.Text);
+                this.Save(FileName);
                 InitComplier();
             }
         }
@@ -239,7 +236,6 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnSaveCodeToFile_Click(object sender, EventArgs e)
         {
-            FileName = "";
             SetFilePath();
         }
 
@@ -250,9 +246,6 @@ namespace Justin.Controls.CodeCompiler
 		System.out.println(""hello word"");
         }
 }");
-            FileName = "";
-            saveFileDialog1.DefaultExt = "java";
-            saveFileDialog1.FileName = "";
         }
 
         private void insertCSharpTemplateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -269,9 +262,6 @@ namespace ConsoleApplication1
         }
     }
 }");
-            FileName = "";
-            saveFileDialog1.DefaultExt = "cs";
-            saveFileDialog1.FileName = "";
 
         }
 
@@ -282,28 +272,38 @@ namespace ConsoleApplication1
         Console.WriteLine(""hello VB!"")
     End Sub
 End Module");
-            FileName = "";
-            saveFileDialog1.DefaultExt = "vb";
-            saveFileDialog1.FileName = "";
 
         }
 
-        public string FileName { get; set; }
 
-        public void Save()
-        {
-            File.AppendAllText(this.FileName,txtCode.Text);
-        }
+        #region    override
 
-        public void LoadFile()
+        public override string FileName
         {
-            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
+            get
             {
-                string content = File.ReadAllText(FileName);
-                txtCode.SetText(content);
+                return base.FileName;
+            }
+            set
+            {
+                base.FileName = value;
+                this.LoadFile();
             }
         }
-         
+        public override void Save(string fileName)
+        {
+            base.Save(fileName);
+            File.AppendAllText(fileName, txtCode.Text);
+        }
+        public override void LoadFile()
+        {
+            base.LoadFile();
+            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
+                txtCode.LoadFile(this.FileName);
+        }
+
+        #endregion
+
     }
 
 

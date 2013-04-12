@@ -76,6 +76,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Core", "Justin.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Workspace", "Justin.Workspace\Justin.Workspace.csproj", "{C97E4F7C-39A3-40E7-81B4-D6C10BD48E91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.TextEditor", "..\..\Justin.Controls\Justin.Controls.TextEditor\Justin.Controls.TextEditor.csproj", "{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E} = {F1BA0A66-6D68-4142-83D8-C96A81A6862E}
+		{FB90C580-4E99-4921-B352-7704032AE2F7} = {FB90C580-4E99-4921-B352-7704032AE2F7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +149,10 @@ Global
 		{C97E4F7C-39A3-40E7-81B4-D6C10BD48E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C97E4F7C-39A3-40E7-81B4-D6C10BD48E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C97E4F7C-39A3-40E7-81B4-D6C10BD48E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
