@@ -28,7 +28,7 @@ namespace Justin.Core
         }
         private static OutPutWindow win = new OutPutWindow();
         public static OutPutWindow Instance { get { return win; } }
-         
+
         public delegate void AppendTextCallback(MessageReceivedEventArgs e);
 
         public void ProcessMessageObj(MessageReceivedEventArgs e)
@@ -43,10 +43,13 @@ namespace Justin.Core
                 if (e.Exception != null)
                 {
                     ShowMessage(e.Exception, e.Native);
+                    JLog.Write(LogMode.Error, e.Exception);
                 }
                 else
                 {
                     ShowMessage(e.ShortMsg, e.DetailMsg, e.Native);
+                    string msg = !string.IsNullOrEmpty(e.DetailMsg) ? e.DetailMsg : e.ShortMsg;
+                    JLog.Write(LogMode.Info,msg);
                 }
             }
 

@@ -30,9 +30,9 @@
         {
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
+            this.btnBrowerSQLFile = new System.Windows.Forms.Button();
             this.txtSQLFileName = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnBrowerSQLFile = new System.Windows.Forms.Button();
             this.btnExecuteSQLByLine = new System.Windows.Forms.Button();
             this.btnExecuteAllSQL = new System.Windows.Forms.Button();
             this.btnIntelligentExecuteSQL = new System.Windows.Forms.Button();
@@ -40,6 +40,7 @@
             this.btnModifySQLFileContent = new System.Windows.Forms.Button();
             this.btnShowLineNum = new System.Windows.Forms.Button();
             this.txtSQLPreview = new Justin.FrameWork.WinForm.FormUI.NumberedTextBox();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -75,6 +76,19 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "SQl File：";
             // 
+            // btnBrowerSQLFile
+            // 
+            this.btnBrowerSQLFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnBrowerSQLFile.Image = global::Justin.Controls.Executer.Properties.Resources.open;
+            this.btnBrowerSQLFile.Location = new System.Drawing.Point(630, 3);
+            this.btnBrowerSQLFile.Name = "btnBrowerSQLFile";
+            this.btnBrowerSQLFile.Size = new System.Drawing.Size(99, 24);
+            this.btnBrowerSQLFile.TabIndex = 2;
+            this.btnBrowerSQLFile.Text = "浏览文件";
+            this.btnBrowerSQLFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnBrowerSQLFile.UseVisualStyleBackColor = true;
+            this.btnBrowerSQLFile.Click += new System.EventHandler(this.btnBrowerSQLFile_Click);
+            // 
             // txtSQLFileName
             // 
             this.txtSQLFileName.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -107,19 +121,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(99, 332);
             this.tableLayoutPanel2.TabIndex = 7;
-            // 
-            // btnBrowerSQLFile
-            // 
-            this.btnBrowerSQLFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnBrowerSQLFile.Image = global::Justin.Controls.Executer.Properties.Resources.open;
-            this.btnBrowerSQLFile.Location = new System.Drawing.Point(630, 3);
-            this.btnBrowerSQLFile.Name = "btnBrowerSQLFile";
-            this.btnBrowerSQLFile.Size = new System.Drawing.Size(99, 24);
-            this.btnBrowerSQLFile.TabIndex = 2;
-            this.btnBrowerSQLFile.Text = "浏览文件";
-            this.btnBrowerSQLFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnBrowerSQLFile.UseVisualStyleBackColor = true;
-            this.btnBrowerSQLFile.Click += new System.EventHandler(this.btnBrowerSQLFile_Click);
             // 
             // btnExecuteSQLByLine
             // 
@@ -212,6 +213,10 @@
             this.txtSQLPreview.TabIndex = 8;
             this.txtSQLPreview.Load += new System.EventHandler(this.txtSQLPreview_Load);
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog1";
+            // 
             // SqlExecuterCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -240,5 +245,6 @@
         private System.Windows.Forms.Button btnModifySQLFileContent;
         private System.Windows.Forms.Button btnShowLineNum;
         private FrameWork.WinForm.FormUI.NumberedTextBox txtSQLPreview;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

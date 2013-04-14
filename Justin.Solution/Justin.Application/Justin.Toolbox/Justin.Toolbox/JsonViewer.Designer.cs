@@ -34,9 +34,10 @@
             // jsonViewCtrl1
             // 
             this.jsonViewCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.jsonViewCtrl1.FileName = null;
             this.jsonViewCtrl1.Location = new System.Drawing.Point(0, 0);
             this.jsonViewCtrl1.Name = "jsonViewCtrl1";
-            this.jsonViewCtrl1.Size = new System.Drawing.Size(813, 375);
+            this.jsonViewCtrl1.Size = new System.Drawing.Size(813, 353);
             this.jsonViewCtrl1.TabIndex = 0;
             // 
             // JsonViewer
@@ -47,6 +48,7 @@
             this.Controls.Add(this.jsonViewCtrl1);
             this.Name = "JsonViewer";
             this.Text = "JsonViewer";
+            this.Load += new System.EventHandler(this.JsonViewer_Load);
             this.Controls.SetChildIndex(this.jsonViewCtrl1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();

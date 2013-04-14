@@ -35,6 +35,10 @@
             this.btnMSIL = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtCode = new ICSharpCode.TextEditor.TextEditorControl();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.insertCSharpTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertVBTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertJavaTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMSILCode = new ICSharpCode.TextEditor.TextEditorControl();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
@@ -42,12 +46,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.btnSaveCodeToFile = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.insertCSharpTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.insertVBTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.insertJavaTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -55,7 +55,6 @@
             this.tableLayoutPanelMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCompiler
@@ -100,7 +99,6 @@
             this.tableLayoutPanel1.Controls.Add(this.btnMSIL, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnCompiler, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnRun, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnSaveCodeToFile, 0, 6);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(609, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
@@ -141,6 +139,36 @@
             this.txtCode.Size = new System.Drawing.Size(316, 335);
             this.txtCode.TabIndex = 21;
             this.txtCode.Text = resources.GetString("txtCode.Text");
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.insertCSharpTemplateToolStripMenuItem,
+            this.insertVBTemplateToolStripMenuItem,
+            this.insertJavaTemplateToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(198, 70);
+            // 
+            // insertCSharpTemplateToolStripMenuItem
+            // 
+            this.insertCSharpTemplateToolStripMenuItem.Name = "insertCSharpTemplateToolStripMenuItem";
+            this.insertCSharpTemplateToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.insertCSharpTemplateToolStripMenuItem.Text = "Insert CSharp Template";
+            this.insertCSharpTemplateToolStripMenuItem.Click += new System.EventHandler(this.insertCSharpTemplateToolStripMenuItem_Click);
+            // 
+            // insertVBTemplateToolStripMenuItem
+            // 
+            this.insertVBTemplateToolStripMenuItem.Name = "insertVBTemplateToolStripMenuItem";
+            this.insertVBTemplateToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.insertVBTemplateToolStripMenuItem.Text = "Insert VB Template";
+            this.insertVBTemplateToolStripMenuItem.Click += new System.EventHandler(this.insertVBTemplateToolStripMenuItem_Click);
+            // 
+            // insertJavaTemplateToolStripMenuItem
+            // 
+            this.insertJavaTemplateToolStripMenuItem.Name = "insertJavaTemplateToolStripMenuItem";
+            this.insertJavaTemplateToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.insertJavaTemplateToolStripMenuItem.Text = "Insert Java Template";
+            this.insertJavaTemplateToolStripMenuItem.Click += new System.EventHandler(this.insertJavaTemplateToolStripMenuItem_Click);
             // 
             // txtMSILCode
             // 
@@ -222,47 +250,6 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnSaveCodeToFile
-            // 
-            this.btnSaveCodeToFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveCodeToFile.Location = new System.Drawing.Point(3, 256);
-            this.btnSaveCodeToFile.Name = "btnSaveCodeToFile";
-            this.btnSaveCodeToFile.Size = new System.Drawing.Size(68, 29);
-            this.btnSaveCodeToFile.TabIndex = 3;
-            this.btnSaveCodeToFile.Text = "SaveCode";
-            this.btnSaveCodeToFile.UseVisualStyleBackColor = true;
-            this.btnSaveCodeToFile.Click += new System.EventHandler(this.btnSaveCodeToFile_Click);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.insertCSharpTemplateToolStripMenuItem,
-            this.insertVBTemplateToolStripMenuItem,
-            this.insertJavaTemplateToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(198, 92);
-            // 
-            // insertCSharpTemplateToolStripMenuItem
-            // 
-            this.insertCSharpTemplateToolStripMenuItem.Name = "insertCSharpTemplateToolStripMenuItem";
-            this.insertCSharpTemplateToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.insertCSharpTemplateToolStripMenuItem.Text = "Insert CSharp Template";
-            this.insertCSharpTemplateToolStripMenuItem.Click += new System.EventHandler(this.insertCSharpTemplateToolStripMenuItem_Click);
-            // 
-            // insertVBTemplateToolStripMenuItem
-            // 
-            this.insertVBTemplateToolStripMenuItem.Name = "insertVBTemplateToolStripMenuItem";
-            this.insertVBTemplateToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.insertVBTemplateToolStripMenuItem.Text = "Insert VB Template";
-            this.insertVBTemplateToolStripMenuItem.Click += new System.EventHandler(this.insertVBTemplateToolStripMenuItem_Click);
-            // 
-            // insertJavaTemplateToolStripMenuItem
-            // 
-            this.insertJavaTemplateToolStripMenuItem.Name = "insertJavaTemplateToolStripMenuItem";
-            this.insertJavaTemplateToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.insertJavaTemplateToolStripMenuItem.Text = "Insert Java Template";
-            this.insertJavaTemplateToolStripMenuItem.Click += new System.EventHandler(this.insertJavaTemplateToolStripMenuItem_Click);
-            // 
             // CodeComplierCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,6 +259,7 @@
             this.Size = new System.Drawing.Size(701, 373);
             this.Load += new System.EventHandler(this.CodeComplierCtrl_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -279,7 +267,6 @@
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -298,7 +285,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.Button btnSaveCodeToFile;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem insertCSharpTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertVBTemplateToolStripMenuItem;

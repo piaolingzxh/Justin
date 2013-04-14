@@ -14,38 +14,49 @@ using Justin.BI.DBLibrary.TestDataGenerate;
 using Justin.BI.DBLibrary.Utility;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
+using Justin.FrameWork.WinForm.Extensions;
+using Justin.FrameWork.WinForm.Helper;
 
 namespace Justin.Controls.Executer
 {
-    public partial class SqlExecuterCtrl : JUserControl,IFile
+    public partial class SqlExecuterCtrl : JUserControl, IFile
     {
         public SqlExecuterCtrl()
         {
             InitializeComponent();
+            this.LoadAction = (fileName) =>
+            {
+                using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
+                {
+                    string sql = sr.ReadToEnd();
+                    using (new JStopWatch("ms").Start(LogMode.Warn, "自定义开始", "自定义结束"))
+                    {
+
+                        txtSQLPreview.Text = sql;
+                        //设定光标所在位置 
+                        txtSQLPreview.BoxPart.SelectionStart = txtSQLPreview.BoxPart.TextLength - 1;
+                        //滚动到当前光标处    
+
+                        txtSQLPreview.BoxPart.ScrollToCaret();
+                    }
+                    this.ShowMessage(string.Format("文件{0}加载完，共{1}行", txtSQLFileName.Text, txtSQLPreview.BoxPart.Lines.Count()));
+                }
+            };
+            this.SaveAction = (fileName) =>
+            {
+                FileHelper.OverWrite(fileName, txtSQLPreview.Text);
+            };
         }
+
+        #region 按钮事件
 
         private void btnBrowerSQLFile_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Constants.OuputSQLFileFolder;
 
-            StringBuilder filterBuilder = new StringBuilder();
-            FileInfoAttribute fia = FileType.SQL.GetFileInfoAttribute();
-            filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fia.DefaultFileExtension, fia.DefaultDisplayName);
-            foreach (string fileExtension in fia.GetAllowFileExtensions(true))
-            {
-                filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fileExtension, fileExtension);
-            }
-            filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, "*", "所有");
-            openFileDialog.Filter = filterBuilder.ToString().TrimEnd('|');
-
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.FilterIndex = 1;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.FileName = txtSQLFileName.Text = openFileDialog.FileName;
-                SetFormText();
-                ReadFile();
+                this.LoadFile(this.FileName);
             }
         }
 
@@ -172,8 +183,7 @@ namespace Justin.Controls.Executer
 
         private void btnModifySQLFileContent_Click(object sender, EventArgs e)
         {
-            File.Delete(txtSQLFileName.Text);
-            File.AppendAllText(txtSQLFileName.Text, txtSQLPreview.Text, Encoding.Default);
+            this.SaveFile(this.FileName);
         }
 
         private void btnShowLineNum_Click(object sender, EventArgs e)
@@ -181,38 +191,52 @@ namespace Justin.Controls.Executer
             txtSQLPreview.ShowLineNumber = !txtSQLPreview.ShowLineNumber;
         }
 
-        public void ReadFile()
+        #endregion
+
+        private void txtSQLPreview_Load(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
+
+            #region tips
+
+            btnIntelligentExecuteSQL.Tag = string.Format(@"{0}
+{1}   
+以上两行之内的SQL将一次性执行.
+分段SQL开始符：{0}
+分段SQL结束符：{1}
+", Constants.SQLParagraphStartFlag, Constants.SQLParagraphEndFlag);
+            ToolTip tips = new ToolTip();
+
+            foreach (Control item in this.Controls)
             {
-                using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
-                {
-                    string sql = sr.ReadToEnd();
-                    using (new JStopWatch("ms").Start(LogMode.Warn, "自定义开始", "自定义结束"))
-                    {
-
-                        txtSQLPreview.Text = sql;
-                        //设定光标所在位置 
-                        txtSQLPreview.BoxPart.SelectionStart = txtSQLPreview.BoxPart.TextLength - 1;
-                        //滚动到当前光标处    
-
-                        txtSQLPreview.BoxPart.ScrollToCaret();
-                    }
-                    this.ShowMessage(string.Format("文件{0}加载完，共{1}行", txtSQLFileName.Text, txtSQLPreview.BoxPart.Lines.Count()));
-                }
+                JTools.SetToolTips(item, tips);
             }
-        }
-        private void SetFormText()
-        {
-            if (!string.IsNullOrEmpty(this.FileName))
+            #endregion
+
+            #region openFileDialog
+
+            openFileDialog.InitialDirectory = Constants.OuputSQLFileFolder;
+
+            StringBuilder filterBuilder = new StringBuilder();
+            FileInfoAttribute fia = FileType.SQL.GetFileInfoAttribute();
+            filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fia.DefaultFileExtension, fia.DefaultDisplayName);
+            foreach (string fileExtension in fia.GetAllowFileExtensions(true))
             {
-                this.Text = Path.GetFileName(this.FileName);
+                filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fileExtension, fileExtension);
             }
-        }
+            filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, "*", "所有");
+            openFileDialog.Filter = filterBuilder.ToString().TrimEnd('|');
 
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.FilterIndex = 1;
+
+            #endregion
+        }
 
         public string ConnStr { get; set; }
-        public string FileName
+
+        #region override
+
+        public override string FileName
         {
             get
             {
@@ -223,45 +247,7 @@ namespace Justin.Controls.Executer
                 txtSQLFileName.Text = value;
             }
         }
-         
-        private void txtSQLPreview_Load(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
-            {
-                if (!Path.GetExtension(this.FileName).Equals(".sql", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    this.ShowMessage(string.Format("文件{0}可能不是SQL文件,请核查！", this.FileName));
-                }
 
-                txtSQLFileName.Text = this.FileName;
-                SetFormText();
-                ReadFile();
-            }
-            btnIntelligentExecuteSQL.Tag = string.Format(@"{0}
-{1}   
-以上两行之内的SQL将一次性执行.
-分段SQL开始符：{0}
-分段SQL结束符：{1}
-", Constants.SQLParagraphStartFlag, Constants.SQLParagraphEndFlag);
-
-            ToolTip tips = new ToolTip();
-
-            foreach (Control item in this.Controls)
-            {
-                JTools.SetToolTips(item, tips);
-            }
-        }
-
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            File.AppendAllText(fileName, txtSQLPreview.Text);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-                txtSQLPreview.Text=File.ReadAllText(fileName);
-        }
+        #endregion
     }
 }

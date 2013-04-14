@@ -24,6 +24,14 @@ namespace Justin.Controls.JsonView
         public JsonViewCtrl()
         {
             InitializeComponent();
+            this.LoadAction = (fileName) =>
+            {
+                txtJson.LoadFile(fileName);
+            };
+            this.SaveAction = (fileName) =>
+            {
+                txtJson.SaveFile(fileName);
+            };
         }
 
         #region 工具按钮事件
@@ -141,12 +149,6 @@ namespace Justin.Controls.JsonView
         {
             txtJson.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             txtJson.Encoding = Encoding.Default;
-
-            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
-            {
-                string content = File.ReadAllText(FileName);
-                this.txtJson.SetText(content);
-            }
         }
 
         public bool FindNext(string text, bool includeSelected)
@@ -338,20 +340,6 @@ namespace Justin.Controls.JsonView
                 this.ShowMessage(ex);
             }
         }
-
-        public string FileName { get; set; }
-
-         
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            txtJson.SaveFile(fileName);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-                txtJson.LoadFile(fileName);
-        }
+ 
     }
 }

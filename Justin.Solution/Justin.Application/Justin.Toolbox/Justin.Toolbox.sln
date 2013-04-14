@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork", "..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj", "{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{9147BBCA-24E7-43F7-89E5-3AD1790B51F1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Toolbox", "Justin.Toolbox\Justin.Toolbox.csproj", "{E9A9747F-21E7-46AF-B2CC-9B9D54740FCB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BB49DE23-C34D-4457-9F25-34CA6277813D} = {BB49DE23-C34D-4457-9F25-34CA6277813D}
@@ -97,10 +95,6 @@ Global
 		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9147BBCA-24E7-43F7-89E5-3AD1790B51F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9147BBCA-24E7-43F7-89E5-3AD1790B51F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9147BBCA-24E7-43F7-89E5-3AD1790B51F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9147BBCA-24E7-43F7-89E5-3AD1790B51F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9A9747F-21E7-46AF-B2CC-9B9D54740FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9A9747F-21E7-46AF-B2CC-9B9D54740FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9A9747F-21E7-46AF-B2CC-9B9D54740FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU

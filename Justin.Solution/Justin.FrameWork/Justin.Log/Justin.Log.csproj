@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OutPutService.cs" />
+    <Compile Include="LogService.cs" />
     <Compile Include="JLog.cs" />
     <Compile Include="JStopWatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

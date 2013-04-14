@@ -24,26 +24,18 @@ using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Toolbox
 {
-    public partial class TableConfigurator : JForm, IDB,IFile
+    public partial class TableConfigurator : JForm, IDB, IFile
     {
         private TableConfigurator()
         {
             InitializeComponent();
+            this.tableConfigCtrl1.FileChanged += this.OnFileChanged;
         }
         public TableConfigurator(string[] args)
             : this()
         {
             this.FileName = args[0];
-            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
-            {
-                JTable table = SerializeHelper.XmlDeserializeFromFile<JTable>(this.FileName);
-                if (table != null)
-                {
-                    this.tableConfigCtrl1.TableSetting = table;
-                    this.ConnStr = args.Length > 1 ? args[1] : "";
-                    this.Text = table.TableName;
-                }
-            }
+            this.ConnStr = args.Length > 1 ? args[1] : "";
         }
         public TableConfigurator(JTable table)
             : this()
@@ -103,12 +95,12 @@ namespace Justin.Toolbox
         public override void LoadFile(string fileName)
         {
             base.LoadFile(fileName);
-           // this.codeComplierCtrl1.LoadFile();
+            this.tableConfigCtrl1.LoadFile(fileName);
         }
         public override void SaveFile(string fileName)
         {
             base.SaveFile(fileName);
-            //this.jEditorCtrl1.Save(fileName);
+            this.tableConfigCtrl1.SaveFile(fileName);
         }
 
         protected override string FileName
@@ -120,7 +112,6 @@ namespace Justin.Toolbox
             set
             {
                 this.tableConfigCtrl1.FileName = value;
-                base.FileName = value;
             }
         }
 

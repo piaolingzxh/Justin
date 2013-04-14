@@ -28,15 +28,15 @@ namespace Justin.Controls.CodeCompiler
             InitializeComponent();
         }
 
-        CodeComplierBase jcc;
+        CodeComplierBase complier;
 
         private void btnCompiler_Click(object sender, EventArgs e)
         {
             SetFilePath();
             if (!string.IsNullOrEmpty(FileName))
             {
-                jcc.SourceFileName = FileName;
-                jcc.Complier();
+                complier.SourceFileName = FileName;
+                complier.Complier();
             }
         }
 
@@ -45,8 +45,8 @@ namespace Justin.Controls.CodeCompiler
             SetFilePath();
             if (!string.IsNullOrEmpty(FileName))
             {
-                jcc.SourceFileName = FileName;
-                jcc.Run();
+                complier.SourceFileName = FileName;
+                complier.Run();
             }
         }
 
@@ -55,8 +55,8 @@ namespace Justin.Controls.CodeCompiler
             SetFilePath();
             if (!string.IsNullOrEmpty(FileName))
             {
-                jcc.SourceFileName = FileName;
-                string ilFileName = jcc.IL();
+                complier.SourceFileName = FileName;
+                string ilFileName = complier.IL();
                 if (File.Exists(ilFileName))
                 {
                     var sr = new StreamReader(ilFileName);
@@ -65,8 +65,6 @@ namespace Justin.Controls.CodeCompiler
                     txtMSILCode.SetText(outfile);
                 }
             }
-
-            //test();
 
         }
         private void ExpandIlDasm(string file)
@@ -85,9 +83,7 @@ namespace Justin.Controls.CodeCompiler
         {
 
             JavaCodeComplier.JDKPath = @"C:\Programs\Java\jdk1.6.0_24\bin";
-            //jcc = new NetCodeComplier(NetDialect.CSharp);
-            jcc = new JavaCodeComplier();
-            jcc.MsgReceivedEvent += this.ShowMsg;
+         
             txtCode.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             txtCode.Encoding = Encoding.GetEncoding("GB2312");
 
@@ -98,6 +94,7 @@ namespace Justin.Controls.CodeCompiler
 
             LoadFile(this.FileName);
         }
+     
         public void ShowMsg(string msg)
         {
             this.ShowMessage(msg);
@@ -105,140 +102,37 @@ namespace Justin.Controls.CodeCompiler
 
         private void SetFilePath()
         {
-            if (string.IsNullOrEmpty(FileName))
-            {
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    FileName = Path.Combine(Path.GetDirectoryName(saveFileDialog1.FileName), Path.GetFileNameWithoutExtension(saveFileDialog1.FileName) + Path.GetExtension(saveFileDialog1.FileName).ToLower());
-                }
-
-            }
-            if (!string.IsNullOrEmpty(FileName))
-            {
-                this.SaveFile(FileName);
-                InitComplier();
-            }
+            this.SaveFile(FileName);
+            InitComplier();
         }
 
         private void InitComplier()
         {
             if (!string.IsNullOrEmpty(FileName))
             {
-                jcc = null;
+                complier = null;
                 if (FileName.EndsWith("cs", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    jcc = new NetCodeComplier(NetDialect.CSharp);
+                    complier = new NetCodeComplier(NetDialect.CSharp);
                 }
                 else if (FileName.EndsWith("vb", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    jcc = new NetCodeComplier(NetDialect.VB);
+                    complier = new NetCodeComplier(NetDialect.VB);
                 }
                 else if (FileName.EndsWith("java", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    jcc = new JavaCodeComplier();
+                    complier = new JavaCodeComplier();
                 }
                 else
                 {
                     throw new NotSupportedException("不支持该语言");
                 }
-                jcc.MsgReceivedEvent = this.ShowMsg;
+                complier.MsgReceivedEvent = this.ShowMsg;
             }
 
         }
 
-        private void test()
-        {
-            var options = new Dictionary<string, string> { { "CompilerVersion", "v4.0" } };
-            var provider = new CSharpCodeProvider(options);
-
-            var parms = new CompilerParameters
-            {
-                CompilerOptions = @"/lib:C:\Windows\assembly\GAC /target:library",
-                GenerateExecutable = true,
-                GenerateInMemory = false
-            };
-            parms.ReferencedAssemblies.AddRange(CodeCompilerFactory.GetReferencedAssemblies(FrameworkVersion.VersionLatest).ToArray());
-            //foreach (string item in lbReferences.Items)
-            //{
-            //    parms.ReferencedAssemblies.Add(item + ".dll");
-            //}
-            string outFile = Path.GetTempFileName();
-            string ilOutFile = Path.GetTempFileName();
-            string ildasm = Path.GetTempFileName() + ".exe";
-            parms.OutputAssembly = outFile;
-
-            CompilerResults res = provider.CompileAssemblyFromSource(parms, txtCode.Text);
-            if (res.Errors.HasErrors)
-            {
-                try
-                {
-                    File.Delete(outFile);
-                }
-                catch
-                {
-                }
-                try
-                {
-                    File.Delete(ildasm);
-                }
-                catch
-                {
-                }
-                try
-                {
-                    File.Delete(ilOutFile);
-                }
-                catch
-                {
-                }
-                // BindErrors(res);
-                return;
-            }
-            ExpandIlDasm(ildasm);
-            var startInfo = new ProcessStartInfo();
-            var p = new Process();
-
-            startInfo.CreateNoWindow = true;
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.Arguments = "/out:" + ilOutFile + " " + outFile;
-            startInfo.FileName = ildasm;
-            p.StartInfo = startInfo;
-
-            p.Start();
-            p.WaitForExit();
-
-            var sr = new StreamReader(ilOutFile);
-            string outfile = sr.ReadToEnd();
-            sr.Close();
-            txtMSILCode.SetText(outfile);
-            try
-            {
-                File.Delete(outFile);
-            }
-            catch
-            {
-            }
-            try
-            {
-                File.Delete(ildasm);
-            }
-            catch
-            {
-            }
-            try
-            {
-                File.Delete(ilOutFile);
-            }
-            catch
-            {
-            }
-        }
-
-        private void btnSaveCodeToFile_Click(object sender, EventArgs e)
-        {
-            SetFilePath();
-        }
+        #region 示例代码
 
         private void insertJavaTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -276,6 +170,7 @@ End Module");
 
         }
 
+        #endregion
 
         #region    override
 
@@ -300,7 +195,10 @@ End Module");
         {
             base.LoadFile(fileName);
             if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            {
                 txtCode.LoadFile(fileName);
+                InitComplier();
+            }
         }
 
         #endregion

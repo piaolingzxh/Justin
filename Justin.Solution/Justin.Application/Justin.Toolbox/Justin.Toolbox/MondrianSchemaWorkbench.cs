@@ -25,6 +25,7 @@ namespace Justin.Toolbox
         public MondrianSchemaWorkbench()
         {
             InitializeComponent();
+            this.schemaViewerCtrl1.FileChanged += this.OnFileChanged;
         }
         public MondrianSchemaWorkbench(string[] args)
             : this()

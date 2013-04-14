@@ -14,6 +14,7 @@ using Justin.FrameWork.Extensions;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
+using Justin.FrameWork.WinForm.Helper;
 
 namespace Justin.Controls.TestDataGenerator
 {
@@ -22,7 +23,6 @@ namespace Justin.Controls.TestDataGenerator
     {
         public string ConnStr { get; set; }
         public JTable TableSetting { get; set; }
-        public string FileName { get; set; }
         public TableConfigCtrl()
         {
             InitializeComponent();
@@ -76,7 +76,7 @@ namespace Justin.Controls.TestDataGenerator
 
         #region 数据绑定
 
-        private void BindTable()
+        private void BindTableToTree()
         {
             tvDst.Nodes.Clear();
             tvDst.ImageList = imageList1;
@@ -144,8 +144,6 @@ namespace Justin.Controls.TestDataGenerator
         }
 
         #endregion
-
-
 
         private void btnSaveFieldInfo_Click(object sender, EventArgs e)
         {
@@ -344,13 +342,11 @@ namespace Justin.Controls.TestDataGenerator
 
         private void TableConfigCtrl_Load(object sender, EventArgs e)
         {
-            this.Text = TableSetting.TableName;
-            //this.Title = string.Format("配置表【{0}】测试数据SQL生成规则", TableSetting.TableName);
-            BindTable();
+            this.LoadFile(this.FileName);
             JTable.SqlProcess = (StringBuilder sqlBuilder, JTable table) =>
             {
                 string fileName = JTools.GetFileName(table.TableName, FileType.SQL);
-                File.AppendAllText(fileName, sqlBuilder.ToString(), Encoding.Default);
+                FileHelper.OverWrite(fileName, sqlBuilder.ToString());
             };
 
             ToolTip tips = new ToolTip();
@@ -364,14 +360,16 @@ namespace Justin.Controls.TestDataGenerator
         public override void SaveFile(string fileName)
         {
             base.SaveFile(fileName);
-           // txtCode.SaveFile(fileName);
+            if (TableSetting != null)
+                this.TableSetting.SaveSettings(fileName);
         }
         public override void LoadFile(string fileName)
         {
             base.LoadFile(fileName);
             if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
             {
-                //txtCode.LoadFile(fileName);
+                TableSetting = SerializeHelper.XmlDeserializeFromFile<JTable>(fileName);
+                BindTableToTree();
             }
         }
 

@@ -543,17 +543,6 @@ namespace Justin.Controls.Mondrian
         #endregion
 
 
-        public string FileName
-        {
-            get
-            {
-                return txtFileName.Text;
-            }
-            set
-            {
-                txtFileName.Text = value;
-            }
-        }
 
         private void ChangeTreeNodesIcon(TreeNodeCollection nodes)
         {
@@ -630,17 +619,49 @@ namespace Justin.Controls.Mondrian
             PriviewSchema();
         }
 
+        #region override
+
+        public override string FileName
+        {
+            get
+            {
+                return txtFileName.Text;
+            }
+            set
+            {
+                txtFileName.Text = value;
+            }
+        }
+
         public override void SaveFile(string fileName)
         {
             base.SaveFile(fileName);
-            //   txtCode.SaveFile(fileName);
+            this.schema.Serializer(fileName);
         }
         public override void LoadFile(string fileName)
         {
             base.LoadFile(fileName);
             if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-            {   //  txtCode.LoadFile(fileName);
+            {
+                txtFileName.Text = fileName;
+                if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                {
+                    try
+                    {
+                        GenerateSchemaFromFile();
+                        BindTreeview(schema);
+                        propertyGrid.SelectedObject = schema;
+                        PriviewSchema();
+                    }
+                    catch (Exception ex)
+                    {
+                        this.ShowMessage(ex);
+                    }
+                }
             }
         }
+
+        #endregion
+
     }
 }

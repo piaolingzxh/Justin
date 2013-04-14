@@ -100,12 +100,11 @@ namespace Justin.FrameWork.WinForm.FormUI
         {
             get
             {
-                return base.Text;
+                return this.txtContent.Text;
             }
             set
             {
                 this.txtContent.Text = value;
-                base.Text = value;
             }
         }
         public RichTextBox BoxPart

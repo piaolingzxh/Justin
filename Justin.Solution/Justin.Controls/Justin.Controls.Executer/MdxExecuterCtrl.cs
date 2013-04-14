@@ -15,11 +15,8 @@ using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
 namespace Justin.Controls.Executer
 {
-    public partial class MdxExecuterCtrl : JUserControl,IFile
+    public partial class MdxExecuterCtrl : JUserControl, IFile
     {
-        private string _mdx = "";
-        private string _ConnectionStr = "";
-
         public MdxExecuterCtrl()
         {
             InitializeComponent();
@@ -69,14 +66,12 @@ namespace Justin.Controls.Executer
 
         private void MdxExecuterCtrl_Load(object sender, EventArgs e)
         {
-            //this.txtConnectionString.Text = this._ConnectionStr;
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
-            //this.txtMdx.SetText(this._mdx);
+            
             if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
             {
-                string content = File.ReadAllText(FileName);
-                this.txtMdx.SetText(content);
+                txtMdx.LoadFile(FileName);
             }
         }
 
@@ -91,7 +86,7 @@ namespace Justin.Controls.Executer
                 txtConnectionString.Text = value;
             }
         }
-        public string FileName { get; set; }
+
         public string Mdx
         {
             get

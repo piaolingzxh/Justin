@@ -79,7 +79,7 @@ namespace Justin.Core
         private void FormatFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.SaveFile(this.FileName);
-            JFormat.FormatFile(this.fileName);
+            JFormat.FormatFile(this.FileName);
             this.LoadFile(this.FileName);
         }
         private ToolStripMenuItem SaveFileToolStripMenuItem;
@@ -92,8 +92,8 @@ namespace Justin.Core
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                this.SaveFile(saveFileDialog1.FileName);
                 this.FileName = saveFileDialog1.FileName;
+                this.SaveFile(saveFileDialog1.FileName);
             }
 
         }
@@ -229,45 +229,49 @@ namespace Justin.Core
 
         #endregion
 
-        private string fileName;
-        protected virtual string FileName
+        public Action<string> LoadAction;
+        public Action<string> SaveAction;
+        protected virtual string FileName { get; set; }
+        protected void OnFileChanged(string fileName)
         {
-            get
-            {
-                return fileName;
-            }
-            set
-            {
-                fileName = value;
-                if (!string.IsNullOrEmpty(this.fileName))
-                {
-                    this.Text = Path.GetFileName(this.fileName);
-                }
-            }
+            this.Text = Path.GetFileName(this.FileName);
         }
         public virtual void SaveFile(string fileName)
         {
-            if (File.Exists(this.FileName))
+            string tempFileName = "";
+            if (string.IsNullOrEmpty(fileName))
             {
-                File.Delete(FileName);
+                if (this.saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    tempFileName = saveFileDialog1.FileName;
+                }
             }
             else
             {
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    this.FileName = saveFileDialog1.FileName;
-                }
+                tempFileName = fileName;
             }
+            if (!string.IsNullOrEmpty(tempFileName))
+            {
+                if (SaveAction != null)
+                    SaveAction(tempFileName);
+                this.FileName = tempFileName;
+            }
+            OnFileChanged(this.FileName);
         }
         public virtual void LoadFile(string fileName)
         {
-            if (!File.Exists(fileName))
+            if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
             {
-                this.ShowMessage("文件不存在");
+                this.ShowMessage(string.Format("文件{0}不存在", fileName));
                 return;
             }
+            if (LoadAction != null)
+            {
+                LoadAction(fileName);
+            }
+            this.FileName = fileName;
+            OnFileChanged(fileName);
         }
-
 
         private string connStr = "";
         public virtual string ConnStr
@@ -303,6 +307,6 @@ namespace Justin.Core
             }
         }
         public ConnStrChangDelegate ConnStrChanged;
-          
+
     }
 }

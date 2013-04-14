@@ -14,11 +14,15 @@ using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Toolbox
 {
-    public partial class JsonViewer : JForm,IFile
+    public partial class JsonViewer : JForm, IFile
     {
         public JsonViewer()
         {
             InitializeComponent();
+            this.jsonViewCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) => { this.jsonViewCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.jsonViewCtrl1.SaveFile(fileName); };
+        
         }
         public JsonViewer(string[] args)
             : this()
@@ -28,7 +32,10 @@ namespace Justin.Toolbox
                 this.FileName = args[0];
             }
         }
-
+        private void JsonViewer_Load(object sender, EventArgs e)
+        {
+            this.LoadFile(this.FileName);
+        }
         #region 继承
 
 
@@ -47,21 +54,11 @@ namespace Justin.Toolbox
             set
             {
                 jsonViewCtrl1.FileName = value;
-                base.FileName = value;
-
             }
         }
 
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            this.jsonViewCtrl1.LoadFile(fileName);
-        }
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.jsonViewCtrl1.SaveFile(fileName);
-        }
         #endregion
+
+
     }
 }

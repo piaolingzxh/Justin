@@ -52,6 +52,7 @@
             this.Name = "SqlExecuteor";
             this.ShowInTaskbar = false;
             this.Text = "SqlExecuteor";
+            this.Load += new System.EventHandler(this.SqlExecuteor_Load);
             this.Controls.SetChildIndex(this.sqlExecuterCtrl1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();

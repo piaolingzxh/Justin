@@ -19,11 +19,14 @@ using Justin.Log;
 namespace Justin.Toolbox
 {
     public delegate void AsyncDelegate();
-    public partial class SqlExecuteor : JForm,IDB,IFile
+    public partial class SqlExecuteor : JForm, IDB, IFile
     {
         public SqlExecuteor()
         {
             InitializeComponent();
+            this.sqlExecuterCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) => { this.sqlExecuterCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.sqlExecuterCtrl1.SaveFile(fileName); };
         }
         /// <summary>
         ///     
@@ -34,7 +37,8 @@ namespace Justin.Toolbox
         ///           1:ConnStr
         ///     </para>
         /// </param>
-        public SqlExecuteor(string[] args):this()
+        public SqlExecuteor(string[] args)
+            : this()
         {
             if (args != null)
             {
@@ -43,7 +47,19 @@ namespace Justin.Toolbox
             }
         }
 
+        private void SqlExecuteor_Load(object sender, EventArgs e)
+        {
+            this.LoadFile(this.FileName);
+        }
+
         #region 继承
+
+
+        protected override string GetPersistString()
+        {
+            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
+        }
+
         public override string ConnStr
         {
             get
@@ -56,11 +72,6 @@ namespace Justin.Toolbox
                 base.ConnStr = value;
             }
         }
-        protected override string GetPersistString()
-        {
-            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
-        }
-      
 
         protected override string FileName
         {
@@ -71,24 +82,9 @@ namespace Justin.Toolbox
             set
             {
                 sqlExecuterCtrl1.FileName = value;
-                base.FileName = value;
-
             }
         }
 
-        public  override void LoadFile(string fileName)
-        {
-            this.sqlExecuterCtrl1.ReadFile();
-            base.LoadFile(fileName);
-        }
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.sqlExecuterCtrl1.SaveFile(fileName);
-        }
-
         #endregion
-
- 
     }
 }
