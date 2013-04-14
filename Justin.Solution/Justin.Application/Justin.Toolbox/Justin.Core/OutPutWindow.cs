@@ -21,9 +21,9 @@ namespace Justin.Core
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
 
-            if (OutPutService.Instance.MessageReceived == null)
+            if (LogService.Instance.MessageReceived == null)
             {
-                OutPutService.Instance.MessageReceived += MessageReceived;
+                LogService.Instance.MessageReceived += MessageReceived;
             }
         }
         private static OutPutWindow win = new OutPutWindow();

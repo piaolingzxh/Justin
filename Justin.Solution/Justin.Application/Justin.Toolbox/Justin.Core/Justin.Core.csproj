@@ -57,35 +57,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abount.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abount.Designer.cs">
-      <DependentUpon>Abount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AddinConfig.cs" />
-    <Compile Include="Customization\DockHelper.cs" />
-    <Compile Include="Customization\Extender.cs" />
-    <Compile Include="Customization\InertButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Customization\Resources.Designer.cs" />
-    <Compile Include="Customization\Strings.Designer.cs" />
-    <Compile Include="Customization\VS2003AutoHideStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Customization\VS2003DockPaneCaption.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Customization\VS2003DockPaneStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="JDBForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="JDBForm.Designer.cs">
-      <DependentUpon>JDBForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="JFormat.cs" />
+    <Compile Include="Models.cs" />
     <Compile Include="JForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,14 +85,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Abount.resx">
-      <DependentUpon>Abount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Customization\Resources.resx" />
-    <EmbeddedResource Include="Customization\Strings.resx" />
-    <EmbeddedResource Include="JDBForm.resx">
-      <DependentUpon>JDBForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="JForm.resx">
       <DependentUpon>JForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,6 +95,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="WorkbenchBase.resx">
+      <DependentUpon>WorkbenchBase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Common\Library\AStyle.exe">
@@ -137,38 +105,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="TextFile1.txt" />
-    <None Include="Justin.Toolbox.addin">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
-    <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Hotspot.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_HotspotIndex.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Left.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Right.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Top.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelBottom.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelBottom_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelFill.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelFill_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelLeft.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelLeft_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelRight.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelRight_Active.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelTop.bmp" />
-    <Content Include="Customization\Resources\DockIndicator_PanelTop_Active.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_AutoHideNo.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_AutoHideYes.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_CloseDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneCaption_CloseEnabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_CloseDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_CloseEnabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftEnabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightDisabled.bmp" />
-    <Content Include="Customization\Resources\DockPaneStrip_ScrollRightEnabled.bmp" />
+    <None Include="AStyle.rtf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

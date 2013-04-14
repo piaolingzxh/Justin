@@ -12,12 +12,14 @@ using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
+using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.FormUI.PropertyGrid;
 using Justin.FrameWork.WinForm.FormUI.SharpCodeTextEditor;
+using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Controls.Mondrian
 {
-    public partial class SchemaViewerCtrl : UserControl
+    public partial class SchemaViewerCtrl : JUserControl, IFile
     {
         public SchemaViewerCtrl()
         {
@@ -626,6 +628,19 @@ namespace Justin.Controls.Mondrian
         {
 
             PriviewSchema();
+        }
+
+        public override void SaveFile(string fileName)
+        {
+            base.SaveFile(fileName);
+            //   txtCode.SaveFile(fileName);
+        }
+        public override void LoadFile(string fileName)
+        {
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            {   //  txtCode.LoadFile(fileName);
+            }
         }
     }
 }

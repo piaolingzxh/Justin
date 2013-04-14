@@ -12,11 +12,13 @@ using System.IO;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Extensions;
 using ICSharpCode.TextEditor.Document;
+using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Controls.TestDataGenerator
 {
     public delegate void ConnStrChangDelegate(string oldConnStr, string newConnStr);
-    public partial class TableConfigCtrl : UserControl
+    public partial class TableConfigCtrl : JUserControl, IFile
     {
         public string ConnStr { get; set; }
         public JTable TableSetting { get; set; }
@@ -358,6 +360,21 @@ namespace Justin.Controls.TestDataGenerator
                 JTools.SetToolTips(item, tips);
             }
         }
+
+        public override void SaveFile(string fileName)
+        {
+            base.SaveFile(fileName);
+           // txtCode.SaveFile(fileName);
+        }
+        public override void LoadFile(string fileName)
+        {
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+            {
+                //txtCode.LoadFile(fileName);
+            }
+        }
+
 
     }
 }

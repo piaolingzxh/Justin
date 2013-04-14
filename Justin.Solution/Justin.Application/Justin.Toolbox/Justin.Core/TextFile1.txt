@@ -1,1 +1,18 @@
 ﻿AStyle --style=allman -N program.cs
+
+
+xml format
+
+MemoryStream stream = new MemoryStream(0x400);
+XmlTextWriter writer = new XmlTextWriter(stream, null);
+XmlDocument document = new XmlDocument();
+writer.Formatting = Formatting.Indented;
+document.Load(@"d:\temp\00.xml");
+document.WriteTo(writer);
+writer.Flush();
+writer.Close();
+string str2 = Encoding.GetEncoding("utf-8").GetString(stream.ToArray());
+stream.Close();
+File.WriteAllText(@"d:\temp\00.xml", str2, Encoding.UTF8);
+
+

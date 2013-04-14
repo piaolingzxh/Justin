@@ -26,9 +26,9 @@ namespace System.Windows.Forms
 
         public static void ShowMessage(this Form instance, Exception ex, bool native = false)
         {
-            if (OutPutService.Instance.MessageReceived != null)
+            if (LogService.Instance.MessageReceived != null)
             {
-                foreach (MessageReceivedEventHandler tempEvent in OutPutService.Instance.MessageReceived.GetInvocationList())
+                foreach (MessageReceivedEventHandler tempEvent in LogService.Instance.MessageReceived.GetInvocationList())
                 {
                     tempEvent(null, new MessageReceivedEventArgs(ex));
                 }
@@ -37,9 +37,9 @@ namespace System.Windows.Forms
 
         public static void ShowMessage(this Form instance, string msg, string detailMsg = "", bool native = false)
         {
-            if (OutPutService.Instance.MessageReceived != null)
+            if (LogService.Instance.MessageReceived != null)
             {
-                foreach (MessageReceivedEventHandler tempEvent in OutPutService.Instance.MessageReceived.GetInvocationList())
+                foreach (MessageReceivedEventHandler tempEvent in LogService.Instance.MessageReceived.GetInvocationList())
                 {
                     tempEvent(null, new MessageReceivedEventArgs(msg));
                 }

@@ -6,21 +6,21 @@ using System.Text;
 namespace Justin.Log
 {
     public delegate void MessageReceivedEventHandler(object sender, MessageReceivedEventArgs e);
-    public class OutPutService
+    public class LogService
     {
-        private OutPutService()
+        private LogService()
         {
 
         }
-        private static OutPutService service;
+        private static LogService service;
 
-        public static OutPutService Instance
+        public static LogService Instance
         {
             get
             {
                 if (service == null)
                 {
-                    service = new OutPutService();
+                    service = new LogService();
                 }
 
                 return service;

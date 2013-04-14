@@ -12,10 +12,12 @@ using Justin.FrameWork.Settings;
 using Justin.Log;
 using Justin.BI.DBLibrary.TestDataGenerate;
 using Justin.BI.DBLibrary.Utility;
+using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Controls.Executer
 {
-    public partial class SqlExecuterCtrl : UserControl
+    public partial class SqlExecuterCtrl : JUserControl,IFile
     {
         public SqlExecuterCtrl()
         {
@@ -248,6 +250,18 @@ namespace Justin.Controls.Executer
             {
                 JTools.SetToolTips(item, tips);
             }
+        }
+
+        public override void SaveFile(string fileName)
+        {
+            base.SaveFile(fileName);
+            File.AppendAllText(fileName, txtSQLPreview.Text);
+        }
+        public override void LoadFile(string fileName)
+        {
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                txtSQLPreview.Text=File.ReadAllText(fileName);
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Justin.Core;
-using Justin.Core.Customization;
+using Justin.Workspace;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
 using WeifenLuo.WinFormsUI.Docking;
@@ -396,9 +396,9 @@ namespace Justin.Workspace
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            JForm a = new Abount();
+            Form a = new Abount();
             a.MdiParent = this;
-            a.Show(this.dockPanel);
+            a.Show();
         }
 
         #endregion

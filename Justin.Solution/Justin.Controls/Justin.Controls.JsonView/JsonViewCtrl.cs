@@ -13,10 +13,12 @@ using ICSharpCode.TextEditor.Document;
 using System.Threading;
 using Justin.Log;
 using Justin.FrameWork.Settings;
+using Justin.FrameWork.WinForm.Models;
+using Justin.FrameWork.WinForm.FormUI;
 
 namespace Justin.Controls.JsonView
 {
-    public partial class JsonViewCtrl : UserControl
+    public partial class JsonViewCtrl : JUserControl,IFile
     {
         private PluginsManager _pluginsManager = new PluginsManager();
         public JsonViewCtrl()
@@ -338,5 +340,18 @@ namespace Justin.Controls.JsonView
         }
 
         public string FileName { get; set; }
+
+         
+        public override void SaveFile(string fileName)
+        {
+            base.SaveFile(fileName);
+            txtJson.SaveFile(fileName);
+        }
+        public override void LoadFile(string fileName)
+        {
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                txtJson.LoadFile(fileName);
+        }
     }
 }

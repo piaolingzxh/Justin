@@ -16,11 +16,12 @@ using Justin.Log;
 using ICSharpCode.TextEditor.Document;
 using System.Threading;
 using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Controls.CodeCompiler
 {
     public delegate void AppendTextCallback(string text);
-    public partial class CodeComplierCtrl : JUserControl
+    public partial class CodeComplierCtrl : JUserControl, IFile
     {
         public CodeComplierCtrl()
         {
@@ -95,7 +96,7 @@ namespace Justin.Controls.CodeCompiler
 
             saveFileDialog1.Filter = "cs 文件(*.cs)|*.cs|vb 文件(*.vb)|*.vb|java 文件(*.java)|*.java|所有文件(*.*)|*.*";
 
-            LoadFile();
+            LoadFile(this.FileName);
         }
         public void ShowMsg(string msg)
         {
@@ -114,7 +115,7 @@ namespace Justin.Controls.CodeCompiler
             }
             if (!string.IsNullOrEmpty(FileName))
             {
-                this.Save(FileName);
+                this.SaveFile(FileName);
                 InitComplier();
             }
         }
@@ -287,19 +288,19 @@ End Module");
             set
             {
                 base.FileName = value;
-                this.LoadFile();
+                this.LoadFile(this.FileName);
             }
         }
-        public override void Save(string fileName)
+        public override void SaveFile(string fileName)
         {
-            base.Save(fileName);
-            File.AppendAllText(fileName, txtCode.Text);
+            base.SaveFile(fileName);
+            txtCode.SaveFile(fileName);
         }
-        public override void LoadFile()
+        public override void LoadFile(string fileName)
         {
-            base.LoadFile();
-            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
-                txtCode.LoadFile(this.FileName);
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                txtCode.LoadFile(fileName);
         }
 
         #endregion

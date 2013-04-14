@@ -11,9 +11,11 @@ using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
 using System.IO;
+using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Models;
 namespace Justin.Controls.Executer
 {
-    public partial class MdxExecuterCtrl : UserControl
+    public partial class MdxExecuterCtrl : JUserControl,IFile
     {
         private string _mdx = "";
         private string _ConnectionStr = "";
@@ -100,6 +102,18 @@ namespace Justin.Controls.Executer
             {
                 txtMdx.Text = value;
             }
+        }
+
+        public override void SaveFile(string fileName)
+        {
+            base.SaveFile(fileName);
+            txtMdx.SaveFile(fileName);
+        }
+        public override void LoadFile(string fileName)
+        {
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                txtMdx.LoadFile(fileName);
         }
     }
 }

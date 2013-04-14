@@ -9,9 +9,10 @@ using System.Text;
 using System.Windows.Forms;
 using Justin.FrameWork.WinForm.FormUI;
 using ICSharpCode.TextEditor.Document;
+using Justin.FrameWork.WinForm.Models;
 namespace Justin.Controls.TextEditor
 {
-    public partial class JEditorCtrl : JUserControl
+    public partial class JEditorCtrl : JUserControl,IFile
     {
         public JEditorCtrl()
         {
@@ -28,20 +29,10 @@ namespace Justin.Controls.TextEditor
             {
                 base.FileName = value;
                 richTextBox1.Text = base.FileName;
-                this.LoadFile();
+                this.LoadFile(this.FileName);
             }
         }
-        public override void Save(string fileName)
-        {
-            base.Save(fileName);
-            File.AppendAllText(fileName, textEditorControl1.Text);
-        }
-        public override void LoadFile()
-        {
-            base.LoadFile();
-            if (!string.IsNullOrEmpty(this.FileName) && File.Exists(this.FileName))
-                textEditorControl1.LoadFile(this.FileName);
-        }
+         
         private void button1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -49,5 +40,18 @@ namespace Justin.Controls.TextEditor
                 this.FileName = openFileDialog1.FileName;
             }
         }
+
+        public override void SaveFile(string fileName)
+        {
+            base.SaveFile(fileName);
+            textEditorControl1.SaveFile(fileName);
+        }
+        public override void LoadFile(string fileName)
+        {
+            base.LoadFile(fileName);
+            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                textEditorControl1.LoadFile(fileName);
+        }
+
     }
 }

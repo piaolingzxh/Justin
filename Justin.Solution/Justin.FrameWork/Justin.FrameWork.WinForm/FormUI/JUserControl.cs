@@ -31,14 +31,14 @@ namespace Justin.FrameWork.WinForm.FormUI
             }
         }
 
-        public virtual void Save(string fileName)
+        public virtual void SaveFile(string fileName)
         {
             if (File.Exists(this.FileName))
             {
                 File.Delete(FileName);
             }
         }
-        public virtual void LoadFile() { }
+        public virtual void LoadFile(string fileName) { }
 
     }
 }
