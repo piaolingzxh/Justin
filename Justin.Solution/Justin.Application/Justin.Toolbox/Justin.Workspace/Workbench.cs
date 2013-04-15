@@ -13,6 +13,7 @@ using Justin.Workspace;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Configuration;
 
 namespace Justin.Workspace
 {
@@ -633,7 +634,7 @@ namespace Justin.Workspace
                         {
                             if (!Assemblies.ContainsKey(item.DllFileName))
                             {
-                                Assembly assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + item.DllFileName+".dll"));
+                                Assembly assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + item.DllFileName + ".dll"));
                                 Assemblies.Add(item.DllFileName, assembly);
                             }
                         }
@@ -662,10 +663,20 @@ namespace Justin.Workspace
             {
                 OpenFileAccordingToFile(rightContextMenuFileName);
             }
-
+            string showInNotifyAreaString = ConfigurationManager.AppSettings["ShowInNotifyArea"];
+            bool showNotify = false;
+            if (showInNotifyAreaString != null && bool.TryParse(showInNotifyAreaString, out showNotify))
+            {
+            }
+            notifyIcon1.Visible = showNotify;
             dockPanel.ShowDocumentIcon = true;
             OutPutWin.Show(dockPanel, DockState.DockBottom);
             DynamicMenuGenerate();
+        }
+
+        private void OutPutWin_Load(object sender, EventArgs e)
+        {
+
         }
 
 

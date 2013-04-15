@@ -20,6 +20,14 @@ namespace Justin.Controls.Executer
         public MdxExecuterCtrl()
         {
             InitializeComponent();
+            this.LoadAction = (fileName) =>
+            {
+                this.txtMdx.LoadFile(fileName);
+            };
+            this.SaveAction = (fileName) =>
+            {
+                this.txtMdx.SaveFile(fileName);
+            };
         }
 
         public AdomdConnection Connection
@@ -54,13 +62,19 @@ namespace Justin.Controls.Executer
         {
             try
             {
-                CellSet cst = MdxHelper.ExecuteCellSet(Connection, txtMdx.Text);
+                gvMdxresult.DataSource = null;
+                string mdx = txtMdx.Text;
+                if (txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected)
+                {
+                    mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
+                }
+                CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
                 DataTable dt = cst.ToDataTable();
                 gvMdxresult.DataSource = dt;
             }
             catch (Exception ex)
             {
-                this.ShowMessage("Mdx查询出错,", ex.ToString());
+                this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
             }
         }
 
@@ -68,11 +82,6 @@ namespace Justin.Controls.Executer
         {
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
-            
-            if (!string.IsNullOrEmpty(FileName) && File.Exists(FileName))
-            {
-                txtMdx.LoadFile(FileName);
-            }
         }
 
         public string ConnStr
@@ -87,28 +96,5 @@ namespace Justin.Controls.Executer
             }
         }
 
-        public string Mdx
-        {
-            get
-            {
-                return txtMdx.Text;
-            }
-            set
-            {
-                txtMdx.Text = value;
-            }
-        }
-
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            txtMdx.SaveFile(fileName);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-                txtMdx.LoadFile(fileName);
-        }
     }
 }

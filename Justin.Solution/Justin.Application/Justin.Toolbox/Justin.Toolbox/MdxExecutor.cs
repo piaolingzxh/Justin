@@ -15,12 +15,15 @@ using Microsoft.AnalysisServices.AdomdClient;
 
 namespace Justin.Toolbox
 {
-    public partial class MdxExecutor : JForm, IDB, IFile
+    public partial class MdxExecutor : JForm, IFile
     {
         public MdxExecutor()
         {
             InitializeComponent();
             this.mdxExecuterCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) => { this.mdxExecuterCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.mdxExecuterCtrl1.SaveFile(fileName); };
+
         }
         /// <summary>
         ///     
@@ -43,6 +46,11 @@ namespace Justin.Toolbox
             }
         }
 
+        private void MdxExecutor_Load(object sender, EventArgs e)
+        {
+            this.LoadFile(this.FileName);
+        }
+
         #region 继承
 
         protected override string GetPersistString()
@@ -50,7 +58,7 @@ namespace Justin.Toolbox
             return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
         }
 
-        protected string ConnStr
+        public override string ConnStr
         {
             get
             {
@@ -74,17 +82,10 @@ namespace Justin.Toolbox
                 mdxExecuterCtrl1.FileName = value;
             }
         }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            this.mdxExecuterCtrl1.LoadFile(fileName);
-        }
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.mdxExecuterCtrl1.SaveFile(fileName);
-        }
+
         #endregion
+
+
 
     }
 }

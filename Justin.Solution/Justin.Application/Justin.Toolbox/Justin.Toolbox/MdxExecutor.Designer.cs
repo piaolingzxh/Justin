@@ -36,8 +36,8 @@
             // 
             this.mdxExecuterCtrl1.ConnStr = "Provider=mondrian;Data Source=http://localhost:8080/mondrian350_oracle/xmla";
             this.mdxExecuterCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mdxExecuterCtrl1.FileName = null;
             this.mdxExecuterCtrl1.Location = new System.Drawing.Point(0, 0);
-            this.mdxExecuterCtrl1.Mdx = "";
             this.mdxExecuterCtrl1.Name = "mdxExecuterCtrl1";
             this.mdxExecuterCtrl1.Size = new System.Drawing.Size(676, 398);
             this.mdxExecuterCtrl1.TabIndex = 3;
@@ -51,6 +51,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MdxExecutor";
             this.Text = "MdxExecutor";
+            this.Load += new System.EventHandler(this.MdxExecutor_Load);
             this.Controls.SetChildIndex(this.mdxExecuterCtrl1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();

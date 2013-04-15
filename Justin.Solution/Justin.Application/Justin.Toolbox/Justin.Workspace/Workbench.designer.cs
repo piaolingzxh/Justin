@@ -406,8 +406,7 @@
             // 
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStripOfNotify;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Justin.Core";
-            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.Text = "Justin.Toolbox";
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // openFileDialog1
@@ -421,6 +420,7 @@
             this.ClientSize = new System.Drawing.Size(747, 355);
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.menuStripMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "Workbench";
