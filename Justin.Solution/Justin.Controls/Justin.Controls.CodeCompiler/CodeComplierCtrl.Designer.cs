@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeComplierCtrl));
             this.btnCompiler = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
-            this.btnMSIL = new System.Windows.Forms.Button();
+            this.btnDisassembly = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtCode = new ICSharpCode.TextEditor.TextEditorControl();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -62,7 +62,7 @@
             this.btnCompiler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCompiler.Location = new System.Drawing.Point(3, 38);
             this.btnCompiler.Name = "btnCompiler";
-            this.btnCompiler.Size = new System.Drawing.Size(68, 29);
+            this.btnCompiler.Size = new System.Drawing.Size(75, 29);
             this.btnCompiler.TabIndex = 0;
             this.btnCompiler.Text = "Compiler";
             this.btnCompiler.UseVisualStyleBackColor = true;
@@ -73,22 +73,22 @@
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRun.Location = new System.Drawing.Point(3, 73);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(68, 29);
+            this.btnRun.Size = new System.Drawing.Size(75, 29);
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
-            // btnMSIL
+            // btnDisassembly
             // 
-            this.btnMSIL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMSIL.Location = new System.Drawing.Point(3, 3);
-            this.btnMSIL.Name = "btnMSIL";
-            this.btnMSIL.Size = new System.Drawing.Size(68, 29);
-            this.btnMSIL.TabIndex = 2;
-            this.btnMSIL.Text = "MSIL";
-            this.btnMSIL.UseVisualStyleBackColor = true;
-            this.btnMSIL.Click += new System.EventHandler(this.btnShowILCode_Click);
+            this.btnDisassembly.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDisassembly.Location = new System.Drawing.Point(3, 3);
+            this.btnDisassembly.Name = "btnDisassembly";
+            this.btnDisassembly.Size = new System.Drawing.Size(75, 29);
+            this.btnDisassembly.TabIndex = 2;
+            this.btnDisassembly.Text = "Disassembly";
+            this.btnDisassembly.UseVisualStyleBackColor = true;
+            this.btnDisassembly.Click += new System.EventHandler(this.btnShowILCode_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -96,10 +96,11 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.btnMSIL, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnDisassembly, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnCompiler, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnRun, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(609, 3);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(603, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
@@ -123,7 +124,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(74, 288);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(81, 335);
             this.tableLayoutPanel1.TabIndex = 22;
             // 
             // txtCode
@@ -136,7 +137,7 @@
             this.txtCode.ShowEOLMarkers = true;
             this.txtCode.ShowSpaces = true;
             this.txtCode.ShowTabs = true;
-            this.txtCode.Size = new System.Drawing.Size(316, 335);
+            this.txtCode.Size = new System.Drawing.Size(312, 335);
             this.txtCode.TabIndex = 21;
             this.txtCode.Text = resources.GetString("txtCode.Text");
             // 
@@ -179,7 +180,7 @@
             this.txtMSILCode.ShowEOLMarkers = true;
             this.txtMSILCode.ShowSpaces = true;
             this.txtMSILCode.ShowTabs = true;
-            this.txtMSILCode.Size = new System.Drawing.Size(280, 335);
+            this.txtMSILCode.Size = new System.Drawing.Size(278, 335);
             this.txtMSILCode.TabIndex = 23;
             this.txtMSILCode.Text = resources.GetString("txtMSILCode.Text");
             // 
@@ -198,8 +199,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtMSILCode);
-            this.splitContainer1.Size = new System.Drawing.Size(600, 335);
-            this.splitContainer1.SplitterDistance = 316;
+            this.splitContainer1.Size = new System.Drawing.Size(594, 335);
+            this.splitContainer1.SplitterDistance = 312;
             this.splitContainer1.TabIndex = 23;
             // 
             // tableLayoutPanelMain
@@ -207,7 +208,7 @@
             this.tableLayoutPanelMain.ColumnCount = 3;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel1, 2, 0);
             this.tableLayoutPanelMain.Controls.Add(this.splitContainer1, 0, 0);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -275,7 +276,7 @@
 
         private System.Windows.Forms.Button btnCompiler;
         private System.Windows.Forms.Button btnRun;
-        private System.Windows.Forms.Button btnMSIL;
+        private System.Windows.Forms.Button btnDisassembly;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ICSharpCode.TextEditor.TextEditorControl txtCode;
         private ICSharpCode.TextEditor.TextEditorControl txtMSILCode;

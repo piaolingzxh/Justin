@@ -140,6 +140,7 @@ namespace Justin.Controls.CodeSnippet
             this.axFramerControl1.Size = new System.Drawing.Size(75, 23);
             this.axFramerControl1.TabIndex = 0;
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
+
         }
          
         private void CreateWebBrower()
