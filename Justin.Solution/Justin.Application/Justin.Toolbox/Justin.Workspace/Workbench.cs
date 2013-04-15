@@ -431,7 +431,7 @@ namespace Justin.Workspace
         #region 动态菜单
 
         string fileNameOfAddin = "Justin.Toolbox.addin";
-        string addinFolder = @"";
+        string addinFolder = @"addins";
         protected AddinConfig addinConfig;
 
         protected void DynamicMenuGenerate()
@@ -634,7 +634,8 @@ namespace Justin.Workspace
                         {
                             if (!Assemblies.ContainsKey(item.DllFileName))
                             {
-                                Assembly assembly = Assembly.LoadFrom(Path.Combine(Application.StartupPath, addinFolder + item.DllFileName + ".dll"));
+                                // string fileName = Path.Combine(Application.StartupPath, addinFolder + item.DllFileName + ".dll");
+                                Assembly assembly = Assembly.Load(item.DllFileName);
                                 Assemblies.Add(item.DllFileName, assembly);
                             }
                         }

@@ -34,6 +34,7 @@
             // schemaViewerCtrl1
             // 
             this.schemaViewerCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.schemaViewerCtrl1.FileName = "";
             this.schemaViewerCtrl1.Location = new System.Drawing.Point(0, 0);
             this.schemaViewerCtrl1.Name = "schemaViewerCtrl1";
             this.schemaViewerCtrl1.SaveSchemaFileName = "";
@@ -50,7 +51,10 @@
             this.Name = "MondrianSchemaWorkbench";
             this.Text = "MondrianSchemaWorkbench";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MondrianSchemaWorkbench_Load);
+            this.Controls.SetChildIndex(this.schemaViewerCtrl1, 0);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

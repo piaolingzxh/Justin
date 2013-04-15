@@ -26,6 +26,16 @@ namespace Justin.Controls.TestDataGenerator
         public TableConfigCtrl()
         {
             InitializeComponent();
+            this.LoadAction = (fileName) =>
+            {
+                TableSetting = SerializeHelper.XmlDeserializeFromFile<JTable>(fileName);
+                BindTableToTree();
+            };
+            this.SaveAction = (fileName) =>
+            {
+                if (TableSetting != null)
+                    this.TableSetting.SaveSettings(fileName);
+            };
         }
 
 
@@ -342,7 +352,10 @@ namespace Justin.Controls.TestDataGenerator
 
         private void TableConfigCtrl_Load(object sender, EventArgs e)
         {
-            this.LoadFile(this.FileName);
+            if (this.TableSetting != null)
+            {
+                BindTableToTree();
+            }
             JTable.SqlProcess = (StringBuilder sqlBuilder, JTable table) =>
             {
                 string fileName = JTools.GetFileName(table.TableName, FileType.SQL);
@@ -356,23 +369,6 @@ namespace Justin.Controls.TestDataGenerator
                 JTools.SetToolTips(item, tips);
             }
         }
-
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            if (TableSetting != null)
-                this.TableSetting.SaveSettings(fileName);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-            {
-                TableSetting = SerializeHelper.XmlDeserializeFromFile<JTable>(fileName);
-                BindTableToTree();
-            }
-        }
-
 
     }
 }

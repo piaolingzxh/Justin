@@ -26,13 +26,17 @@ namespace Justin.Controls.CodeCompiler
         public CodeComplierCtrl()
         {
             InitializeComponent();
+            this.LoadAction = (fileName) => { this.txtCode.LoadFile(fileName); InitComplier(fileName); };
+            this.SaveAction = (fileName) => { this.txtCode.SaveFile(fileName); InitComplier(fileName); };
         }
 
         CodeComplierBase complier;
 
+        #region 按钮事件
+
         private void btnCompiler_Click(object sender, EventArgs e)
         {
-            SetFilePath();
+            this.SaveFile(FileName);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -42,7 +46,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            SetFilePath();
+            this.SaveFile(FileName);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -52,7 +56,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnShowILCode_Click(object sender, EventArgs e)
         {
-            SetFilePath();
+            this.SaveFile(FileName);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -64,6 +68,41 @@ namespace Justin.Controls.CodeCompiler
                     sr.Close();
                     txtMSILCode.SetText(outfile);
                 }
+            }
+
+        }
+
+        #endregion
+
+        public void ShowMsg(string msg)
+        {
+            this.ShowMessage(msg);
+        }
+
+
+        private void InitComplier(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                complier = null;
+                if (fileName.EndsWith("cs", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    complier = new NetCodeComplier(NetDialect.CSharp);
+                }
+                else if (fileName.EndsWith("vb", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    complier = new NetCodeComplier(NetDialect.VB);
+                }
+                else if (fileName.EndsWith("java", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    complier = new JavaCodeComplier();
+                }
+                else
+                {
+                    throw new NotSupportedException("不支持该语言");
+                }
+                if (complier != null)
+                    complier.MsgReceivedEvent = this.ShowMsg;
             }
 
         }
@@ -83,7 +122,7 @@ namespace Justin.Controls.CodeCompiler
         {
 
             JavaCodeComplier.JDKPath = @"C:\Programs\Java\jdk1.6.0_24\bin";
-         
+
             txtCode.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             txtCode.Encoding = Encoding.GetEncoding("GB2312");
 
@@ -91,44 +130,6 @@ namespace Justin.Controls.CodeCompiler
             txtMSILCode.Encoding = Encoding.GetEncoding("GB2312");
 
             saveFileDialog1.Filter = "cs 文件(*.cs)|*.cs|vb 文件(*.vb)|*.vb|java 文件(*.java)|*.java|所有文件(*.*)|*.*";
-
-            LoadFile(this.FileName);
-        }
-     
-        public void ShowMsg(string msg)
-        {
-            this.ShowMessage(msg);
-        }
-
-        private void SetFilePath()
-        {
-            this.SaveFile(FileName);
-            InitComplier();
-        }
-
-        private void InitComplier()
-        {
-            if (!string.IsNullOrEmpty(FileName))
-            {
-                complier = null;
-                if (FileName.EndsWith("cs", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    complier = new NetCodeComplier(NetDialect.CSharp);
-                }
-                else if (FileName.EndsWith("vb", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    complier = new NetCodeComplier(NetDialect.VB);
-                }
-                else if (FileName.EndsWith("java", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    complier = new JavaCodeComplier();
-                }
-                else
-                {
-                    throw new NotSupportedException("不支持该语言");
-                }
-                complier.MsgReceivedEvent = this.ShowMsg;
-            }
 
         }
 
@@ -168,37 +169,6 @@ namespace ConsoleApplication1
     End Sub
 End Module");
 
-        }
-
-        #endregion
-
-        #region    override
-
-        public override string FileName
-        {
-            get
-            {
-                return base.FileName;
-            }
-            set
-            {
-                base.FileName = value;
-                this.LoadFile(this.FileName);
-            }
-        }
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            txtCode.SaveFile(fileName);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-            {
-                txtCode.LoadFile(fileName);
-                InitComplier();
-            }
         }
 
         #endregion

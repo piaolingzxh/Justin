@@ -36,6 +36,7 @@
             // 
             this.tableConfigCtrl1.ConnStr = null;
             this.tableConfigCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableConfigCtrl1.FileName = null;
             this.tableConfigCtrl1.Location = new System.Drawing.Point(0, 0);
             this.tableConfigCtrl1.Name = "tableConfigCtrl1";
             this.tableConfigCtrl1.Size = new System.Drawing.Size(859, 495);
@@ -52,6 +53,7 @@
             this.Name = "TableConfigurator";
             this.Text = "ConfigTableForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigTableForm_FormClosing);
+            this.Load += new System.EventHandler(this.TableConfigurator_Load);
             this.Controls.SetChildIndex(this.tableConfigCtrl1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();

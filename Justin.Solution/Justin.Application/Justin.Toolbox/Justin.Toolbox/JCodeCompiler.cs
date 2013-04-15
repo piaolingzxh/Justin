@@ -20,11 +20,14 @@ using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Toolbox
 {
-    public partial class JCodeCompiler : JForm, IFile
+    public partial class JCodeCompiler : JForm, IFile, IFormat
     {
         public JCodeCompiler()
         {
             InitializeComponent();
+            this.codeComplierCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
+            this.LoadAction = (fileName) => { this.codeComplierCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.codeComplierCtrl1.SaveFile(fileName); };
         }
         /// <summary>
         ///     
@@ -45,8 +48,7 @@ namespace Justin.Toolbox
 
         private void JCodeCompiler_Load(object sender, EventArgs e)
         {
-            this.codeComplierCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
-
+            this.LoadFile(this.FileName);
         }
 
         #region override
@@ -69,19 +71,6 @@ namespace Justin.Toolbox
                 codeComplierCtrl1.FileName = value;
             }
         }
-
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.codeComplierCtrl1.SaveFile(fileName);
-        }
-
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            this.codeComplierCtrl1.LoadFile(fileName);
-        }
-
 
         #endregion
     }

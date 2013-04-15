@@ -37,7 +37,7 @@ namespace Justin.FrameWork.WinForm.FormUI
                     SaveAction(tempFileName);
                 this.FileName = tempFileName;
             }
-            OnFileChanged(fileName);
+            OnFileChanged(tempFileName);
         }
         public virtual void LoadFile(string fileName)
         {

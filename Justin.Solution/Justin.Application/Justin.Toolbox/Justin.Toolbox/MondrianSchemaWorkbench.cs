@@ -20,12 +20,15 @@ using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Toolbox
 {
-    public partial class MondrianSchemaWorkbench : JForm, IFile
+    public partial class MondrianSchemaWorkbench : JForm, IFile, IFormat
     {
         public MondrianSchemaWorkbench()
         {
             InitializeComponent();
             this.schemaViewerCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) => { this.schemaViewerCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.schemaViewerCtrl1.SaveFile(fileName); };
+     
         }
         public MondrianSchemaWorkbench(string[] args)
             : this()
@@ -34,7 +37,6 @@ namespace Justin.Toolbox
             {
                 schemaViewerCtrl1.SchemaFileName = args[0];
                 this.FileName = args[0];
-
             }
         }
 
@@ -55,16 +57,16 @@ namespace Justin.Toolbox
             set
             {
                 schemaViewerCtrl1.FileName = value;
-                base.FileName = value;
-
             }
         }
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-           // this.jEditorCtrl1.Save(fileName);
-        }
+         
+
         #endregion
+
+        private void MondrianSchemaWorkbench_Load(object sender, EventArgs e)
+        {
+            this.LoadFile(this.FileName);
+        }
     }
 
 

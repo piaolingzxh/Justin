@@ -109,6 +109,21 @@ namespace Justin.FrameWork.Helper
             }
         }
 
+        public static DataTable ExecuteDataTable(AdomdConnection conn, string CommandText)
+        {
+            DataTable dt=null;
+            try
+            {
+                AdomdDataAdapter da = new AdomdDataAdapter(CommandText, conn);
+                dt = new DataTable();
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return dt;
+        }
         public static AdomdConnection GetConnection(string ConnectionString)
         {
             return new AdomdConnection(ConnectionString);

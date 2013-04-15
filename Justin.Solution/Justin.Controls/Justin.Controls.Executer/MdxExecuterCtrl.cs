@@ -96,5 +96,25 @@ namespace Justin.Controls.Executer
             }
         }
 
+        private void btnExecuteDataSet_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                gvMdxresult.DataSource = null;
+                string mdx = txtMdx.Text;
+                if (txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected)
+                {
+                    mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
+                }
+                 
+                DataTable dt =MdxHelper.ExecuteDataTable(Connection, mdx);  
+                gvMdxresult.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
+            }
+        }
+
     }
 }

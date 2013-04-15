@@ -17,21 +17,17 @@ namespace Justin.Controls.TextEditor
         public JEditorCtrl()
         {
             InitializeComponent();
+            this.LoadAction = (fileName) =>
+            {
+                textEditorControl1.LoadFile(fileName);
+            };
+            this.SaveAction = (fileName) =>
+            {
+                textEditorControl1.SaveFile(fileName);
+            };
         }
 
-        public override string FileName
-        {
-            get
-            {
-                return base.FileName;
-            }
-            set
-            {
-                base.FileName = value;
-                richTextBox1.Text = base.FileName;
-                this.LoadFile(this.FileName);
-            }
-        }
+        
          
         private void button1_Click(object sender, EventArgs e)
         {
@@ -41,16 +37,17 @@ namespace Justin.Controls.TextEditor
             }
         }
 
-        public override void SaveFile(string fileName)
+
+        public override string FileName
         {
-            base.SaveFile(fileName);
-            textEditorControl1.SaveFile(fileName);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-                textEditorControl1.LoadFile(fileName);
+            get
+            {
+                return base.FileName;
+            }
+            set
+            {
+                richTextBox1.Text = base.FileName;
+            }
         }
 
     }

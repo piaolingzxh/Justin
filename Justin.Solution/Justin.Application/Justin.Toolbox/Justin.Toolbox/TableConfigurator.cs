@@ -30,6 +30,9 @@ namespace Justin.Toolbox
         {
             InitializeComponent();
             this.tableConfigCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) => { this.tableConfigCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.tableConfigCtrl1.SaveFile(fileName); };
+
         }
         public TableConfigurator(string[] args)
             : this()
@@ -71,6 +74,7 @@ namespace Justin.Toolbox
                 }
             }
         }
+
         #region 继承
 
         protected override string GetPersistString()
@@ -91,18 +95,6 @@ namespace Justin.Toolbox
             }
         }
 
-
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            this.tableConfigCtrl1.LoadFile(fileName);
-        }
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.tableConfigCtrl1.SaveFile(fileName);
-        }
-
         protected override string FileName
         {
             get
@@ -116,6 +108,18 @@ namespace Justin.Toolbox
         }
 
         #endregion
+
+        private void TableConfigurator_Load(object sender, EventArgs e)
+        {
+            if (this.tableConfigCtrl1.TableSetting == null)
+            {
+                this.LoadFile(this.FileName);
+            }
+            else
+            { 
+            
+            }
+        }
 
 
     }

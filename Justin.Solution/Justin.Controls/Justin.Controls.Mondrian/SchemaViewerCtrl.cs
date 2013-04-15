@@ -24,6 +24,27 @@ namespace Justin.Controls.Mondrian
         public SchemaViewerCtrl()
         {
             InitializeComponent();
+
+            this.LoadAction = (fileName) =>
+            {
+                txtFileName.Text = fileName;
+
+                try
+                {
+                    GenerateSchemaFromFile();
+                    BindTreeview(schema);
+                    propertyGrid.SelectedObject = schema;
+                    PriviewSchema();
+                }
+                catch (Exception ex)
+                {
+                    this.ShowMessage(ex);
+                }
+            };
+            this.SaveAction = (fileName) =>
+            {
+                this.schema.Serializer(fileName);
+            };
         }
 
         private void SchemaViewerCtrl_Load(object sender, EventArgs e)
@@ -630,34 +651,6 @@ namespace Justin.Controls.Mondrian
             set
             {
                 txtFileName.Text = value;
-            }
-        }
-
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.schema.Serializer(fileName);
-        }
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-            {
-                txtFileName.Text = fileName;
-                if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
-                {
-                    try
-                    {
-                        GenerateSchemaFromFile();
-                        BindTreeview(schema);
-                        propertyGrid.SelectedObject = schema;
-                        PriviewSchema();
-                    }
-                    catch (Exception ex)
-                    {
-                        this.ShowMessage(ex);
-                    }
-                }
             }
         }
 

@@ -12,11 +12,15 @@ using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Toolbox
 {
-    public partial class JEditor : JForm,IFile
+    public partial class JEditor : JForm, IFile, IFormat
     {
         public JEditor()
         {
             InitializeComponent();
+            this.jEditorCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) => { this.jEditorCtrl1.LoadFile(fileName); };
+            this.SaveAction = (fileName) => { this.jEditorCtrl1.SaveFile(fileName); };
+     
         }
         public JEditor(string[] args)
             : this()
@@ -24,6 +28,9 @@ namespace Justin.Toolbox
             if (args.Length > 0)
                 this.FileName = args[0];
         }
+
+
+        #region override
 
         protected override string GetPersistString()
         {
@@ -43,21 +50,11 @@ namespace Justin.Toolbox
             }
         }
 
-        public override void SaveFile(string fileName)
-        {
-            base.SaveFile(fileName);
-            this.jEditorCtrl1.SaveFile(fileName);
-        }
-
-        public override void LoadFile(string fileName)
-        {
-            base.LoadFile(fileName);
-            this.jEditorCtrl1.LoadFile(fileName);
-        }
+        #endregion
 
         private void JEditor_Load(object sender, EventArgs e)
         {
-            this.jEditorCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
+            this.LoadFile(this.FileName);
         }
     }
 }

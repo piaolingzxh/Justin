@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>..\Release\addins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -75,6 +75,7 @@
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog">
       <HintPath>..\..\..\Common\Library\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
@@ -100,11 +101,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeSnippetMgr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CodeSnippetMgr.Designer.cs">
+      <DependentUpon>CodeSnippetMgr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FormDBField.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Controls\FormDBField.Designer.cs">
       <DependentUpon>FormDBField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileAssociation.Designer.cs">
+      <DependentUpon>FileAssociation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JCodeCompiler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JCodeCompiler.Designer.cs">
+      <DependentUpon>JCodeCompiler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JEditor.Designer.cs">
+      <DependentUpon>JEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonViewer.cs">
       <SubType>Form</SubType>
@@ -141,6 +166,12 @@
     </Compile>
     <Compile Include="TableConfigurator.Designer.cs">
       <DependentUpon>TableConfigurator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestDataGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestDataGenerator.Designer.cs">
+      <DependentUpon>TestDataGenerator.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -232,8 +263,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CodeSnippetMgr.resx">
+      <DependentUpon>CodeSnippetMgr.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\FormDBField.resx">
       <DependentUpon>FormDBField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileAssociation.resx">
+      <DependentUpon>FileAssociation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JCodeCompiler.resx">
+      <DependentUpon>JCodeCompiler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JEditor.resx">
+      <DependentUpon>JEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JsonViewer.resx">
       <DependentUpon>JsonViewer.cs</DependentUpon>
@@ -253,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TableConfigurator.resx">
       <DependentUpon>TableConfigurator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestDataGenerator.resx">
+      <DependentUpon>TestDataGenerator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

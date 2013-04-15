@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtConnectionString = new System.Windows.Forms.TextBox();
@@ -44,6 +44,7 @@
             this.gvMdxresult = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnExecute = new System.Windows.Forms.Button();
+            this.btnExecuteDataSet = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -60,8 +61,8 @@
             this.tableLayoutPanel1.ColumnCount = 4;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtConnectionString, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnConnectOLAP, 3, 0);
@@ -92,16 +93,16 @@
             this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConnectionString.Location = new System.Drawing.Point(83, 3);
             this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(604, 20);
+            this.txtConnectionString.Size = new System.Drawing.Size(592, 20);
             this.txtConnectionString.TabIndex = 1;
             this.txtConnectionString.Text = "Provider=mondrian;Data Source=http://localhost:8080/mondrian350_oracle/xmla";
             // 
             // btnConnectOLAP
             // 
             this.btnConnectOLAP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnConnectOLAP.Location = new System.Drawing.Point(693, 3);
+            this.btnConnectOLAP.Location = new System.Drawing.Point(681, 3);
             this.btnConnectOLAP.Name = "btnConnectOLAP";
-            this.btnConnectOLAP.Size = new System.Drawing.Size(74, 24);
+            this.btnConnectOLAP.Size = new System.Drawing.Size(86, 24);
             this.btnConnectOLAP.TabIndex = 2;
             this.btnConnectOLAP.Text = "Connect";
             this.btnConnectOLAP.UseVisualStyleBackColor = true;
@@ -122,7 +123,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer1.Size = new System.Drawing.Size(684, 425);
+            this.splitContainer1.Size = new System.Drawing.Size(672, 425);
             this.splitContainer1.SplitterDistance = 199;
             this.splitContainer1.TabIndex = 5;
             // 
@@ -140,7 +141,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 199F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 199F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(684, 199);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(672, 199);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // lbllabel2
@@ -159,7 +160,7 @@
             this.txtMdx.Location = new System.Drawing.Point(83, 3);
             this.txtMdx.Name = "txtMdx";
             this.txtMdx.ShowVRuler = false;
-            this.txtMdx.Size = new System.Drawing.Size(598, 193);
+            this.txtMdx.Size = new System.Drawing.Size(586, 193);
             this.txtMdx.TabIndex = 4;
             this.txtMdx.Text = "\r\nSELECT \r\nNON EMPTY\r\n{\r\n    [Measures].[ZCHTAmount],[Measures].[ZCHTCount]\r\n}\r\n " +
     "ON COLUMNS,\r\nNON EMPTY\r\n{\r\n   [ProjectDim.hieInfo].[Project].Members\r\n}\r\nON ROWS" +
@@ -179,7 +180,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 222F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 222F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(684, 222);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(672, 222);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // label2
@@ -194,35 +195,35 @@
             // gvMdxresult
             // 
             this.gvMdxresult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvMdxresult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvMdxresult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.gvMdxresult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gvMdxresult.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gvMdxresult.DefaultCellStyle = dataGridViewCellStyle11;
             this.gvMdxresult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvMdxresult.Location = new System.Drawing.Point(83, 3);
             this.gvMdxresult.Name = "gvMdxresult";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvMdxresult.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.gvMdxresult.Size = new System.Drawing.Size(598, 216);
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvMdxresult.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.gvMdxresult.Size = new System.Drawing.Size(586, 216);
             this.gvMdxresult.TabIndex = 4;
             // 
             // tableLayoutPanel4
@@ -230,15 +231,16 @@
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.btnExecute, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnExecuteDataSet, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(693, 33);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(681, 33);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 4;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(74, 425);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(86, 425);
             this.tableLayoutPanel4.TabIndex = 6;
             // 
             // btnExecute
@@ -246,11 +248,22 @@
             this.btnExecute.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExecute.Location = new System.Drawing.Point(3, 3);
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(68, 29);
+            this.btnExecute.Size = new System.Drawing.Size(80, 29);
             this.btnExecute.TabIndex = 0;
-            this.btnExecute.Text = "Execute";
+            this.btnExecute.Text = "ExecuteCS";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
+            // 
+            // btnExecuteDataSet
+            // 
+            this.btnExecuteDataSet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExecuteDataSet.Location = new System.Drawing.Point(3, 38);
+            this.btnExecuteDataSet.Name = "btnExecuteDataSet";
+            this.btnExecuteDataSet.Size = new System.Drawing.Size(80, 29);
+            this.btnExecuteDataSet.TabIndex = 1;
+            this.btnExecuteDataSet.Text = "ExecuteDS";
+            this.btnExecuteDataSet.UseVisualStyleBackColor = true;
+            this.btnExecuteDataSet.Click += new System.EventHandler(this.btnExecuteDataSet_Click);
             // 
             // MdxExecuterCtrl
             // 
@@ -291,6 +304,7 @@
         private System.Windows.Forms.DataGridView gvMdxresult;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnExecute;
+        private System.Windows.Forms.Button btnExecuteDataSet;
 
     }
 }
