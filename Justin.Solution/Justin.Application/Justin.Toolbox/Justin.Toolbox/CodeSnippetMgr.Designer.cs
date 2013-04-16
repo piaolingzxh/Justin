@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeSnippetMgr));
             this.codeSnippetCtrl1 = new Justin.Controls.CodeSnippet.CodeSnippetCtrl();
             this.SuspendLayout();
             // 
@@ -36,7 +37,7 @@
             this.codeSnippetCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.codeSnippetCtrl1.Location = new System.Drawing.Point(0, 0);
             this.codeSnippetCtrl1.Name = "codeSnippetCtrl1";
-            this.codeSnippetCtrl1.Size = new System.Drawing.Size(767, 365);
+            this.codeSnippetCtrl1.Size = new System.Drawing.Size(767, 343);
             this.codeSnippetCtrl1.TabIndex = 0;
             // 
             // CodeSnippetMgr
@@ -45,10 +46,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 365);
             this.Controls.Add(this.codeSnippetCtrl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CodeSnippetMgr";
+            this.ShowStatus = true;
             this.Text = "CodeSnippetMgr";
             this.Load += new System.EventHandler(this.CodeSnippetMgr_Load);
+            this.Controls.SetChildIndex(this.codeSnippetCtrl1, 0);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

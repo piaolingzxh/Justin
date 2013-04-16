@@ -82,9 +82,15 @@
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.subFormStatusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.contextMenuStripOfNotify.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // OutPutWin
+            // 
+            this.OutPutWin.Location = new System.Drawing.Point(100, 100);
             // 
             // dockPanel
             // 
@@ -241,7 +247,9 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.outputWindowToolStripMenuItem,
             this.toolBarToolStripMenuItem,
-            this.statusBarToolStripMenuItem});
+            this.statusBarToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.subFormStatusBarToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -250,21 +258,21 @@
             // outputWindowToolStripMenuItem
             // 
             this.outputWindowToolStripMenuItem.Name = "outputWindowToolStripMenuItem";
-            this.outputWindowToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.outputWindowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.outputWindowToolStripMenuItem.Text = "&Output Window";
             this.outputWindowToolStripMenuItem.Click += new System.EventHandler(this.outputWindowToolStripMenuItem_Click);
             // 
             // toolBarToolStripMenuItem
             // 
             this.toolBarToolStripMenuItem.Name = "toolBarToolStripMenuItem";
-            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.toolBarToolStripMenuItem.Text = "Tool &Bar";
             this.toolBarToolStripMenuItem.Click += new System.EventHandler(this.toolBarToolStripMenuItem_Click);
             // 
             // statusBarToolStripMenuItem
             // 
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.statusBarToolStripMenuItem.Text = "Status B&ar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.statusBarToolStripMenuItem_Click);
             // 
@@ -413,6 +421,18 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            // 
+            // subFormStatusBarToolStripMenuItem
+            // 
+            this.subFormStatusBarToolStripMenuItem.Name = "subFormStatusBarToolStripMenuItem";
+            this.subFormStatusBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.subFormStatusBarToolStripMenuItem.Text = "Sub Form Status Bar";
+            this.subFormStatusBarToolStripMenuItem.Click += new System.EventHandler(this.subFormStatusBarToolStripMenuItem_Click);
+            // 
             // Workbench
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -474,5 +494,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem subFormStatusBarToolStripMenuItem;
     }
 }

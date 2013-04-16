@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeSnippetCtrl));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tvDirectory = new System.Windows.Forms.TreeView();
@@ -41,6 +42,7 @@
             this.txtFileName = new System.Windows.Forms.RichTextBox();
             this.btnCloseOpen = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.imageListOfDirectory = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -89,10 +91,14 @@
             this.tableLayoutPanel2.SetColumnSpan(this.tvDirectory, 2);
             this.tvDirectory.ContextMenuStrip = this.contextMenuStrip1;
             this.tvDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvDirectory.ImageIndex = 0;
+            this.tvDirectory.ImageList = this.imageListOfDirectory;
             this.tvDirectory.Location = new System.Drawing.Point(3, 28);
             this.tvDirectory.Name = "tvDirectory";
+            this.tvDirectory.SelectedImageIndex = 0;
             this.tvDirectory.Size = new System.Drawing.Size(170, 400);
             this.tvDirectory.TabIndex = 0;
+            this.tvDirectory.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tvDirectory_AfterExpand);
             this.tvDirectory.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvDirectory_NodeMouseClick);
             this.tvDirectory.DoubleClick += new System.EventHandler(this.tvDirectory_DoubleClick);
             // 
@@ -174,6 +180,12 @@
             this.btnCloseOpen.UseVisualStyleBackColor = true;
             this.btnCloseOpen.Click += new System.EventHandler(this.btnCloseOpen_Click);
             // 
+            // imageListOfDirectory
+            // 
+            this.imageListOfDirectory.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListOfDirectory.ImageStream")));
+            this.imageListOfDirectory.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListOfDirectory.Images.SetKeyName(0, "ClosedFolder.ICO");
+            // 
             // CodeSnippetCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,5 +220,6 @@
         private System.Windows.Forms.Button btnCloseOpen;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ImageList imageListOfDirectory;
     }
 }

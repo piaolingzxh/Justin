@@ -181,9 +181,12 @@
     <Content Include="images\BlankIcon.ico" />
     <Content Include="images\CalMeasure.png" />
     <Content Include="images\ClosedFolder.ICO" />
+    <Content Include="images\Compile.bmp" />
+    <Content Include="images\Compile.ico" />
     <Content Include="images\config.png" />
     <Content Include="images\CSFile.ico" />
     <Content Include="images\CSProject.ico" />
+    <Content Include="images\Cube.ico" />
     <Content Include="images\Cube.png" />
     <Content Include="images\date.png" />
     <Content Include="images\DB2Config.ico" />
@@ -211,6 +214,7 @@
     <Content Include="images\Measure.png" />
     <Content Include="images\Mouse.bmp" />
     <Content Include="images\msenv22.ico" />
+    <Content Include="images\namedset.ico" />
     <Content Include="images\namedset.png" />
     <Content Include="images\New.ico" />
     <Content Include="images\num.ico" />

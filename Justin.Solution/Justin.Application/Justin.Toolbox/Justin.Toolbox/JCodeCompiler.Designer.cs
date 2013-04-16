@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JCodeCompiler));
             this.codeComplierCtrl1 = new Justin.Controls.CodeCompiler.CodeComplierCtrl();
             this.SuspendLayout();
             // 
             // codeComplierCtrl1
             // 
             this.codeComplierCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codeComplierCtrl1.FileName = null;
             this.codeComplierCtrl1.Location = new System.Drawing.Point(0, 0);
             this.codeComplierCtrl1.Name = "codeComplierCtrl1";
             this.codeComplierCtrl1.Size = new System.Drawing.Size(744, 383);
@@ -45,7 +47,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 405);
             this.Controls.Add(this.codeComplierCtrl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JCodeCompiler";
+            this.ShowStatus = true;
             this.Text = "JCodeCompiler";
             this.Load += new System.EventHandler(this.JCodeCompiler_Load);
             this.Controls.SetChildIndex(this.codeComplierCtrl1, 0);

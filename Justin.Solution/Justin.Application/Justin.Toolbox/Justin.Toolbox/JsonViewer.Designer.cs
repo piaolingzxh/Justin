@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonViewer));
             this.jsonViewCtrl1 = new Justin.Controls.JsonView.JsonViewCtrl();
             this.SuspendLayout();
             // 
@@ -46,7 +47,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 375);
             this.Controls.Add(this.jsonViewCtrl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JsonViewer";
+            this.ShowStatus = true;
             this.Text = "JsonViewer";
             this.Load += new System.EventHandler(this.JsonViewer_Load);
             this.Controls.SetChildIndex(this.jsonViewCtrl1, 0);

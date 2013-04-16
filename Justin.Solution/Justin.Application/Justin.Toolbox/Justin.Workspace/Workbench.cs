@@ -273,6 +273,8 @@ namespace Justin.Workspace
         private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             outputWindowToolStripMenuItem.Checked = this.OutPutWin.Visible;
+            JForm form = this.ActiveMdiChild as JForm;
+            subFormStatusBarToolStripMenuItem.Checked = form.ShowStatus;
         }
 
         private void outputWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -398,8 +400,8 @@ namespace Justin.Workspace
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form a = new Abount();
-            a.MdiParent = this;
-            a.Show();
+            a.StartPosition = FormStartPosition.CenterParent;
+            a.ShowDialog();
         }
 
         #endregion
@@ -678,6 +680,12 @@ namespace Justin.Workspace
         private void OutPutWin_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void subFormStatusBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JForm form = this.ActiveMdiChild as JForm;
+            form.ShowStatus = !form.ShowStatus;
         }
 
 

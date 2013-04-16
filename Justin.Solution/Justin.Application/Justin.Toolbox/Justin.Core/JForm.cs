@@ -165,24 +165,29 @@ namespace Justin.Core
                 this.FormatFileToolStripMenuItem.Click += FormatFileToolStripMenuItem_Click;
                 this.TopContextMenu.Items.Add(this.FormatFileToolStripMenuItem);
             }
-            //Save 
-            this.SaveFileToolStripMenuItem = new ToolStripMenuItem();
-            this.SaveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
-            this.SaveFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.SaveFileToolStripMenuItem.Text = "Save";
-            this.SaveFileToolStripMenuItem.Click += SaveFileToolStripMenuItem_Click;
-            this.TopContextMenu.Items.Add(this.SaveFileToolStripMenuItem);
+            if (this is IFormat || this is IFile)
+            {
+                //Save 
+                this.SaveFileToolStripMenuItem = new ToolStripMenuItem();
+                this.SaveFileToolStripMenuItem.Name = "saveFileToolStripMenuItem";
+                this.SaveFileToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.SaveFileToolStripMenuItem.Text = "Save";
+                this.SaveFileToolStripMenuItem.Click += SaveFileToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Add(this.SaveFileToolStripMenuItem);
 
-            //Save As
-            this.SaveFileAsToolStripMenuItem = new ToolStripMenuItem();
-            this.SaveFileAsToolStripMenuItem.Name = "saveFileAsToolStripMenuItem";
-            this.SaveFileAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.SaveFileAsToolStripMenuItem.Text = "Save As";
-            this.SaveFileAsToolStripMenuItem.Click += SaveFileAsToolStripMenuItem_Click;
-            this.TopContextMenu.Items.Add(this.SaveFileAsToolStripMenuItem);
-
-            ToolStripSeparator closeSplitor = new ToolStripSeparator();
-            this.TopContextMenu.Items.Add(closeSplitor);
+                //Save As
+                this.SaveFileAsToolStripMenuItem = new ToolStripMenuItem();
+                this.SaveFileAsToolStripMenuItem.Name = "saveFileAsToolStripMenuItem";
+                this.SaveFileAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+                this.SaveFileAsToolStripMenuItem.Text = "Save As";
+                this.SaveFileAsToolStripMenuItem.Click += SaveFileAsToolStripMenuItem_Click;
+                this.TopContextMenu.Items.Add(this.SaveFileAsToolStripMenuItem);
+            }
+            if (this.TopContextMenu.Items.Count > 0 && !(this.TopContextMenu.Items[this.TopContextMenu.Items.Count - 1] is ToolStripSeparator))
+            {
+                ToolStripSeparator closeSplitor = new ToolStripSeparator();
+                this.TopContextMenu.Items.Add(closeSplitor);
+            }
 
             //Close Me
             this.closeMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -307,6 +312,18 @@ namespace Justin.Core
             }
         }
         public ConnStrChangDelegate ConnStrChanged;
+
+        public bool ShowStatus
+        {
+            get
+            {
+                return this.statusStrip1.Visible;
+            }
+            set
+            {
+                this.statusStrip1.Visible = value;
+            }
+        }
 
     }
 }

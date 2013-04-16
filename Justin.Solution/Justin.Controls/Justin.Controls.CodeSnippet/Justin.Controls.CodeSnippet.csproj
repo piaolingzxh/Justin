@@ -84,6 +84,7 @@
       <Link>dsoframer.ocx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="images\ClosedFolder.ICO" />
     <Content Include="images\search.png" />
   </ItemGroup>
   <ItemGroup>

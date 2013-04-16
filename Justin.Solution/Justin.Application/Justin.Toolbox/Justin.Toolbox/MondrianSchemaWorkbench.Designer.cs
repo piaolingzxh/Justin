@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MondrianSchemaWorkbench));
             this.schemaViewerCtrl1 = new Justin.Controls.Mondrian.SchemaViewerCtrl();
             this.SuspendLayout();
             // 
@@ -39,7 +40,7 @@
             this.schemaViewerCtrl1.Name = "schemaViewerCtrl1";
             this.schemaViewerCtrl1.SaveSchemaFileName = "";
             this.schemaViewerCtrl1.SchemaFileName = "";
-            this.schemaViewerCtrl1.Size = new System.Drawing.Size(768, 460);
+            this.schemaViewerCtrl1.Size = new System.Drawing.Size(768, 438);
             this.schemaViewerCtrl1.TabIndex = 6;
             // 
             // MondrianSchemaWorkbench
@@ -48,7 +49,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(768, 460);
             this.Controls.Add(this.schemaViewerCtrl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MondrianSchemaWorkbench";
+            this.ShowStatus = true;
             this.Text = "MondrianSchemaWorkbench";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MondrianSchemaWorkbench_Load);

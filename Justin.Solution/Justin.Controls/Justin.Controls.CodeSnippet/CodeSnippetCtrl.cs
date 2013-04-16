@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using Justin.FrameWork.WinForm.Helper;
 using Microsoft.Win32;
 namespace Justin.Controls.CodeSnippet
 {
@@ -39,77 +41,113 @@ namespace Justin.Controls.CodeSnippet
         {
             DirectoryInfo dir = new DirectoryInfo(fileDirectory);
             if (!dir.Exists) return;
-            TreeNode rootNode = new TreeNode("我的代码段");
+            TreeNode rootNode = new TreeNode("我的代码段") { Name = fileDirectory, Tag = fileDirectory, ImageIndex = 0, SelectedImageIndex = 0 };
             tvDirectory.Nodes.Clear();
             tvDirectory.Nodes.Add(rootNode);
-            BindTree(rootNode, dir);
+            BindTree(rootNode, dir, 1);
+            rootNode.Expand();
             CreateSharpEditor();
             CreateWebBrower();
             CreateDSOFramer();
         }
-        private void BindTree(TreeNode node, DirectoryInfo dir)
+        private void BindTree(TreeNode node, DirectoryInfo dir, int depth)
         {
-            foreach (var subdir in dir.GetDirectories())
+            if (depth > 0)
             {
-                TreeNode childNode = new TreeNode(subdir.Name) { Tag = subdir.FullName };
-                node.Nodes.Add(childNode);
-                BindTree(childNode, subdir);
-            }
-            foreach (FileInfo file in dir.GetFiles())
-            {
-                node.Nodes.Add(new TreeNode(file.Name) { Tag = file.FullName });
+                foreach (var subdir in dir.GetDirectories().Where(row => row.Name != "System Volume Information").OrderBy(row => row.FullName))
+                {
+                    TreeNode childNode = new TreeNode(subdir.Name) { Name = subdir.FullName, Tag = subdir.FullName, ImageIndex = 0, SelectedImageIndex = 0 };
+                    node.Nodes.Add(childNode);
+                    BindTree(childNode, subdir, depth - 1);
+                }
+                foreach (FileInfo file in dir.GetFiles().OrderBy(row => row.Extension).ThenBy(row => row.FullName))
+                {
+                    string strExt = Path.GetExtension(file.FullName);
+                    if (!imageListOfDirectory.Images.ContainsKey(strExt))
+                    {
+                        imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName, true));
+                    }
+                    node.Nodes.Add(new TreeNode(file.Name) { Name = file.FullName, Tag = file.FullName, ImageKey = strExt, SelectedImageKey = strExt });
+                }
             }
         }
 
         private void tvDirectory_DoubleClick(object sender, EventArgs e)
         {
-            string dsoFramerExtensionString = ".doc,.docx,.rtf,.ppt,.odt,.docm,.dotx,.dotm,.dot,";
-            string generalExtensionString = ".txt,.cs,.vb,.java,.cpp,.il,.xml,config,";
-            string webBrowerExtensionString = ".htm,.html,.mht,.pdf,";
-
-            string[] generalExtensions = generalExtensionString.Split(',');
-            string[] dsoFramerExtensions = dsoFramerExtensionString.Split(',');
-            string[] webBrowerExtensions = webBrowerExtensionString.Split(',');
-            string[] extensions = (dsoFramerExtensionString + webBrowerExtensionString + generalExtensions).Split(',');
             TreeNode selectNode = tvDirectory.SelectedNode;
             if (selectNode != null && selectNode.Tag != null)
             {
-                string path = selectNode.Tag.ToString();
-                //try
-                //{
-                txtFileName.Text = path.ToString();
-                if (extensions.Contains(Path.GetExtension(path)))
+                if (selectNode.ImageIndex != 0)
                 {
-                    if (dsoFramerExtensions.Contains(Path.GetExtension(path)))
-                    {
-                        this.editorContainer.Controls.Clear();
-                        //dsoFramer必须先把控件Add上，再打开文件
-                        this.editorContainer.Controls.Add(this.axFramerControl1);
-                        this.axFramerControl1.Open(path);
-                        //this.axFramerControl1.Focus();
-                    }
-                    else if (webBrowerExtensions.Contains(Path.GetExtension(path)))
-                    {
-                        this.editorContainer.Controls.Clear();
-                        this.webBrower.Navigate(path);
-                        this.editorContainer.Controls.Add(this.webBrower);
-                        this.webBrower.Focus();
-                    }
-                    else
-                    {
-                        string content = File.ReadAllText(path);
-                        this.editorContainer.Controls.Clear();
-                        txtCode.LoadFile(path);
-                        this.editorContainer.Controls.Add(this.txtCode);
-                        txtCode.Focus();
-                    }
-                }
-                //}
-                //finally
-                //{
-                //    ShowOpenFileWithDialog(path);
-                //}
 
+                    #region 打开文件
+                    string dsoFramerExtensionString = ".doc,.docx,.rtf,.ppt,.odt,.docm,.dotx,.dotm,.dot,.xls,";
+                    string generalExtensionString = ".txt,.cs,.vb,.java,.cpp,.il,.xml,.config,";
+                    string webBrowerExtensionString = ".htm,.html,.mht,.pdf,";
+
+                    string[] generalExtensions = generalExtensionString.Split(',');
+                    string[] dsoFramerExtensions = dsoFramerExtensionString.Split(',');
+                    string[] webBrowerExtensions = webBrowerExtensionString.Split(',');
+                    string[] extensions = (dsoFramerExtensionString + generalExtensionString + webBrowerExtensionString).TrimEnd(',').Split(',');
+                    string path = selectNode.Tag.ToString();
+                    try
+                    {
+
+                        if (extensions.Contains(Path.GetExtension(path)))
+                        {
+                            if (dsoFramerExtensions.Contains(Path.GetExtension(path)))
+                            {
+                                this.editorContainer.Controls.Clear();
+                                //dsoFramer必须先把控件Add上，再打开文件
+                                this.editorContainer.Controls.Add(this.axFramerControl1);
+                                this.axFramerControl1.Open(path);
+                                //this.axFramerControl1.Focus();
+                            }
+                            else if (webBrowerExtensions.Contains(Path.GetExtension(path)))
+                            {
+                                this.editorContainer.Controls.Clear();
+                                this.webBrower.Navigate(path);
+                                this.editorContainer.Controls.Add(this.webBrower);
+                                this.webBrower.Focus();
+                            }
+                            else
+                            {
+                                string content = File.ReadAllText(path);
+                                this.editorContainer.Controls.Clear();
+                                txtCode.LoadFile(path);
+                                this.editorContainer.Controls.Add(this.txtCode);
+                                txtCode.Focus();
+                            }
+                            txtFileName.Text = path.ToString();
+                        }
+                        else
+                        {
+                            OpenFileBySystem(path);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        this.ShowMessage(ex);
+                        OpenFileBySystem(path);
+                    }
+                    #endregion
+                }
+            }
+        }
+
+        private void OpenFileBySystem(string path)
+        {
+            try
+            {
+                Process pc = Process.Start(path);
+                if (pc != null)
+                {
+                    pc.CloseMainWindow();
+                }
+            }
+            catch
+            {
+                ShowOpenFileWithDialog(path);
             }
         }
 
@@ -142,7 +180,7 @@ namespace Justin.Controls.CodeSnippet
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
 
         }
-         
+
         private void CreateWebBrower()
         {
             this.webBrower.Dock = DockStyle.Fill;
@@ -182,6 +220,45 @@ namespace Justin.Controls.CodeSnippet
 
                 txtFolder.Text = fileDirectory = folderBrowserDialog1.SelectedPath;
                 InitTree();
+            }
+        }
+
+        private void tvDirectory_AfterExpand(object sender, TreeViewEventArgs e)
+        {
+            foreach (TreeNode childNode in e.Node.Nodes)
+            {
+                if (childNode.ImageIndex == 0)
+                {
+                    string childFolder = childNode.Tag.ToString();
+                    if (childNode.Nodes.Count > 0)
+                    {
+                        continue;
+                    }
+                    DirectoryInfo childDir = new DirectoryInfo(childFolder);
+                    foreach (DirectoryInfo childChildDir in childDir.GetDirectories())
+                    {
+                        if (childChildDir.Attributes == FileAttributes.Hidden)
+                        {
+                            continue;
+                        }
+                        TreeNode childChildNode = new TreeNode(childChildDir.Name);
+                        childChildNode.Tag = childChildDir.FullName;
+                        //名字作为节点索引。
+                        childChildNode.Name = childChildDir.FullName;
+                        childChildNode.ImageIndex = childChildNode.SelectedImageIndex = 0;
+                        childNode.Nodes.Add(childChildNode);
+                    }
+                    foreach (FileInfo file in childDir.GetFiles().OrderBy(row => row.Extension).ThenBy(row => row.FullName))
+                    {
+                        string strExt = Path.GetExtension(file.FullName);
+                        if (!imageListOfDirectory.Images.ContainsKey(strExt))
+                        {
+                            imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName, true));
+                        }
+                        childNode.Nodes.Add(new TreeNode(file.Name) { Name = file.FullName, Tag = file.FullName, ImageKey = strExt, SelectedImageKey = strExt });
+                    }
+
+                }
             }
         }
     }
