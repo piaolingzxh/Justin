@@ -46,6 +46,7 @@ namespace Justin.Stock.Controls
             BindMyStocks(StockService.MyStock);
 
             #endregion
+            dgvStocksetting.AutoGenerateColumns = false;
         }
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
@@ -186,9 +187,9 @@ namespace Justin.Stock.Controls
                 int buyCount = row.Cells["BuyCount"].Value.Value<int>();
                 bool showInFolatWindow = row.Cells["ShowInFolatWindow"].Value.Value<bool>();
                 int order = row.Cells["Order"].Value.Value<int>();
-                decimal hasProfitOrLoss = row.Cells["HasProfitOrLoss"].Value.Value<decimal>();
+                string profitOrLossHistory = row.Cells["profitOrLossHistory"].Value.Value<string>();
 
-                stockDAL.UpdateStock(code, name, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, showInFolatWindow, order, hasProfitOrLoss);
+                stockDAL.UpdateStock(code, name, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, showInFolatWindow, order, profitOrLossHistory);
             }
             Constants.ResetMyStock();
         }
@@ -199,8 +200,9 @@ namespace Justin.Stock.Controls
         }
         private void RefreshPersonalStockSetting()
         {
-
-            dgvStocksetting.DataSource = stockDAL.Query("select * from  MyStocks order by [order] desc,  BuyCount desc");
+            //DataTable table = stockDAL.Query("select * from  MyStocks order by [order] desc,  BuyCount desc");
+            List<StockInfo> stockList = stockDAL.getAllMyStock();
+            dgvStocksetting.DataSource = stockList;
             foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
             {
                 if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())

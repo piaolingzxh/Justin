@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Release\vsx\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,13 +41,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Justin.FrameWork">
-      <HintPath>..\..\..\Relese\Justin.FrameWork.dll</HintPath>
+      <HintPath>..\..\..\Release\Justin.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="Justin.FrameWork.WinForm">
-      <HintPath>..\..\..\Relese\Justin.FrameWork.WinForm.dll</HintPath>
+      <HintPath>..\..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
     </Reference>
     <Reference Include="Justin.Log">
-      <HintPath>..\..\..\Relese\Justin.Log.dll</HintPath>
+      <HintPath>..\..\..\Release\Justin.Log.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />

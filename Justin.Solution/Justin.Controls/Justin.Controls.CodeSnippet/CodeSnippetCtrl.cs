@@ -30,6 +30,7 @@ namespace Justin.Controls.CodeSnippet
         private WebBrowser webBrower = new WebBrowser();
         private string fileDirectory = ConfigurationManager.AppSettings["CodeSnippet"];
 
+        private string folderKey = "folder";
         private void CodeViewCtrl_Load(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(fileDirectory))
@@ -41,10 +42,16 @@ namespace Justin.Controls.CodeSnippet
         {
             DirectoryInfo dir = new DirectoryInfo(fileDirectory);
             if (!dir.Exists) return;
-            TreeNode rootNode = new TreeNode("我的代码段") { Name = fileDirectory, Tag = fileDirectory, ImageIndex = 0, SelectedImageIndex = 0 };
+
+            if (!imageListOfDirectory.Images.ContainsKey(folderKey))
+            {
+                imageListOfDirectory.Images.Add(folderKey, FileHelper.GetDirectoryIcon());
+            }
+
+            TreeNode rootNode = new TreeNode("我的代码段") { Name = fileDirectory, Tag = fileDirectory, ImageKey = folderKey, SelectedImageKey = folderKey };
             tvDirectory.Nodes.Clear();
             tvDirectory.Nodes.Add(rootNode);
-            BindTree(rootNode, dir, 1);
+            BindTreeNode(rootNode, dir, false);
             rootNode.Expand();
             CreateSharpEditor();
             CreateWebBrower();
@@ -65,7 +72,7 @@ namespace Justin.Controls.CodeSnippet
                     string strExt = Path.GetExtension(file.FullName);
                     if (!imageListOfDirectory.Images.ContainsKey(strExt))
                     {
-                        imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName, true));
+                        imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName));
                     }
                     node.Nodes.Add(new TreeNode(file.Name) { Name = file.FullName, Tag = file.FullName, ImageKey = strExt, SelectedImageKey = strExt });
                 }
@@ -77,10 +84,10 @@ namespace Justin.Controls.CodeSnippet
             TreeNode selectNode = tvDirectory.SelectedNode;
             if (selectNode != null && selectNode.Tag != null)
             {
-                if (selectNode.ImageIndex != 0)
+                if (selectNode.ImageKey != folderKey)
                 {
-
                     #region 打开文件
+
                     string dsoFramerExtensionString = ".doc,.docx,.rtf,.ppt,.odt,.docm,.dotx,.dotm,.dot,.xls,";
                     string generalExtensionString = ".txt,.cs,.vb,.java,.cpp,.il,.xml,.config,";
                     string webBrowerExtensionString = ".htm,.html,.mht,.pdf,";
@@ -227,38 +234,54 @@ namespace Justin.Controls.CodeSnippet
         {
             foreach (TreeNode childNode in e.Node.Nodes)
             {
-                if (childNode.ImageIndex == 0)
+                if (childNode.ImageKey == folderKey)
                 {
                     string childFolder = childNode.Tag.ToString();
                     if (childNode.Nodes.Count > 0)
                     {
                         continue;
                     }
-                    DirectoryInfo childDir = new DirectoryInfo(childFolder);
-                    foreach (DirectoryInfo childChildDir in childDir.GetDirectories())
-                    {
-                        if (childChildDir.Attributes == FileAttributes.Hidden)
-                        {
-                            continue;
-                        }
-                        TreeNode childChildNode = new TreeNode(childChildDir.Name);
-                        childChildNode.Tag = childChildDir.FullName;
-                        //名字作为节点索引。
-                        childChildNode.Name = childChildDir.FullName;
-                        childChildNode.ImageIndex = childChildNode.SelectedImageIndex = 0;
-                        childNode.Nodes.Add(childChildNode);
-                    }
-                    foreach (FileInfo file in childDir.GetFiles().OrderBy(row => row.Extension).ThenBy(row => row.FullName))
-                    {
-                        string strExt = Path.GetExtension(file.FullName);
-                        if (!imageListOfDirectory.Images.ContainsKey(strExt))
-                        {
-                            imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName, true));
-                        }
-                        childNode.Nodes.Add(new TreeNode(file.Name) { Name = file.FullName, Tag = file.FullName, ImageKey = strExt, SelectedImageKey = strExt });
-                    }
 
+                    BindTreeNode(childNode, new DirectoryInfo(childFolder), false);
                 }
+            }
+        }
+
+        private void BindTreeNode(TreeNode node, DirectoryInfo crtDir, bool recursion)
+        {
+            //加载该目录下的所有文件夹
+            foreach (DirectoryInfo childDir in crtDir.GetDirectories().Where(row => row.Name != "System Volume Information").OrderBy(row => row.FullName))
+            {
+
+                if (childDir.Attributes == FileAttributes.Hidden)
+                {
+                    continue;
+                }
+                TreeNode childNode = new TreeNode(childDir.Name);
+                childNode.Tag = childDir.FullName;
+                childNode.Name = childDir.FullName;
+
+                if (!imageListOfDirectory.Images.ContainsKey(folderKey))
+                {
+                    imageListOfDirectory.Images.Add(folderKey, FileHelper.GetDirectoryIcon());
+                }
+                childNode.ImageKey = childNode.SelectedImageKey = folderKey;
+
+                if (recursion)
+                {
+                    BindTreeNode(childNode, childDir, recursion);
+                }
+                node.Nodes.Add(childNode);
+            }
+            //加载该目录下的所有文件
+            foreach (FileInfo file in crtDir.GetFiles().OrderBy(row => row.Extension).ThenBy(row => row.FullName))
+            {
+                string strExt = Path.GetExtension(file.FullName);
+                if (!imageListOfDirectory.Images.ContainsKey(strExt))
+                {
+                    imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName));
+                }
+                node.Nodes.Add(new TreeNode(file.Name) { Name = file.FullName, Tag = file.FullName, ImageKey = strExt, SelectedImageKey = strExt });
             }
         }
     }

@@ -30,7 +30,36 @@ namespace Justin.Stock.Service.Entities
         /// <summary>
         /// 历史盈亏
         /// </summary>
-        public decimal HasProfitOrLoss { get; set; }
+        public decimal HasProfitOrLoss
+        {
+            get
+            {
+                return this.ProfitOrLossHistoryData.Sum();
+            }
+        }
+
+        public string ProfitOrLossHistory { get; set; }
+
+        public List<decimal> ProfitOrLossHistoryData
+        {
+            get
+            {
+                List<decimal> datas = new List<decimal>();
+                if (string.IsNullOrEmpty(this.ProfitOrLossHistory) || string.IsNullOrEmpty(this.ProfitOrLossHistory.Trim()))
+                {
+                    return datas;
+                }
+
+                string[] dataStrs = this.ProfitOrLossHistory.Split(',');
+                if (dataStrs == null || dataStrs.Length < 1)
+                    return datas;
+                foreach (var item in dataStrs)
+                {
+                    datas.Add(decimal.Parse(item));
+                }
+                return datas;
+            }
+        }
 
         #endregion
 

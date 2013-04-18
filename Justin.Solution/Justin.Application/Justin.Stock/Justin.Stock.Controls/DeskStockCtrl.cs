@@ -338,7 +338,11 @@ namespace Justin.Stock.Controls
         Label stockLabel;
         private void deskMenu_Opening(object sender, CancelEventArgs e)
         {
-            stockLabel = (Label)(sender as ContextMenuStrip).SourceControl;
+            Control sourceControl = (sender as ContextMenuStrip).SourceControl;
+            if (sourceControl is Label)
+            {
+                stockLabel = sourceControl as Label;
+            }
         }
 
         private void timeSheetMenuItem_Click(object sender, EventArgs e)

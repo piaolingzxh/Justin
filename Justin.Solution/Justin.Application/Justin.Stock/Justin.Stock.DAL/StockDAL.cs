@@ -54,7 +54,7 @@ namespace Justin.Stock.DAL
                 BuyPrice = reader["BuyPrice"].Value<decimal>(),
                 ShowInFolatWindow = reader["ShowInFolatWindow"].Value<bool>(),
                 Order = reader["Order"].Value<int>(),
-                HasProfitOrLoss = reader["HasProfitOrLoss"].Value<decimal>(),
+                ProfitOrLossHistory = reader["ProfitOrLossHistory"].Value<string>(),
             };
             return stock;
         }
@@ -63,18 +63,20 @@ namespace Justin.Stock.DAL
 
         private static string INIT_SQL = @"
 CREATE TABLE [MyStocks] (
-[Code] NVARCHAR(15)  UNIQUE NOT NULL,
-[No] NVARCHAR(15)  NOT NULL,
-[Name] NVARCHAR(15)  NOT NULL,
-[SpellingInShort] NVARCHAR(15)  NOT NULL,
-[WarnPrice_Min] FLOAT  NULL,
-[WarnPrice_Max] FLOAT  NULL,
-[WarnPercent_Min] FLOAT  NULL,
-[WarnPercent_Max] FLOAT  NULL,
-[BuyPrice] FLOAT  NULL,
-[BuyCount] INTEGER  NULL,
-[ShowInFolatWindow] BOOLEAN  NULL
-)";
+  [Code] NVARCHAR(15) NOT NULL UNIQUE, 
+  [No] NVARCHAR(15) NOT NULL, 
+  [Name] NVARCHAR(15) NOT NULL, 
+  [SpellingInShort] NVARCHAR(15) NOT NULL, 
+  [WarnPrice_Min] FLOAT, 
+  [WarnPrice_Max] FLOAT, 
+  [WarnPercent_Min] FLOAT, 
+  [WarnPercent_Max] FLOAT, 
+  [BuyPrice] FLOAT, 
+  [BuyCount] INTEGER, 
+  [ShowInFolatWindow] BOOLEAN, 
+  [Order] INTEGER, 
+  [HasProfitOrLoss] FLOAT, 
+  [ProfitOrLossHistory] TEXT);";
 
         public static void InitDB()
         {
@@ -109,7 +111,7 @@ CREATE TABLE [MyStocks] (
 
             SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, sql, null);
         }
-        public void UpdateStock(string code, string name, string inShort, decimal warnprice_Min, decimal warnprice_Max, decimal warnpercent_Min, decimal warnpercent_Max, decimal buyPrice, int buyCount, bool showInFolatWindow, int order, decimal hasProfitOrLoss)
+        public void UpdateStock(string code, string name, string inShort, decimal warnprice_Min, decimal warnprice_Max, decimal warnpercent_Min, decimal warnpercent_Max, decimal buyPrice, int buyCount, bool showInFolatWindow, int order, string  profitOrLossHistory)
         {
 
             string UPDATE_SQL_FORMAT = @"
@@ -124,10 +126,10 @@ SpellingInShort    ='{1}'
 ,Name              ='{8}'
 ,ShowInFolatWindow={9}
 ,[Order]={10}
-,HasProfitOrLoss={11}  
+,ProfitOrLossHistory='{11}'  
 where Code='{0}'";
 
-            string updateSQL = string.Format(UPDATE_SQL_FORMAT, code, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, name, showInFolatWindow ? 1 : 0, order, hasProfitOrLoss);
+            string updateSQL = string.Format(UPDATE_SQL_FORMAT, code, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, name, showInFolatWindow ? 1 : 0, order, profitOrLossHistory);
             SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, updateSQL, null);
         }
 
