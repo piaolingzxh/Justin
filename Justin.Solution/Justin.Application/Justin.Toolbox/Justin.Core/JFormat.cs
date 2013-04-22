@@ -23,7 +23,7 @@ namespace Justin.Core
             }
             else
             {
-                ProcessBackground pbg = new SyncProcessBackground(Path.Combine(Application.StartupPath, "AStyle.exe"));
+                ProcessBackground pbg = new SyncProcessBackground(Path.Combine(Application.StartupPath, @"Addins\AStyle.exe"));
                 string args = string.Format("--style=allman -N -Y {0}", fileName);
                 pbg.ExecuteCommand(args);
             }
