@@ -202,7 +202,7 @@ namespace Justin.Stock.Controls
         {
             //DataTable table = stockDAL.Query("select * from  MyStocks order by [order] desc,  BuyCount desc");
             List<StockInfo> stockList = stockDAL.getAllMyStock();
-            dgvStocksetting.DataSource = stockList;
+            dgvStocksetting.DataSource = new BindingCollection<StockInfo>(stockList); 
             foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
             {
                 if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())
