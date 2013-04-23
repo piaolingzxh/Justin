@@ -590,9 +590,12 @@ namespace Justin.Workspace
         {
             if (!forceClose)
             {
-                //e.Cancel = true;
-                //this.Hide();
-                if (m_bSaveLayout && !specialFile)
+                if (notifyIcon1.Visible)
+                {
+                    e.Cancel = true;
+                    this.Hide();
+                }
+                else if (m_bSaveLayout && !specialFile)
                 {
                     string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
                     dockPanel.SaveAsXml(configFile);

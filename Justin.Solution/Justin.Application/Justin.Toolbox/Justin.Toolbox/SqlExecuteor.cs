@@ -23,7 +23,11 @@ namespace Justin.Toolbox
         {
             InitializeComponent();
             this.sqlExecuterCtrl1.FileChanged += this.OnFileChanged;
-            this.LoadAction = (fileName) => { this.sqlExecuterCtrl1.LoadFile(fileName); };
+            this.LoadAction = (fileName) =>
+            {
+                this.sqlExecuterCtrl1.LoadFile(fileName);
+                this.ShowInStatus(this.ConnStr);
+            };
             this.SaveAction = (fileName) => { this.sqlExecuterCtrl1.SaveFile(fileName); };
         }
         /// <summary>
@@ -48,6 +52,7 @@ namespace Justin.Toolbox
         private void SqlExecuteor_Load(object sender, EventArgs e)
         {
             this.LoadFile(this.FileName);
+            this.ShowInStatus(this.ConnStr);
         }
 
         #region 继承
@@ -67,7 +72,6 @@ namespace Justin.Toolbox
             set
             {
                 this.sqlExecuterCtrl1.ConnStr = value;
-                base.ConnStr = value;
             }
         }
 

@@ -48,23 +48,18 @@ namespace Justin.Controls.TestDataGenerator.Entities
         public string ConnStr { get; set; }
         public JTable()
         {
-            this.NumericFieldValueFormat = "{0},";
-            this.StringFieldValueFormat = "'{0}',";
-            //this.DateTimeFieldValueFormat = "'{0}'";
-            this.DateTimeFieldValueFormat = "{{ts'{0}'}},";
-
         }
-        public string NumericFieldValueFormat { get; set; }
-        public string StringFieldValueFormat { get; set; }
-        public string DateTimeFieldValueFormat { get; set; }
+        public static string NumericFieldValueFormat = "{0}";
+        public static string StringFieldValueFormat = "'{0}'";
+        public static string DateTimeFieldValueFormat = "{{ts'{0}'}}";
         private string GetFileValueFormat(JValueType valueType)
         {
             switch (valueType)
             {
-                case JValueType.Numeric: return this.NumericFieldValueFormat;
-                case JValueType.String: return this.StringFieldValueFormat;
-                case JValueType.DateTime: return this.DateTimeFieldValueFormat;
-                default: return this.StringFieldValueFormat;
+                case JValueType.Numeric: return NumericFieldValueFormat + ",";
+                case JValueType.String: return StringFieldValueFormat + ",";
+                case JValueType.DateTime: return DateTimeFieldValueFormat + ",";
+                default: return StringFieldValueFormat;
             }
         }
 
@@ -554,7 +549,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
     }
 
     #endregion
-    
+
 
 
 }

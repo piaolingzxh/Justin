@@ -31,6 +31,18 @@ namespace Justin.Toolbox
 
             InitializeComponent();
             TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
+            string fieldValueFormat = ConfigurationManager.AppSettings["FieldValueFormat"];
+            if (!string.IsNullOrEmpty(fieldValueFormat))
+            {
+                string[] formats = fieldValueFormat.Trim().Split(',');
+                if (formats.Length == 3)
+                {
+                    JTable.NumericFieldValueFormat = formats[0];
+                    JTable.StringFieldValueFormat = formats[1];
+                    JTable.DateTimeFieldValueFormat = formats[2];
+                }
+
+            }
             this.tableConfigCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) =>
             {
@@ -49,8 +61,11 @@ namespace Justin.Toolbox
         public TableConfigurator(string[] args)
             : this()
         {
-            this.FileName = args[0];
-            this.ConnStr = args.Length > 1 ? args[1] : "";
+            if (args != null)
+            {
+                this.FileName = args[0];
+                this.ConnStr = args.Length > 1 ? args[1] : "";
+            }
         }
         public TableConfigurator(JTable table, string connStr = "")
             : this()
