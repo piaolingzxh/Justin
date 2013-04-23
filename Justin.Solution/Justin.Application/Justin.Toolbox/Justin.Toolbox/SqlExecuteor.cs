@@ -8,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Justin.BI.DBLibrary.TestDataGenerate;
-using Justin.BI.DBLibrary.Utility;
 using Justin.Core;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;

@@ -101,12 +101,6 @@
     <Content Include="Images\save.png" />
     <Content Include="Images\zhineng.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Justin.BI.DBLibrary\Justin.BI.DBLibrary.csproj">
-      <Project>{b58020eb-6ec4-42f1-a81d-3004481b9b8d}</Project>
-      <Name>Justin.BI.DBLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

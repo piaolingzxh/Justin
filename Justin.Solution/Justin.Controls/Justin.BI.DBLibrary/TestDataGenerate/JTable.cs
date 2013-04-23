@@ -17,6 +17,7 @@ namespace Justin.BI.DBLibrary.TestDataGenerate
     public class JTable
     {
         public JTable(DBTable dbTable, string connStr)
+            : this()
         {
             this.TableName = dbTable.TableName;
             this.Fields = new List<JField>();
@@ -45,7 +46,6 @@ namespace Justin.BI.DBLibrary.TestDataGenerate
         {
             this.NumericFieldValueFormat = "{0},";
             this.StringFieldValueFormat = "'{0}',";
-            //this.DateTimeFieldValueFormat = "'{0}'";
             //this.DateTimeFieldValueFormat = "'{0}'";
             this.DateTimeFieldValueFormat = "{{ts'{0}'}},";
 
@@ -150,288 +150,6 @@ namespace Justin.BI.DBLibrary.TestDataGenerate
                                 }
                             }
 
-                            #region 生成Value 注释掉
-
-                            //switch (field.FirstOperand.ValueCategroy)
-                            //{
-                            //    case JValueCategroy.List:
-
-                            //        #region List不管是DateTime、Numeric、String处理方式都一样
-
-                            //        object[] values = field.FirstOperand.Values.ToArray();
-                            //        int listCount = field.FirstOperand.Values.Count();
-                            //        int randNum = rd.Next(0, listCount);
-                            //        value = values[randNum];
-                            //        break;
-
-                            //        #endregion
-
-                            //    case JValueCategroy.Range:
-
-                            //        #region Range
-
-                            //        switch (field.ValueType)
-                            //        {
-                            //            case JValueType.DateTime:
-
-                            //                #region Range
-
-                            //                DateTime minDate = DateTime.Parse(field.FirstOperand.MinValue.ToJString());
-                            //                DateTime maxDate = DateTime.Parse(field.FirstOperand.MaxValue.ToJString());
-                            //                int minutesDiff = (int)(maxDate - minDate).TotalMinutes;
-                            //                int randMinutes = rd.Next(0, minutesDiff);
-                            //                value = minDate.AddMinutes(randMinutes);
-
-                            //                break;
-
-                            //                #endregion
-
-                            //            case JValueType.Numeric:
-
-                            //                #region Range
-
-                            //                decimal maxSeed = decimal.Parse(field.FirstOperand.MaxValue.ToJString());
-                            //                decimal minSeed = decimal.Parse(field.FirstOperand.MinValue.ToJString());
-                            //                if (maxSeed <= 1)
-                            //                {
-                            //                    maxSeed = maxSeed * 10000;
-                            //                    minSeed = minSeed * 10000;
-                            //                    value = (decimal)rd.Next((int)minSeed, (int)maxSeed) / 10000;
-                            //                }
-                            //                else
-                            //                {
-                            //                    value = rd.Next((int)minSeed, (int)maxSeed);
-                            //                }
-
-                            //                break;
-
-                            //                #endregion
-
-                            //            case JValueType.String:
-
-                            //                value = String.Format(field.FirstOperand.Format, rd.Next((Int32)field.FirstOperand.MinValue, (Int32)field.FirstOperand.MaxValue));
-
-                            //                break;
-
-                            //        }
-                            //        break;
-
-                            //        #endregion
-
-                            //    case JValueCategroy.Sequence:
-
-                            //        #region Sequence
-
-                            //        switch (field.ValueType)
-                            //        {
-                            //            case JValueType.DateTime:
-                            //                #region Sequence
-
-                            //                throw GetException(field.FieldName, field.ValueType, field.FirstOperand.ValueCategroy);
-
-                            //                #endregion
-
-                            //            case JValueType.Numeric:
-                            //                #region Sequence
-
-                            //                value = field.FirstOperand.MinValue;
-                            //                field.FirstOperand.MinValue = int.Parse(field.FirstOperand.MinValue.ToJString("0")) + int.Parse(field.FirstOperand.Step.ToJString("0"));
-                            //                break;
-
-                            //                #endregion
-
-                            //            case JValueType.String:
-
-                            //                value = String.Format(field.Format, field.FirstOperand.MinValue);
-                            //                field.FirstOperand.MinValue = int.Parse(field.FirstOperand.MinValue.ToJString("0")) + int.Parse(field.FirstOperand.Step.ToJString("0"));
-                            //                break;
-
-                            //        }
-                            //        break;
-
-                            //        #endregion
-
-                            //    case JValueCategroy.FromTable:
-
-                            //        #region FromTable
-
-                            //        string refTableName = field.FirstOperand.ReferenceTableName;
-                            //        string refColumnName = field.FirstOperand.ReferenceColumnName;
-                            //        List<string> parameters = new List<string>();
-                            //        string filterFormat = field.FirstOperand.RefFilter.ToParameters(parameters);
-                            //        List<object> parameterValues = new List<object>();
-                            //        foreach (var item in parameters)
-                            //        {
-                            //            parameterValues.Add(dataRow[item]);
-                            //        }
-                            //        string refFilter = string.Format(filterFormat, parameterValues.ToArray());
-
-
-                            //        SourceFieldData tempData =
-                            //            tempData = new SourceFieldData()
-                            //            {
-                            //                fieldName = refColumnName,
-                            //                TableName = refTableName,
-                            //                Values = CommonDAL.GetValues(refTableName, refColumnName, refFilter).ToArray()
-                            //            };
-
-                            //        value = tempData.Values[rd.Next(0, tempData.Values.Count())];
-
-                            //        if (field.FirstOperand.FromTableCalculateValueUseOtherField)
-                            //        {
-
-                            //            switch (field.ValueType)
-                            //            {
-                            //                case JValueType.DateTime:
-
-                            //                    DateTime dtValue = DateTime.Parse(value.ToJString(DateTime.Now.ToString()));
-                            //                    decimal value2 = field.FirstOperand.OtherFiledCalculateValue;
-                            //                    #region 随机操作数
-
-                            //                    if (field.FirstOperand.RandOtherFiledCalculateValue)
-                            //                    {
-                            //                        decimal otherMaxSeed = decimal.Parse(field.FirstOperand.MaxValue.ToJString());
-                            //                        decimal otherMinSeed = decimal.Parse(field.FirstOperand.MinValue.ToJString());
-                            //                        if (otherMaxSeed <= 1)
-                            //                        {
-                            //                            otherMaxSeed = otherMaxSeed * 10000;
-                            //                            otherMinSeed = otherMinSeed * 10000;
-                            //                            value2 = (decimal)rd.Next((int)otherMinSeed, (int)otherMaxSeed) / 10000;
-                            //                        }
-                            //                        else
-                            //                        {
-                            //                            value2 = rd.Next((int)otherMinSeed, (int)otherMaxSeed);
-                            //                        }
-                            //                    }
-
-                            //                    #endregion
-
-                            //                    value = dtValue.AddDays((double)value2);
-
-                            //                    break;
-                            //            }
-                            //        }
-                            //        break;
-
-                            //        #endregion
-
-                            //    case JValueCategroy.OtherField:
-
-                            //        #region OtherField 数据准备
-                            //        JField otherField = table.Fields.Where(row => row.FieldName == field.FirstOperand.OtherFiledName).FirstOrDefault();
-                            //        if (otherField == null)
-                            //        {
-                            //            throw new Exception("");
-                            //        }
-                            //        if (!dataRow.ContainsKey(field.FirstOperand.OtherFiledName))
-                            //        {
-                            //            throw new Exception("");
-                            //        }
-                            //        object tempOtherFieldValue = dataRow[field.FirstOperand.OtherFiledName];
-
-                            //        #endregion
-
-                            //        #region 计算
-
-                            //        if (field.FirstOperand.OtherFiledCalculateValue != 0 || (field.FirstOperand.OtherFiledCalculateValue == 0 && field.FirstOperand.RandOtherFiledCalculateValue))
-                            //        {
-                            //            switch (field.ValueType)
-                            //            {
-                            //                case JValueType.DateTime:
-                            //                    decimal dtvalue2 = field.FirstOperand.OtherFiledCalculateValue;
-                            //                    #region 随机操作数
-
-                            //                    if (field.FirstOperand.RandOtherFiledCalculateValue)
-                            //                    {
-                            //                        decimal otherMaxSeed = decimal.Parse(field.FirstOperand.MaxValue.ToJString());
-                            //                        decimal otherMinSeed = decimal.Parse(field.FirstOperand.MinValue.ToJString());
-                            //                        if (otherMaxSeed <= 1)
-                            //                        {
-                            //                            otherMaxSeed = otherMaxSeed * 10000;
-                            //                            otherMinSeed = otherMinSeed * 10000;
-                            //                            dtvalue2 = (decimal)rd.Next((int)otherMinSeed, (int)otherMaxSeed) / 10000;
-                            //                        }
-                            //                        else
-                            //                        {
-                            //                            dtvalue2 = rd.Next((int)otherMinSeed, (int)otherMaxSeed);
-                            //                        }
-                            //                    }
-
-                            //                    #endregion
-
-
-
-                            //                    switch (field.FirstOperand.OtherFiledCalculate)
-                            //                    {
-                            //                        case "+":
-                            //                            //dtvalue2 = dtvalue2; 
-                            //                            break;
-                            //                        case "-":
-                            //                            dtvalue2 = -dtvalue2;
-                            //                            break;
-                            //                        case "*":
-                            //                            //dtvalue2 = dtvalue2;
-                            //                            break;
-                            //                        case "/":
-                            //                            //dtvalue2 = dtvalue2; 
-                            //                            break;
-                            //                    }
-                            //                    value = DateTime.Parse(tempOtherFieldValue.ToJString(DateTime.Now.ToString())).AddDays((double)dtvalue2);
-                            //                    break;
-                            //                case JValueType.Numeric:
-                            //                    if (otherField.ValueType == JValueType.Numeric)
-                            //                    {
-                            //                        decimal value1 = decimal.Parse(tempOtherFieldValue.ToJString(DateTime.Now.ToString()));
-                            //                        decimal value2 = field.FirstOperand.OtherFiledCalculateValue;
-                            //                        #region 随机操作数
-
-                            //                        if (field.FirstOperand.RandOtherFiledCalculateValue)
-                            //                        {
-                            //                            decimal otherMaxSeed = decimal.Parse(field.FirstOperand.MaxValue.ToJString());
-                            //                            decimal otherMinSeed = decimal.Parse(field.FirstOperand.MinValue.ToJString());
-                            //                            if (otherMaxSeed <= 1)
-                            //                            {
-                            //                                otherMaxSeed = otherMaxSeed * 10000;
-                            //                                otherMinSeed = otherMinSeed * 10000;
-                            //                                value2 = (decimal)rd.Next((int)otherMinSeed, (int)otherMaxSeed) / 10000;
-                            //                            }
-                            //                            else
-                            //                            {
-                            //                                value2 = rd.Next((int)otherMinSeed, (int)otherMaxSeed);
-                            //                            }
-                            //                        }
-
-                            //                        #endregion
-
-                            //                        switch (field.FirstOperand.OtherFiledCalculate)
-                            //                        {
-                            //                            case "+": value = value1 + value2; break;
-                            //                            case "-": value = value1 - value2; break;
-                            //                            case "*": value = value1 * value2; break;
-                            //                            case "/": value = value1 / value2; break;
-                            //                        }
-                            //                    }
-                            //                    break;
-                            //                case JValueType.String:
-
-                            //                    break;
-                            //            }
-                            //        }
-                            //        else
-                            //        {
-                            //            value = field.FirstOperand.OtherFiledCalculateValue;
-                            //        }
-
-                            //        break;
-
-                            //        #endregion
-
-                            //}
-
-
-                            #endregion
-
-
                             fieldValueBuilder.AppendFormat(
                              GetFileValueFormat(field.ValueType)
                              , field.ValueType == JValueType.DateTime ? DateTime.Parse(value.ToString()).ToString("yyyy-MM-dd HH:mm:ss") : value
@@ -482,7 +200,7 @@ namespace Justin.BI.DBLibrary.TestDataGenerate
                 File.Delete(fileName);
             }
 
-            SerializeHelper.XmlSerializeToFile<JTable>(this, fileName);       
+            SerializeHelper.XmlSerializeToFile<JTable>(this, fileName);
         }
         public bool Modified { get; set; }
     }
@@ -774,19 +492,7 @@ namespace Justin.BI.DBLibrary.TestDataGenerate
             return value;
         }
     }
-    ///// <summary>
-    ///// 操作符
-    ///// </summary>
-    //public enum Operator
-    //{
-    //    None,
-    //    Add,
-    //    Subtract,
-    //    Multiply,
-    //    Divide,
-    //    Remainder,  
-    //}
-
+    
     public enum JValueCategroy
     {
         List,

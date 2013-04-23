@@ -1,4 +1,4 @@
-﻿using Justin.BI.DBLibrary.Controls;
+﻿using Justin.Controls.TestDataGenerator.Controls;
 namespace Justin.Controls.TestDataGenerator
 {
     partial class TableConfigCtrl
@@ -58,8 +58,8 @@ namespace Justin.Controls.TestDataGenerator
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.cBoxOperator = new System.Windows.Forms.ComboBox();
             this.SaveFieldInfo = new System.Windows.Forms.Button();
-            this.operandCtrl1 = new Justin.BI.DBLibrary.Controls.OperandCtrl();
-            this.operandCtrl2 = new Justin.BI.DBLibrary.Controls.OperandCtrl();
+            this.operandCtrl1 = new Justin.Controls.TestDataGenerator.Controls.OperandCtrl();
+            this.operandCtrl2 = new Justin.Controls.TestDataGenerator.Controls.OperandCtrl();
             this.tabTable = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.txtDataCount = new System.Windows.Forms.TextBox();

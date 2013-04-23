@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\IEnumerableEx.cs" />
     <Compile Include="Entities\BindingCollection~.cs" />
     <Compile Include="Extensions\CellSetEx.cs" />
     <Compile Include="Helper\MdxHelper.cs" />
@@ -73,8 +74,8 @@
     <Compile Include="Helper\SqlHelper.cs" />
     <Compile Include="Helper\SqliteHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\JCodeCompiler.cs" />
-    <Compile Include="Utility\JMail.cs" />
+    <Compile Include="obj\Utility\JCodeCompiler.cs" />
+    <Compile Include="obj\Utility\JMail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Helper\App.config" />

@@ -62,5 +62,19 @@ namespace Justin.FrameWork.WinForm.FormUI
                 FileChanged(fileName);
             }
         }
+
+
+        public virtual string ConnStr { get; set; }
+        public void CheckConnStringAssigned(Action action)
+        {
+            if (!string.IsNullOrEmpty(ConnStr))
+            {
+                action();
+            }
+            else
+            {
+                this.ShowMessage("请选择数据源。");
+            }
+        }
     }
 }

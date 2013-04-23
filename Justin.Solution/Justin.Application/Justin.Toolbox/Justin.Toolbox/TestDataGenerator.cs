@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using Justin.BI.DBLibrary.TestDataGenerate;
 using Justin.FrameWork.Helper;
 using System.Configuration;
 using WeifenLuo.WinFormsUI.Docking;
@@ -18,9 +17,11 @@ using Justin.Log;
 using System.Security.AccessControl;
 using Justin.Toolbox;
 using Justin.FrameWork.Settings;
-using Justin.BI.DBLibrary.Utility;
-using Justin.BI.DBLibrary.DAL;
 using Justin.Core;
+using Justin.Controls.TestDataGenerator.Entities;
+using Justin.Controls.TestDataGenerator.DAL;
+using Justin.Controls.TestDataGenerator.Utility;
+using Justin.Controls.TestDataGenerator;
 
 
 namespace Justin.Toolbox
@@ -43,13 +44,15 @@ namespace Justin.Toolbox
 
         private void ShowConfigTableForm(JTable table)
         {
-            TableConfigurator form = new TableConfigurator(table);
+            TableConfigurator form = new TableConfigurator(table, this.ConnStr);
             form.MdiParent = this.MdiParent;
+            form.ShowStatus = true;
             form.Show();
         }
 
         private DBTable GetDBTableBySourceTreeNode(TreeNode sourceTreeNode)
         {
+            //找到table节点，返回tag中的DBTable信息
             var node = sourceTreeNode;
             while (node != null)
             {
@@ -68,9 +71,25 @@ namespace Justin.Toolbox
 
         #endregion
 
+        #region 窗体事件
+
+        private void fomr1_Load(object sender, EventArgs e)
+        {
+            ToolTip tips = new ToolTip();
+            this.SetToolTipsForButton(tips);
+        }
+
+        #endregion
+
+        #region 树 事件
+
         private void tvAllTables_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             e.Node.Checked = !e.Node.Checked;
+        }
+        private void tvAllTables_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            tvAllTables.SelectedNode = e.Node;
         }
 
         #region TtvSource事件
@@ -85,8 +104,8 @@ namespace Justin.Toolbox
             DBTable dbTable = GetDBTableBySourceTreeNode(tvSource.SelectedNode);
             if (dbTable != null)
             {
-                string fileName = JTools.GetFileName(dbTable.TableName, FileType.TableConfig);
-                JTable table = JTools.ReadTableSettingByFile(fileName);
+                string fileName = TableConfigCtrl.GetFullFileName(dbTable.TableName, TableConfigCtrl.configFileExtensions);
+                JTable table = SerializeHelper.XmlDeserializeFromFile<JTable>(fileName);
                 ShowConfigTableForm(table);
                 this.ShowMessage(string.Format("已加载表【{0}】的配置文件[{1}]", dbTable.TableName, fileName));
             }
@@ -105,6 +124,8 @@ namespace Justin.Toolbox
                 }
             });
         }
+
+        #endregion
 
         #endregion
 
@@ -185,31 +206,15 @@ namespace Justin.Toolbox
 
         #endregion
 
-        private void fomr1_Load(object sender, EventArgs e)
-        {
-
-            ToolTip tips = new ToolTip();
-
-            foreach (Control item in this.Controls)
-            {
-                JTools.SetToolTips(item, tips);
-            }
-
-        }
+        #region override
 
         protected override string GetPersistString()
         {
             return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.ConnStr);
         }
 
-        private void tvAllTables_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            tvAllTables.SelectedNode = e.Node;
-        }
-
+        #endregion
 
     }
-
-
 
 }

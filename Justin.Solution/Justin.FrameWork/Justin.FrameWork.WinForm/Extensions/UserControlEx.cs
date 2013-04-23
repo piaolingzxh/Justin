@@ -31,5 +31,13 @@ namespace System.Windows.Forms
             }
         }
 
+
+        public static void ShowTips(this UserControl instance, ToolTip tips)
+        {
+            foreach (Control item in instance.Controls)
+            {
+                item.SetToolTipsForButton(tips);
+            }
+        }
     }
 }

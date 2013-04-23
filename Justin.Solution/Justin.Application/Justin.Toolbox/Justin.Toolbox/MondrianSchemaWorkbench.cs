@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
-using Justin.BI.DBLibrary.TestDataGenerate;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.WinForm.FormUI.SharpCodeTextEditor;
 using Justin.FrameWork.Settings;

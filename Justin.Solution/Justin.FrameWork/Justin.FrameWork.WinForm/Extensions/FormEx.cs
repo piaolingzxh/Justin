@@ -22,8 +22,6 @@ namespace System.Windows.Forms
             ShowWindow(form.Handle, 4);
         }
 
-
-
         public static void ShowMessage(this Form instance, Exception ex, bool native = false)
         {
             if (LogService.Instance.MessageReceived != null)
@@ -43,6 +41,16 @@ namespace System.Windows.Forms
                 {
                     tempEvent(null, new MessageReceivedEventArgs(msg));
                 }
+            }
+        }
+
+
+
+        public static void ShowTips(this Form instance, ToolTip tips)
+        {
+            foreach (Control  item in instance.Controls)
+            {
+                item.SetToolTipsForButton(tips);
             }
         }
     }

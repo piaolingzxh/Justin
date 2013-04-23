@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AssociationManager;
-using Justin.BI.DBLibrary.TestDataGenerate;
 using Microsoft.Win32;
-using Justin.BI.DBLibrary.Utility;
 using Justin.Core;
+using Justin.Controls.TestDataGenerator.Entities;
+using Justin.Controls.TestDataGenerator.Utility;
+
 
 namespace Justin.Toolbox
 {
@@ -29,10 +30,10 @@ namespace Justin.Toolbox
 
             this.cListBoxFileExtension.Items.Clear();
 
-            foreach (FileType item in Enum.GetValues(typeof(FileType)))
-            {
-                this.cListBoxFileExtension.Items.Add(item.GetDefaultFileExtension());
-            }
+            //foreach (FileType item in Enum.GetValues(typeof(FileType)))
+            //{
+            //    this.cListBoxFileExtension.Items.Add(item.GetDefaultFileExtension());
+            //}
         }
 
         private void btnDoFileAssociate_Click(object sender, EventArgs e)

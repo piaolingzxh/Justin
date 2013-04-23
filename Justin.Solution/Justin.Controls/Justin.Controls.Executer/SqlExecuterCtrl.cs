@@ -10,11 +10,8 @@ using System.IO;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
 using Justin.Log;
-using Justin.BI.DBLibrary.TestDataGenerate;
-using Justin.BI.DBLibrary.Utility;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
-using Justin.FrameWork.WinForm.Extensions;
 using Justin.FrameWork.WinForm.Helper;
 
 namespace Justin.Controls.Executer
@@ -205,11 +202,7 @@ namespace Justin.Controls.Executer
 分段SQL结束符：{1}
 ", Constants.SQLParagraphStartFlag, Constants.SQLParagraphEndFlag);
             ToolTip tips = new ToolTip();
-
-            foreach (Control item in this.Controls)
-            {
-                JTools.SetToolTips(item, tips);
-            }
+            this.SetToolTipsForButton(tips);
             #endregion
 
             #region openFileDialog
@@ -217,12 +210,13 @@ namespace Justin.Controls.Executer
             openFileDialog.InitialDirectory = Constants.OuputSQLFileFolder;
 
             StringBuilder filterBuilder = new StringBuilder();
-            FileInfoAttribute fia = FileType.SQL.GetFileInfoAttribute();
-            filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fia.DefaultFileExtension, fia.DefaultDisplayName);
-            foreach (string fileExtension in fia.GetAllowFileExtensions(true))
-            {
-                filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fileExtension, fileExtension);
-            }
+            //FileInfoAttribute fia = FileType.SQL.GetFileInfoAttribute();
+            //filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fia.DefaultFileExtension, fia.DefaultDisplayName);
+            //foreach (string fileExtension in fia.GetAllowFileExtensions(true))
+            //{
+            //    filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, fileExtension, fileExtension);
+            //}
+            filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, "sql", "sql文件");
             filterBuilder.AppendFormat(Constants.OpenFileDialogFilterFormart, "*", "所有");
             openFileDialog.Filter = filterBuilder.ToString().TrimEnd('|');
 

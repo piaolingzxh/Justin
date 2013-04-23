@@ -8,9 +8,10 @@ namespace Justin.Core
     public interface IFormat
     {
     }
-    
+
     public interface IDB
     {
         string ConnStr { get; set; }
+        void CheckConnStringAssigned(Action action);
     }
 }

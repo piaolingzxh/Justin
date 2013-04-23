@@ -99,6 +99,10 @@ namespace Justin.Workspace
             string dllName = query != null ? query.DllFileName : "";
 
             JForm form = CreateJDockForm(className, dllName, args == null ? null : new object[] { args });
+            if (form is IDB)
+            {
+                form.ShowStatus = true;
+            }
             return form;
         }
         protected virtual void OpenFileAccordingToFile(string fileName) { }
@@ -433,7 +437,6 @@ namespace Justin.Workspace
         #region 动态菜单
 
         string fileNameOfAddin = "Justin.Toolbox.addin";
-        string addinFolder = @"addins";
         protected AddinConfig addinConfig;
 
         protected void DynamicMenuGenerate()
@@ -520,6 +523,10 @@ namespace Justin.Workspace
                 return;
             }
             JForm form = CreateJDockForm(classInfo[0], classInfo[2], string.IsNullOrEmpty(fileName) ? null : new object[] { new string[] { fileName } });
+            if (form is IDB)
+            {
+                form.ShowStatus = true;
+            }
             form.Show(dockPanel);
         }
 
@@ -636,7 +643,6 @@ namespace Justin.Workspace
                         {
                             if (!Assemblies.ContainsKey(item.DllFileName))
                             {
-                                // string fileName = Path.Combine(Application.StartupPath, addinFolder + item.DllFileName + ".dll");
                                 Assembly assembly = Assembly.Load(item.DllFileName);
                                 Assemblies.Add(item.DllFileName, assembly);
                             }
@@ -687,7 +693,5 @@ namespace Justin.Workspace
             JForm form = this.ActiveMdiChild as JForm;
             form.ShowStatus = !form.ShowStatus;
         }
-
-
     }
 }

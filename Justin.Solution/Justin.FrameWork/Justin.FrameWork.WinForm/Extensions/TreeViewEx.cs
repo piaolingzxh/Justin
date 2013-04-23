@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Extensions;
-namespace Justin.FrameWork.WinForm.Extensions
+namespace System.Windows.Forms
 {
     public static class TreeViewEx
     {

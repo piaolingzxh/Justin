@@ -10,8 +10,6 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using Justin.BI.DBLibrary.TestDataGenerate;
-using Justin.BI.DBLibrary.Utility;
 using Justin.FrameWork.Helper;
 using System.Configuration;
 using WeifenLuo.WinFormsUI.Docking;
@@ -20,6 +18,8 @@ using Justin.FrameWork.Settings;
 using Justin.FrameWork.Extensions;
 using Justin.Core;
 using Justin.FrameWork.WinForm.Models;
+using Justin.Controls.TestDataGenerator.Entities;
+using Justin.Controls.TestDataGenerator;
 
 
 namespace Justin.Toolbox
@@ -28,11 +28,23 @@ namespace Justin.Toolbox
     {
         private TableConfigurator()
         {
-            InitializeComponent();
-            this.tableConfigCtrl1.FileChanged += this.OnFileChanged;
-            this.LoadAction = (fileName) => { this.tableConfigCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.tableConfigCtrl1.SaveFile(fileName); };
 
+            InitializeComponent();
+            TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
+            this.tableConfigCtrl1.FileChanged += this.OnFileChanged;
+            this.LoadAction = (fileName) =>
+            {
+                this.tableConfigCtrl1.LoadFile(fileName);
+                if (!string.IsNullOrEmpty(this.tableConfigCtrl1.TableSetting.ConnStr))
+                {
+                    this.ConnStr = this.tableConfigCtrl1.TableSetting.ConnStr;
+                    this.ShowInStatus(this.ConnStr);
+                }
+            };
+            this.SaveAction = (fileName) =>
+            {
+                this.tableConfigCtrl1.SaveFile(fileName);
+            };
         }
         public TableConfigurator(string[] args)
             : this()
@@ -40,14 +52,23 @@ namespace Justin.Toolbox
             this.FileName = args[0];
             this.ConnStr = args.Length > 1 ? args[1] : "";
         }
-        public TableConfigurator(JTable table)
+        public TableConfigurator(JTable table, string connStr = "")
             : this()
         {
             this.tableConfigCtrl1.TableSetting = table;
-            this.ConnStr = ConnStr;
+            this.ConnStr = !string.IsNullOrEmpty(table.ConnStr) ? table.ConnStr : connStr;
             this.Text = table.TableName;
         }
 
+        private void TableConfigurator_Load(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(this.FileName))
+            {
+                this.LoadFile(this.FileName);
+            }
+
+            this.ShowInStatus(this.ConnStr);
+        }
         private void ConfigTableForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.tableConfigCtrl1.TableSetting == null) return;
@@ -79,7 +100,7 @@ namespace Justin.Toolbox
 
         protected override string GetPersistString()
         {
-            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
+            return string.Format("{1}{0}{2}{0}{3}", Constants.Splitor, GetType().ToString(), this.FileName, this.ConnStr);
         }
 
         public override string ConnStr
@@ -91,7 +112,8 @@ namespace Justin.Toolbox
             set
             {
                 this.tableConfigCtrl1.ConnStr = value;
-                base.ConnStr = value;
+                if (this.tableConfigCtrl1.TableSetting != null)
+                    this.tableConfigCtrl1.TableSetting.ConnStr = value;
             }
         }
 
@@ -108,19 +130,5 @@ namespace Justin.Toolbox
         }
 
         #endregion
-
-        private void TableConfigurator_Load(object sender, EventArgs e)
-        {
-            if (this.tableConfigCtrl1.TableSetting == null)
-            {
-                this.LoadFile(this.FileName);
-            }
-            else
-            { 
-            
-            }
-        }
-
-
     }
 }

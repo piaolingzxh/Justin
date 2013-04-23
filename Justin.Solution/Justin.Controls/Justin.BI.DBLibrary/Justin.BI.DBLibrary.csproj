@@ -54,12 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\OperandCtrl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\OperandCtrl.designer.cs">
-      <DependentUpon>OperandCtrl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ResultTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -86,9 +80,6 @@
     <Compile Include="TestDataGenerate\OperateType.cs" />
     <Compile Include="TestDataGenerate\SourceFieldData.cs" />
     <Compile Include="TestDataGenerate\SqlSyntax.cs" />
-    <Compile Include="Utility\DBConnectDialog.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Utility\DBHelper.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\JTools.cs" />
@@ -99,9 +90,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Controls\OperandCtrl.resx">
-      <DependentUpon>OperandCtrl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SqlResult.resx">
       <DependentUpon>SqlResult.cs</DependentUpon>
     </EmbeddedResource>

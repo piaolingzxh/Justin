@@ -49,12 +49,6 @@ namespace Justin.Core
                 base.Show(this.WorkspaceBase.DockPanel, dockState);
         }
 
-        #region 关闭菜单
-
-
-
-        #endregion
-
         #endregion
 
         private void JDockForm_Load(object sender, EventArgs e)
@@ -68,11 +62,13 @@ namespace Justin.Core
         private void chooseDataBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string tempConnStr = DBConnectDialog.GetConnectionString(DBConnectDialog.DataSourceType.SqlDataSource);
-            if (!string.IsNullOrEmpty(tempConnStr))
+            if (!string.IsNullOrEmpty(tempConnStr) && string.Compare(this.ConnStr, tempConnStr, true) != 0)
             {
                 this.ConnStr = tempConnStr;
-                this.ShowMessage("更改数据源。");
+                OnConnStrChanged(tempConnStr);
+                this.ShowMessage("已更改数据源。");
             }
+
         }
 
         private ToolStripMenuItem FormatFileToolStripMenuItem;
@@ -234,6 +230,8 @@ namespace Justin.Core
 
         #endregion
 
+        #region IFile
+
         public Action<string> LoadAction;
         public Action<string> SaveAction;
         protected virtual string FileName { get; set; }
@@ -278,31 +276,20 @@ namespace Justin.Core
             OnFileChanged(fileName);
         }
 
-        private string connStr = "";
-        public virtual string ConnStr
-        {
-            get
-            {
-                return connStr;
-            }
-            set
-            {
-                string oldConnStr = connStr;
-                connStr = value;
-                if (string.Compare(oldConnStr, value, true) != 0)
-                {
-                    if (ConnStrChanged != null)
-                    {
-                        ConnStrChanged(oldConnStr, value);
-                    }
-                    this.toolStripStatusDataSource.Text = connStr;
-                }
-            }
-        }
+        #endregion
 
+        #region IDB
+
+        //public ConnStrChangDelegate ConnStrChanged;
+        public virtual string ConnStr { get; set; }
+
+        public void OnConnStrChanged(string connStr)
+        {
+            ShowInStatus(connStr);
+        }
         public void CheckConnStringAssigned(Action action)
         {
-            if (!string.IsNullOrEmpty(connStr))
+            if (!string.IsNullOrEmpty(this.ConnStr))
             {
                 action();
             }
@@ -311,7 +298,13 @@ namespace Justin.Core
                 this.ShowMessage("请选择数据源。");
             }
         }
-        public ConnStrChangDelegate ConnStrChanged;
+
+        #endregion
+
+        public void ShowInStatus(string msg)
+        { 
+            this.toolStripStatusDataSource.Text = msg;
+        }
 
         public bool ShowStatus
         {

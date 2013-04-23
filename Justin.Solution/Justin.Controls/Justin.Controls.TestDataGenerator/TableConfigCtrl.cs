@@ -6,8 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Justin.BI.DBLibrary.TestDataGenerate;
-using Justin.BI.DBLibrary.Utility;
+using Justin.Controls.TestDataGenerator.Entities;
+using Justin.Controls.TestDataGenerator.Utility;
 using System.IO;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Extensions;
@@ -15,14 +15,23 @@ using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
 using Justin.FrameWork.WinForm.Helper;
+using Justin.FrameWork.Settings;
 
 namespace Justin.Controls.TestDataGenerator
 {
     public delegate void ConnStrChangDelegate(string oldConnStr, string newConnStr);
     public partial class TableConfigCtrl : JUserControl, IFile
     {
-        public string ConnStr { get; set; }
+        #region 变量
+
+        public static string tableConfigFolder = "";
+        public static string configFileExtensions = ".TableConfig";
+        public static string sqlFileExtensions = ".Sql";
+
         public JTable TableSetting { get; set; }
+
+        #endregion
+
         public TableConfigCtrl()
         {
             InitializeComponent();
@@ -34,135 +43,56 @@ namespace Justin.Controls.TestDataGenerator
             this.SaveAction = (fileName) =>
             {
                 if (TableSetting != null)
+                {
                     this.TableSetting.SaveSettings(fileName);
+                    this.ShowMessage(string.Format("表【{0}】配置【{1}】保存成功!", TableSetting.TableName, fileName));
+                    TableSetting.Modified = false;
+                }
             };
         }
 
+        #region 窗体 按钮事件
 
-        #region tvDst事件
-
-        private void tvDst_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void TableConfigCtrl_Load(object sender, EventArgs e)
         {
-            tvDst.SelectedNode = e.Node;
-        }
-        private void visualeMenuItemOfDst_Click(object sender, EventArgs e)
-        {
-            try
+            if (this.TableSetting != null)
             {
-                if (tvDst.SelectedNode.Parent != null)
+                BindTableToTree();
+            }
+            JTable.SqlProcess = (StringBuilder sqlBuilder, JTable table) =>
+            {
+                string fileName = GetFullFileName(table.TableName, sqlFileExtensions);
+                File.AppendAllText(fileName, sqlBuilder.ToString());
+            };
+
+            ToolTip tips = new ToolTip();
+            this.SetToolTipsForButton(tips);
+        }
+        private void TableConfigCtrl_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (TableSetting.Modified)
+            {
+                TableSetting.Modified = false;
+                DialogResult result = MessageBox.Show("是否保存设置？", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (result == DialogResult.OK)
                 {
-                    string fieldName = tvDst.SelectedNode.Tag.ToString();
-                    JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
-                    field.SetVisible(!field.Visible);
-                    BindFieldInfo(field);
+                    TableSetting.SaveSettings(this.FileName);
+                    this.ShowMessage(string.Format("表【{0}】配置保存成功!", TableSetting.TableName));
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "设置是否生成该列数据", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
-        private void tvDst_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (tvDst.SelectedNode.Parent != null)
-            {
-                string fieldName = tvDst.SelectedNode.Tag.ToString();
-                IEnumerable<string> allFieldNames = TableSetting.Fields.Select(row => row.FieldName);
-                operandCtrl1.PreLoad(allFieldNames);
-                operandCtrl2.PreLoad(allFieldNames);
-                JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
-                BindFieldInfo(field);
-                tabControl1.SelectedIndex = 0;
-            }
-            else
-            {
-                BindTableInfo();
-                tabControl1.SelectedIndex = 1;
-            }
-        }
-
-
-        #endregion
-
-        #region 数据绑定
-
-        private void BindTableToTree()
-        {
-            tvDst.Nodes.Clear();
-            tvDst.ImageList = imageList1;
-            var tableNode = new TreeNode(TableSetting.TableName);
-            tableNode.Tag = TableSetting.TableName;
-            tableNode.ImageIndex = tableNode.SelectedImageIndex = 0;
-            foreach (var field in TableSetting.Fields.OrderBy(row => row.FirstOperand.ValueCategroy).ThenBy(row => row.FieldName))
-            {
-                //var fieldNode = new TreeNode(field.FieldName);
-                //fieldNode.Tag = field.FieldName;
-                //if (field.ValueType == JValueType.DateTime)
-                //{
-                //    fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 4;
-                //}
-                //else if (field.ValueType == JValueType.Numeric)
-                //{
-                //    fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 5;
-                //}
-                //else
-                //{
-                //    fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 1;
-                //}
-                //if (!field.Visible)
-                //{
-                //    if (!field.AllowNull)
-                //    {
-                //        fieldNode.ForeColor = Color.Red;
-                //    }
-                //    else
-                //    {
-                //        fieldNode.ForeColor = Color.OrangeRed;
-                //    }
-                //}
-                TreeNode fieldNode = PrepareNode(field);
-                tableNode.Nodes.Add(fieldNode);
-            }
-            tvDst.Nodes.Add(tableNode);
-            tvDst.ExpandAll();
-            tvDst.SelectedNode = tvDst.Nodes[0];
-            BindTableInfo();
-        }
-        private void BindFieldInfo(JField field)
-        {
-            if (field == null)
-            {
-                return;
-            }
-            lbFieldName.Text = field.FieldName;
-            cBoxValueType.Text = field.ValueType.ToJString();
-            cBoxVisible.Text = field.Visible.ToJString("True");
-
-            cBoxOperator.Text = field.Operator;
-            operandCtrl1.LoadJOperateNum(field.FirstOperand, field.FieldName);
-            operandCtrl2.LoadJOperateNum(field.SecondOperand, field.FieldName);
-        }
-        private void BindTableInfo()
-        {
-            txtDataCount.Text = TableSetting.DataCount.ToJString();
-            txtBeforeSQL.Encoding = System.Text.Encoding.Default;
-            txtBeforeSQL.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
-            txtAfterSQL.Encoding = System.Text.Encoding.Default;
-            txtAfterSQL.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
-            txtBeforeSQL.Text = TableSetting.BeforeSQL;
-            txtAfterSQL.Text = TableSetting.AfterSQL;
-        }
-
-        #endregion
 
         private void btnSaveFieldInfo_Click(object sender, EventArgs e)
         {
             try
             {
-                string tableName = "";
-
+                if (tvDst.SelectedNode == null || tvDst.SelectedNode.ImageIndex == 0)
+                {
+                    this.ShowMessage("请在左侧树中选择字段！");
+                    return;
+                }
                 string fieldName = tvDst.SelectedNode.Tag.ToString();
-                tableName = tvDst.SelectedNode.Parent.Tag.ToString();
+                string tableName = tvDst.SelectedNode.Parent.Tag.ToString();
                 JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
                 field.ValueType = (JValueType)Enum.Parse(typeof(JValueType), cBoxValueType.Text, true);
                 field.SetVisible(bool.Parse(cBoxVisible.Text));
@@ -205,10 +135,7 @@ namespace Justin.Controls.TestDataGenerator
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
-
-            TableSetting.SaveSettings(this.FileName);
-            this.ShowMessage(string.Format("表【{0}】配置保存成功!", TableSetting.TableName));
-            TableSetting.Modified = false;
+            base.SaveFile(this.FileName);
         }
         private void btnGenerateData_Click(object sender, EventArgs e)
         {
@@ -218,20 +145,20 @@ namespace Justin.Controls.TestDataGenerator
                 {
                     return;
                 }
-                string fileName = JTools.GetFileName(TableSetting.TableName, FileType.SQL);
+                string fileName = GetFullFileName(TableSetting.TableName, sqlFileExtensions);
                 if (File.Exists(fileName))
                 {
                     File.Delete(fileName);
                 }
                 TableSetting.Process(this.ConnStr);
-                this.ShowMessage(string.Format("表【{0}】SQL【生成】成功!", TableSetting.TableName));
+                this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
             });
         }
         private void btnExecuteTableSQL_Click(object sender, EventArgs e)
         {
             this.CheckConnStringAssigned(() =>
             {
-                string fileName = JTools.GetFileName(TableSetting.TableName, FileType.SQL);
+                string fileName = GetFullFileName(TableSetting.TableName, sqlFileExtensions);
 
                 using (StreamReader sr = new StreamReader(fileName, Encoding.Default))
                 {
@@ -239,44 +166,51 @@ namespace Justin.Controls.TestDataGenerator
                     SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, sql, null);
 
                 }
-                this.ShowMessage(string.Format("表【{0}】SQL【执行】成功!", TableSetting.TableName));
+                this.ShowMessage(string.Format("表【{0}】SQL【{1}】执行成功!", TableSetting.TableName, fileName));
             });
         }
 
-        #region 功能函数
-
-        private bool CheckTableSetting()
-        {
-            string messageStr = "";
-
-            if (TableSetting.DataCount > 0)
-            {
-                foreach (var field in TableSetting.Fields)
-                {
-                    if (field.FirstOperand == null && field.FirstOperand.ValueCategroy == null)
-                    {
-                        messageStr += string.Format("{0}:{1}需设置SourceValueCategroy", TableSetting.TableName, field.FieldName) + Environment.NewLine;
-                    }
-                }
-            }
-            this.ShowMessage(messageStr);
-            return string.IsNullOrEmpty(messageStr);
-        }
-
-
         #endregion
 
-        private void TableConfigCtrl_FormClosing(object sender, FormClosingEventArgs e)
+        #region 树、树的右键菜单 事件
+
+        private void tvDst_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (TableSetting.Modified)
+            tvDst.SelectedNode = e.Node;
+        }
+        private void visualeMenuItemOfDst_Click(object sender, EventArgs e)
+        {
+            try
             {
-                TableSetting.Modified = false;
-                DialogResult result = MessageBox.Show("是否保存设置？", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                if (result == DialogResult.OK)
+                if (tvDst.SelectedNode.Parent != null)
                 {
-                    TableSetting.SaveSettings(this.FileName);
-                    this.ShowMessage(string.Format("表【{0}】配置保存成功!", TableSetting.TableName));
+                    string fieldName = tvDst.SelectedNode.Tag.ToString();
+                    JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
+                    field.SetVisible(!field.Visible);
+                    BindFieldInfo(field);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "设置是否生成该列数据", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void tvDst_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (tvDst.SelectedNode.Parent != null)
+            {
+                string fieldName = tvDst.SelectedNode.Tag.ToString();
+                IEnumerable<string> allFieldNames = TableSetting.Fields.Select(row => row.FieldName);
+                operandCtrl1.PreLoad(allFieldNames);
+                operandCtrl2.PreLoad(allFieldNames);
+                JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
+                BindFieldInfo(field);
+                tabControl1.SelectedIndex = 0;
+            }
+            else
+            {
+                BindTableInfo();
+                tabControl1.SelectedIndex = 1;
             }
         }
 
@@ -294,7 +228,38 @@ namespace Justin.Controls.TestDataGenerator
             //formDBField.StartPosition = FormStartPosition.CenterParent;
             //formDBField.ShowDialog();
         }
+        private void deleteFieldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tvDst.SelectedNode.ImageIndex != 0)
+            {
+                tvDst.Nodes[0].Nodes.Remove(this.tvDst.SelectedNode);
+                string fieldName = this.tvDst.SelectedNode.Tag as string;
+                this.TableSetting.Fields.Remove(this.TableSetting.Fields.FirstOrDefault(row => row.FieldName == fieldName));
+                this.TableSetting.Modified = true;
+            }
+        }
 
+        #endregion
+
+        #region 辅助函数
+
+        private void BindTableToTree()
+        {
+            tvDst.Nodes.Clear();
+            tvDst.ImageList = imageList1;
+            var tableNode = new TreeNode(TableSetting.TableName);
+            tableNode.Tag = TableSetting.TableName;
+            tableNode.ImageIndex = tableNode.SelectedImageIndex = 0;
+            foreach (var field in TableSetting.Fields.OrderBy(row => row.FirstOperand.ValueCategroy).ThenBy(row => row.FieldName))
+            {
+                TreeNode fieldNode = PrepareNode(field);
+                tableNode.Nodes.Add(fieldNode);
+            }
+            tvDst.Nodes.Add(tableNode);
+            tvDst.ExpandAll();
+            tvDst.SelectedNode = tvDst.Nodes[0];
+            BindTableInfo();
+        }
         public TreeNode PrepareNode(JField field)
         {
             var fieldNode = new TreeNode(field.FieldName);
@@ -325,50 +290,60 @@ namespace Justin.Controls.TestDataGenerator
 
             return fieldNode;
         }
-
-        private void deleteFieldToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BindFieldInfo(JField field)
         {
-            if (tvDst.SelectedNode.ImageIndex != 0)
+            if (field == null)
             {
-                tvDst.Nodes[0].Nodes.Remove(this.tvDst.SelectedNode);
-                string fieldName = this.tvDst.SelectedNode.Tag as string;
-                this.TableSetting.Fields.Remove(this.TableSetting.Fields.FirstOrDefault(row => row.FieldName == fieldName));
-                this.TableSetting.Modified = true;
+                return;
             }
+            lbFieldName.Text = field.FieldName;
+            cBoxValueType.Text = field.ValueType.ToJString();
+            cBoxVisible.Text = field.Visible.ToJString("True");
+
+            cBoxOperator.Text = field.Operator;
+            operandCtrl1.LoadJOperateNum(field.FirstOperand, field.FieldName);
+            operandCtrl2.LoadJOperateNum(field.SecondOperand, field.FieldName);
+        }
+        private void BindTableInfo()
+        {
+            txtDataCount.Text = TableSetting.DataCount.ToJString();
+            txtBeforeSQL.Encoding = System.Text.Encoding.Default;
+            txtBeforeSQL.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
+            txtAfterSQL.Encoding = System.Text.Encoding.Default;
+            txtAfterSQL.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
+            txtBeforeSQL.Text = TableSetting.BeforeSQL;
+            txtAfterSQL.Text = TableSetting.AfterSQL;
         }
 
-        public void CheckConnStringAssigned(Action action)
+        private bool CheckTableSetting()
         {
-            if (!string.IsNullOrEmpty(ConnStr))
-            {
-                action();
-            }
-            else
-            {
-                this.ShowMessage("请选择数据源。");
-            }
-        }
-        public ConnStrChangDelegate ConnStrChanged;
+            string messageStr = "";
 
-        private void TableConfigCtrl_Load(object sender, EventArgs e)
+            if (TableSetting.DataCount > 0)
+            {
+                foreach (var field in TableSetting.Fields)
+                {
+                    if (field.FirstOperand == null && field.FirstOperand.ValueCategroy == null)
+                    {
+                        messageStr += string.Format("{0}:{1}需设置SourceValueCategroy", TableSetting.TableName, field.FieldName) + Environment.NewLine;
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(messageStr))
+            {
+                this.ShowMessage(messageStr);
+            }
+            return string.IsNullOrEmpty(messageStr);
+        }
+
+
+        public static string GetFullFileName(string tableName, string fileExtension)
         {
-            if (this.TableSetting != null)
-            {
-                BindTableToTree();
-            }
-            JTable.SqlProcess = (StringBuilder sqlBuilder, JTable table) =>
-            {
-                string fileName = JTools.GetFileName(table.TableName, FileType.SQL);
-                FileHelper.OverWrite(fileName, sqlBuilder.ToString());
-            };
-
-            ToolTip tips = new ToolTip();
-
-            foreach (Control item in this.Controls)
-            {
-                JTools.SetToolTips(item, tips);
-            }
+            string fullFileName = Path.Combine(tableConfigFolder, string.Format("{0}{1}", tableName, fileExtension));
+            return fullFileName;
         }
+
+        #endregion
 
     }
 }
