@@ -7,6 +7,7 @@ namespace Justin.FrameWork.WinForm.Models
 {
     public interface IFile
     {
+        string Extension { get; }
         void LoadFile(string fileName);
         void SaveFile(string fileName);
     }

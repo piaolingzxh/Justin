@@ -265,7 +265,7 @@ namespace Justin.Controls.Mondrian
 
     public partial class Schema
     {
-        public string Serializer()
+        public new string Serializer()
         {
             this.PrepareChildrenElements();
             return SerializeHelper.XmlSerialize<Schema>(this, true);
@@ -284,5 +284,5 @@ namespace Justin.Controls.Mondrian
 
     }
 
-    
+
 }

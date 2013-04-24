@@ -12,7 +12,6 @@ using System.CodeDom.Compiler;
 using System.IO;
 using System.Diagnostics;
 using System.Reflection;
-using Justin.Log;
 using ICSharpCode.TextEditor.Document;
 using System.Threading;
 using Justin.FrameWork.WinForm.FormUI;
@@ -120,9 +119,6 @@ namespace Justin.Controls.CodeCompiler
 
         private void CodeComplierCtrl_Load(object sender, EventArgs e)
         {
-
-            JavaCodeComplier.JDKPath = @"C:\Programs\Java\jdk1.6.0_24\bin";
-
             txtCode.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             txtCode.Encoding = Encoding.GetEncoding("GB2312");
 
@@ -133,6 +129,17 @@ namespace Justin.Controls.CodeCompiler
 
         }
 
+        public static String JDKPath
+        {
+            get
+            {
+                return JavaCodeComplier.JDKPath;
+            }
+            set
+            {
+                JavaCodeComplier.JDKPath = value;
+            }
+        }
         #region 示例代码
 
         private void insertJavaTemplateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -171,6 +178,14 @@ End Module");
 
         }
 
+        #endregion
+
+        #region override
+
+        public string Extension
+        {
+            get { return ".cs,.vb,.java"; }
+        }
         #endregion
 
     }

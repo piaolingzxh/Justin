@@ -84,7 +84,7 @@ namespace Justin.Controls.Executer
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
         }
 
-        public string ConnStr
+        public override string ConnStr
         {
             get
             {
@@ -106,14 +106,19 @@ namespace Justin.Controls.Executer
                 {
                     mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
                 }
-                 
-                DataTable dt =MdxHelper.ExecuteDataTable(Connection, mdx);  
+
+                DataTable dt = MdxHelper.ExecuteDataTable(Connection, mdx);
                 gvMdxresult.DataSource = dt;
             }
             catch (Exception ex)
             {
                 this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
             }
+        }
+
+        public string Extension
+        {
+            get { return ".mdx"; }
         }
 
     }

@@ -98,8 +98,8 @@ namespace Justin.FrameWork.WinForm.Helper
         private void RegisterHotKeySample()
         {
             HotkeyHelper hotkeyHelper = null;//new HotkeyHelper(this.Handle);
-            int showWindowKey = hotkeyHelper.RegisterHotkey(Keys.Oemtilde, HotkeyHelper.KeyFlags.MOD_CONTROL);
-            int showWarnKey = hotkeyHelper.RegisterHotkey(Keys.D1, HotkeyHelper.KeyFlags.MOD_CONTROL);
+            showWindowKey = hotkeyHelper.RegisterHotkey(Keys.Oemtilde, HotkeyHelper.KeyFlags.MOD_CONTROL);
+            showWarnKey = hotkeyHelper.RegisterHotkey(Keys.D1, HotkeyHelper.KeyFlags.MOD_CONTROL);
             hotkeyHelper.OnHotkey += new HotkeyEventHandler(OnMyHotkey);
         }
 

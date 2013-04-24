@@ -59,9 +59,6 @@
     <Reference Include="Justin.Controls.JsonView">
       <HintPath>..\..\..\Release\Justin.Controls.JsonView.dll</HintPath>
     </Reference>
-    <Reference Include="Justin.Controls.WordView">
-      <HintPath>..\..\..\Release\Justin.Controls.WordView.dll</HintPath>
-    </Reference>
     <Reference Include="Justin.FrameWork">
       <HintPath>..\..\..\Release\Justin.FrameWork.dll</HintPath>
     </Reference>

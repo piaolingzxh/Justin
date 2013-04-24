@@ -340,6 +340,11 @@ namespace Justin.Controls.JsonView
                 this.ShowMessage(ex);
             }
         }
+
+        public string Extension
+        {
+            get { return ".json"; }
+        }
  
     }
 }

@@ -56,7 +56,10 @@ namespace Justin.Toolbox
         }
 
         #region 继承
-
+        public string Extension
+        {
+            get { return this.sqlExecuterCtrl1.Extension; }
+        }
 
         protected override string GetPersistString()
         {

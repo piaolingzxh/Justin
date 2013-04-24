@@ -34,7 +34,10 @@ namespace Justin.FrameWork.WinForm.FormUI
             if (!string.IsNullOrEmpty(tempFileName))
             {
                 if (SaveAction != null)
+                {
                     SaveAction(tempFileName);
+                    this.ShowMessage(string.Format("文件【{0}】保存成功!",   fileName));
+                }
                 this.FileName = tempFileName;
             }
             OnFileChanged(tempFileName);
@@ -43,12 +46,13 @@ namespace Justin.FrameWork.WinForm.FormUI
         {
             if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
             {
-                this.ShowMessage(string.Format("文件{0}不存在", fileName));
+                this.ShowMessage(string.Format("文件【{0}】不存在", fileName));
                 return;
             }
             if (LoadAction != null)
             {
                 LoadAction(fileName);
+                this.ShowMessage(string.Format("加载文件【{0}】成功!", fileName));
             }
             this.FileName = fileName;
             OnFileChanged(fileName);

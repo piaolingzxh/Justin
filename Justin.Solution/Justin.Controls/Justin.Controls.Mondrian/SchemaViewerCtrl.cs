@@ -656,5 +656,10 @@ namespace Justin.Controls.Mondrian
 
         #endregion
 
+        public string Extension
+        {
+            get { return ".xml"; }
+        }
+
     }
 }

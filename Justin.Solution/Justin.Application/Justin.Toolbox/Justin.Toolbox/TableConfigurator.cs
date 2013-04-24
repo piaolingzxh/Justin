@@ -43,6 +43,7 @@ namespace Justin.Toolbox
                 }
 
             }
+
             this.tableConfigCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) =>
             {
@@ -142,6 +143,10 @@ namespace Justin.Toolbox
             {
                 this.tableConfigCtrl1.FileName = value;
             }
+        }
+        public string Extension
+        {
+            get { return this.tableConfigCtrl1.Extension; }
         }
 
         #endregion

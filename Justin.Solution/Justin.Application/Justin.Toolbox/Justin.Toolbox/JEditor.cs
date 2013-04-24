@@ -36,7 +36,10 @@ namespace Justin.Toolbox
         {
             return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName);
         }
-
+        public string Extension
+        {
+            get { return this.jEditorCtrl1.Extension; }
+        }
 
         protected override string FileName
         {

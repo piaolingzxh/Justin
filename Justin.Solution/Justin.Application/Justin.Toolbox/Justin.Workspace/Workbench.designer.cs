@@ -62,6 +62,8 @@
             this.outputWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.subFormStatusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.styleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lockLayoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showDocumentIconToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,15 +84,9 @@
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.subFormStatusBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.contextMenuStripOfNotify.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // OutPutWin
-            // 
-            this.OutPutWin.Location = new System.Drawing.Point(100, 100);
             // 
             // dockPanel
             // 
@@ -276,6 +272,18 @@
             this.statusBarToolStripMenuItem.Text = "Status B&ar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.statusBarToolStripMenuItem_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            // 
+            // subFormStatusBarToolStripMenuItem
+            // 
+            this.subFormStatusBarToolStripMenuItem.Name = "subFormStatusBarToolStripMenuItem";
+            this.subFormStatusBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.subFormStatusBarToolStripMenuItem.Text = "Sub Form Status Bar";
+            this.subFormStatusBarToolStripMenuItem.Click += new System.EventHandler(this.subFormStatusBarToolStripMenuItem_Click);
+            // 
             // styleToolStripMenuItem
             // 
             this.styleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -421,18 +429,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
-            // 
-            // subFormStatusBarToolStripMenuItem
-            // 
-            this.subFormStatusBarToolStripMenuItem.Name = "subFormStatusBarToolStripMenuItem";
-            this.subFormStatusBarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.subFormStatusBarToolStripMenuItem.Text = "Sub Form Status Bar";
-            this.subFormStatusBarToolStripMenuItem.Click += new System.EventHandler(this.subFormStatusBarToolStripMenuItem_Click);
-            // 
             // Workbench
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -444,7 +440,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "Workbench";
-            this.Text = "WorkspaceBase";
+            this.Text = "Toolbox";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkspaceBase_FormClosing);
             this.Load += new System.EventHandler(this.Workbench_Load);
             this.menuStripMain.ResumeLayout(false);

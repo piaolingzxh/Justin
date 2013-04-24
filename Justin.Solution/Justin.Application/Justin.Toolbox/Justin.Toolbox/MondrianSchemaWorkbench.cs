@@ -58,8 +58,11 @@ namespace Justin.Toolbox
                 schemaViewerCtrl1.FileName = value;
             }
         }
-         
 
+        public string Extension
+        {
+            get { return this.schemaViewerCtrl1.Extension; }
+        }
         #endregion
 
         private void MondrianSchemaWorkbench_Load(object sender, EventArgs e)

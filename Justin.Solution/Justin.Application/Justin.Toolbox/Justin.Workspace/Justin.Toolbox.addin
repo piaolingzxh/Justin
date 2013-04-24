@@ -30,14 +30,14 @@
   </Menu>
   <Tools>
     <Tool Class="Justin.Toolbox.TestDataGenerator" DLL="Justin.Toolbox" />
-    <Tool Class="Justin.Toolbox.TableConfigurator" DLL="Justin.Toolbox" Extensions=".config,.xml" />
+    <Tool Class="Justin.Toolbox.TableConfigurator" DLL="Justin.Toolbox" Extensions=".config" />
     <Tool Class="Justin.Toolbox.SqlExecuteor" DLL="Justin.Toolbox" Extensions=".sql"/>
     <Tool Class="Justin.Toolbox.MdxExecutor" DLL="Justin.Toolbox" Extensions=".mdx" />
     <Tool Class="Justin.Toolbox.MondrianSchemaWorkbench" DLL="Justin.Toolbox"  Extensions=".xml"/>
-    <Tool Class="Justin.Toolbox.JsonViewer" DLL="Justin.Toolbox"   Extensions=".mdx"/>
+    <Tool Class="Justin.Toolbox.JsonViewer" DLL="Justin.Toolbox"   Extensions=".json"/>
     <Tool Class="Justin.Toolbox.JCodeCompiler" DLL="Justin.Toolbox"  Extensions=".cs,.vb,.java"/>
     <Tool Class="Justin.Toolbox.CodeSnippetMgr" DLL="Justin.Toolbox" />
-    <Tool Class="Justin.Toolbox.JEditor" DLL="Justin.Toolbox" />
+    <Tool Class="Justin.Toolbox.JEditor" DLL="Justin.Toolbox" Extensions=".*"/>
     <Tool Class="Justin.Toolbox.Explorer" DLL="Justin.Toolbox" />
 
   </Tools>

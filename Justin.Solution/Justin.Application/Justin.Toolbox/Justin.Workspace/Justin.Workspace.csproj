@@ -33,7 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>tool.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>Justin.Workspace.rct</Win32Resource>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -142,6 +146,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ico\20120917647.ico" />
+    <Content Include="ico\201304081625 %281%29.ico" />
+    <Content Include="ico\201304083561.ico" />
+    <Content Include="ico\201304084646.ico" />
+    <Content Include="ico\201304084648.ico" />
+    <Content Include="ico\201304084649.ico" />
+    <Content Include="ico\201304084650.ico" />
+    <Content Include="ico\201304084651.ico" />
+    <Content Include="ico\201304084653.ico" />
+    <Content Include="ico\201304084708.ico" />
+    <Content Include="ico\201304084733.ico" />
+    <Content Include="ico\201304084745.ico" />
+    <Content Include="ico\201304084749.ico" />
+    <Content Include="ico\201304084786.ico" />
+    <Content Include="ico\201304085189.ico" />
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond.bmp" />
     <Content Include="Customization\Resources\DockIndicator_PaneDiamond_Bottom.bmp" />
     <Content Include="Customization\Resources\Dockindicator_PaneDiamond_Fill.bmp" />
@@ -170,8 +189,9 @@
     <Content Include="Customization\Resources\DockPaneStrip_ScrollLeftEnabled.bmp" />
     <Content Include="Customization\Resources\DockPaneStrip_ScrollRightDisabled.bmp" />
     <Content Include="Customization\Resources\DockPaneStrip_ScrollRightEnabled.bmp" />
-    <Content Include="tool-pro.ico" />
-    <Content Include="tool.ico" />
+    <Content Include="Justin.Workspace.rct" />
+    <Content Include="ico\tool-pro.ico" />
+    <Content Include="ico\tool.ico" />
     <None Include="Justin.Toolbox.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

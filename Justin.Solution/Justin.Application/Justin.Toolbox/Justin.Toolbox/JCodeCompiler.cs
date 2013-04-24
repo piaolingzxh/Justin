@@ -17,6 +17,8 @@ using Microsoft.CSharp;
 using Justin.FrameWork.Settings;
 using Justin.Core;
 using Justin.FrameWork.WinForm.Models;
+using Justin.Controls.CodeCompiler;
+using System.Configuration;
 
 namespace Justin.Toolbox
 {
@@ -25,6 +27,7 @@ namespace Justin.Toolbox
         public JCodeCompiler()
         {
             InitializeComponent();
+            CodeComplierCtrl.JDKPath = ConfigurationManager.AppSettings["JDKPath"];
             this.codeComplierCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
             this.LoadAction = (fileName) => { this.codeComplierCtrl1.LoadFile(fileName); };
             this.SaveAction = (fileName) => { this.codeComplierCtrl1.SaveFile(fileName); };
@@ -58,7 +61,10 @@ namespace Justin.Toolbox
         {
             return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.FileName);
         }
-
+        public string Extension
+        {
+            get { return this.codeComplierCtrl1.Extension; }
+        }
 
         protected override string FileName
         {

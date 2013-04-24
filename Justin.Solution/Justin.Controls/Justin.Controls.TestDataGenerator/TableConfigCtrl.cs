@@ -19,13 +19,13 @@ using Justin.FrameWork.Settings;
 
 namespace Justin.Controls.TestDataGenerator
 {
-    public delegate void ConnStrChangDelegate(string oldConnStr, string newConnStr);
+    //public delegate void ConnStrChangDelegate(string oldConnStr, string newConnStr);
     public partial class TableConfigCtrl : JUserControl, IFile
     {
         #region 变量
 
         public static string tableConfigFolder = "";
-        public static string configFileExtensions = ".TableConfig";
+        public static string configFileExtensions = ".config";
         public static string sqlFileExtensions = ".Sql";
 
         public JTable TableSetting { get; set; }
@@ -45,7 +45,6 @@ namespace Justin.Controls.TestDataGenerator
                 if (TableSetting != null)
                 {
                     this.TableSetting.SaveSettings(fileName);
-                    this.ShowMessage(string.Format("表【{0}】配置【{1}】保存成功!", TableSetting.TableName, fileName));
                     TableSetting.Modified = false;
                 }
             };
@@ -323,7 +322,7 @@ namespace Justin.Controls.TestDataGenerator
             {
                 foreach (var field in TableSetting.Fields)
                 {
-                    if (field.FirstOperand == null && field.FirstOperand.ValueCategroy == null)
+                    if (field.FirstOperand == null)
                     {
                         messageStr += string.Format("{0}:{1}需设置SourceValueCategroy", TableSetting.TableName, field.FieldName) + Environment.NewLine;
                     }
@@ -342,8 +341,12 @@ namespace Justin.Controls.TestDataGenerator
             string fullFileName = Path.Combine(tableConfigFolder, string.Format("{0}{1}", tableName, fileExtension));
             return fullFileName;
         }
-
+        public string Extension
+        {
+            get { return ".config"; }
+        }
         #endregion
+
 
     }
 }

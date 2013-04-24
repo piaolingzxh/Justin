@@ -50,5 +50,10 @@ namespace Justin.Controls.TextEditor
             }
         }
 
+        public string Extension
+        {
+            get { return ".*"; }
+        }
+
     }
 }

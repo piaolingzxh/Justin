@@ -59,117 +59,117 @@ namespace Justin.Controls.Executer
 
         private void btnExecuteSQLByLine_Click(object sender, EventArgs e)
         {
-            //this.CheckConnStringAssigned(() =>
-            //{
-            try
+            this.CheckConnStringAssigned(() =>
             {
-                using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
+                try
                 {
-
-                    StringBuilder builder = new StringBuilder();
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
                     {
-                        builder.Append(line).AppendLine();
-                        if (builder.Length > Constants.SqlBufferSize)
+
+                        StringBuilder builder = new StringBuilder();
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            builder.Append(line).AppendLine();
+                            if (builder.Length > Constants.SqlBufferSize)
+                            {
+                                SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
+                                builder.Clear();
+                            }
+                        }
+                        if (builder.Length > 0)
                         {
                             SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
                             builder.Clear();
                         }
+                        sr.Close();
                     }
-                    if (builder.Length > 0)
-                    {
-                        SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
-                        builder.Clear();
-                    }
-                    sr.Close();
-                }
-                this.ShowMessage("逐行执行SQL完成");
-            }
-            catch (Exception ex)
-            {
-                JLog.Write(LogMode.Error, ex);
-                this.ShowMessage(ex.Message.ToString(), ex.ToString());
-            }
-            //});
-        }
-
-        private void btnExecuteAllSQL_Click(object sender, EventArgs e)
-        {
-            //this.CheckConnStringAssigned(() =>
-            //{
-            using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
-            {
-                string sql = sr.ReadToEnd();
-                try
-                {
-                    SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, sql.ToString(), null);
-                    sr.Close();
-                    this.ShowMessage("一次执行所有SQL完成");
+                    this.ShowMessage("逐行执行SQL完成");
                 }
                 catch (Exception ex)
                 {
                     JLog.Write(LogMode.Error, ex);
-                    this.ShowMessage(ex.Message.ToString(), sql.ToString() + Environment.NewLine + ex.ToString());
+                    this.ShowMessage(ex.Message.ToString(), ex.ToString());
                 }
+            });
+        }
 
-            }
-            //});
+        private void btnExecuteAllSQL_Click(object sender, EventArgs e)
+        {
+            this.CheckConnStringAssigned(() =>
+            {
+                using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
+                {
+                    string sql = sr.ReadToEnd();
+                    try
+                    {
+                        SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, sql.ToString(), null);
+                        sr.Close();
+                        this.ShowMessage("一次执行所有SQL完成");
+                    }
+                    catch (Exception ex)
+                    {
+                        JLog.Write(LogMode.Error, ex);
+                        this.ShowMessage(ex.Message.ToString(), sql.ToString() + Environment.NewLine + ex.ToString());
+                    }
+
+                }
+            });
         }
 
         private void btnIntelligentExecuteSQL_Click(object sender, EventArgs e)
         {
-            //this.CheckConnStringAssigned(() =>
-            //{
-            try
+            this.CheckConnStringAssigned(() =>
             {
-                using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
+                try
                 {
-                    bool canEnd = true;
-                    bool hasStart = false;
-                    StringBuilder builder = new StringBuilder();
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
                     {
-                        if (line.StartsWith(Constants.SQLParagraphStartFlag))   //当遇到开始符时，则设置已开始标识
+                        bool canEnd = true;
+                        bool hasStart = false;
+                        StringBuilder builder = new StringBuilder();
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            hasStart = true;
-                            canEnd = false;
-                        }
-                        if (hasStart && line.StartsWith(Constants.SQLParagraphEndFlag))
-                        {
-                            canEnd = true;
-                        }
-                        if (hasStart && canEnd)
-                        {
-                            hasStart = false;
-                        }
-                        builder.Append(line).AppendLine();
-                        if (canEnd)
-                        {
-                            if (builder.Length > Constants.SqlBufferSize)
+                            if (line.StartsWith(Constants.SQLParagraphStartFlag))   //当遇到开始符时，则设置已开始标识
                             {
-                                SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
-                                JLog.Write(LogMode.Info, builder.ToString());
-                                builder.Clear();
+                                hasStart = true;
+                                canEnd = false;
+                            }
+                            if (hasStart && line.StartsWith(Constants.SQLParagraphEndFlag))
+                            {
+                                canEnd = true;
+                            }
+                            if (hasStart && canEnd)
+                            {
+                                hasStart = false;
+                            }
+                            builder.Append(line).AppendLine();
+                            if (canEnd)
+                            {
+                                if (builder.Length > Constants.SqlBufferSize)
+                                {
+                                    SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
+                                    JLog.Write(LogMode.Info, builder.ToString());
+                                    builder.Clear();
+                                }
                             }
                         }
+                        if (builder.Length > 0)
+                        {
+                            SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
+                            builder.Clear();
+                        }
+                        sr.Close();
                     }
-                    if (builder.Length > 0)
-                    {
-                        SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
-                        builder.Clear();
-                    }
-                    sr.Close();
+                    this.ShowMessage("智能执行所有SQL完成");
                 }
-                this.ShowMessage("智能执行所有SQL完成");
-            }
-            catch (Exception ex)
-            {
-                JLog.Write(LogMode.Error, ex);
-                this.ShowMessage(ex.Message.ToString(), ex.ToString());
-            }
-            //});
+                catch (Exception ex)
+                {
+                    JLog.Write(LogMode.Error, ex);
+                    this.ShowMessage(ex.Message.ToString(), ex.ToString());
+                }
+            });
 
         }
 
@@ -226,7 +226,10 @@ namespace Justin.Controls.Executer
             #endregion
         }
 
-        public string ConnStr { get; set; }
+        public string Extension
+        {
+            get { return ".sql"; }
+        }
 
         #region override
 

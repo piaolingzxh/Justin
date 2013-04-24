@@ -82,6 +82,10 @@ namespace Justin.Toolbox
                 mdxExecuterCtrl1.FileName = value;
             }
         }
+        public string Extension
+        {
+            get { return this.mdxExecuterCtrl1.Extension; }
+        }
 
         #endregion
 

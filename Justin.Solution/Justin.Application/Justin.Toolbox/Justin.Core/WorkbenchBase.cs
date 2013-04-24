@@ -15,9 +15,11 @@ namespace Justin.Core
         public WorkbenchBase()
         {
             InitializeComponent();
+
+           
         }
 
-        public OutPutWindow OutPutWin = OutPutWindow.Instance;
+        public OutPutWindow OutPutWin ;
         public virtual DockPanel DockPanel { get { return null; } }
 
         #region 关闭子窗体
@@ -110,7 +112,7 @@ namespace Justin.Core
                 }
             }
         }
-        private void CloseAllContents()
+        protected void CloseAllContents()
         {
             OutPutWin.DockPanel = null;
             CloseAllDocuments();

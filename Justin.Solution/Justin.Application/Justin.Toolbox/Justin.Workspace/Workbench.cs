@@ -28,7 +28,7 @@ namespace Justin.Workspace
         }
         bool forceClose = false;
 
-
+               
         #region 加载上次打开的文件
 
         //加载上次打开的窗口
@@ -110,98 +110,98 @@ namespace Justin.Workspace
         #region 关闭子窗体
 
         //关闭窗体 (不关闭OutPutWindow)   
-        public void CloseAllDocumentBut(JForm exceptForm)
-        {
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                foreach (Form form in MdiChildren)
-                {
-                    if (form != exceptForm && !(form is OutPutWindow))
-                        form.Close();
-                }
-            }
-            else
-            {
-                foreach (IDockContent document in dockPanel.DocumentsToArray())
-                {
-                    if (document != exceptForm && !(document is OutPutWindow))
-                    {
-                        document.DockHandler.Close();
-                    }
-                }
-            }
-        }
-        public void CloseAllDocumentButCurrent()
-        {
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                Form activeMdi = ActiveMdiChild;
-                foreach (Form form in MdiChildren)
-                {
-                    if (form != activeMdi && !(form is OutPutWindow))
-                        form.Close();
-                }
-            }
-            else
-            {
-                foreach (IDockContent document in dockPanel.DocumentsToArray())
-                {
-                    if (!document.DockHandler.IsActivated && !(document is OutPutWindow))
-                    {
-                        document.DockHandler.Close();
-                    }
-                }
-            }
-        }
-        public void CloseAllDocuments()
-        {
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                foreach (Form form in MdiChildren)
-                {
-                    if (!(form is OutPutWindow))
-                    {
-                        form.Close();
-                    }
-                }
-            }
-            else
-            {
-                for (int index = dockPanel.Contents.Count - 1; index >= 0; index--)
-                {
-                    if (dockPanel.Contents[index] is IDockContent)
-                    {
-                        IDockContent content = (IDockContent)dockPanel.Contents[index];
-                        if (!(content is OutPutWindow))
-                        {
-                            content.DockHandler.Close();
-                        }
-                    }
-                }
-            }
-        }
-        public void CloseCurrent()
-        {
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi && !(ActiveMdiChild is OutPutWindow))
-            {
-                ActiveMdiChild.Close();
-            }
-            else
-            {
-                foreach (IDockContent document in dockPanel.DocumentsToArray())
-                {
-                    if (document.DockHandler.IsActivated && !(document is OutPutWindow))
-                    {
-                        document.DockHandler.Close();
-                    }
-                }
-            }
-        }
-        private void CloseAllContents()
-        {
-            OutPutWin.DockPanel = null;
-            CloseAllDocuments();
-        }
+        //public void CloseAllDocumentBut(JForm exceptForm)
+        //{
+        //    if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
+        //    {
+        //        foreach (Form form in MdiChildren)
+        //        {
+        //            if (form != exceptForm && !(form is OutPutWindow))
+        //                form.Close();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (IDockContent document in dockPanel.DocumentsToArray())
+        //        {
+        //            if (document != exceptForm && !(document is OutPutWindow))
+        //            {
+        //                document.DockHandler.Close();
+        //            }
+        //        }
+        //    }
+        //}
+        //public void CloseAllDocumentButCurrent()
+        //{
+        //    if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
+        //    {
+        //        Form activeMdi = ActiveMdiChild;
+        //        foreach (Form form in MdiChildren)
+        //        {
+        //            if (form != activeMdi && !(form is OutPutWindow))
+        //                form.Close();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (IDockContent document in dockPanel.DocumentsToArray())
+        //        {
+        //            if (!document.DockHandler.IsActivated && !(document is OutPutWindow))
+        //            {
+        //                document.DockHandler.Close();
+        //            }
+        //        }
+        //    }
+        //}
+        //public void CloseAllDocuments()
+        //{
+        //    if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
+        //    {
+        //        foreach (Form form in MdiChildren)
+        //        {
+        //            if (!(form is OutPutWindow))
+        //            {
+        //                form.Close();
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int index = dockPanel.Contents.Count - 1; index >= 0; index--)
+        //        {
+        //            if (dockPanel.Contents[index] is IDockContent)
+        //            {
+        //                IDockContent content = (IDockContent)dockPanel.Contents[index];
+        //                if (!(content is OutPutWindow))
+        //                {
+        //                    content.DockHandler.Close();
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //public void CloseCurrent()
+        //{
+        //    if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi && !(ActiveMdiChild is OutPutWindow))
+        //    {
+        //        ActiveMdiChild.Close();
+        //    }
+        //    else
+        //    {
+        //        foreach (IDockContent document in dockPanel.DocumentsToArray())
+        //        {
+        //            if (document.DockHandler.IsActivated && !(document is OutPutWindow))
+        //            {
+        //                document.DockHandler.Close();
+        //            }
+        //        }
+        //    }
+        //}
+        //private void CloseAllContents()
+        //{
+        //    OutPutWin.DockPanel = null;
+        //    CloseAllDocuments();
+        //}
 
 
         #endregion
@@ -682,6 +682,7 @@ namespace Justin.Workspace
             }
             notifyIcon1.Visible = showNotify;
             dockPanel.ShowDocumentIcon = true;
+            OutPutWin = OutPutWindow.Instance;
             OutPutWin.Show(dockPanel, DockState.DockBottom);
             DynamicMenuGenerate();
         }
@@ -696,5 +697,7 @@ namespace Justin.Workspace
             JForm form = this.ActiveMdiChild as JForm;
             form.ShowStatus = !form.ShowStatus;
         }
+
+         
     }
 }

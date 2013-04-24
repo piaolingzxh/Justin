@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using AxDSOFramer;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.WinForm.Helper;
@@ -22,33 +23,34 @@ namespace Justin.Controls.CodeSnippet
         {
             InitializeComponent();
         }
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeSnippetCtrl));
-
         private TextEditorControl txtCode = new TextEditorControl();
-        private AxDSOFramer.AxFramerControl axFramerControl1 = new AxDSOFramer.AxFramerControl();
-
+        private AxFramerControl axFramerControl1 = new AxFramerControl();
         private WebBrowser webBrower = new WebBrowser();
-        private string fileDirectory = ConfigurationManager.AppSettings["CodeSnippet"];
 
-        private string folderKey = "folder";
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(CodeSnippetCtrl));
+       
+        public static string CodeSnippetFileDirectory = @"d:\";
+
+        private string folderKeyOfImageList = "folder";
+
         private void CodeViewCtrl_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(fileDirectory))
+            if (string.IsNullOrEmpty(CodeSnippetFileDirectory))
                 return;
-            txtFolder.Text = fileDirectory;
+            txtFolder.Text = CodeSnippetFileDirectory;
             InitTree();
         }
         private void InitTree()
         {
-            DirectoryInfo dir = new DirectoryInfo(fileDirectory);
+            DirectoryInfo dir = new DirectoryInfo(CodeSnippetFileDirectory);
             if (!dir.Exists) return;
 
-            if (!imageListOfDirectory.Images.ContainsKey(folderKey))
+            if (!imageListOfDirectory.Images.ContainsKey(folderKeyOfImageList))
             {
-                imageListOfDirectory.Images.Add(folderKey, FileHelper.GetDirectoryIcon());
+                imageListOfDirectory.Images.Add(folderKeyOfImageList, FileHelper.GetDirectoryIcon());
             }
 
-            TreeNode rootNode = new TreeNode("我的代码段") { Name = fileDirectory, Tag = fileDirectory, ImageKey = folderKey, SelectedImageKey = folderKey };
+            TreeNode rootNode = new TreeNode("我的代码段") { Name = CodeSnippetFileDirectory, Tag = CodeSnippetFileDirectory, ImageKey = folderKeyOfImageList, SelectedImageKey = folderKeyOfImageList };
             tvDirectory.Nodes.Clear();
             tvDirectory.Nodes.Add(rootNode);
             BindTreeNode(rootNode, dir, false);
@@ -84,7 +86,7 @@ namespace Justin.Controls.CodeSnippet
             TreeNode selectNode = tvDirectory.SelectedNode;
             if (selectNode != null && selectNode.Tag != null)
             {
-                if (selectNode.ImageKey != folderKey)
+                if (selectNode.ImageKey != folderKeyOfImageList)
                 {
                     #region 打开文件
 
@@ -187,7 +189,6 @@ namespace Justin.Controls.CodeSnippet
             ((System.ComponentModel.ISupportInitialize)(this.axFramerControl1)).EndInit();
 
         }
-
         private void CreateWebBrower()
         {
             this.webBrower.Dock = DockStyle.Fill;
@@ -206,7 +207,7 @@ namespace Justin.Controls.CodeSnippet
         }
         private void ShowOpenFileWithDialog(string filename)
         {
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+           Process proc = new Process();
             proc.EnableRaisingEvents = false;
             proc.StartInfo.FileName = "rundll32.exe";
             proc.StartInfo.Arguments = string.Format("shell32,OpenAs_RunDLL {0}", filename);
@@ -225,7 +226,7 @@ namespace Justin.Controls.CodeSnippet
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
 
-                txtFolder.Text = fileDirectory = folderBrowserDialog1.SelectedPath;
+                txtFolder.Text = CodeSnippetFileDirectory = folderBrowserDialog1.SelectedPath;
                 InitTree();
             }
         }
@@ -234,7 +235,7 @@ namespace Justin.Controls.CodeSnippet
         {
             foreach (TreeNode childNode in e.Node.Nodes)
             {
-                if (childNode.ImageKey == folderKey)
+                if (childNode.ImageKey == folderKeyOfImageList)
                 {
                     string childFolder = childNode.Tag.ToString();
                     if (childNode.Nodes.Count > 0)
@@ -261,11 +262,11 @@ namespace Justin.Controls.CodeSnippet
                 childNode.Tag = childDir.FullName;
                 childNode.Name = childDir.FullName;
 
-                if (!imageListOfDirectory.Images.ContainsKey(folderKey))
+                if (!imageListOfDirectory.Images.ContainsKey(folderKeyOfImageList))
                 {
-                    imageListOfDirectory.Images.Add(folderKey, FileHelper.GetDirectoryIcon());
+                    imageListOfDirectory.Images.Add(folderKeyOfImageList, FileHelper.GetDirectoryIcon());
                 }
-                childNode.ImageKey = childNode.SelectedImageKey = folderKey;
+                childNode.ImageKey = childNode.SelectedImageKey = folderKeyOfImageList;
 
                 if (recursion)
                 {

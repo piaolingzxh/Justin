@@ -34,17 +34,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Justin.FrameWork, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48d83e4bfa0cc209, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.FrameWork.dll</HintPath>
-    </Reference>
     <Reference Include="Justin.FrameWork.WinForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b54556de27525ede, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.Log, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d146da2c886820c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.Log.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ildasm.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

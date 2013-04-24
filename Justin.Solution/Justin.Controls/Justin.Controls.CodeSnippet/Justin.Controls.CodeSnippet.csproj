@@ -40,7 +40,6 @@
       <HintPath>..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -72,12 +71,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Justin.Controls.Mondrian\Justin.Controls.Mondrian.csproj">
-      <Project>{D6701E81-57AA-4348-8AE7-7BB2BB94C826}</Project>
-      <Name>Justin.Controls.Mondrian</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Common\Library\dsoframer.ocx">
