@@ -30,6 +30,7 @@ namespace Justin.Controls.Executer
             };
         }
 
+        
         public AdomdConnection Connection
         {
             get
@@ -82,6 +83,7 @@ namespace Justin.Controls.Executer
         {
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
+            this.SetToolTipsForButton(new ToolTip());
         }
 
         public override string ConnStr
@@ -119,6 +121,16 @@ namespace Justin.Controls.Executer
         public string Extension
         {
             get { return ".mdx"; }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.gvMdxresult.DataSource = null;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            this.txtConnectionString.Text = "Provider=mondrian;Data Source=http://localhost:8080/mondrian_mssql/xmla;Initial Catalog=gtp;";
         }
 
     }
