@@ -13,14 +13,14 @@
       <MenuItem Type="Menu" Name="Explorer" Text="Explorer" IsFile="false" Class="Justin.Toolbox.Explorer,,Justin.Toolbox" />
     </New>
     <Open>
-      <MenuItem Type="Menu" Name="TableConfigurator" Text="TableConfigurator" IsFile="false" Class="Justin.Toolbox.TableConfigurator,,Justin.Toolbox" Extensions=".config,.xml" />
-      <MenuItem Type="Menu" Name="SqlExecuteor" Text="SqlExecuteor" IsFile="false" Class="Justin.Toolbox.SqlExecuteor,,Justin.Toolbox" Extensions=".sql"/>
-      <MenuItem Type="Menu" Name="MdxExecutor" Text="MdxExecutor" IsFile="false" Class="Justin.Toolbox.MdxExecutor,,Justin.Toolbox" Extensions=".mdx"/>
-      <MenuItem Type="Menu" Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.MondrianSchemaWorkbench,,Justin.Toolbox" Extensions=".xml" />
+      <MenuItem Type="Menu" Name="TableConfigurator" Text="TableConfigurator" IsFile="false" Class="Justin.Toolbox.TableConfigurator,,Justin.Toolbox" Extensions=".config,.*" />
+      <MenuItem Type="Menu" Name="SqlExecuteor" Text="SqlExecuteor" IsFile="false" Class="Justin.Toolbox.SqlExecuteor,,Justin.Toolbox" Extensions=".sql,.*"/>
+      <MenuItem Type="Menu" Name="MdxExecutor" Text="MdxExecutor" IsFile="false" Class="Justin.Toolbox.MdxExecutor,,Justin.Toolbox" Extensions=".mdx,.*"/>
+      <MenuItem Type="Menu" Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.MondrianSchemaWorkbench,,Justin.Toolbox" Extensions=".xml,.*" />
       <MenuItem Type="Splitor" IsFile="false" />
-      <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.JsonViewer,,Justin.Toolbox" Extensions=".json" />
-      <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java" Class="Justin.Toolbox.JCodeCompiler,,Justin.Toolbox" />
-      <MenuItem Type="Menu" Name="JEditor" Text="JEditor" IsFile="false" Extensions=".cs,.vb,.java" Class="Justin.Toolbox.JEditor,,Justin.Toolbox" />
+      <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.JsonViewer,,Justin.Toolbox" Extensions=".json,.*" />
+      <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java,.*" Class="Justin.Toolbox.JCodeCompiler,,Justin.Toolbox" />
+      <MenuItem Type="Menu" Name="JEditor" Text="JEditor" IsFile="false" Extensions=".*" Class="Justin.Toolbox.JEditor,,Justin.Toolbox" />
 
     </Open>
     <Tools>
@@ -30,12 +30,12 @@
   </Menu>
   <Tools>
     <Tool Class="Justin.Toolbox.TestDataGenerator" DLL="Justin.Toolbox" />
-    <Tool Class="Justin.Toolbox.TableConfigurator" DLL="Justin.Toolbox" Extensions=".config" />
-    <Tool Class="Justin.Toolbox.SqlExecuteor" DLL="Justin.Toolbox" Extensions=".sql"/>
-    <Tool Class="Justin.Toolbox.MdxExecutor" DLL="Justin.Toolbox" Extensions=".mdx" />
-    <Tool Class="Justin.Toolbox.MondrianSchemaWorkbench" DLL="Justin.Toolbox"  Extensions=".xml"/>
-    <Tool Class="Justin.Toolbox.JsonViewer" DLL="Justin.Toolbox"   Extensions=".json"/>
-    <Tool Class="Justin.Toolbox.JCodeCompiler" DLL="Justin.Toolbox"  Extensions=".cs,.vb,.java"/>
+    <Tool Class="Justin.Toolbox.TableConfigurator" DLL="Justin.Toolbox" Extensions=".config,.*" />
+    <Tool Class="Justin.Toolbox.SqlExecuteor" DLL="Justin.Toolbox" Extensions=".sql,.*"/>
+    <Tool Class="Justin.Toolbox.MdxExecutor" DLL="Justin.Toolbox" Extensions=".mdx,.*" />
+    <Tool Class="Justin.Toolbox.MondrianSchemaWorkbench" DLL="Justin.Toolbox"  Extensions=".xml,.*"/>
+    <Tool Class="Justin.Toolbox.JsonViewer" DLL="Justin.Toolbox"   Extensions=".json,.*"/>
+    <Tool Class="Justin.Toolbox.JCodeCompiler" DLL="Justin.Toolbox"  Extensions=".cs,.vb,.java,.*"/>
     <Tool Class="Justin.Toolbox.CodeSnippetMgr" DLL="Justin.Toolbox" />
     <Tool Class="Justin.Toolbox.JEditor" DLL="Justin.Toolbox" Extensions=".*"/>
     <Tool Class="Justin.Toolbox.Explorer" DLL="Justin.Toolbox" />

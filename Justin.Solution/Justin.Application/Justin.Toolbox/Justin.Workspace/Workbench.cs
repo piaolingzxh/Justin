@@ -14,6 +14,7 @@ using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Configuration;
+using System.Globalization;
 
 namespace Justin.Workspace
 {
@@ -28,7 +29,7 @@ namespace Justin.Workspace
         }
         bool forceClose = false;
 
-               
+
         #region 加载上次打开的文件
 
         //加载上次打开的窗口
@@ -82,30 +83,66 @@ namespace Justin.Workspace
 
         protected virtual IDockContent NewToolAccrodingPersistString(string[] parsedStrings)
         {
-            if (parsedStrings.Length < 1 || parsedStrings[0] == typeof(OutPutWindow).ToString())
-                return null;
-            string[] args = null;
-            if (parsedStrings.Length > 1)
+            try
             {
-                args = new string[parsedStrings.Length - 1];
-
-                for (int i = 1; i <= parsedStrings.Length - 1; i++)
+                if (parsedStrings.Length < 1 || parsedStrings[0] == typeof(OutPutWindow).ToString())
+                    return null;
+                string[] args = null;
+                if (parsedStrings.Length > 1)
                 {
-                    args[i - 1] = parsedStrings[i];
+                    args = new string[parsedStrings.Length - 1];
+
+                    for (int i = 1; i <= parsedStrings.Length - 1; i++)
+                    {
+                        args[i - 1] = parsedStrings[i];
+                    }
+                }
+                string className = parsedStrings[0];
+                var query = addinConfig.Tools.First(row => row.ClassName == className);
+                string dllName = query != null ? query.DllFileName : "";
+
+                JForm form = CreateJDockForm(className, dllName, args == null ? null : new object[] { args });
+                if (form is IDB)
+                {
+                    form.ShowStatus = true;
+                }
+                return form;
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessage(ex);
+            }
+            return null;
+        }
+        protected virtual void OpenFileAccordingToFile(string fileName)
+        {
+            this.ShowMessage(fileName);
+            string extension = Path.GetExtension(fileName);
+
+            Tool targetTool = null;
+            foreach (Tool tool in addinConfig.Tools)
+            {
+                if (string.IsNullOrEmpty(tool.Extensions))
+                    continue;
+
+                string[] allowExtensions = tool.Extensions.Split(',');
+                if (allowExtensions.Contains(extension, StringComparer.Create(CultureInfo.CurrentCulture, true)))
+                {
+                    targetTool = tool;
+                    break;
                 }
             }
-            string className = parsedStrings[0];
-            var query = addinConfig.Tools.First(row => row.ClassName == className);
-            string dllName = query != null ? query.DllFileName : "";
-
-            JForm form = CreateJDockForm(className, dllName, args == null ? null : new object[] { args });
-            if (form is IDB)
+            if (targetTool != null)
             {
-                form.ShowStatus = true;
+                JForm form = CreateJDockForm(targetTool.ClassName, targetTool.DllFileName, new object[] { new string[] { fileName } });
+                if (form is IDB)
+                {
+                    form.ShowStatus = true;
+                }
+                form.Show();
             }
-            return form;
+
         }
-        protected virtual void OpenFileAccordingToFile(string fileName) { }
 
         #region 关闭子窗体
 
@@ -226,7 +263,7 @@ namespace Justin.Workspace
             ToolStripMenuItem tsItem = sender as ToolStripMenuItem;
             Justin.Core.MenuItem data = tsItem.Tag as Justin.Core.MenuItem;
             openFileDialog1.InitialDirectory = Constants.ConfigFileFolder;//注意这里写路径时要用c:\\而不是c:\
-            openFileDialog1.Filter = GetOpenFileDialogFilter(data.Extensions);
+            openFileDialog1.Filter = Tools.GetOpenFileDialogFilter(data.Extensions);
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FilterIndex = 1;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -277,8 +314,11 @@ namespace Justin.Workspace
         private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             outputWindowToolStripMenuItem.Checked = this.OutPutWin.Visible;
-            JForm form = this.ActiveMdiChild as JForm;
-            subFormStatusBarToolStripMenuItem.Checked = form.ShowStatus;
+            if (this.ActiveMdiChild != null)
+            {
+                JForm form = this.ActiveMdiChild as JForm;
+                subFormStatusBarToolStripMenuItem.Checked = form.ShowStatus;
+            }
         }
 
         private void outputWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -447,7 +487,7 @@ namespace Justin.Workspace
         }
         protected void GenerateSubMenuForNew()
         {
-            if (addinConfig == null && addinConfig.Menu == null && addinConfig.Menu.NewItems == null)
+            if (addinConfig == null || addinConfig.Menu == null || addinConfig.Menu.NewItems == null)
                 return;
             newToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.NewItems)
@@ -468,7 +508,7 @@ namespace Justin.Workspace
         }
         protected void GenerateSubMenuForOpen()
         {
-            if (addinConfig == null && addinConfig.Menu == null && addinConfig.Menu.OpenItems == null)
+            if (addinConfig == null || addinConfig.Menu == null || addinConfig.Menu.OpenItems == null)
                 return;
             openToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.OpenItems)
@@ -489,7 +529,7 @@ namespace Justin.Workspace
         }
         protected void GenerateSubMenuForTools()
         {
-            if (addinConfig == null && addinConfig.Menu == null && addinConfig.Menu.ToolsItems == null)
+            if (addinConfig == null || addinConfig.Menu == null || addinConfig.Menu.ToolsItems == null)
                 return;
             toolsToolStripMenuItem.DropDownItems.Clear();
             foreach (var item in addinConfig.Menu.ToolsItems)
@@ -612,33 +652,20 @@ namespace Justin.Workspace
             }
         }
 
-        private string GetOpenFileDialogFilter(string extensionsString)
-        {
-            StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(extensionsString))
-            {
-                string[] extensions = extensionsString.Split(',');
-                if (extensions != null)
-                {
-                    foreach (var item in extensions)
-                    {
-                        sb.AppendFormat(Constants.OpenFileDialogFilterFormart, item.TrimStart('.'), item.TrimStart('.'));
-                    }
-                }
-            }
-            sb.AppendFormat(Constants.OpenFileDialogFilterFormart, "*", "所有");
-            return sb.ToString().TrimEnd('|');
-        }
-
         public static Dictionary<string, Assembly> Assemblies = new Dictionary<string, Assembly>();
 
         private void Workbench_Load(object sender, EventArgs e)
         {
-            if (File.Exists(fileNameOfAddin))
+            OutPutWin = OutPutWindow.Instance;
+            OutPutWin.Show(dockPanel, DockState.DockBottom);
+            string addinFileFullName = Path.Combine(Application.StartupPath, fileNameOfAddin);
+            this.ShowMessage(string.Format("addin【{0}】", addinFileFullName));
+
+            if (File.Exists(addinFileFullName))
             {
                 try
                 {
-                    addinConfig = SerializeHelper.XmlDeserializeFromFile<AddinConfig>(fileNameOfAddin);
+                    addinConfig = SerializeHelper.XmlDeserializeFromFile<AddinConfig>(addinFileFullName);
 
                     if (addinConfig != null && addinConfig.Tools != null)
                     {
@@ -659,7 +686,7 @@ namespace Justin.Workspace
             }
             if (!specialFile) //加载上次打开的文件
             {
-                string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+                string configFile = Path.Combine(Application.StartupPath, "DockPanel.config");
                 try
                 {
                     if (File.Exists(configFile))
@@ -682,8 +709,7 @@ namespace Justin.Workspace
             }
             notifyIcon1.Visible = showNotify;
             dockPanel.ShowDocumentIcon = true;
-            OutPutWin = OutPutWindow.Instance;
-            OutPutWin.Show(dockPanel, DockState.DockBottom);
+
             DynamicMenuGenerate();
         }
 
@@ -698,6 +724,6 @@ namespace Justin.Workspace
             form.ShowStatus = !form.ShowStatus;
         }
 
-         
+
     }
 }

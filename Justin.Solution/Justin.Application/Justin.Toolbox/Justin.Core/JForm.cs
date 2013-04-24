@@ -54,6 +54,11 @@ namespace Justin.Core
         private void JDockForm_Load(object sender, EventArgs e)
         {
             InitMenu();
+            if (this is IFile)
+            {
+                IFile file = this as IFile;
+                this.saveFileDialog1.Filter = Tools.GetOpenFileDialogFilter(file.Extension);
+            }
         }
 
         #region 菜单
