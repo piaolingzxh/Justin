@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Justin.FrameWork.Extensions;
 using Justin.Controls.TestDataGenerator.Entities;
 
-namespace Justin.Controls.TestDataGenerator.Controls
+namespace Justin.Controls.TestDataGenerator
 {
     public partial class OperandCtrl : UserControl
     {

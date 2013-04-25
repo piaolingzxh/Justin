@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestDataGenerator));
             this.btnDataSourceChoose = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -39,14 +38,14 @@
             this.tvAllTables = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tvSource = new System.Windows.Forms.TreeView();
-            this.tvSourceMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tvSourceMenu = new System.Windows.Forms.ContextMenuStrip();
             this.TranslateMenuItemOfTVSource = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMenuItemOfTVSource = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrepareDBTables = new System.Windows.Forms.Button();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabConfigPage = new System.Windows.Forms.TabPage();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -120,7 +119,7 @@
             this.txtTableNameFilter.Location = new System.Drawing.Point(129, 3);
             this.txtTableNameFilter.Name = "txtTableNameFilter";
             this.txtTableNameFilter.Size = new System.Drawing.Size(351, 20);
-            this.txtTableNameFilter.TabIndex = 2;
+            this.txtTableNameFilter.TabIndex = 1;
             // 
             // splitContainer1
             // 
@@ -147,7 +146,7 @@
             this.tvAllTables.Location = new System.Drawing.Point(0, 0);
             this.tvAllTables.Name = "tvAllTables";
             this.tvAllTables.Size = new System.Drawing.Size(150, 308);
-            this.tvAllTables.TabIndex = 13;
+            this.tvAllTables.TabIndex = 2;
             this.tvAllTables.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvAllTables_NodeMouseClick);
             this.tvAllTables.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvAllTables_NodeMouseDoubleClick);
             // 
@@ -204,7 +203,7 @@
             this.btnPrepareDBTables.Location = new System.Drawing.Point(3, 3);
             this.btnPrepareDBTables.Name = "btnPrepareDBTables";
             this.btnPrepareDBTables.Size = new System.Drawing.Size(14, 302);
-            this.btnPrepareDBTables.TabIndex = 14;
+            this.btnPrepareDBTables.TabIndex = 3;
             this.btnPrepareDBTables.Tag = "加载该表的字段信息";
             this.btnPrepareDBTables.Text = "→";
             this.btnPrepareDBTables.UseVisualStyleBackColor = true;
@@ -262,6 +261,7 @@
             this.Controls.Add(this.tableLayoutPanel7);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestDataGenerator";
+            this.ShowStatus = true;
             this.Text = "SQL SERVER TEST DATA GENERATOR";
             this.Load += new System.EventHandler(this.fomr1_Load);
             this.Controls.SetChildIndex(this.tableLayoutPanel7, 0);

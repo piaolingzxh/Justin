@@ -44,7 +44,7 @@
             this.textEditorControl1.Location = new System.Drawing.Point(3, 33);
             this.textEditorControl1.Name = "textEditorControl1";
             this.textEditorControl1.Size = new System.Drawing.Size(529, 327);
-            this.textEditorControl1.TabIndex = 0;
+            this.textEditorControl1.TabIndex = 2;
             this.textEditorControl1.Text = "textEditorControl1";
             // 
             // tableLayoutPanel1
@@ -70,7 +70,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(3, 3);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(449, 24);
-            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
             // button1
@@ -79,7 +79,7 @@
             this.button1.Location = new System.Drawing.Point(458, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(74, 24);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 1;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -88,12 +88,12 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // JEditor
+            // JEditorCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "JEditor";
+            this.Name = "JEditorCtrl";
             this.Size = new System.Drawing.Size(535, 363);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

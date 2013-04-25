@@ -63,7 +63,7 @@
             this.btnCompiler.Location = new System.Drawing.Point(3, 38);
             this.btnCompiler.Name = "btnCompiler";
             this.btnCompiler.Size = new System.Drawing.Size(75, 29);
-            this.btnCompiler.TabIndex = 0;
+            this.btnCompiler.TabIndex = 2;
             this.btnCompiler.Text = "Compiler";
             this.btnCompiler.UseVisualStyleBackColor = true;
             this.btnCompiler.Click += new System.EventHandler(this.btnCompiler_Click);
@@ -74,7 +74,7 @@
             this.btnRun.Location = new System.Drawing.Point(3, 73);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 29);
-            this.btnRun.TabIndex = 1;
+            this.btnRun.TabIndex = 3;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
@@ -85,7 +85,7 @@
             this.btnDisassembly.Location = new System.Drawing.Point(3, 3);
             this.btnDisassembly.Name = "btnDisassembly";
             this.btnDisassembly.Size = new System.Drawing.Size(75, 29);
-            this.btnDisassembly.TabIndex = 2;
+            this.btnDisassembly.TabIndex = 1;
             this.btnDisassembly.Text = "Disassembly";
             this.btnDisassembly.UseVisualStyleBackColor = true;
             this.btnDisassembly.Click += new System.EventHandler(this.btnShowILCode_Click);
@@ -138,7 +138,7 @@
             this.txtCode.ShowSpaces = true;
             this.txtCode.ShowTabs = true;
             this.txtCode.Size = new System.Drawing.Size(312, 335);
-            this.txtCode.TabIndex = 21;
+            this.txtCode.TabIndex = 0;
             this.txtCode.Text = resources.GetString("txtCode.Text");
             // 
             // contextMenuStrip1
@@ -181,7 +181,7 @@
             this.txtMSILCode.ShowSpaces = true;
             this.txtMSILCode.ShowTabs = true;
             this.txtMSILCode.Size = new System.Drawing.Size(278, 335);
-            this.txtMSILCode.TabIndex = 23;
+            this.txtMSILCode.TabIndex = 4;
             this.txtMSILCode.Text = resources.GetString("txtMSILCode.Text");
             // 
             // splitContainer1

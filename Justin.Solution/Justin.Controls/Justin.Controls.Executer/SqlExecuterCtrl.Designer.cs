@@ -83,7 +83,7 @@
             this.btnBrowerSQLFile.Location = new System.Drawing.Point(630, 3);
             this.btnBrowerSQLFile.Name = "btnBrowerSQLFile";
             this.btnBrowerSQLFile.Size = new System.Drawing.Size(99, 24);
-            this.btnBrowerSQLFile.TabIndex = 2;
+            this.btnBrowerSQLFile.TabIndex = 0;
             this.btnBrowerSQLFile.Text = "浏览文件";
             this.btnBrowerSQLFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnBrowerSQLFile.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.txtSQLFileName.Name = "txtSQLFileName";
             this.txtSQLFileName.ReadOnly = true;
             this.txtSQLFileName.Size = new System.Drawing.Size(540, 20);
-            this.txtSQLFileName.TabIndex = 1;
+            this.txtSQLFileName.TabIndex = 15;
             // 
             // tableLayoutPanel2
             // 
@@ -129,7 +129,7 @@
             this.btnExecuteSQLByLine.Location = new System.Drawing.Point(3, 215);
             this.btnExecuteSQLByLine.Name = "btnExecuteSQLByLine";
             this.btnExecuteSQLByLine.Size = new System.Drawing.Size(93, 34);
-            this.btnExecuteSQLByLine.TabIndex = 3;
+            this.btnExecuteSQLByLine.TabIndex = 5;
             this.btnExecuteSQLByLine.Text = "逐行执行";
             this.btnExecuteSQLByLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExecuteSQLByLine.UseVisualStyleBackColor = true;
@@ -142,7 +142,7 @@
             this.btnExecuteAllSQL.Location = new System.Drawing.Point(3, 255);
             this.btnExecuteAllSQL.Name = "btnExecuteAllSQL";
             this.btnExecuteAllSQL.Size = new System.Drawing.Size(93, 34);
-            this.btnExecuteAllSQL.TabIndex = 4;
+            this.btnExecuteAllSQL.TabIndex = 6;
             this.btnExecuteAllSQL.Text = "全部执行";
             this.btnExecuteAllSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExecuteAllSQL.UseVisualStyleBackColor = true;
@@ -156,7 +156,7 @@
             this.btnIntelligentExecuteSQL.Location = new System.Drawing.Point(3, 295);
             this.btnIntelligentExecuteSQL.Name = "btnIntelligentExecuteSQL";
             this.btnIntelligentExecuteSQL.Size = new System.Drawing.Size(93, 34);
-            this.btnIntelligentExecuteSQL.TabIndex = 5;
+            this.btnIntelligentExecuteSQL.TabIndex = 7;
             this.btnIntelligentExecuteSQL.Tag = "//->";
             this.btnIntelligentExecuteSQL.Text = "智能执行";
             this.btnIntelligentExecuteSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -170,7 +170,7 @@
             this.btnEnableEditSQL.Location = new System.Drawing.Point(3, 43);
             this.btnEnableEditSQL.Name = "btnEnableEditSQL";
             this.btnEnableEditSQL.Size = new System.Drawing.Size(93, 34);
-            this.btnEnableEditSQL.TabIndex = 6;
+            this.btnEnableEditSQL.TabIndex = 3;
             this.btnEnableEditSQL.Text = "启用编辑";
             this.btnEnableEditSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEnableEditSQL.UseVisualStyleBackColor = true;
@@ -183,7 +183,7 @@
             this.btnModifySQLFileContent.Location = new System.Drawing.Point(3, 83);
             this.btnModifySQLFileContent.Name = "btnModifySQLFileContent";
             this.btnModifySQLFileContent.Size = new System.Drawing.Size(93, 34);
-            this.btnModifySQLFileContent.TabIndex = 7;
+            this.btnModifySQLFileContent.TabIndex = 4;
             this.btnModifySQLFileContent.Text = "保存";
             this.btnModifySQLFileContent.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnModifySQLFileContent.UseVisualStyleBackColor = true;
@@ -196,7 +196,7 @@
             this.btnShowLineNum.Location = new System.Drawing.Point(3, 3);
             this.btnShowLineNum.Name = "btnShowLineNum";
             this.btnShowLineNum.Size = new System.Drawing.Size(93, 34);
-            this.btnShowLineNum.TabIndex = 8;
+            this.btnShowLineNum.TabIndex = 2;
             this.btnShowLineNum.Text = "显示行号";
             this.btnShowLineNum.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnShowLineNum.UseVisualStyleBackColor = true;
@@ -210,7 +210,7 @@
             this.txtSQLPreview.Name = "txtSQLPreview";
             this.txtSQLPreview.ShowLineNumber = true;
             this.txtSQLPreview.Size = new System.Drawing.Size(621, 332);
-            this.txtSQLPreview.TabIndex = 8;
+            this.txtSQLPreview.TabIndex = 1;
             this.txtSQLPreview.Load += new System.EventHandler(this.txtSQLPreview_Load);
             // 
             // openFileDialog

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SchemaViewerCtrl));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -39,9 +38,9 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.treeViewSchema = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
             this.priviewSchemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageListOfTree = new System.Windows.Forms.ImageList(this.components);
+            this.imageListOfTree = new System.Windows.Forms.ImageList();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.lbPropertyGridSource = new System.Windows.Forms.TextBox();
@@ -129,7 +128,7 @@
             this.btnConnect.Location = new System.Drawing.Point(312, 3);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(74, 23);
-            this.btnConnect.TabIndex = 0;
+            this.btnConnect.TabIndex = 3;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -139,7 +138,7 @@
             this.btnBrowerFile.Location = new System.Drawing.Point(232, 3);
             this.btnBrowerFile.Name = "btnBrowerFile";
             this.btnBrowerFile.Size = new System.Drawing.Size(74, 23);
-            this.btnBrowerFile.TabIndex = 0;
+            this.btnBrowerFile.TabIndex = 2;
             this.btnBrowerFile.Text = "Brower";
             this.btnBrowerFile.UseVisualStyleBackColor = true;
             this.btnBrowerFile.Click += new System.EventHandler(this.btnBrowerFile_Click);
@@ -194,7 +193,7 @@
             this.treeViewSchema.Name = "treeViewSchema";
             this.treeViewSchema.SelectedImageIndex = 0;
             this.treeViewSchema.Size = new System.Drawing.Size(165, 444);
-            this.treeViewSchema.TabIndex = 0;
+            this.treeViewSchema.TabIndex = 4;
             this.treeViewSchema.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSchema_AfterSelect);
             // 
             // contextMenuStrip1
@@ -249,7 +248,7 @@
             this.propertyGrid.Location = new System.Drawing.Point(3, 27);
             this.propertyGrid.Name = "propertyGrid";
             this.propertyGrid.Size = new System.Drawing.Size(214, 414);
-            this.propertyGrid.TabIndex = 2;
+            this.propertyGrid.TabIndex = 5;
             // 
             // lbPropertyGridSource
             // 
@@ -288,7 +287,7 @@
             this.btnSerch.Location = new System.Drawing.Point(103, 3);
             this.btnSerch.Name = "btnSerch";
             this.btnSerch.Size = new System.Drawing.Size(74, 29);
-            this.btnSerch.TabIndex = 3;
+            this.btnSerch.TabIndex = 7;
             this.btnSerch.Text = "Search";
             this.btnSerch.UseVisualStyleBackColor = true;
             this.btnSerch.Click += new System.EventHandler(this.btnSerch_Click);
@@ -299,7 +298,7 @@
             this.btnSave.Location = new System.Drawing.Point(283, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(77, 29);
-            this.btnSave.TabIndex = 0;
+            this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -310,7 +309,7 @@
             this.txtLookFor.Location = new System.Drawing.Point(3, 3);
             this.txtLookFor.Name = "txtLookFor";
             this.txtLookFor.Size = new System.Drawing.Size(94, 29);
-            this.txtLookFor.TabIndex = 5;
+            this.txtLookFor.TabIndex = 6;
             this.txtLookFor.Text = "";
             // 
             // txtDstFileName
@@ -319,7 +318,7 @@
             this.txtDstFileName.Location = new System.Drawing.Point(183, 3);
             this.txtDstFileName.Name = "txtDstFileName";
             this.txtDstFileName.Size = new System.Drawing.Size(94, 29);
-            this.txtDstFileName.TabIndex = 6;
+            this.txtDstFileName.TabIndex = 8;
             this.txtDstFileName.Text = "";
             // 
             // txtSchemaXML

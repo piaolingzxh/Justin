@@ -1,4 +1,4 @@
-﻿using Justin.Controls.TestDataGenerator.Controls;
+﻿using Justin.Controls.TestDataGenerator;
 namespace Justin.Controls.TestDataGenerator
 {
     partial class TableConfigCtrl
@@ -58,8 +58,8 @@ namespace Justin.Controls.TestDataGenerator
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.cBoxOperator = new System.Windows.Forms.ComboBox();
             this.SaveFieldInfo = new System.Windows.Forms.Button();
-            this.operandCtrl1 = new Justin.Controls.TestDataGenerator.Controls.OperandCtrl();
-            this.operandCtrl2 = new Justin.Controls.TestDataGenerator.Controls.OperandCtrl();
+            this.operandCtrl1 = new Justin.Controls.TestDataGenerator.OperandCtrl();
+            this.operandCtrl2 = new Justin.Controls.TestDataGenerator.OperandCtrl();
             this.tabTable = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.txtDataCount = new System.Windows.Forms.TextBox();
@@ -137,7 +137,7 @@ namespace Justin.Controls.TestDataGenerator
             this.btnExecuteTableSQL.Location = new System.Drawing.Point(3, 387);
             this.btnExecuteTableSQL.Name = "btnExecuteTableSQL";
             this.btnExecuteTableSQL.Size = new System.Drawing.Size(34, 124);
-            this.btnExecuteTableSQL.TabIndex = 14;
+            this.btnExecuteTableSQL.TabIndex = 15;
             this.btnExecuteTableSQL.Tag = "根据表及所有字段设置生成测试数据SQL";
             this.btnExecuteTableSQL.UseVisualStyleBackColor = true;
             this.btnExecuteTableSQL.Click += new System.EventHandler(this.btnExecuteTableSQL_Click);
@@ -161,7 +161,7 @@ namespace Justin.Controls.TestDataGenerator
             this.btnGenerateData.Location = new System.Drawing.Point(3, 131);
             this.btnGenerateData.Name = "btnGenerateData";
             this.btnGenerateData.Size = new System.Drawing.Size(34, 122);
-            this.btnGenerateData.TabIndex = 11;
+            this.btnGenerateData.TabIndex = 14;
             this.btnGenerateData.Tag = "根据表及所有字段设置生成测试数据SQL";
             this.btnGenerateData.UseVisualStyleBackColor = true;
             this.btnGenerateData.Click += new System.EventHandler(this.btnGenerateData_Click);
@@ -194,7 +194,7 @@ namespace Justin.Controls.TestDataGenerator
             this.tvDst.Name = "tvDst";
             this.tvDst.SelectedImageIndex = 0;
             this.tvDst.Size = new System.Drawing.Size(165, 514);
-            this.tvDst.TabIndex = 17;
+            this.tvDst.TabIndex = 0;
             this.tvDst.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvDst_AfterSelect);
             this.tvDst.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvDst_NodeMouseClick);
             // 
@@ -250,7 +250,7 @@ namespace Justin.Controls.TestDataGenerator
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(557, 514);
-            this.tabControl1.TabIndex = 18;
+            this.tabControl1.TabIndex = 1;
             // 
             // tabField
             // 
@@ -332,7 +332,7 @@ namespace Justin.Controls.TestDataGenerator
             this.cBoxVisible.Location = new System.Drawing.Point(83, 30);
             this.cBoxVisible.Name = "cBoxVisible";
             this.cBoxVisible.Size = new System.Drawing.Size(182, 21);
-            this.cBoxVisible.TabIndex = 6;
+            this.cBoxVisible.TabIndex = 4;
             // 
             // cBoxValueType
             // 
@@ -345,7 +345,7 @@ namespace Justin.Controls.TestDataGenerator
             this.cBoxValueType.Location = new System.Drawing.Point(351, 3);
             this.cBoxValueType.Name = "cBoxValueType";
             this.cBoxValueType.Size = new System.Drawing.Size(183, 21);
-            this.cBoxValueType.TabIndex = 2;
+            this.cBoxValueType.TabIndex = 3;
             // 
             // lbFieldName
             // 
@@ -354,7 +354,7 @@ namespace Justin.Controls.TestDataGenerator
             this.lbFieldName.Name = "lbFieldName";
             this.lbFieldName.ReadOnly = true;
             this.lbFieldName.Size = new System.Drawing.Size(182, 20);
-            this.lbFieldName.TabIndex = 7;
+            this.lbFieldName.TabIndex = 2;
             // 
             // label3
             // 
@@ -420,7 +420,7 @@ namespace Justin.Controls.TestDataGenerator
             this.cBoxOperator.Location = new System.Drawing.Point(243, 3);
             this.cBoxOperator.Name = "cBoxOperator";
             this.cBoxOperator.Size = new System.Drawing.Size(44, 21);
-            this.cBoxOperator.TabIndex = 14;
+            this.cBoxOperator.TabIndex = 6;
             // 
             // SaveFieldInfo
             // 
@@ -431,7 +431,7 @@ namespace Justin.Controls.TestDataGenerator
             this.SaveFieldInfo.Location = new System.Drawing.Point(3, 361);
             this.SaveFieldInfo.Name = "SaveFieldInfo";
             this.SaveFieldInfo.Size = new System.Drawing.Size(525, 29);
-            this.SaveFieldInfo.TabIndex = 11;
+            this.SaveFieldInfo.TabIndex = 8;
             this.SaveFieldInfo.Tag = "应用该字段的设置";
             this.SaveFieldInfo.Text = "Apply Field Setting";
             this.SaveFieldInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -445,7 +445,7 @@ namespace Justin.Controls.TestDataGenerator
             this.operandCtrl1.Location = new System.Drawing.Point(3, 3);
             this.operandCtrl1.Name = "operandCtrl1";
             this.operandCtrl1.Size = new System.Drawing.Size(234, 352);
-            this.operandCtrl1.TabIndex = 15;
+            this.operandCtrl1.TabIndex = 5;
             // 
             // operandCtrl2
             // 
@@ -453,7 +453,7 @@ namespace Justin.Controls.TestDataGenerator
             this.operandCtrl2.Location = new System.Drawing.Point(293, 3);
             this.operandCtrl2.Name = "operandCtrl2";
             this.operandCtrl2.Size = new System.Drawing.Size(235, 352);
-            this.operandCtrl2.TabIndex = 16;
+            this.operandCtrl2.TabIndex = 7;
             // 
             // tabTable
             // 
@@ -493,7 +493,7 @@ namespace Justin.Controls.TestDataGenerator
             this.txtDataCount.Location = new System.Drawing.Point(83, 3);
             this.txtDataCount.Name = "txtDataCount";
             this.txtDataCount.Size = new System.Drawing.Size(457, 20);
-            this.txtDataCount.TabIndex = 16;
+            this.txtDataCount.TabIndex = 9;
             // 
             // btnSaveTable
             // 
@@ -576,7 +576,7 @@ namespace Justin.Controls.TestDataGenerator
             this.txtBeforeSQL.ShowSpaces = true;
             this.txtBeforeSQL.ShowTabs = true;
             this.txtBeforeSQL.Size = new System.Drawing.Size(451, 176);
-            this.txtBeforeSQL.TabIndex = 19;
+            this.txtBeforeSQL.TabIndex = 10;
             // 
             // tableLayoutPanel8
             // 
@@ -614,7 +614,7 @@ namespace Justin.Controls.TestDataGenerator
             this.txtAfterSQL.ShowSpaces = true;
             this.txtAfterSQL.ShowTabs = true;
             this.txtAfterSQL.Size = new System.Drawing.Size(451, 232);
-            this.txtAfterSQL.TabIndex = 20;
+            this.txtAfterSQL.TabIndex = 11;
             // 
             // TableConfigCtrl
             // 

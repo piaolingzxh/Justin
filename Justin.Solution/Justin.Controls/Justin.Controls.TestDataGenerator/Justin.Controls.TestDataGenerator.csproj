@@ -36,11 +36,11 @@
     </Reference>
     <Reference Include="Justin.FrameWork, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48d83e4bfa0cc209, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.FrameWork.dll</HintPath>
+      <HintPath>..\..\Justin.FrameWork\Justin.FrameWork\obj\Debug\Justin.FrameWork.dll</HintPath>
     </Reference>
     <Reference Include="Justin.FrameWork.WinForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b54556de27525ede, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
+      <HintPath>..\..\Justin.FrameWork\Justin.FrameWork.WinForm\obj\Debug\Justin.FrameWork.WinForm.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

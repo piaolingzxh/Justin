@@ -1,4 +1,4 @@
-﻿namespace Justin.Controls.TestDataGenerator.Controls
+﻿namespace Justin.Controls.TestDataGenerator
 {
     partial class OperandCtrl
     {
@@ -115,7 +115,7 @@
             this.txtSourceList.Location = new System.Drawing.Point(3, 3);
             this.txtSourceList.Name = "txtSourceList";
             this.txtSourceList.Size = new System.Drawing.Size(324, 167);
-            this.txtSourceList.TabIndex = 11;
+            this.txtSourceList.TabIndex = 1;
             this.txtSourceList.Text = "";
             // 
             // tbRangeAndSequence
@@ -170,7 +170,7 @@
             this.txtSeed.Location = new System.Drawing.Point(83, 43);
             this.txtSeed.Name = "txtSeed";
             this.txtSeed.Size = new System.Drawing.Size(238, 20);
-            this.txtSeed.TabIndex = 13;
+            this.txtSeed.TabIndex = 4;
             // 
             // label12
             // 
@@ -188,7 +188,7 @@
             this.txtMaxValue.Location = new System.Drawing.Point(83, 23);
             this.txtMaxValue.Name = "txtMaxValue";
             this.txtMaxValue.Size = new System.Drawing.Size(238, 20);
-            this.txtMaxValue.TabIndex = 11;
+            this.txtMaxValue.TabIndex = 3;
             // 
             // label13
             // 
@@ -206,7 +206,7 @@
             this.txtMinValue.Location = new System.Drawing.Point(83, 3);
             this.txtMinValue.Name = "txtMinValue";
             this.txtMinValue.Size = new System.Drawing.Size(238, 20);
-            this.txtMinValue.TabIndex = 12;
+            this.txtMinValue.TabIndex = 2;
             // 
             // label9
             // 
@@ -224,7 +224,7 @@
             this.txtFormat.Location = new System.Drawing.Point(83, 63);
             this.txtFormat.Name = "txtFormat";
             this.txtFormat.Size = new System.Drawing.Size(238, 20);
-            this.txtFormat.TabIndex = 15;
+            this.txtFormat.TabIndex = 5;
             // 
             // tbFromTable
             // 
@@ -285,7 +285,7 @@
             this.txtRefTableName.Location = new System.Drawing.Point(91, 3);
             this.txtRefTableName.Name = "txtRefTableName";
             this.txtRefTableName.Size = new System.Drawing.Size(236, 20);
-            this.txtRefTableName.TabIndex = 1;
+            this.txtRefTableName.TabIndex = 6;
             // 
             // txtRefFieldName
             // 
@@ -293,7 +293,7 @@
             this.txtRefFieldName.Location = new System.Drawing.Point(91, 23);
             this.txtRefFieldName.Name = "txtRefFieldName";
             this.txtRefFieldName.Size = new System.Drawing.Size(236, 20);
-            this.txtRefFieldName.TabIndex = 1;
+            this.txtRefFieldName.TabIndex = 7;
             // 
             // label10
             // 
@@ -311,7 +311,7 @@
             this.txtFilter.Location = new System.Drawing.Point(91, 43);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(236, 20);
-            this.txtFilter.TabIndex = 3;
+            this.txtFilter.TabIndex = 8;
             // 
             // tanOtherField
             // 
@@ -359,7 +359,7 @@
             this.cBoxOtherFieldName.Location = new System.Drawing.Point(83, 3);
             this.cBoxOtherFieldName.Name = "cBoxOtherFieldName";
             this.cBoxOtherFieldName.Size = new System.Drawing.Size(244, 21);
-            this.cBoxOtherFieldName.TabIndex = 7;
+            this.cBoxOtherFieldName.TabIndex = 9;
             // 
             // label15
             // 
@@ -384,7 +384,7 @@
             this.cBoxValueCategroy.Location = new System.Drawing.Point(83, 3);
             this.cBoxValueCategroy.Name = "cBoxValueCategroy";
             this.cBoxValueCategroy.Size = new System.Drawing.Size(258, 21);
-            this.cBoxValueCategroy.TabIndex = 15;
+            this.cBoxValueCategroy.TabIndex = 0;
             this.cBoxValueCategroy.SelectedIndexChanged += new System.EventHandler(this.cBoxValueCategroy_SelectedIndexChanged);
             // 
             // OperandCtrl
