@@ -30,7 +30,7 @@ namespace Justin.Controls.Executer
             };
         }
 
-        
+
         public AdomdConnection Connection
         {
             get
@@ -70,7 +70,10 @@ namespace Justin.Controls.Executer
                     mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
                 }
                 CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
-                DataTable dt = cst.ToDataTable();
+
+
+                bool useFormattedValue = sender == this.btnExecute;
+                DataTable dt = cst.ToDataTable(useFormattedValue);
                 gvMdxresult.DataSource = dt;
             }
             catch (Exception ex)

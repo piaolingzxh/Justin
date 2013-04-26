@@ -9,7 +9,7 @@ namespace Justin.FrameWork.Extensions
 {
     public static class CellSetEx
     {
-        public static DataTable ToDataTable(this CellSet cs)
+        public static DataTable ToDataTable(this CellSet cs, bool useFormattedValue = false)
         {
             try
             {
@@ -56,7 +56,14 @@ namespace Justin.FrameWork.Extensions
                     {
                         try
                         {
-                            dr[x] = cs[pos++].FormattedValue;
+                            if (useFormattedValue)
+                            {
+                                dr[x] = cs[pos++].FormattedValue;
+                            }
+                            else
+                            {
+                                dr[x] = cs[pos++].Value;
+                            }
                             if (dr[x].ToString() == "null")
                             {
                                 dr[x] = "";
@@ -84,7 +91,15 @@ namespace Justin.FrameWork.Extensions
                         {
                             try
                             {
-                                dr[x] = cs[pos++].FormattedValue;
+                                if (useFormattedValue)
+                                {
+                                    dr[x] = cs[pos++].FormattedValue;
+                                }
+                                else
+                                {
+                                    dr[x] = cs[pos++].Value;
+                                }
+
                                 if (dr[x].ToString() == "null")
                                 {
                                     dr[x] = "";
