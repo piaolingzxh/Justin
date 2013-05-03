@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Justin.Core;
+using Justin.FrameWork.Settings;
 using Microsoft.WindowsAPICodePack.Controls;
 using Microsoft.WindowsAPICodePack.Shell;
 
@@ -20,8 +21,28 @@ namespace Justin.Toolbox
             InitializeComponent();
         }
 
+        public Explorer(string[] args)
+            : this()
+        {
+            if (args != null)
+            {
+                this.textBoxPath.Text = args[0];
+            }
+        }
+
         private void Explorer_Load(object sender, EventArgs e)
         {
+            this.panel1.Paint += panel1_Paint;
+        }
+
+        void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxPath.Text))
+                return;
+            DirectoryInfo dir = new DirectoryInfo(textBoxPath.Text);
+            if (!dir.Exists)
+                return;
+            explorerBrowser1.Navigate(ShellFileSystemFolder.FromFolderPath(textBoxPath.Text));
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
@@ -47,16 +68,10 @@ namespace Justin.Toolbox
             }
         }
 
-         
+
         private void Explorer_Activated(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(textBoxPath.Text))
-                return;
-            DirectoryInfo dir = new DirectoryInfo(textBoxPath.Text);
-            if (!dir.Exists)
-                return;
-            
-            explorerBrowser1.Navigate(ShellFileSystemFolder.FromFolderPath(textBoxPath.Text));
+
         }
 
         private void btnBrower_Click(object sender, EventArgs e)
@@ -67,5 +82,13 @@ namespace Justin.Toolbox
                 explorerBrowser1.Navigate(ShellFileSystemFolder.FromFolderPath(textBoxPath.Text));
             }
         }
+
+
+        protected override string GetPersistString()
+        {
+            return string.Format("{1}{0}{2}", Constants.Splitor, GetType().ToString(), this.textBoxPath.Text);
+        }
+
+
     }
 }

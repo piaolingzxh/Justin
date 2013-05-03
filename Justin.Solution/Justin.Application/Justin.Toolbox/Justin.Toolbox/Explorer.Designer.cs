@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.explorerBrowser1 = new Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonBack = new System.Windows.Forms.Button();
@@ -36,27 +35,20 @@
             this.textBoxPath = new System.Windows.Forms.TextBox();
             this.buttonLocation = new System.Windows.Forms.Button();
             this.btnBrower = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.explorerBrowser1 = new Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // explorerBrowser1
-            // 
-            this.explorerBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.explorerBrowser1.Location = new System.Drawing.Point(3, 43);
-            this.explorerBrowser1.Name = "explorerBrowser1";
-            this.explorerBrowser1.PropertyBagName = "Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser";
-            this.explorerBrowser1.Size = new System.Drawing.Size(600, 197);
-            this.explorerBrowser1.TabIndex = 4;
-            this.explorerBrowser1.NavigationComplete += new System.EventHandler<Microsoft.WindowsAPICodePack.Controls.NavigationCompleteEventArgs>(this.explorerBrowser1_NavigationComplete);
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.explorerBrowser1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -145,6 +137,25 @@
             this.btnBrower.UseVisualStyleBackColor = true;
             this.btnBrower.Click += new System.EventHandler(this.btnBrower_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.explorerBrowser1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 43);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(600, 197);
+            this.panel1.TabIndex = 6;
+            // 
+            // explorerBrowser1
+            // 
+            this.explorerBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.explorerBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.explorerBrowser1.Name = "explorerBrowser1";
+            this.explorerBrowser1.PropertyBagName = "Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser";
+            this.explorerBrowser1.Size = new System.Drawing.Size(600, 197);
+            this.explorerBrowser1.TabIndex = 5;
+            this.explorerBrowser1.NavigationComplete += new System.EventHandler<Microsoft.WindowsAPICodePack.Controls.NavigationCompleteEventArgs>(this.explorerBrowser1_NavigationComplete);
+            // 
             // Explorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,12 +165,12 @@
             this.Name = "Explorer";
             this.ShowStatus = true;
             this.Text = "Explorer";
-            this.Activated += new System.EventHandler(this.Explorer_Activated);
             this.Load += new System.EventHandler(this.Explorer_Load);
             this.Controls.SetChildIndex(this.tableLayoutPanel1, 0);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,7 +178,6 @@
 
         #endregion
 
-        private Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser explorerBrowser1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button buttonBack;
@@ -176,5 +186,7 @@
         private System.Windows.Forms.Button buttonLocation;
         private System.Windows.Forms.Button btnBrower;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Panel panel1;
+        private Microsoft.WindowsAPICodePack.Controls.WindowsForms.ExplorerBrowser explorerBrowser1;
     }
 }
