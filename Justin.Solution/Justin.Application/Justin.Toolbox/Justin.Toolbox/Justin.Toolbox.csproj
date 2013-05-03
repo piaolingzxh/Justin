@@ -155,12 +155,12 @@
     <Compile Include="MondrianSchemaWorkbench.Designer.cs">
       <DependentUpon>MondrianSchemaWorkbench.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlExecuteor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +183,8 @@
   <ItemGroup>
     <Content Include="images\ArrowDown.bmp" />
     <Content Include="images\ArrowUp.bmp" />
+    <None Include="images\back.png" />
+    <Content Include="images\back_48.jpg" />
     <Content Include="images\Bitmap.ico" />
     <Content Include="images\BlankIcon.ico" />
     <Content Include="images\CalMeasure.png" />
@@ -209,7 +211,11 @@
     <Content Include="images\find.png" />
     <Content Include="images\fk.png" />
     <Content Include="images\Form.ico" />
+    <None Include="images\forward.png" />
+    <Content Include="images\qian.png" />
+    <Content Include="images\后退.png" />
     <None Include="images\help.png" />
+    <Content Include="images\forward_48.jpg" />
     <Content Include="images\GTP_date.png" />
     <Content Include="images\GTP_number.png" />
     <Content Include="images\GTP_wait.png" />

@@ -30,7 +30,7 @@ namespace Justin.Controls.Executer
             };
         }
 
-
+        public static string DefaultConnStr { get; set; }
         public AdomdConnection Connection
         {
             get
@@ -75,6 +75,7 @@ namespace Justin.Controls.Executer
                 bool useFormattedValue = sender == this.btnExecute;
                 DataTable dt = cst.ToDataTable(useFormattedValue);
                 gvMdxresult.DataSource = dt;
+                ShowResult(dt);
             }
             catch (Exception ex)
             {
@@ -114,6 +115,7 @@ namespace Justin.Controls.Executer
 
                 DataTable dt = MdxHelper.ExecuteDataTable(Connection, mdx);
                 gvMdxresult.DataSource = dt;
+                ShowResult(dt);
             }
             catch (Exception ex)
             {
@@ -126,14 +128,25 @@ namespace Justin.Controls.Executer
             get { return ".mdx"; }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.gvMdxresult.DataSource = null;
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
             this.txtConnectionString.Text = "Provider=mondrian;Data Source=http://localhost:8080/mondrian_mssql/xmla;Initial Catalog=gtp;";
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            this.gvMdxresult.DataSource = null;
+            this.txtResult.Text = "";
+        }
+
+        private void ShowResult(DataTable dt)
+        {
+            txtResult.Text = string.Format("查询结果:{0}行/{1}列,", dt == null ? 0 : dt.Rows.Count, dt == null ? 0 : dt.Columns.Count);
+        }
+
+        private void btnDefaultConnStr_Click(object sender, EventArgs e)
+        {
+            this.txtConnectionString.Text = DefaultConnStr;
         }
 
     }

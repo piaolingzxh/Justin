@@ -92,6 +92,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\clear.png" />
+    <Content Include="Images\conn.png" />
     <Content Include="Images\edit1.png" />
     <Content Include="Images\execute.png" />
     <Content Include="Images\ExecuteAll.png" />

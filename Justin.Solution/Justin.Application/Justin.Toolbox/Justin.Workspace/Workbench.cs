@@ -656,8 +656,7 @@ namespace Justin.Workspace
 
         private void Workbench_Load(object sender, EventArgs e)
         {
-            OutPutWin = OutPutWindow.Instance;
-            OutPutWin.Show(dockPanel, DockState.DockBottom);
+           
             string addinFileFullName = Path.Combine(Application.StartupPath, fileNameOfAddin);
             this.ShowMessage(string.Format("addin【{0}】", addinFileFullName));
 
@@ -702,6 +701,8 @@ namespace Justin.Workspace
             {
                 OpenFileAccordingToFile(rightContextMenuFileName);
             }
+            OutPutWin = OutPutWindow.Instance;
+            OutPutWin.Show(dockPanel, DockState.DockBottom);
             string showInNotifyAreaString = ConfigurationManager.AppSettings["ShowInNotifyArea"];
             bool showNotify = false;
             if (showInNotifyAreaString != null && bool.TryParse(showInNotifyAreaString, out showNotify))

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
+using Justin.Controls.Executer;
 using Justin.Core;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.Models;
@@ -49,6 +51,7 @@ namespace Justin.Toolbox
         private void MdxExecutor_Load(object sender, EventArgs e)
         {
             this.LoadFile(this.FileName);
+            MdxExecuterCtrl.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
         }
 
         #region 继承
