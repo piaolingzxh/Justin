@@ -276,7 +276,7 @@ namespace Justin.Stock.Controls
             foreach (var stock in StockList)
             {
                 bool showWarnFlag = false;
-                if (stock.PriceNow != 0)
+                if (stock.PriceNow != 0 & stock.Warn)
                 {
                     if (stock.WarnPrice_Max != 0 && stock.PriceNow > stock.WarnPrice_Max)
                     {

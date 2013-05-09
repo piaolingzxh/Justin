@@ -11,4 +11,7 @@
   [BuyCount] INTEGER, 
   [ShowInFolatWindow] BOOLEAN, 
   [Order] INTEGER, 
-  [HasProfitOrLoss] FLOAT);
+  [ProfitOrLossHistory] TEXT, 
+  [Warn] BOOLEAN DEFAULT 1);
+
+

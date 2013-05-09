@@ -55,6 +55,7 @@ namespace Justin.Stock.DAL
                 ShowInFolatWindow = reader["ShowInFolatWindow"].Value<bool>(),
                 Order = reader["Order"].Value<int>(),
                 ProfitOrLossHistory = reader["ProfitOrLossHistory"].Value<string>(),
+                Warn = reader["Warn"].Value<bool>(),
             };
             return stock;
         }
@@ -75,8 +76,8 @@ CREATE TABLE [MyStocks] (
   [BuyCount] INTEGER, 
   [ShowInFolatWindow] BOOLEAN, 
   [Order] INTEGER, 
-  [HasProfitOrLoss] FLOAT, 
-  [ProfitOrLossHistory] TEXT);";
+  [ProfitOrLossHistory] TEXT, 
+  [Warn] BOOLEAN DEFAULT 1);";
 
         public static void InitDB()
         {
@@ -100,7 +101,7 @@ CREATE TABLE [MyStocks] (
             if (count < 1)
             {
                 string insertSQL = string.Format(INSERT_SQL_FORMAT, code, no, name, shortName);
-                SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, insertSQL, null);
+                SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, insertSQL, null);
             }
 
         }
@@ -111,33 +112,54 @@ CREATE TABLE [MyStocks] (
 
             SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, sql, null);
         }
-        public void UpdateStock(string code, string name, string inShort, decimal warnprice_Min, decimal warnprice_Max, decimal warnpercent_Min, decimal warnpercent_Max, decimal buyPrice, int buyCount, bool showInFolatWindow, int order, string  profitOrLossHistory)
+        //        public void UpdateStock(string code, string name, string inShort, decimal warnprice_Min, decimal warnprice_Max, decimal warnpercent_Min, decimal warnpercent_Max, decimal buyPrice, int buyCount, bool showInFolatWindow, int order, string profitOrLossHistory)
+        //        {
+
+        //            string UPDATE_SQL_FORMAT = @"
+        //update MyStocks set
+        //SpellingInShort    ='{1}'
+        //,Warnprice_Min     ={2}
+        //,Warnprice_Max     ={3}
+        //,Warnpercent_Min   ={4}
+        //,Warnpercent_Max   ={5}
+        //,BuyPrice          ={6}
+        //,BuyCount          ={7}
+        //,Name              ='{8}'
+        //,ShowInFolatWindow={9}
+        //,[Order]={10}
+        //,ProfitOrLossHistory='{11}'  
+        //where Code='{0}'";
+
+        //            string updateSQL = string.Format(UPDATE_SQL_FORMAT, code, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, name, showInFolatWindow ? 1 : 0, order, profitOrLossHistory);
+        //            SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, updateSQL, null);
+        //        }
+
+
+        public int UpdateByDataSet(DataTable table)
         {
+            try
+            {
+                SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr);
 
-            string UPDATE_SQL_FORMAT = @"
-update MyStocks set
-SpellingInShort    ='{1}'
-,Warnprice_Min     ={2}
-,Warnprice_Max     ={3}
-,Warnpercent_Min   ={4}
-,Warnpercent_Max   ={5}
-,BuyPrice          ={6}
-,BuyCount          ={7}
-,Name              ='{8}'
-,ShowInFolatWindow={9}
-,[Order]={10}
-,ProfitOrLossHistory='{11}'  
-where Code='{0}'";
-
-            string updateSQL = string.Format(UPDATE_SQL_FORMAT, code, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, name, showInFolatWindow ? 1 : 0, order, profitOrLossHistory);
-            SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, updateSQL, null);
+                SQLiteDataAdapter myAdapter = new SQLiteDataAdapter();
+                SQLiteCommand myCommand = new SQLiteCommand(("select * from " + "MyStocks"), conn);
+                myAdapter.SelectCommand = myCommand;
+                SQLiteCommandBuilder myCommandBuilder = new SQLiteCommandBuilder(myAdapter);
+                myAdapter.Update(table);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
         }
-
         #endregion
 
         public DataTable Query(string sql)
         {
             return SqliteHelper.ExecuteDataTable(SqliteHelper.ConnStr, CommandType.Text, sql, null);
         }
+
+
     }
 }

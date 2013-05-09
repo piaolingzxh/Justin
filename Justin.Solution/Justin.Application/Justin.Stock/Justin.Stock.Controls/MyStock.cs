@@ -174,24 +174,29 @@ namespace Justin.Stock.Controls
         }
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dgvStocksetting.SelectedRows)
-            {
-                string code = row.Cells["StockCode"].Value.ToString();
-                string name = row.Cells["StockName"].Value.ToString();
-                string inShort = row.Cells["StockInShort"].Value.ToString();
-                decimal warnprice_Min = row.Cells["WarnPrice_Min"].Value.Value<decimal>();
-                decimal warnprice_Max = row.Cells["WarnPrice_Max"].Value.Value<decimal>();
-                decimal warnpercent_Min = row.Cells["WarnPercent_Min"].Value.Value<decimal>();
-                decimal warnpercent_Max = row.Cells["WarnPercent_Max"].Value.Value<decimal>();
-                decimal buyPrice = row.Cells["BuyPrice"].Value.Value<decimal>();
-                int buyCount = row.Cells["BuyCount"].Value.Value<int>();
-                bool showInFolatWindow = row.Cells["ShowInFolatWindow"].Value.Value<bool>();
-                int order = row.Cells["Order"].Value.Value<int>();
-                string profitOrLossHistory = row.Cells["profitOrLossHistory"].Value.Value<string>();
+            //foreach (DataGridViewRow row in dgvStocksetting.SelectedRows)
+            //{
+            //    string code = row.Cells["StockCode"].Value.ToString();
+            //    string name = row.Cells["StockName"].Value.ToString();
+            //    string inShort = row.Cells["StockInShort"].Value.ToString();
+            //    decimal warnprice_Min = row.Cells["WarnPrice_Min"].Value.Value<decimal>();
+            //    decimal warnprice_Max = row.Cells["WarnPrice_Max"].Value.Value<decimal>();
+            //    decimal warnpercent_Min = row.Cells["WarnPercent_Min"].Value.Value<decimal>();
+            //    decimal warnpercent_Max = row.Cells["WarnPercent_Max"].Value.Value<decimal>();
+            //    decimal buyPrice = row.Cells["BuyPrice"].Value.Value<decimal>();
+            //    int buyCount = row.Cells["BuyCount"].Value.Value<int>();
+            //    bool showInFolatWindow = row.Cells["ShowInFolatWindow"].Value.Value<bool>();
+            //    int order = row.Cells["Order"].Value.Value<int>();
+            //    string profitOrLossHistory = row.Cells["profitOrLossHistory"].Value.Value<string>();
 
-                stockDAL.UpdateStock(code, name, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, showInFolatWindow, order, profitOrLossHistory);
+            //    stockDAL.UpdateStock(code, name, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, showInFolatWindow, order, profitOrLossHistory);
+            //}
+            DataTable table = dgvStocksetting.DataSource as DataTable;
+            if (table != null)
+            {
+                stockDAL.UpdateByDataSet(table);
+                Constants.ResetMyStock();
             }
-            Constants.ResetMyStock();
         }
         //刷新自选列表
         private void btnRefreshPersonalStockSetting_Click(object sender, EventArgs e)
@@ -200,9 +205,19 @@ namespace Justin.Stock.Controls
         }
         private void RefreshPersonalStockSetting()
         {
-            //DataTable table = stockDAL.Query("select * from  MyStocks order by [order] desc,  BuyCount desc");
+            DataTable table = stockDAL.Query("select * from  MyStocks order by [order] desc");
+            dgvStocksetting.DataSource = table;
+
+
+            foreach (DataGridViewRow row in dgvStocksetting.Rows)
+            {
+                object objProfitOrLossHistory = row.Cells["ProfitOrLossHistory"].Value;
+                if (objProfitOrLossHistory != null)
+                {
+                    row.Cells["HasProfitOrLoss"].Value = StockInfo.GetProfitOrLossHistoryData(objProfitOrLossHistory.ToString()).Sum();
+                }
+            }
             List<StockInfo> stockList = stockDAL.getAllMyStock();
-            dgvStocksetting.DataSource = new BindingCollection<StockInfo>(stockList); 
             foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
             {
                 if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())

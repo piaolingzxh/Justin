@@ -23,6 +23,7 @@ namespace Justin.Stock.Service.Entities
         /// 是否显示在桌面
         /// </summary>
         public bool ShowInFolatWindow { get; set; }
+        public bool Warn { get; set; }
         /// <summary>
         /// 显示排序
         /// </summary>
@@ -44,20 +45,7 @@ namespace Justin.Stock.Service.Entities
         {
             get
             {
-                List<decimal> datas = new List<decimal>();
-                if (string.IsNullOrEmpty(this.ProfitOrLossHistory) || string.IsNullOrEmpty(this.ProfitOrLossHistory.Trim()))
-                {
-                    return datas;
-                }
-
-                string[] dataStrs = this.ProfitOrLossHistory.Split(',');
-                if (dataStrs == null || dataStrs.Length < 1)
-                    return datas;
-                foreach (var item in dataStrs)
-                {
-                    datas.Add(decimal.Parse(item));
-                }
-                return datas;
+                return GetProfitOrLossHistoryData(this.ProfitOrLossHistory);
             }
         }
 
@@ -230,5 +218,25 @@ namespace Justin.Stock.Service.Entities
 
 
         #endregion
+
+
+        public static List<decimal> GetProfitOrLossHistoryData(string profitOrLossHistory)
+        {
+            List<decimal> datas = new List<decimal>();
+            if (string.IsNullOrEmpty(profitOrLossHistory) || string.IsNullOrEmpty(profitOrLossHistory.Trim()))
+            {
+                return datas;
+            }
+
+            string[] dataStrs = profitOrLossHistory.Split(',');
+            if (dataStrs == null || dataStrs.Length < 1)
+                return datas;
+            foreach (var item in dataStrs)
+            {
+                datas.Add(decimal.Parse(item));
+            }
+            return datas;
+        }
+
     }
 }
