@@ -47,6 +47,21 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPageMyStockSetting = new System.Windows.Forms.TabPage();
             this.dgvStocksetting = new System.Windows.Forms.DataGridView();
+            this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StockCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StockNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StockInShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WarnPrice_Min = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WarnPrice_Max = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WarnPercent_Min = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WarnPercent_Max = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BuyCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BuyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Order = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HasProfitOrLoss = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProfitOrLossHistory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ShowInFolatWindow = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Warn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabPageAllStockList = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvQueryResultStocks = new System.Windows.Forms.DataGridView();
@@ -67,20 +82,11 @@
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvMonitorStocks = new System.Windows.Forms.DataGridView();
-            this.S_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timeSheetMenuItemOfMyStock = new System.Windows.Forms.ToolStripMenuItem();
             this.dayKMenuItemOfMyStock = new System.Windows.Forms.ToolStripMenuItem();
             this.weekKMenuItemOfMyStock = new System.Windows.Forms.ToolStripMenuItem();
             this.monthKMenuItemOfMyStock = new System.Windows.Forms.ToolStripMenuItem();
-            this.S_Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Low = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Now = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_High = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_BuyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cboxListMonitorSetting = new System.Windows.Forms.CheckedListBox();
@@ -88,21 +94,16 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStockChart = new System.Windows.Forms.TabPage();
             this.stockChartCtrl = new Justin.Stock.StockChartCtrl();
-            this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StockCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StockNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StockInShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WarnPrice_Min = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WarnPrice_Max = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WarnPercent_Min = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WarnPercent_Max = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BuyCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BuyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Order = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HasProfitOrLoss = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.profitOrLossHistory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ShowInFolatWindow = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Warn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.S_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Low = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Now = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_High = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_BuyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_ProfitOrLoss = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stockSettingsContextMenu.SuspendLayout();
             this.queryResultStocksContextMenu.SuspendLayout();
             this.tabPagePersonalOption.SuspendLayout();
@@ -282,7 +283,7 @@
             this.BuyPrice,
             this.Order,
             this.HasProfitOrLoss,
-            this.profitOrLossHistory,
+            this.ProfitOrLossHistory,
             this.ShowInFolatWindow,
             this.Warn});
             this.dgvStocksetting.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -294,446 +295,6 @@
             this.dgvStocksetting.Size = new System.Drawing.Size(857, 423);
             this.dgvStocksetting.TabIndex = 22;
             this.dgvStocksetting.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvStocksetting_CellMouseDown);
-            // 
-            // tabPageAllStockList
-            // 
-            this.tabPageAllStockList.Controls.Add(this.tableLayoutPanel2);
-            this.tabPageAllStockList.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAllStockList.Name = "tabPageAllStockList";
-            this.tabPageAllStockList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAllStockList.Size = new System.Drawing.Size(807, 426);
-            this.tabPageAllStockList.TabIndex = 1;
-            this.tabPageAllStockList.Text = "AllStockList";
-            this.tabPageAllStockList.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.dgvQueryResultStocks, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(801, 420);
-            this.tableLayoutPanel2.TabIndex = 7;
-            // 
-            // dgvQueryResultStocks
-            // 
-            this.dgvQueryResultStocks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvQueryResultStocks.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dgvQueryResultStocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvQueryResultStocks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Code,
-            this.No,
-            this._Name,
-            this.InShort});
-            this.dgvQueryResultStocks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvQueryResultStocks.Location = new System.Drawing.Point(3, 38);
-            this.dgvQueryResultStocks.MultiSelect = false;
-            this.dgvQueryResultStocks.Name = "dgvQueryResultStocks";
-            this.dgvQueryResultStocks.RowTemplate.Height = 23;
-            this.dgvQueryResultStocks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvQueryResultStocks.Size = new System.Drawing.Size(795, 379);
-            this.dgvQueryResultStocks.TabIndex = 10;
-            this.dgvQueryResultStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvQueryResultStocks_CellMouseDown);
-            // 
-            // Code
-            // 
-            this.Code.ContextMenuStrip = this.queryResultStocksContextMenu;
-            this.Code.DataPropertyName = "Item1";
-            this.Code.HeaderText = "Code";
-            this.Code.Name = "Code";
-            this.Code.Width = 57;
-            // 
-            // No
-            // 
-            this.No.DataPropertyName = "Item2";
-            this.No.HeaderText = "No";
-            this.No.Name = "No";
-            this.No.Width = 46;
-            // 
-            // _Name
-            // 
-            this._Name.DataPropertyName = "Item3";
-            this._Name.HeaderText = "StockName";
-            this._Name.Name = "_Name";
-            this._Name.Width = 88;
-            // 
-            // InShort
-            // 
-            this.InShort.HeaderText = "InShort";
-            this.InShort.Name = "InShort";
-            this.InShort.Width = 66;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel3.Controls.Add(this.txtSrockName, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnQueryStock, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnRefreshPersonalStockSetting, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.btnUpdateStockInfo, 3, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(795, 29);
-            this.tableLayoutPanel3.TabIndex = 16;
-            // 
-            // txtSrockName
-            // 
-            this.txtSrockName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSrockName.Location = new System.Drawing.Point(3, 3);
-            this.txtSrockName.Name = "txtSrockName";
-            this.txtSrockName.Size = new System.Drawing.Size(549, 20);
-            this.txtSrockName.TabIndex = 10;
-            // 
-            // btnQueryStock
-            // 
-            this.btnQueryStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnQueryStock.Location = new System.Drawing.Point(558, 3);
-            this.btnQueryStock.Name = "btnQueryStock";
-            this.btnQueryStock.Size = new System.Drawing.Size(74, 23);
-            this.btnQueryStock.TabIndex = 11;
-            this.btnQueryStock.Text = "查询个股";
-            this.btnQueryStock.UseVisualStyleBackColor = true;
-            this.btnQueryStock.Click += new System.EventHandler(this.btnQueryStock_Click);
-            // 
-            // btnRefreshPersonalStockSetting
-            // 
-            this.btnRefreshPersonalStockSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRefreshPersonalStockSetting.Location = new System.Drawing.Point(638, 3);
-            this.btnRefreshPersonalStockSetting.Name = "btnRefreshPersonalStockSetting";
-            this.btnRefreshPersonalStockSetting.Size = new System.Drawing.Size(74, 23);
-            this.btnRefreshPersonalStockSetting.TabIndex = 12;
-            this.btnRefreshPersonalStockSetting.Text = "刷新个股";
-            this.btnRefreshPersonalStockSetting.UseVisualStyleBackColor = true;
-            this.btnRefreshPersonalStockSetting.Click += new System.EventHandler(this.btnRefreshPersonalStockSetting_Click);
-            // 
-            // btnUpdateStockInfo
-            // 
-            this.btnUpdateStockInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnUpdateStockInfo.Location = new System.Drawing.Point(718, 3);
-            this.btnUpdateStockInfo.Name = "btnUpdateStockInfo";
-            this.btnUpdateStockInfo.Size = new System.Drawing.Size(74, 23);
-            this.btnUpdateStockInfo.TabIndex = 13;
-            this.btnUpdateStockInfo.Text = "代码更新";
-            this.btnUpdateStockInfo.UseVisualStyleBackColor = true;
-            this.btnUpdateStockInfo.Click += new System.EventHandler(this.btnUpdateStockInfo_Click);
-            // 
-            // tabPageMyStockColumnsSetting
-            // 
-            this.tabPageMyStockColumnsSetting.Controls.Add(this.tableLayoutPanel4);
-            this.tabPageMyStockColumnsSetting.Location = new System.Drawing.Point(4, 22);
-            this.tabPageMyStockColumnsSetting.Name = "tabPageMyStockColumnsSetting";
-            this.tabPageMyStockColumnsSetting.Size = new System.Drawing.Size(807, 426);
-            this.tabPageMyStockColumnsSetting.TabIndex = 2;
-            this.tabPageMyStockColumnsSetting.Text = "ColumnsSetting";
-            this.tabPageMyStockColumnsSetting.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.btnMyStockColumnSetting, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.cBoxListMyStockColumnsSetting, 0, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.77109F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.228916F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(807, 426);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // btnMyStockColumnSetting
-            // 
-            this.btnMyStockColumnSetting.Location = new System.Drawing.Point(3, 398);
-            this.btnMyStockColumnSetting.Name = "btnMyStockColumnSetting";
-            this.btnMyStockColumnSetting.Size = new System.Drawing.Size(484, 22);
-            this.btnMyStockColumnSetting.TabIndex = 2;
-            this.btnMyStockColumnSetting.Text = "√";
-            this.btnMyStockColumnSetting.UseVisualStyleBackColor = true;
-            this.btnMyStockColumnSetting.Click += new System.EventHandler(this.btnMyStockColumnSetting_Click);
-            // 
-            // cBoxListMyStockColumnsSetting
-            // 
-            this.cBoxListMyStockColumnsSetting.CheckOnClick = true;
-            this.cBoxListMyStockColumnsSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cBoxListMyStockColumnsSetting.FormattingEnabled = true;
-            this.cBoxListMyStockColumnsSetting.Location = new System.Drawing.Point(3, 3);
-            this.cBoxListMyStockColumnsSetting.Name = "cBoxListMyStockColumnsSetting";
-            this.cBoxListMyStockColumnsSetting.Size = new System.Drawing.Size(801, 389);
-            this.cBoxListMyStockColumnsSetting.TabIndex = 3;
-            // 
-            // tabPageStockList
-            // 
-            this.tabPageStockList.Controls.Add(this.tabControl3);
-            this.tabPageStockList.Location = new System.Drawing.Point(4, 22);
-            this.tabPageStockList.Name = "tabPageStockList";
-            this.tabPageStockList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStockList.Size = new System.Drawing.Size(821, 458);
-            this.tabPageStockList.TabIndex = 0;
-            this.tabPageStockList.Text = "Monitor";
-            this.tabPageStockList.UseVisualStyleBackColor = true;
-            // 
-            // tabControl3
-            // 
-            this.tabControl3.Controls.Add(this.tabPage1);
-            this.tabControl3.Controls.Add(this.tabPage2);
-            this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl3.Location = new System.Drawing.Point(3, 3);
-            this.tabControl3.Name = "tabControl3";
-            this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(815, 452);
-            this.tabControl3.TabIndex = 2;
-            this.tabControl3.SelectedIndexChanged += new System.EventHandler(this.tabControl3_SelectedIndexChanged);
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dgvMonitorStocks);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(807, 426);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "List";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dgvMonitorStocks
-            // 
-            this.dgvMonitorStocks.AllowUserToAddRows = false;
-            this.dgvMonitorStocks.AllowUserToDeleteRows = false;
-            this.dgvMonitorStocks.AllowUserToOrderColumns = true;
-            this.dgvMonitorStocks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvMonitorStocks.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dgvMonitorStocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMonitorStocks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.S_Name,
-            this.S_Code,
-            this.S_Low,
-            this.S_Now,
-            this.S_High,
-            this.S_BuyPrice,
-            this.S_Profit,
-            this.S_Percent,
-            this.SCount});
-            this.dgvMonitorStocks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMonitorStocks.Location = new System.Drawing.Point(3, 3);
-            this.dgvMonitorStocks.MultiSelect = false;
-            this.dgvMonitorStocks.Name = "dgvMonitorStocks";
-            this.dgvMonitorStocks.ReadOnly = true;
-            this.dgvMonitorStocks.RowTemplate.Height = 23;
-            this.dgvMonitorStocks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMonitorStocks.Size = new System.Drawing.Size(801, 420);
-            this.dgvMonitorStocks.TabIndex = 1;
-            this.dgvMonitorStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMonitorStocks_CellMouseDown);
-            // 
-            // S_Name
-            // 
-            this.S_Name.ContextMenuStrip = this.monitorContextMenu;
-            this.S_Name.DataPropertyName = "Name";
-            this.S_Name.Frozen = true;
-            this.S_Name.HeaderText = "名称";
-            this.S_Name.Name = "S_Name";
-            this.S_Name.ReadOnly = true;
-            this.S_Name.Width = 56;
-            // 
-            // monitorContextMenu
-            // 
-            this.monitorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.timeSheetMenuItemOfMyStock,
-            this.dayKMenuItemOfMyStock,
-            this.weekKMenuItemOfMyStock,
-            this.monthKMenuItemOfMyStock});
-            this.monitorContextMenu.Name = "MySrockMenu";
-            this.monitorContextMenu.Size = new System.Drawing.Size(99, 92);
-            // 
-            // timeSheetMenuItemOfMyStock
-            // 
-            this.timeSheetMenuItemOfMyStock.Name = "timeSheetMenuItemOfMyStock";
-            this.timeSheetMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
-            this.timeSheetMenuItemOfMyStock.Text = "分时";
-            this.timeSheetMenuItemOfMyStock.Click += new System.EventHandler(this.timeSheetMenuItem_Click);
-            // 
-            // dayKMenuItemOfMyStock
-            // 
-            this.dayKMenuItemOfMyStock.Name = "dayKMenuItemOfMyStock";
-            this.dayKMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
-            this.dayKMenuItemOfMyStock.Text = "日线";
-            this.dayKMenuItemOfMyStock.Click += new System.EventHandler(this.dayKMenuItem_Click);
-            // 
-            // weekKMenuItemOfMyStock
-            // 
-            this.weekKMenuItemOfMyStock.Name = "weekKMenuItemOfMyStock";
-            this.weekKMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
-            this.weekKMenuItemOfMyStock.Text = "周线";
-            this.weekKMenuItemOfMyStock.Click += new System.EventHandler(this.weekKMenuItem_Click);
-            // 
-            // monthKMenuItemOfMyStock
-            // 
-            this.monthKMenuItemOfMyStock.Name = "monthKMenuItemOfMyStock";
-            this.monthKMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
-            this.monthKMenuItemOfMyStock.Text = "月线";
-            this.monthKMenuItemOfMyStock.Click += new System.EventHandler(this.monthKMenuItem_Click);
-            // 
-            // S_Code
-            // 
-            this.S_Code.ContextMenuStrip = this.monitorContextMenu;
-            this.S_Code.DataPropertyName = "Code";
-            this.S_Code.HeaderText = "Code";
-            this.S_Code.Name = "S_Code";
-            this.S_Code.ReadOnly = true;
-            this.S_Code.Width = 57;
-            // 
-            // S_Low
-            // 
-            this.S_Low.ContextMenuStrip = this.monitorContextMenu;
-            this.S_Low.DataPropertyName = "PriceTodayLow";
-            this.S_Low.HeaderText = "最低";
-            this.S_Low.Name = "S_Low";
-            this.S_Low.ReadOnly = true;
-            this.S_Low.Width = 56;
-            // 
-            // S_Now
-            // 
-            this.S_Now.ContextMenuStrip = this.monitorContextMenu;
-            this.S_Now.DataPropertyName = "PriceNow";
-            this.S_Now.HeaderText = "现价";
-            this.S_Now.Name = "S_Now";
-            this.S_Now.ReadOnly = true;
-            this.S_Now.Width = 56;
-            // 
-            // S_High
-            // 
-            this.S_High.ContextMenuStrip = this.monitorContextMenu;
-            this.S_High.DataPropertyName = "PriceTodayHigh";
-            this.S_High.HeaderText = "最高";
-            this.S_High.Name = "S_High";
-            this.S_High.ReadOnly = true;
-            this.S_High.Width = 56;
-            // 
-            // S_BuyPrice
-            // 
-            this.S_BuyPrice.ContextMenuStrip = this.monitorContextMenu;
-            this.S_BuyPrice.DataPropertyName = "BuyPrice";
-            this.S_BuyPrice.HeaderText = "成本";
-            this.S_BuyPrice.Name = "S_BuyPrice";
-            this.S_BuyPrice.ReadOnly = true;
-            this.S_BuyPrice.Width = 56;
-            // 
-            // S_Profit
-            // 
-            this.S_Profit.ContextMenuStrip = this.monitorContextMenu;
-            this.S_Profit.DataPropertyName = "CurrentProfitOrLoss";
-            this.S_Profit.HeaderText = "盈利";
-            this.S_Profit.Name = "S_Profit";
-            this.S_Profit.ReadOnly = true;
-            this.S_Profit.Width = 56;
-            // 
-            // S_Percent
-            // 
-            this.S_Percent.ContextMenuStrip = this.monitorContextMenu;
-            this.S_Percent.DataPropertyName = "SurgedRange";
-            this.S_Percent.HeaderText = "涨幅";
-            this.S_Percent.Name = "S_Percent";
-            this.S_Percent.ReadOnly = true;
-            this.S_Percent.Width = 56;
-            // 
-            // SCount
-            // 
-            this.SCount.DataPropertyName = "BuyCount";
-            this.SCount.HeaderText = "股数";
-            this.SCount.Name = "SCount";
-            this.SCount.ReadOnly = true;
-            this.SCount.Width = 56;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.tableLayoutPanel1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(807, 426);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Setting";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.cboxListMonitorSetting, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnSaveMonitorSetting, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(801, 420);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // cboxListMonitorSetting
-            // 
-            this.cboxListMonitorSetting.CheckOnClick = true;
-            this.cboxListMonitorSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxListMonitorSetting.FormattingEnabled = true;
-            this.cboxListMonitorSetting.Location = new System.Drawing.Point(3, 3);
-            this.cboxListMonitorSetting.Name = "cboxListMonitorSetting";
-            this.cboxListMonitorSetting.Size = new System.Drawing.Size(795, 386);
-            this.cboxListMonitorSetting.TabIndex = 0;
-            // 
-            // btnSaveMonitorSetting
-            // 
-            this.btnSaveMonitorSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveMonitorSetting.Location = new System.Drawing.Point(3, 395);
-            this.btnSaveMonitorSetting.Name = "btnSaveMonitorSetting";
-            this.btnSaveMonitorSetting.Size = new System.Drawing.Size(795, 22);
-            this.btnSaveMonitorSetting.TabIndex = 1;
-            this.btnSaveMonitorSetting.Text = "√";
-            this.btnSaveMonitorSetting.UseVisualStyleBackColor = true;
-            this.btnSaveMonitorSetting.Click += new System.EventHandler(this.btnSaveMonitorSetting_Click);
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPageStockList);
-            this.tabControl1.Controls.Add(this.tabPagePersonalOption);
-            this.tabControl1.Controls.Add(this.tabPageStockChart);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(885, 487);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabPageStockChart
-            // 
-            this.tabPageStockChart.Controls.Add(this.stockChartCtrl);
-            this.tabPageStockChart.Location = new System.Drawing.Point(4, 22);
-            this.tabPageStockChart.Name = "tabPageStockChart";
-            this.tabPageStockChart.Size = new System.Drawing.Size(821, 458);
-            this.tabPageStockChart.TabIndex = 3;
-            this.tabPageStockChart.Text = "Chart";
-            this.tabPageStockChart.UseVisualStyleBackColor = true;
-            // 
-            // stockChartCtrl
-            // 
-            this.stockChartCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stockChartCtrl.Location = new System.Drawing.Point(0, 0);
-            this.stockChartCtrl.Name = "stockChartCtrl";
-            this.stockChartCtrl.Size = new System.Drawing.Size(821, 458);
-            this.stockChartCtrl.TabIndex = 0;
             // 
             // StockName
             // 
@@ -837,13 +398,13 @@
             this.HasProfitOrLoss.ReadOnly = true;
             this.HasProfitOrLoss.Width = 68;
             // 
-            // profitOrLossHistory
+            // ProfitOrLossHistory
             // 
-            this.profitOrLossHistory.ContextMenuStrip = this.stockSettingsContextMenu;
-            this.profitOrLossHistory.DataPropertyName = "profitOrLossHistory";
-            this.profitOrLossHistory.HeaderText = "历史盈亏";
-            this.profitOrLossHistory.Name = "profitOrLossHistory";
-            this.profitOrLossHistory.Width = 80;
+            this.ProfitOrLossHistory.ContextMenuStrip = this.stockSettingsContextMenu;
+            this.ProfitOrLossHistory.DataPropertyName = "ProfitOrLossHistory";
+            this.ProfitOrLossHistory.HeaderText = "历史盈亏";
+            this.ProfitOrLossHistory.Name = "ProfitOrLossHistory";
+            this.ProfitOrLossHistory.Width = 80;
             // 
             // ShowInFolatWindow
             // 
@@ -860,6 +421,456 @@
             this.Warn.HeaderText = "预警";
             this.Warn.Name = "Warn";
             this.Warn.Width = 37;
+            // 
+            // tabPageAllStockList
+            // 
+            this.tabPageAllStockList.Controls.Add(this.tableLayoutPanel2);
+            this.tabPageAllStockList.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAllStockList.Name = "tabPageAllStockList";
+            this.tabPageAllStockList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAllStockList.Size = new System.Drawing.Size(863, 429);
+            this.tabPageAllStockList.TabIndex = 1;
+            this.tabPageAllStockList.Text = "AllStockList";
+            this.tabPageAllStockList.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.dgvQueryResultStocks, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(857, 423);
+            this.tableLayoutPanel2.TabIndex = 7;
+            // 
+            // dgvQueryResultStocks
+            // 
+            this.dgvQueryResultStocks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvQueryResultStocks.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvQueryResultStocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvQueryResultStocks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Code,
+            this.No,
+            this._Name,
+            this.InShort});
+            this.dgvQueryResultStocks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvQueryResultStocks.Location = new System.Drawing.Point(3, 38);
+            this.dgvQueryResultStocks.MultiSelect = false;
+            this.dgvQueryResultStocks.Name = "dgvQueryResultStocks";
+            this.dgvQueryResultStocks.RowTemplate.Height = 23;
+            this.dgvQueryResultStocks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvQueryResultStocks.Size = new System.Drawing.Size(851, 382);
+            this.dgvQueryResultStocks.TabIndex = 10;
+            this.dgvQueryResultStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvQueryResultStocks_CellMouseDown);
+            // 
+            // Code
+            // 
+            this.Code.ContextMenuStrip = this.queryResultStocksContextMenu;
+            this.Code.DataPropertyName = "Item1";
+            this.Code.HeaderText = "Code";
+            this.Code.Name = "Code";
+            this.Code.Width = 57;
+            // 
+            // No
+            // 
+            this.No.DataPropertyName = "Item2";
+            this.No.HeaderText = "No";
+            this.No.Name = "No";
+            this.No.Width = 46;
+            // 
+            // _Name
+            // 
+            this._Name.DataPropertyName = "Item3";
+            this._Name.HeaderText = "StockName";
+            this._Name.Name = "_Name";
+            this._Name.Width = 88;
+            // 
+            // InShort
+            // 
+            this.InShort.HeaderText = "InShort";
+            this.InShort.Name = "InShort";
+            this.InShort.Width = 66;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel3.Controls.Add(this.txtSrockName, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnQueryStock, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnRefreshPersonalStockSetting, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnUpdateStockInfo, 3, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(851, 29);
+            this.tableLayoutPanel3.TabIndex = 16;
+            // 
+            // txtSrockName
+            // 
+            this.txtSrockName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSrockName.Location = new System.Drawing.Point(3, 3);
+            this.txtSrockName.Name = "txtSrockName";
+            this.txtSrockName.Size = new System.Drawing.Size(605, 20);
+            this.txtSrockName.TabIndex = 10;
+            // 
+            // btnQueryStock
+            // 
+            this.btnQueryStock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnQueryStock.Location = new System.Drawing.Point(614, 3);
+            this.btnQueryStock.Name = "btnQueryStock";
+            this.btnQueryStock.Size = new System.Drawing.Size(74, 23);
+            this.btnQueryStock.TabIndex = 11;
+            this.btnQueryStock.Text = "查询个股";
+            this.btnQueryStock.UseVisualStyleBackColor = true;
+            this.btnQueryStock.Click += new System.EventHandler(this.btnQueryStock_Click);
+            // 
+            // btnRefreshPersonalStockSetting
+            // 
+            this.btnRefreshPersonalStockSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRefreshPersonalStockSetting.Location = new System.Drawing.Point(694, 3);
+            this.btnRefreshPersonalStockSetting.Name = "btnRefreshPersonalStockSetting";
+            this.btnRefreshPersonalStockSetting.Size = new System.Drawing.Size(74, 23);
+            this.btnRefreshPersonalStockSetting.TabIndex = 12;
+            this.btnRefreshPersonalStockSetting.Text = "刷新个股";
+            this.btnRefreshPersonalStockSetting.UseVisualStyleBackColor = true;
+            this.btnRefreshPersonalStockSetting.Click += new System.EventHandler(this.btnRefreshPersonalStockSetting_Click);
+            // 
+            // btnUpdateStockInfo
+            // 
+            this.btnUpdateStockInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUpdateStockInfo.Location = new System.Drawing.Point(774, 3);
+            this.btnUpdateStockInfo.Name = "btnUpdateStockInfo";
+            this.btnUpdateStockInfo.Size = new System.Drawing.Size(74, 23);
+            this.btnUpdateStockInfo.TabIndex = 13;
+            this.btnUpdateStockInfo.Text = "代码更新";
+            this.btnUpdateStockInfo.UseVisualStyleBackColor = true;
+            this.btnUpdateStockInfo.Click += new System.EventHandler(this.btnUpdateStockInfo_Click);
+            // 
+            // tabPageMyStockColumnsSetting
+            // 
+            this.tabPageMyStockColumnsSetting.Controls.Add(this.tableLayoutPanel4);
+            this.tabPageMyStockColumnsSetting.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMyStockColumnsSetting.Name = "tabPageMyStockColumnsSetting";
+            this.tabPageMyStockColumnsSetting.Size = new System.Drawing.Size(863, 429);
+            this.tabPageMyStockColumnsSetting.TabIndex = 2;
+            this.tabPageMyStockColumnsSetting.Text = "ColumnsSetting";
+            this.tabPageMyStockColumnsSetting.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.btnMyStockColumnSetting, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.cBoxListMyStockColumnsSetting, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.77109F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.228916F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(863, 429);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // btnMyStockColumnSetting
+            // 
+            this.btnMyStockColumnSetting.Location = new System.Drawing.Point(3, 400);
+            this.btnMyStockColumnSetting.Name = "btnMyStockColumnSetting";
+            this.btnMyStockColumnSetting.Size = new System.Drawing.Size(484, 22);
+            this.btnMyStockColumnSetting.TabIndex = 2;
+            this.btnMyStockColumnSetting.Text = "√";
+            this.btnMyStockColumnSetting.UseVisualStyleBackColor = true;
+            this.btnMyStockColumnSetting.Click += new System.EventHandler(this.btnMyStockColumnSetting_Click);
+            // 
+            // cBoxListMyStockColumnsSetting
+            // 
+            this.cBoxListMyStockColumnsSetting.CheckOnClick = true;
+            this.cBoxListMyStockColumnsSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cBoxListMyStockColumnsSetting.FormattingEnabled = true;
+            this.cBoxListMyStockColumnsSetting.Location = new System.Drawing.Point(3, 3);
+            this.cBoxListMyStockColumnsSetting.Name = "cBoxListMyStockColumnsSetting";
+            this.cBoxListMyStockColumnsSetting.Size = new System.Drawing.Size(857, 391);
+            this.cBoxListMyStockColumnsSetting.TabIndex = 3;
+            // 
+            // tabPageStockList
+            // 
+            this.tabPageStockList.Controls.Add(this.tabControl3);
+            this.tabPageStockList.Location = new System.Drawing.Point(4, 22);
+            this.tabPageStockList.Name = "tabPageStockList";
+            this.tabPageStockList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageStockList.Size = new System.Drawing.Size(877, 461);
+            this.tabPageStockList.TabIndex = 0;
+            this.tabPageStockList.Text = "Monitor";
+            this.tabPageStockList.UseVisualStyleBackColor = true;
+            // 
+            // tabControl3
+            // 
+            this.tabControl3.Controls.Add(this.tabPage1);
+            this.tabControl3.Controls.Add(this.tabPage2);
+            this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl3.Location = new System.Drawing.Point(3, 3);
+            this.tabControl3.Name = "tabControl3";
+            this.tabControl3.SelectedIndex = 0;
+            this.tabControl3.Size = new System.Drawing.Size(871, 455);
+            this.tabControl3.TabIndex = 2;
+            this.tabControl3.SelectedIndexChanged += new System.EventHandler(this.tabControl3_SelectedIndexChanged);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dgvMonitorStocks);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(863, 429);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "List";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dgvMonitorStocks
+            // 
+            this.dgvMonitorStocks.AllowUserToAddRows = false;
+            this.dgvMonitorStocks.AllowUserToDeleteRows = false;
+            this.dgvMonitorStocks.AllowUserToOrderColumns = true;
+            this.dgvMonitorStocks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvMonitorStocks.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvMonitorStocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMonitorStocks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.S_Name,
+            this.S_Code,
+            this.S_Low,
+            this.S_Now,
+            this.S_High,
+            this.S_BuyPrice,
+            this.S_Profit,
+            this.S_ProfitOrLoss,
+            this.S_Percent,
+            this.SCount});
+            this.dgvMonitorStocks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvMonitorStocks.Location = new System.Drawing.Point(3, 3);
+            this.dgvMonitorStocks.MultiSelect = false;
+            this.dgvMonitorStocks.Name = "dgvMonitorStocks";
+            this.dgvMonitorStocks.ReadOnly = true;
+            this.dgvMonitorStocks.RowTemplate.Height = 23;
+            this.dgvMonitorStocks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMonitorStocks.Size = new System.Drawing.Size(857, 423);
+            this.dgvMonitorStocks.TabIndex = 1;
+            this.dgvMonitorStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMonitorStocks_CellMouseDown);
+            // 
+            // monitorContextMenu
+            // 
+            this.monitorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.timeSheetMenuItemOfMyStock,
+            this.dayKMenuItemOfMyStock,
+            this.weekKMenuItemOfMyStock,
+            this.monthKMenuItemOfMyStock});
+            this.monitorContextMenu.Name = "MySrockMenu";
+            this.monitorContextMenu.Size = new System.Drawing.Size(99, 92);
+            // 
+            // timeSheetMenuItemOfMyStock
+            // 
+            this.timeSheetMenuItemOfMyStock.Name = "timeSheetMenuItemOfMyStock";
+            this.timeSheetMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
+            this.timeSheetMenuItemOfMyStock.Text = "分时";
+            this.timeSheetMenuItemOfMyStock.Click += new System.EventHandler(this.timeSheetMenuItem_Click);
+            // 
+            // dayKMenuItemOfMyStock
+            // 
+            this.dayKMenuItemOfMyStock.Name = "dayKMenuItemOfMyStock";
+            this.dayKMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
+            this.dayKMenuItemOfMyStock.Text = "日线";
+            this.dayKMenuItemOfMyStock.Click += new System.EventHandler(this.dayKMenuItem_Click);
+            // 
+            // weekKMenuItemOfMyStock
+            // 
+            this.weekKMenuItemOfMyStock.Name = "weekKMenuItemOfMyStock";
+            this.weekKMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
+            this.weekKMenuItemOfMyStock.Text = "周线";
+            this.weekKMenuItemOfMyStock.Click += new System.EventHandler(this.weekKMenuItem_Click);
+            // 
+            // monthKMenuItemOfMyStock
+            // 
+            this.monthKMenuItemOfMyStock.Name = "monthKMenuItemOfMyStock";
+            this.monthKMenuItemOfMyStock.Size = new System.Drawing.Size(98, 22);
+            this.monthKMenuItemOfMyStock.Text = "月线";
+            this.monthKMenuItemOfMyStock.Click += new System.EventHandler(this.monthKMenuItem_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.tableLayoutPanel1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(863, 429);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Setting";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.cboxListMonitorSetting, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnSaveMonitorSetting, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(857, 423);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // cboxListMonitorSetting
+            // 
+            this.cboxListMonitorSetting.CheckOnClick = true;
+            this.cboxListMonitorSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxListMonitorSetting.FormattingEnabled = true;
+            this.cboxListMonitorSetting.Location = new System.Drawing.Point(3, 3);
+            this.cboxListMonitorSetting.Name = "cboxListMonitorSetting";
+            this.cboxListMonitorSetting.Size = new System.Drawing.Size(851, 389);
+            this.cboxListMonitorSetting.TabIndex = 0;
+            // 
+            // btnSaveMonitorSetting
+            // 
+            this.btnSaveMonitorSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSaveMonitorSetting.Location = new System.Drawing.Point(3, 398);
+            this.btnSaveMonitorSetting.Name = "btnSaveMonitorSetting";
+            this.btnSaveMonitorSetting.Size = new System.Drawing.Size(851, 22);
+            this.btnSaveMonitorSetting.TabIndex = 1;
+            this.btnSaveMonitorSetting.Text = "√";
+            this.btnSaveMonitorSetting.UseVisualStyleBackColor = true;
+            this.btnSaveMonitorSetting.Click += new System.EventHandler(this.btnSaveMonitorSetting_Click);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPageStockList);
+            this.tabControl1.Controls.Add(this.tabPagePersonalOption);
+            this.tabControl1.Controls.Add(this.tabPageStockChart);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(885, 487);
+            this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            // 
+            // tabPageStockChart
+            // 
+            this.tabPageStockChart.Controls.Add(this.stockChartCtrl);
+            this.tabPageStockChart.Location = new System.Drawing.Point(4, 22);
+            this.tabPageStockChart.Name = "tabPageStockChart";
+            this.tabPageStockChart.Size = new System.Drawing.Size(877, 461);
+            this.tabPageStockChart.TabIndex = 3;
+            this.tabPageStockChart.Text = "Chart";
+            this.tabPageStockChart.UseVisualStyleBackColor = true;
+            // 
+            // stockChartCtrl
+            // 
+            this.stockChartCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stockChartCtrl.Location = new System.Drawing.Point(0, 0);
+            this.stockChartCtrl.Name = "stockChartCtrl";
+            this.stockChartCtrl.Size = new System.Drawing.Size(877, 461);
+            this.stockChartCtrl.TabIndex = 0;
+            // 
+            // S_Name
+            // 
+            this.S_Name.ContextMenuStrip = this.monitorContextMenu;
+            this.S_Name.DataPropertyName = "Name";
+            this.S_Name.Frozen = true;
+            this.S_Name.HeaderText = "名称";
+            this.S_Name.Name = "S_Name";
+            this.S_Name.ReadOnly = true;
+            this.S_Name.Width = 56;
+            // 
+            // S_Code
+            // 
+            this.S_Code.ContextMenuStrip = this.monitorContextMenu;
+            this.S_Code.DataPropertyName = "Code";
+            this.S_Code.HeaderText = "Code";
+            this.S_Code.Name = "S_Code";
+            this.S_Code.ReadOnly = true;
+            this.S_Code.Width = 57;
+            // 
+            // S_Low
+            // 
+            this.S_Low.ContextMenuStrip = this.monitorContextMenu;
+            this.S_Low.DataPropertyName = "PriceTodayLow";
+            this.S_Low.HeaderText = "最低";
+            this.S_Low.Name = "S_Low";
+            this.S_Low.ReadOnly = true;
+            this.S_Low.Width = 56;
+            // 
+            // S_Now
+            // 
+            this.S_Now.ContextMenuStrip = this.monitorContextMenu;
+            this.S_Now.DataPropertyName = "PriceNow";
+            this.S_Now.HeaderText = "现价";
+            this.S_Now.Name = "S_Now";
+            this.S_Now.ReadOnly = true;
+            this.S_Now.Width = 56;
+            // 
+            // S_High
+            // 
+            this.S_High.ContextMenuStrip = this.monitorContextMenu;
+            this.S_High.DataPropertyName = "PriceTodayHigh";
+            this.S_High.HeaderText = "最高";
+            this.S_High.Name = "S_High";
+            this.S_High.ReadOnly = true;
+            this.S_High.Width = 56;
+            // 
+            // S_BuyPrice
+            // 
+            this.S_BuyPrice.ContextMenuStrip = this.monitorContextMenu;
+            this.S_BuyPrice.DataPropertyName = "BuyPrice";
+            this.S_BuyPrice.HeaderText = "成本";
+            this.S_BuyPrice.Name = "S_BuyPrice";
+            this.S_BuyPrice.ReadOnly = true;
+            this.S_BuyPrice.Width = 56;
+            // 
+            // S_Profit
+            // 
+            this.S_Profit.ContextMenuStrip = this.monitorContextMenu;
+            this.S_Profit.DataPropertyName = "CurrentProfitOrLoss";
+            this.S_Profit.HeaderText = "盈亏";
+            this.S_Profit.Name = "S_Profit";
+            this.S_Profit.ReadOnly = true;
+            this.S_Profit.Width = 56;
+            // 
+            // S_ProfitOrLoss
+            // 
+            this.S_ProfitOrLoss.ContextMenuStrip = this.monitorContextMenu;
+            this.S_ProfitOrLoss.DataPropertyName = "SumProfitOrLoss";
+            this.S_ProfitOrLoss.HeaderText = "总盈亏";
+            this.S_ProfitOrLoss.Name = "S_ProfitOrLoss";
+            this.S_ProfitOrLoss.ReadOnly = true;
+            this.S_ProfitOrLoss.Width = 68;
+            // 
+            // S_Percent
+            // 
+            this.S_Percent.ContextMenuStrip = this.monitorContextMenu;
+            this.S_Percent.DataPropertyName = "SurgedRange";
+            this.S_Percent.HeaderText = "涨幅";
+            this.S_Percent.Name = "S_Percent";
+            this.S_Percent.ReadOnly = true;
+            this.S_Percent.Width = 56;
+            // 
+            // SCount
+            // 
+            this.SCount.DataPropertyName = "BuyCount";
+            this.SCount.HeaderText = "股数";
+            this.SCount.Name = "SCount";
+            this.SCount.ReadOnly = true;
+            this.SCount.Width = 56;
             // 
             // MyStock
             // 
@@ -949,15 +960,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnMyStockColumnSetting;
         private System.Windows.Forms.CheckedListBox cBoxListMyStockColumnsSetting;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Low;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Now;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_High;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_BuyPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Profit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Percent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn StockName;
         private System.Windows.Forms.DataGridViewTextBoxColumn StockCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn StockNo;
@@ -970,9 +972,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn BuyPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn Order;
         private System.Windows.Forms.DataGridViewTextBoxColumn HasProfitOrLoss;
-        private System.Windows.Forms.DataGridViewTextBoxColumn profitOrLossHistory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProfitOrLossHistory;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ShowInFolatWindow;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Warn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Low;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Now;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_High;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_BuyPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Profit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_ProfitOrLoss;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Percent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SCount;
 
     }
 }

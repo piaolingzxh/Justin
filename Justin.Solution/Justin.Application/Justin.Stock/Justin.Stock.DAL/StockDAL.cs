@@ -137,21 +137,55 @@ CREATE TABLE [MyStocks] (
 
         public int UpdateByDataSet(DataTable table)
         {
-            try
-            {
-                SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr);
+            string UPDATE_SQL_FORMAT = @"
+            update MyStocks set
+            SpellingInShort          =@SpellingInShort
+            ,Warnprice_Min           =@Warnprice_Min
+            ,Warnprice_Max           =@Warnprice_Max
+            ,Warnpercent_Min         =@Warnpercent_Min
+            ,Warnpercent_Max         =@Warnpercent_Max
+            ,BuyPrice                =@BuyPrice
+            ,BuyCount                =@BuyCount
+            ,ShowInFolatWindow       =@ShowInFolatWindow
+            ,[Order]                 =@Order
+            ,ProfitOrLossHistory     =@ProfitOrLossHistory
+            ,Warn                    =@Warn
+            where Code               =@Code";
 
-                SQLiteDataAdapter myAdapter = new SQLiteDataAdapter();
-                SQLiteCommand myCommand = new SQLiteCommand(("select * from " + "MyStocks"), conn);
-                myAdapter.SelectCommand = myCommand;
-                SQLiteCommandBuilder myCommandBuilder = new SQLiteCommandBuilder(myAdapter);
-                myAdapter.Update(table);
-                return 0;
-            }
-            catch (Exception ex)
+            SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr);
+
+            SQLiteDataAdapter myAdapter = new SQLiteDataAdapter();
+            SQLiteCommand myCommand = new SQLiteCommand(("select * from " + "MyStocks"), conn);
+            myAdapter.SelectCommand = myCommand;
+
+            SQLiteCommand updateCmd = new SQLiteCommand();
+            updateCmd.CommandType = CommandType.Text;
+            updateCmd.CommandText = UPDATE_SQL_FORMAT;
+            updateCmd.Connection = conn;
+            updateCmd.Parameters.Add(new SQLiteParameter("@SpellingInShort", DbType.String, "SpellingInShort", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Warnprice_Min", DbType.String, "Warnprice_Min", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Warnprice_Max", DbType.String, "Warnprice_Max", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Warnpercent_Min", DbType.String, "Warnpercent_Min", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Warnpercent_Max", DbType.String, "Warnpercent_Max", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@BuyPrice", DbType.String, "BuyPrice", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@BuyCount", DbType.String, "BuyCount", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@ShowInFolatWindow", DbType.Boolean, "ShowInFolatWindow", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Order", DbType.String, "Order", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@ProfitOrLossHistory", DbType.String, "ProfitOrLossHistory", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Warn", DbType.Boolean, "Warn", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Code", DbType.String, "Code", DataRowVersion.Original));
+
+            myAdapter.UpdateCommand = updateCmd;
+            //SQLiteCommandBuilder myCommandBuilder = new SQLiteCommandBuilder(myAdapter);
+            IEnumerable<DataRow> rows = table.Rows.Cast<DataRow>().Where(row => row.RowState == DataRowState.Modified);
+
+            if (rows != null && rows.Count() > 0)
             {
-                return -1;
+                var tempRows = rows.ToArray();
+                myAdapter.Update(tempRows);
             }
+            return 0;
+
         }
         #endregion
 

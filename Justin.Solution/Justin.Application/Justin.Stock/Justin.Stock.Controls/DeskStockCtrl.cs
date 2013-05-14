@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Justin.FrameWork.WinForm.Helper;
+using Justin.Log;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
-using Justin.Log;
 
 namespace Justin.Stock.Controls
 {
@@ -196,11 +196,13 @@ namespace Justin.Stock.Controls
                 #region 总盈亏信息
 
                 //总成本=所有股票总成本+当前余额
-                decimal sumCost = stocks.Where(row => row.BuyCount >= 0).Sum(row => row.SumCost) + Constants.Setting.Balance;//成本
+                decimal sumCost = stockList.Sum(row => row.SumCost) + Constants.Setting.Balance;//成本
                 //总市值=所有股票当前市值+当前余额
-                decimal sumCurrentPrice = stocks.Where(row => row.BuyCount >= 0).Sum(row => row.MarketValue) + Constants.Setting.Balance;//市值
+                decimal sumCurrentPrice = stockList.Sum(row => row.MarketValue) + Constants.Setting.Balance;//市值
 
-                tableLayoutPanel1.Tag = string.Format("{0}/{1}:{2}", (int)sumCost, (int)sumCurrentPrice, (int)(sumCurrentPrice - sumCost));
+                decimal sumProfitOrLoss = stockList.Sum(row => row.SumProfitOrLoss);
+
+                tableLayoutPanel1.Tag = string.Format("{0}/{1}:{2}/{3}", (int)sumCost, (int)sumCurrentPrice, (int)(stocks.Sum(row => row.CurrentProfitOrLoss)), (int)sumProfitOrLoss);
 
                 #endregion
 

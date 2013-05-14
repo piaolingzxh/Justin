@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Justin.FrameWork.Entities;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.Log;
 using Justin.Stock.Controls;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
@@ -191,11 +192,19 @@ namespace Justin.Stock.Controls
 
             //    stockDAL.UpdateStock(code, name, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, showInFolatWindow, order, profitOrLossHistory);
             //}
-            DataTable table = dgvStocksetting.DataSource as DataTable;
-            if (table != null)
+
+            try
             {
-                stockDAL.UpdateByDataSet(table);
-                Constants.ResetMyStock();
+                DataTable table = dgvStocksetting.DataSource as DataTable;
+                if (table != null)
+                {
+                    stockDAL.UpdateByDataSet(table);
+                    Constants.ResetMyStock();
+                }
+            }
+            catch (Exception ex)
+            {
+                JLog.Write(LogMode.Error, ex);
             }
         }
         //刷新自选列表
