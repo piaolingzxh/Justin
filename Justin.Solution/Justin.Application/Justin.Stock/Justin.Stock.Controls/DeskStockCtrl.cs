@@ -61,6 +61,7 @@ namespace Justin.Stock.Controls
 成交量/额:{6}手/{7}万元
 买：          卖：
 {15}
+{16}
 时间：{8}
 当前：{10}";
 
@@ -148,7 +149,7 @@ namespace Justin.Stock.Controls
                         .AppendFormat(fiveDealFormat, rtStock.Buy2Price.ToString().PadLeft(5, ' '), rtStock.Buy2Count.ToString().PadLeft(6, ' '), rtStock.Sell2Price.ToString().PadLeft(5, ' '), rtStock.Sell2Count.ToString().PadLeft(6, ' ')).AppendLine()
                         .AppendFormat(fiveDealFormat, rtStock.Buy3Price.ToString().PadLeft(5, ' '), rtStock.Buy3Count.ToString().PadLeft(6, ' '), rtStock.Sell3Price.ToString().PadLeft(5, ' '), rtStock.Sell3Count.ToString().PadLeft(6, ' ')).AppendLine()
                         .AppendFormat(fiveDealFormat, rtStock.Buy4Price.ToString().PadLeft(5, ' '), rtStock.Buy4Count.ToString().PadLeft(6, ' '), rtStock.Sell4Price.ToString().PadLeft(5, ' '), rtStock.Sell4Count.ToString().PadLeft(6, ' ')).AppendLine()
-                        .AppendFormat(fiveDealFormat, rtStock.Buy5Price.ToString().PadLeft(5, ' '), rtStock.Buy5Count.ToString().PadLeft(6, ' '), rtStock.Sell5Price.ToString().PadLeft(5, ' '), rtStock.Sell5Count.ToString().PadLeft(6, ' ')).AppendLine()
+                        .AppendFormat(fiveDealFormat, rtStock.Buy5Price.ToString().PadLeft(5, ' '), rtStock.Buy5Count.ToString().PadLeft(6, ' '), rtStock.Sell5Price.ToString().PadLeft(5, ' '), rtStock.Sell5Count.ToString().PadLeft(6, ' '))
                         .ToString();
                     string stockTips = string.Format(tipsFormat
                         , rtStock.Name
@@ -167,6 +168,7 @@ namespace Justin.Stock.Controls
                          , rtStock.BuyPrice
                          , rtStock.TurnOver
                          , fiveDeal
+                         , rtStock.Code
                         );
 
                     tip.SetToolTip(stockLabel, stockTips);
@@ -373,12 +375,11 @@ namespace Justin.Stock.Controls
         }
         private void personalStocksMenuItem_Click(object sender, EventArgs e)
         {
-            myStock.Show();
+            myStock.Show(1);
         }
         private void systemSettingMenuItem_Click(object sender, EventArgs e)
         {
-            SystemSetting ss = new SystemSetting();
-            ss.Show();
+            myStock.Show(3);
         }
 
         private void ShowChart(string stockNo, ChartType chartType)
@@ -411,6 +412,11 @@ namespace Justin.Stock.Controls
         public void RemoveWarnHandler()
         {
             StockService.RemoveEvent(ShowWarn);
+        }
+
+        public void CloseChildrenForm()
+        {
+            this.myStock.Close(true);
         }
 
         #endregion

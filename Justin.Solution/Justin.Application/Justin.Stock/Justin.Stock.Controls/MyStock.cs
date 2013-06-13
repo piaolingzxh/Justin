@@ -24,6 +24,8 @@ namespace Justin.Stock.Controls
         //DataGridView contextMenuSourceGridView = null;
         string CurrentStockCode { get; set; }
         StockDAL stockDAL = new StockDAL();
+        SystemSettingCtrl settingCtrl = new SystemSettingCtrl();
+
         public MyStock()
         {
             InitializeComponent();
@@ -48,6 +50,10 @@ namespace Justin.Stock.Controls
 
             #endregion
             dgvStocksetting.AutoGenerateColumns = false;
+
+            this.tabPageSetting.Controls.Clear();
+            this.tabPageSetting.Controls.Add(settingCtrl);
+
         }
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
@@ -75,13 +81,10 @@ namespace Justin.Stock.Controls
                     RefreshPersonalStockSetting();
                     break;
                 case 2:
-                    //for (int i = this.tabPageStockChart.Controls.Count; i > 0; i--)
-                    //{
-                    //    StockChartCtrl ctrol = this.tabPageStockChart.Controls[i - 1] as StockChartCtrl;
-                    //    ctrol.Dispose();
-                    //}
-                    //tabPageStockChart.Controls.Clear();
                     ShowChart(ChartType.TimeSheet, true);
+                    break;
+                case 3:
+                    settingCtrl.RefreshSetting();
                     break;
             }
         }
@@ -226,14 +229,16 @@ namespace Justin.Stock.Controls
                     row.Cells["HasProfitOrLoss"].Value = StockInfo.GetProfitOrLossHistoryData(objProfitOrLossHistory.ToString()).Sum();
                 }
             }
-            List<StockInfo> stockList = stockDAL.getAllMyStock();
-            foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
+            //List<StockInfo> stockList = stockDAL.getAllMyStock();
+            if (!string.IsNullOrEmpty(CurrentStockCode))
             {
-                if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())
-                    dataRow.Selected = true;
+                foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
+                {
+                    if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())
+                        dataRow.Selected = true;
+                }
             }
         }
-
 
 
         #endregion
@@ -377,11 +382,13 @@ namespace Justin.Stock.Controls
             StockChart chart = new StockChart();
             chart.Show(stockNo, chartType);
         }
-        public new void Show()
+        public void Show(int tabIndex = 0)
         {
             StockService.AddEvent(ShowMyStockInfoChanged);
             base.Show();
+            tabControl1.SelectedIndex = tabIndex;
         }
+
         public new void Hide()
         {
             StockService.RemoveEvent(ShowMyStockInfoChanged);

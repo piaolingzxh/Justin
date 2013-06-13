@@ -43,8 +43,8 @@ namespace Justin.SalaryCalculator.Entities
 
             this.RevenueLeveles = new RevenueInfo[2];
 
-            List<RevenueLevel> levelesOfBefore = this.RevenuePolicy.RevenuePolicyBefore.Leveles.Where(row => (row.Max >= this.RevenueSalary - 2000) & (row.Min <= this.RevenueSalary - 2000)).ToList();
-            List<RevenueLevel> levelesOfAfter = this.RevenuePolicy.RevenuePolicyAfter.Leveles.Where(row => (row.Max >= this.RevenueSalary - 3500) & (row.Min <= this.RevenueSalary - 3500)).ToList();
+            List<RevenueLevel> levelesOfBefore = this.RevenuePolicy.RevenuePolicyBefore.Leveles.Where(row => row.Min <= this.RevenueSalary - 2000).OrderByDescending(row => row.Level).ToList();
+            List<RevenueLevel> levelesOfAfter = this.RevenuePolicy.RevenuePolicyAfter.Leveles.Where(row => row.Min <= this.RevenueSalary - 3500).OrderByDescending(row => row.Level).ToList();
             this.RevenueLeveles[0] = new RevenueInfo() { Leveles = levelesOfBefore, RevenueBase = this.RevenuePolicy.RevenuePolicyBefore.RevenueBase };
             this.RevenueLeveles[1] = new RevenueInfo() { Leveles = levelesOfAfter, RevenueBase = this.RevenuePolicy.RevenuePolicyAfter.RevenueBase };
 
@@ -162,7 +162,7 @@ namespace Justin.SalaryCalculator.Entities
         EndowmentInsurance,
         [Display("生育保险")]
         MaternityInsurance,
-        [Display("公积金")]
+        [Display("　公积金")]
         AccumulationFund,
     }
 }
