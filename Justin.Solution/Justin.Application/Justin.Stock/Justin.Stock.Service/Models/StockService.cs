@@ -113,8 +113,8 @@ namespace Justin.Stock.Service.Models
 
         #region 股票代码名称大全
 
-        private static List<Tuple<string, string, string>> _allStocks = null;
-        private static List<Tuple<string, string, string>> GetAllStocks()
+        private static List<StockBaseInfo> _allStocks = null;
+        private static List<StockBaseInfo> GetAllStocks()
         {
             IRequest allStockRequest = RequestFactory.GetRequest(ServiceProvider.EastMoney);
             return allStockRequest.GetAllStocks();
@@ -122,7 +122,7 @@ namespace Justin.Stock.Service.Models
         /// <summary>
         /// item1：Code Item2:no,Item3:Name
         /// </summary>
-        public static List<Tuple<string, string, string>> AllStocks
+        public static List<StockBaseInfo> AllStocks
         {
             get
             {

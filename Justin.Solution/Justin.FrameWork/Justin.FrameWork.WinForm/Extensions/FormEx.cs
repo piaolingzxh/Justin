@@ -44,14 +44,46 @@ namespace System.Windows.Forms
             }
         }
 
-
-
         public static void ShowTips(this Form instance, ToolTip tips)
         {
-            foreach (Control  item in instance.Controls)
+            foreach (Control item in instance.Controls)
             {
                 item.SetToolTipsForButton(tips);
             }
+        }
+
+        public static void Shake(this Form instance)
+        {
+            int recordx = instance.Left;             //保存原来窗体的左上角的x坐标
+            int recordy = instance.Top;              //保存原来窗体的左上角的y坐标
+            int rand = 10;
+            Random random = new Random();
+
+            for (int i = 0; i < 100; i++)
+            {
+                int x = random.Next(rand);
+                int y = random.Next(rand);
+                if (x % 2 == 0)
+                {
+                    instance.Left = instance.Left + x;
+                }
+                else
+                {
+                    instance.Left = instance.Left - x;
+                }
+                if (y % 2 == 0)
+                {
+                    instance.Top = instance.Top + y;
+                }
+                else
+                {
+                    instance.Top = instance.Top - y;
+                }
+
+                instance.Left = recordx;             //还原原始窗体的左上角的x坐标
+                instance.Top = recordy;              //还原原始窗体的左上角的y坐标
+            }
+
         }
     }
 }
