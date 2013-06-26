@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.Stock.Service;
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
 
@@ -194,6 +195,64 @@ CREATE TABLE [MyStocks] (
             return SqliteHelper.ExecuteDataTable(SqliteHelper.ConnStr, CommandType.Text, sql, null);
         }
 
+
+
+        #region AllStock
+
+        public void ResetAllStocks(List<StockBaseInfo> allStocks)
+        {
+            string insertSqlFormat = "insert into allStocks(StockCode,StockNo,StockName,SpellingInShort)values('{0}','{1}','{2}','{3}');";
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in allStocks)
+            {
+                sb.AppendFormat(insertSqlFormat, item.StockCode, item.StockNo, item.StockName, item.SpellingInShort).AppendLine();
+            }
+
+            SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, sb.ToString(), null);
+        }
+
+        public void UpdateStockInfo(string spellingInShort, string code)
+        {
+            string UPDATE_SQL_FORMAT = @"
+        update AllStocks set
+        SpellingInShort    ='{1}'        
+        where StockCode='{0}'";
+
+            string updateSQL = string.Format(UPDATE_SQL_FORMAT, spellingInShort, code);
+            SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, updateSQL, null);
+        }
+        public List<StockBaseInfo> GetAllStocks()
+        {
+            List<StockBaseInfo> list = new List<StockBaseInfo>();
+            using (SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr))
+            {
+                conn.Open();
+                SQLiteDataReader reader = SqliteHelper.ExecuteReader(conn, CommandType.Text, "select * from AllStocks", null);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(GetBaseStock(reader));
+                    }
+                }
+                reader.Close();
+                reader.Dispose();
+            }
+            return list;
+        }
+        private StockBaseInfo GetBaseStock(SQLiteDataReader reader)
+        {
+            StockBaseInfo stock = new StockBaseInfo()
+            {
+                StockCode = reader["StockCode"].Value<string>(),
+                StockName = reader["StockName"].Value<string>(),
+                SpellingInShort = reader["SpellingInShort"].Value<string>(),
+                StockNo = reader["StockNo"].Value<string>(),
+            };
+            return stock;
+        }
+
+        #endregion
 
     }
 }

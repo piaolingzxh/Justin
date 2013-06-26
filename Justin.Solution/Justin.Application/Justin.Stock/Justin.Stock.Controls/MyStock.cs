@@ -11,6 +11,7 @@ using Justin.Log;
 using Justin.Stock.Controls;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
+using Justin.Stock.Service;
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
 
@@ -65,10 +66,7 @@ namespace Justin.Stock.Controls
                 this.Hide();
             }
         }
-        private void btnUpdateStockInfo_Click(object sender, EventArgs e)
-        {
-            var list = StockService.AllStocks;
-        }
+
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -116,14 +114,14 @@ namespace Justin.Stock.Controls
         //从股票大全里边，添加股票代码到自选
         private void btnQueryStock_Click(object sender, EventArgs e)
         {
-            List<Tuple<string, string, string>> allStocks = StockService.AllStocks;
+            List<StockBaseInfo> allStocks = stockDAL.GetAllStocks();
             if (!string.IsNullOrEmpty(txtSrockName.Text))
             {
                 string value = txtSrockName.Text.Trim();
-                allStocks = allStocks.Where(row => row.Item1.IndexOf(value) >= 0 || row.Item2.IndexOf(value) >= 0 || row.Item3.IndexOf(value) >= 0).ToList();
+                allStocks = allStocks.Where(row => row.StockCode.IndexOf(value) >= 0 || row.StockName.IndexOf(value) >= 0 || row.StockNo.IndexOf(value) >= 0 || row.SpellingInShort.IndexOf(value) >= 0).ToList();
             }
 
-            dgvQueryResultStocks.DataSource = new BindingList<Tuple<string, string, string>>(allStocks);
+            dgvQueryResultStocks.DataSource = new BindingList<StockBaseInfo>(allStocks);
         }
         private void dgvQueryResultStocks_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -238,6 +236,13 @@ namespace Justin.Stock.Controls
                         dataRow.Selected = true;
                 }
             }
+        }
+
+        private void btnUpdateStockInfo_Click(object sender, EventArgs e)
+        {
+            var list = StockService.AllStocks;
+            stockDAL.ResetAllStocks(list);
+
         }
 
 

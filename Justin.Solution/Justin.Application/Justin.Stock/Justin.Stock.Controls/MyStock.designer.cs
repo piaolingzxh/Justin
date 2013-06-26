@@ -65,10 +65,6 @@
             this.tabPageAllStockList = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvQueryResultStocks = new System.Windows.Forms.DataGridView();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.txtSrockName = new System.Windows.Forms.TextBox();
             this.btnQueryStock = new System.Windows.Forms.Button();
@@ -104,6 +100,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStockChart = new System.Windows.Forms.TabPage();
             this.tabPageSetting = new System.Windows.Forms.TabPage();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stockChartCtrl = new Justin.Stock.StockChartCtrl();
             this.stockSettingsContextMenu.SuspendLayout();
             this.queryResultStocksContextMenu.SuspendLayout();
@@ -469,34 +469,6 @@
             this.dgvQueryResultStocks.Size = new System.Drawing.Size(851, 382);
             this.dgvQueryResultStocks.TabIndex = 10;
             this.dgvQueryResultStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvQueryResultStocks_CellMouseDown);
-            // 
-            // Code
-            // 
-            this.Code.ContextMenuStrip = this.queryResultStocksContextMenu;
-            this.Code.DataPropertyName = "Item1";
-            this.Code.HeaderText = "Code";
-            this.Code.Name = "Code";
-            this.Code.Width = 57;
-            // 
-            // No
-            // 
-            this.No.DataPropertyName = "Item2";
-            this.No.HeaderText = "No";
-            this.No.Name = "No";
-            this.No.Width = 46;
-            // 
-            // _Name
-            // 
-            this._Name.DataPropertyName = "Item3";
-            this._Name.HeaderText = "StockName";
-            this._Name.Name = "_Name";
-            this._Name.Width = 88;
-            // 
-            // InShort
-            // 
-            this.InShort.HeaderText = "InShort";
-            this.InShort.Name = "InShort";
-            this.InShort.Width = 66;
             // 
             // tableLayoutPanel3
             // 
@@ -875,6 +847,35 @@
             this.tabPageSetting.Text = "Settings";
             this.tabPageSetting.UseVisualStyleBackColor = true;
             // 
+            // Code
+            // 
+            this.Code.ContextMenuStrip = this.queryResultStocksContextMenu;
+            this.Code.DataPropertyName = "StockCode";
+            this.Code.HeaderText = "Code";
+            this.Code.Name = "Code";
+            this.Code.Width = 57;
+            // 
+            // No
+            // 
+            this.No.DataPropertyName = "StockNo";
+            this.No.HeaderText = "No";
+            this.No.Name = "No";
+            this.No.Width = 46;
+            // 
+            // _Name
+            // 
+            this._Name.DataPropertyName = "StockName";
+            this._Name.HeaderText = "StockName";
+            this._Name.Name = "_Name";
+            this._Name.Width = 88;
+            // 
+            // InShort
+            // 
+            this.InShort.DataPropertyName = "SpellingInShort";
+            this.InShort.HeaderText = "InShort";
+            this.InShort.Name = "InShort";
+            this.InShort.Width = 66;
+            // 
             // stockChartCtrl
             // 
             this.stockChartCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -952,10 +953,6 @@
         private System.Windows.Forms.TabPage tabPageAllStockList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.DataGridView dgvQueryResultStocks;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn No;
-        private System.Windows.Forms.DataGridViewTextBoxColumn _Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InShort;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TextBox txtSrockName;
         private System.Windows.Forms.Button btnQueryStock;
@@ -997,6 +994,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Percent;
         private System.Windows.Forms.DataGridViewTextBoxColumn SCount;
         private System.Windows.Forms.TabPage tabPageSetting;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn No;
+        private System.Windows.Forms.DataGridViewTextBoxColumn _Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn InShort;
 
     }
 }
