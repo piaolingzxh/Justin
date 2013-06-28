@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
+using System.Data.OracleClient;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 
@@ -65,7 +68,7 @@ namespace Justin.FrameWork.Helper
                 throw;
             }
         }
-                                                                                              
+
         private static DbCommand PrepareCommand(DbConnection connection, DbTransaction trans, string cmdText)
         {
             if (connection.State != ConnectionState.Open)
@@ -147,6 +150,22 @@ namespace Justin.FrameWork.Helper
             bulkCopy.TruncateTable(conn, tableName);
         }
 
+        public static DbConnection GetConnection(ConnectionStringSettings connectionStringSettings)
+        {
+            return GetConnection(connectionStringSettings.ConnectionString, connectionStringSettings.ProviderName);
+        }
+        public static DbConnection GetConnection(string connectionString,string providerName)
+        {
+            DbConnection conn = null;
+            switch (providerName)
+            {
+                case "System.Data.SqlClient": conn = new SqlConnection(connectionString); break;
+                case "Oracle.DataAccess.Client": conn = new Oracle.DataAccess.Client.OracleConnection(connectionString); break;
+                case "System.Data.OracleClient": conn = new OracleConnection(connectionString); break;
+                case "System.Data.SQLite": conn = new SQLiteConnection(connectionString); break;
+            }
+            return conn;
+        }
 
     }
 }
