@@ -28,7 +28,7 @@ namespace Justin.Controls.CodeSnippet
         private WebBrowser webBrower = new WebBrowser();
 
         ComponentResourceManager resources = new ComponentResourceManager(typeof(CodeSnippetCtrl));
-       
+
         public static string CodeSnippetFileDirectory = @"d:\";
 
         private string folderKeyOfImageList = "folder";
@@ -207,7 +207,7 @@ namespace Justin.Controls.CodeSnippet
         }
         private void ShowOpenFileWithDialog(string filename)
         {
-           Process proc = new Process();
+            Process proc = new Process();
             proc.EnableRaisingEvents = false;
             proc.StartInfo.FileName = "rundll32.exe";
             proc.StartInfo.Arguments = string.Format("shell32,OpenAs_RunDLL {0}", filename);
@@ -283,6 +283,34 @@ namespace Justin.Controls.CodeSnippet
                     imageListOfDirectory.Images.Add(strExt, FileHelper.GetFileIcon(file.FullName));
                 }
                 node.Nodes.Add(new TreeNode(file.Name) { Name = file.FullName, Tag = file.FullName, ImageKey = strExt, SelectedImageKey = strExt });
+            }
+        }
+
+        private void comboBoxHighlightingStrategy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtCode.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy(comboBoxHighlightingStrategy.Text);
+        }
+
+        private void openAsTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TreeNode selectNode = tvDirectory.SelectedNode;
+                if (selectNode != null && selectNode.Tag != null)
+                {
+                    if (selectNode.ImageKey != folderKeyOfImageList)
+                    {
+                        string path = selectNode.Tag.ToString();
+                        this.editorContainer.Controls.Clear();
+                        txtCode.LoadFile(path);
+                        this.editorContainer.Controls.Add(this.txtCode);
+                        txtCode.Focus();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

@@ -49,14 +49,6 @@ namespace Justin.BI.ETL
             try
             {
                 DataTable dt = DBHelper.ExecuteDataTable(sourceConnection,sql);
-                //if (sourceConnection is SqlConnection)
-                //{
-                //    dt = SqlHelper.ExecuteDataTable(sourceConnection as SqlConnection, CommandType.Text, sql, null);
-                //}
-                //else
-                //{
-                //    dt = OracleHelper2.ExecuteDataTable(sourceConnection as OracleConnection, CommandType.Text, sql, null);
-                //}
                 if (dt == null || dt.Rows.Count == 0)
                     return 0;
 

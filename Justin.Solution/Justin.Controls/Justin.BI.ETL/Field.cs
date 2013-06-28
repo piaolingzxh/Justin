@@ -71,7 +71,7 @@ namespace Justin.BI.ETL
 
         public abstract string ToQuerySQL(int pageSize, int pageIndex);
 
-        public abstract SerializableDictionary<string, string> GetDeafultColumnMapping(DbConnection dbConnection = null);
+        public abstract SerializableDictionary<string, string> GetDeafultColumnMapping();
     }
 
     public class Table : ETLSource
@@ -79,7 +79,7 @@ namespace Justin.BI.ETL
         public Table() : base(true) { }
 
 
-        public override SerializableDictionary<string, string> GetDeafultColumnMapping(DbConnection dbConnection = null)
+        public override SerializableDictionary<string, string> GetDeafultColumnMapping()
         {
             SerializableDictionary<string, string> columnMapping = new SerializableDictionary<string, string>();
 
@@ -114,23 +114,18 @@ order by {1} desc";
     {
         public View()
         { }
-        public View(string sql)
+        private DbConnection Connection { get; set; }
+
+        public View(string sql, DbConnection dbConnection)
         {
             this.SQL = sql;
+            this.Connection = dbConnection;
         }
-        public override SerializableDictionary<string, string> GetDeafultColumnMapping(DbConnection dbConnection = null)
+        public override SerializableDictionary<string, string> GetDeafultColumnMapping()
         {
             SerializableDictionary<string, string> columnMapping = new SerializableDictionary<string, string>();
             string sql = this.SQL + " where 1=0";
-            DataTable table = DBHelper.ExecuteDataTable(dbConnection, sql);
-            //if (dbConnection is SqlConnection)
-            //{
-            //    table = SqlHelper.ExecuteDataTable(dbConnection as SqlConnection, CommandType.Text, sql, null);
-            //}
-            //else
-            //{
-            //    table = OracleHelper2.ExecuteDataTable(dbConnection as OracleConnection, CommandType.Text, sql, null);
-            //}
+            DataTable table = DBHelper.ExecuteDataTable(this.Connection, sql);
 
             IEnumerable<DataColumn> fields = table.Columns.Cast<DataColumn>().Where(col => col.ColumnName != "_row_num");
 
@@ -166,13 +161,13 @@ order by {1} desc";
         {
             this.ColumnMapping = new SerializableDictionary<string, string>();
         }
-        public ETLInfo(ETLSource source, string dstTableName, DbConnection sourceConnection)
+        public ETLInfo(ETLSource source, string dstTableName)
             : this()
         {
             this.SourceTable = source;
             this.DestinationTableName = dstTableName;
 
-            this.ColumnMapping = SourceTable.GetDeafultColumnMapping(sourceConnection);
+            this.ColumnMapping = SourceTable.GetDeafultColumnMapping();
         }
 
         [XmlAttribute()]

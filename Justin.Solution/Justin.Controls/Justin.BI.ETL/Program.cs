@@ -14,21 +14,7 @@ namespace Justin.BI.ETL
     {
         public static void Main()
         {
-            DbConnection sourceConn = SqlHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"].ConnectionString);
-            DbConnection sourceConn1 = SqlHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"].ConnectionString);
-
-            DbConnection dstConn = OracleHelper.GetConnection(ConfigurationManager.ConnectionStrings["oracle"].ConnectionString);
-            DbConnection dstConn1 = OracleHelper2.GetConnection(ConfigurationManager.ConnectionStrings["oracle"].ConnectionString);
-            DbConnection testConn = sourceConn;
-
-            DbDataReader dr1 = DBHelper.ExecuteReader(sourceConn1, "select * from Client where sys_key='00004302f8af896d'");
-            //dr1.Close();
-            int e1 = DBHelper.ExecuteNonQuery(testConn, "update Client set sys_display='00004302f8af896d' where sys_key='00004302f8af896d'");
-
-            DataTable dt1 = DBHelper.ExecuteDataTable(testConn, "select * from Client where sys_key='00004302f8af896d'");
-            object o1 = DBHelper.ExecuteScalar(testConn, "select count(*) from Client");
-
-
+            ETLServiceTest();
             Console.WriteLine("OK");
             Console.Read();
         }
@@ -53,19 +39,36 @@ namespace Justin.BI.ETL
 
             #endregion
 
-            DbConnection sourceConn = SqlHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"].ConnectionString);
-            DbConnection dstConn = OracleHelper2.GetConnection(ConfigurationManager.ConnectionStrings["oracle"].ConnectionString);
+            DbConnection sourceConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"]);
+            DbConnection dstConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["oracle"]);
 
             string sql = "select CLIENT_KEY,SYS_DISPLAY,SYS_LOAD_TIME,SYS_END_TIME,SYS_START_TIME,SYS_KEY from D_CLIENT";
-            View view = new View(sql);
+            View view = new View(sql, sourceConn);
             view.PrimaryKeys.Add(new PrimaryKey() { Name = "SYS_KEY", FieldType = DbType.String });
 
-            ETLInfo etlInfo = new ETLInfo(view, "D_Client1", sourceConn);
+            ETLInfo etlInfo = new ETLInfo(view, "Client");
 
-            //SerializeHelper.XmlSerializeToFile(etlInfo, "table.xml", true);
+            SerializeHelper.XmlSerializeToFile(etlInfo, "table.xml", true);
 
             new ETLService().Process("table.xml", sourceConn, dstConn, true, new Program().ShowMsg);
         }
 
+
+        public static void DBHelperTest()
+        {
+            DbConnection sourceConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"]);
+            DbConnection dstConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["oracle"]);
+            DbConnection sqlite = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["sqlite"]);
+
+            DbConnection testConn = sqlite;
+
+            DbDataReader dr1 = DBHelper.ExecuteReader(testConn, "select * from Client where sys_key='00004302f8af896d'");
+            //dr1.Close();
+            int e1 = DBHelper.ExecuteNonQuery(testConn, "update Client set sys_display='00004302f8af896d' where sys_key='00004302f8af896d'");
+
+            DataTable dt1 = DBHelper.ExecuteDataTable(testConn, "select * from Client where sys_key='00004302f8af896d'");
+            object o1 = DBHelper.ExecuteScalar(testConn, "select count(*) from Client");
+
+        }
     }
 }
