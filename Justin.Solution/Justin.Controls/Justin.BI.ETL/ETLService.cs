@@ -15,7 +15,7 @@ namespace Justin.BI.ETL
 {
     public class ETLService
     {
-        public void Process(ETLInfo etlInfo, DbConnection sourceConnection, DbConnection DestinationConnection, bool clearDataBeforeETL = false, Action<int> action = null, int pageSize = 10000)
+        public void Process(ETLInfo etlInfo, DbConnection sourceConnection, DbConnection DestinationConnection, bool clearDataBeforeETL = false, Action<int> callback = null, int pageSize = 10000)
         {
             int pageIndex = 0;
             int result = 1;
@@ -37,8 +37,8 @@ namespace Justin.BI.ETL
                 result = BulkCopyByPage(etlInfo, pageSize, pageIndex, bcp, sourceConnection, DestinationConnection);
                 pageIndex++;
                 success += result;
-                if (action != null && result > 0)
-                    action(success);
+                if (callback != null && result > 0)
+                    callback(success);
             }
         }
 
@@ -58,15 +58,15 @@ namespace Justin.BI.ETL
             catch (Exception ex)
             {
                 string errorString = string.Format("转移失败,数据源SQL:{0}...", sql);
-                File.AppendAllText(@"d:\bulkcopy.log", errorString);
+                File.AppendAllText(@"bulkcopy.log", errorString);
                 throw;
             }
         }
 
-        public void Process(string etlInfoFilePath, DbConnection sourceConnection, DbConnection DestinationConnection, bool clearDataBeforeETL = false, Action<int> action = null, int pageSize = 10000)
+        public void Process(string etlInfoFilePath, DbConnection sourceConnection, DbConnection DestinationConnection, bool clearDataBeforeETL = false, Action<int> callback = null, int pageSize = 10000)
         {
             ETLInfo etlInfo = SerializeHelper.XmlDeserializeFromFile<ETLInfo>(etlInfoFilePath);
-            this.Process(etlInfo, sourceConnection, DestinationConnection, clearDataBeforeETL, action, pageSize);
+            this.Process(etlInfo, sourceConnection, DestinationConnection, clearDataBeforeETL, callback, pageSize);
         }
 
         public void CheckConn(DbConnection sourceConnection, DbConnection DestinationConnection)

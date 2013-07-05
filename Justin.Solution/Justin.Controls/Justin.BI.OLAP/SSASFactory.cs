@@ -17,10 +17,16 @@ namespace Justin.BI.OLAP
 
         private Server server;
 
+
         public SSASFactory(string dwConnectionString, string olapConnectionString)
         {
-            //this.dwConnectionString = dwConnectionString;
-            //  this.olapConnectionString = olapConnectionString;
+            this.dwConnectionString = dwConnectionString;
+            this.olapConnectionString = olapConnectionString;
+            server = new Server();
+        }
+
+        public SSASFactory()
+        {
             server = new Server();
         }
 
@@ -66,15 +72,15 @@ namespace Justin.BI.OLAP
             {
                 dataSource = database.DataSources[dataSourceName];
             }
-            if (dwConnectionString.ToUpper().Contains("PROVIDER=SQLOLEDB;"))
-            {
-                dataSource.ConnectionString = Regex.Replace(dwConnectionString, "PROVIDER=SQLOLEDB;", "", RegexOptions.IgnoreCase);
-                dataSource.ManagedProvider = "System.Data.SqlClient";
-            }
-            else
-            {
-                dataSource.ConnectionString = dwConnectionString;
-            }
+            //if (dwConnectionString.ToUpper().Contains("PROVIDER=SQLOLEDB;"))
+            //{
+            dataSource.ConnectionString = dwConnectionString;// Regex.Replace(dwConnectionString, "PROVIDER=SQLOLEDB;", "", RegexOptions.IgnoreCase);
+            dataSource.ManagedProvider = "System.Data.OleDb";// "System.Data.SqlClient";
+            //}
+            //else
+            //{
+            //    dataSource.ConnectionString = dwConnectionString;
+            //}
             dataSource.Update();
             return dataSource;
         }

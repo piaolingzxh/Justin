@@ -49,35 +49,30 @@ namespace Justin.BI.ETL
     XmlInclude(typeof(View))]
     public abstract class ETLSource
     {
-        public ETLSource()
-            : this(false)
-        { }
-        public ETLSource(bool isTable)
-        {
-            this.PrimaryKeys = new List<PrimaryKey>();
-            if (isTable)
-            {
-                this.ForeKeys = new List<ForeKey>();
-                this.Fields = new List<Field>();
-            }
-        }
+        public ETLSource() { }
+
         [XmlAttribute()]
         public string Name { get; set; }
-        public List<PrimaryKey> PrimaryKeys { get; set; }
-        public List<Field> Fields { get; set; }
-        public List<ForeKey> ForeKeys { get; set; }
-        [XmlElement()]
-        public string SQL { get; set; }
+        public List<Field> OrderBy { get; set; }
+
 
         public abstract string ToQuerySQL(int pageSize, int pageIndex);
-
         public abstract SerializableDictionary<string, string> GetDeafultColumnMapping();
     }
 
     public class Table : ETLSource
     {
-        public Table() : base(true) { }
+        public Table()
+        {
+            this.PrimaryKeys = new List<PrimaryKey>();
+            this.ForeKeys = new List<ForeKey>();
+            this.Fields = new List<Field>();
+            this.OrderBy = new List<Field>();
+        }
 
+        public List<PrimaryKey> PrimaryKeys { get; set; }
+        public List<Field> Fields { get; set; }
+        public List<ForeKey> ForeKeys { get; set; }
 
         public override SerializableDictionary<string, string> GetDeafultColumnMapping()
         {
@@ -94,7 +89,7 @@ namespace Justin.BI.ETL
         public override string ToQuerySQL(int pageSize, int pageIndex)
         {
             string pagedSQL = @"select {2} from
- (select t.*, Row_NUMBER() over(order by {1} desc) as num from {0} t) t2
+ (select t99999.*, Row_NUMBER() over(order by {1} desc) as num from {0} t99999) t99998
 where num between {3} and {4}
 order by {1} desc";
             StringBuilder sb = new StringBuilder();
@@ -105,22 +100,34 @@ order by {1} desc";
             {
                 sb.AppendFormat("{0},", item);
             }
+            if (this.OrderBy != null || this.OrderBy.Count == 0)
+            {
+                foreach (var item in this.PrimaryKeys)
+                {
+                    this.OrderBy.Add((Field)item);
+                }
+            }
 
-            return string.Format(pagedSQL, this.Name, this.PrimaryKeys[0].Name, sb.Remove(sb.Length - 1, 1).ToString(), pageSize * pageIndex + 1, pageSize * (pageIndex + 1));
+            return string.Format(pagedSQL, this.Name, this.OrderBy[0].Name, sb.Remove(sb.Length - 1, 1).ToString(), pageSize * pageIndex + 1, pageSize * (pageIndex + 1));
         }
     }
 
     public class View : ETLSource
     {
         public View()
-        { }
-        private DbConnection Connection { get; set; }
-
+        {
+            this.OrderBy = new List<Field>();
+        }
         public View(string sql, DbConnection dbConnection)
+            : this()
         {
             this.SQL = sql;
             this.Connection = dbConnection;
         }
+
+        private DbConnection Connection { get; set; }
+        [XmlElement()]
+        public string SQL { get; set; }
         public override SerializableDictionary<string, string> GetDeafultColumnMapping()
         {
             SerializableDictionary<string, string> columnMapping = new SerializableDictionary<string, string>();
@@ -139,19 +146,11 @@ order by {1} desc";
         {
 
             string pagedSQL = @"select * from
- (select t.*, Row_NUMBER() over(order by {1} desc) as _row_num from {0} t) t2
+ (select t99999.*, Row_NUMBER() over(order by {1} desc) as _row_num from {0} t99999) t99998
 where _row_num between {2} and {3}
 order by {1} desc";
-            StringBuilder sb = new StringBuilder();
 
-            IEnumerable<Field> fields = this.PrimaryKeys.Union(this.Fields).Union(this.ForeKeys);
-
-            foreach (var item in fields.Where(row => row.Enable).Select(row => row.Name).Distinct())
-            {
-                sb.AppendFormat("{0},", item);
-            }
-
-            return string.Format(pagedSQL, "(" + this.SQL + ")", this.PrimaryKeys[0].Name, pageSize * pageIndex + 1, pageSize * (pageIndex + 1));
+            return string.Format(pagedSQL, "(" + this.SQL + ")", this.OrderBy[0].Name, pageSize * pageIndex + 1, pageSize * (pageIndex + 1));
         }
     }
 

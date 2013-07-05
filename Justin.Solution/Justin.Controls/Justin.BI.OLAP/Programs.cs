@@ -12,26 +12,28 @@ namespace Justin.BI.OLAP
         public static void Main()
         {
             //string connStr =@"Provider=MSOLAP;Data Source=192.168.4.194;UserName=BISERVER194\BI;Password=123qwe!@#;";
-            string connStr = @"Provider=MSOLAP.4;Data Source=192.168.4.32;";
+            //string connStr = @"Provider=MSOLAP.4;Data Source=192.168.4.32;";
 
-            Server server = new Server();
+            //Server server = new Server();
 
-            try
-            {
-                server.Connect(connStr);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            //try
+            //{
+            //    server.Connect(connStr);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.ToString());
+            //}
+
+            test1();
             Console.WriteLine("OK");
             Console.Read();
 
         }
         public static void test1()
         {
-            //string dwConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=gtp_bi_dw_20130311;User Id=sa;Password=sa;";
-
+            string dwConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=MondrianDB;User Id=sa;Password=sa;";
+            string olapConnectionString = "Data Source = .;Provider=msolap";
             //OleDbConnection con = new OleDbConnection(dwConnStr);
             //con.Open();
 
@@ -54,7 +56,7 @@ namespace Justin.BI.OLAP
             //solution.Dims.Add(DateDim);
 
 
-            SSASFactory factory = new SSASFactory("", "");
+            SSASFactory factory = new SSASFactory(dwConnStr, olapConnectionString);
             factory.DeleteSolution(solution);
             factory.CreateSolution(solution);
 

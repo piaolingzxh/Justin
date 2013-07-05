@@ -35,17 +35,17 @@
             this.tvDirectory = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openWithToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageListOfDirectory = new System.Windows.Forms.ImageList(this.components);
             this.txtFolder = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.editorContainer = new System.Windows.Forms.Panel();
-            this.txtFileName = new System.Windows.Forms.RichTextBox();
             this.btnCloseOpen = new System.Windows.Forms.Button();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtFileName = new System.Windows.Forms.RichTextBox();
             this.comboBoxHighlightingStrategy = new System.Windows.Forms.ComboBox();
-            this.openAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -121,6 +121,13 @@
             this.openWithToolStripMenuItem.Text = "打开方式";
             this.openWithToolStripMenuItem.Click += new System.EventHandler(this.openWithToolStripMenuItem_Click);
             // 
+            // openAsTextToolStripMenuItem
+            // 
+            this.openAsTextToolStripMenuItem.Name = "openAsTextToolStripMenuItem";
+            this.openAsTextToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openAsTextToolStripMenuItem.Text = "以为本方式打开";
+            this.openAsTextToolStripMenuItem.Click += new System.EventHandler(this.openAsTextToolStripMenuItem_Click);
+            // 
             // imageListOfDirectory
             // 
             this.imageListOfDirectory.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListOfDirectory.ImageStream")));
@@ -170,16 +177,6 @@
             this.editorContainer.Size = new System.Drawing.Size(595, 395);
             this.editorContainer.TabIndex = 3;
             // 
-            // txtFileName
-            // 
-            this.txtFileName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtFileName.Location = new System.Drawing.Point(3, 3);
-            this.txtFileName.Name = "txtFileName";
-            this.txtFileName.ReadOnly = true;
-            this.txtFileName.Size = new System.Drawing.Size(509, 18);
-            this.txtFileName.TabIndex = 2;
-            this.txtFileName.Text = "";
-            // 
             // btnCloseOpen
             // 
             this.btnCloseOpen.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -206,6 +203,16 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(595, 24);
             this.tableLayoutPanel3.TabIndex = 5;
             // 
+            // txtFileName
+            // 
+            this.txtFileName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFileName.Location = new System.Drawing.Point(3, 3);
+            this.txtFileName.Name = "txtFileName";
+            this.txtFileName.ReadOnly = true;
+            this.txtFileName.Size = new System.Drawing.Size(509, 18);
+            this.txtFileName.TabIndex = 2;
+            this.txtFileName.Text = "";
+            // 
             // comboBoxHighlightingStrategy
             // 
             this.comboBoxHighlightingStrategy.FormattingEnabled = true;
@@ -222,13 +229,6 @@
             this.comboBoxHighlightingStrategy.Size = new System.Drawing.Size(74, 21);
             this.comboBoxHighlightingStrategy.TabIndex = 3;
             this.comboBoxHighlightingStrategy.SelectedIndexChanged += new System.EventHandler(this.comboBoxHighlightingStrategy_SelectedIndexChanged);
-            // 
-            // openAsTextToolStripMenuItem
-            // 
-            this.openAsTextToolStripMenuItem.Name = "openAsTextToolStripMenuItem";
-            this.openAsTextToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.openAsTextToolStripMenuItem.Text = "以为本方式打开";
-            this.openAsTextToolStripMenuItem.Click += new System.EventHandler(this.openAsTextToolStripMenuItem_Click);
             // 
             // CodeSnippetCtrl
             // 
