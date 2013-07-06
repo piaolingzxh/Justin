@@ -15,7 +15,7 @@ namespace Justin.Stock.Service.Models
             throw new NotImplementedException();
         }
 
-        public List<Tuple<string, string, string>> GetAllStocks()
+        public List<StockBaseInfo> GetAllStocks()
         {
             string regexOfEastmoney = "<a target=\"_blank\" href=\"http://quote.eastmoney.com/(\\S+).html\">(\\S+)\\((\\S+)\\)</a>";
 
@@ -26,7 +26,7 @@ namespace Justin.Stock.Service.Models
             reader.Close();
             response.Close();
 
-            List<Tuple<string, string, string>> list = new List<Tuple<string, string, string>>();
+            List<StockBaseInfo> list = new List<StockBaseInfo>();
             MatchCollection mc = Regex.Matches(htmlString, regexOfEastmoney);
             if (mc.Count < 1)
             {
@@ -35,7 +35,7 @@ namespace Justin.Stock.Service.Models
             for (int i = 0; i < mc.Count; i++)
             {
                 Match m = mc[i];
-                list.Add(new Tuple<string, string, string>(m.Groups[1].Value, m.Groups[3].Value, m.Groups[2].Value));
+                list.Add(new StockBaseInfo(m.Groups[1].Value, m.Groups[3].Value, m.Groups[2].Value));
             }
 
             return list;

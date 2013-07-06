@@ -29,14 +29,14 @@ namespace Justin.FrameWork.WinForm.Utility
         /// <summary>
         /// 可以直接传入字符格式的数据源名称，然后用转换成枚举格式
         /// </summary>
-        /// <param name="str">SqlDataSource, AccessDataSource, OdbcDataSouce, OracleDataSource, SqlFileDataSource</param>
+        /// <param name="dataSourceType">SqlDataSource, AccessDataSource, OdbcDataSouce, OracleDataSource, SqlFileDataSource</param>
         /// <returns>返回连接字符串</returns>
-        public static string GetConnectionString(string str)
+        public static string GetConnectionString(string dataSourceType)
         {
             Type DTS = typeof(DataSourceType);
 
             //从ComboBox中选择的数据源已经转换成字符格式
-            DataSourceType DS = (DataSourceType)Enum.Parse(DTS, str);
+            DataSourceType DS = (DataSourceType)Enum.Parse(DTS, dataSourceType);
 
             return GetConnectionString(DS);
         }
@@ -45,19 +45,19 @@ namespace Justin.FrameWork.WinForm.Utility
         /// <summary>
         /// 枚举格式
         /// </summary>
-        /// <param name="DS">数据提供类型 VS2008Dlg.DataSourceType</param>
+        /// <param name="dataSourceType">数据提供类型 VS2008Dlg.DataSourceType</param>
         /// <returns>返回连接字符串</returns>
-        public static string GetConnectionString(DataSourceType DS)
+        public static string GetConnectionString(DataSourceType dataSourceType)
         {
             string connection = null;
             DataConnectionDialog dialog = new DataConnectionDialog();
 
             DataSource.AddStandardDataSources(dialog);
 
-            dialog.SelectedDataSource = ConvertToDaSource(DS);
-            if (ConvertToDaProvider(DS) != null)
+            dialog.SelectedDataSource = ConvertToDaSource(dataSourceType);
+            if (ConvertToDaProvider(dataSourceType) != null)
             {
-                dialog.SelectedDataProvider = ConvertToDaProvider(DS);
+                dialog.SelectedDataProvider = ConvertToDaProvider(dataSourceType);
             }
             if (DataConnectionDialog.Show(dialog) == DialogResult.OK)
             {
@@ -67,10 +67,10 @@ namespace Justin.FrameWork.WinForm.Utility
 
         }
 
-        private static DataSource ConvertToDaSource(DataSourceType DST)
+        private static DataSource ConvertToDaSource(DataSourceType dataSourceType)
         {
             DataSource r = null;
-            switch (DST)
+            switch (dataSourceType)
             {
                 case DataSourceType.AccessDataSource:
                     r = DataSource.AccessDataSource;
@@ -95,10 +95,10 @@ namespace Justin.FrameWork.WinForm.Utility
         }
 
 
-        private static DataProvider ConvertToDaProvider(DataSourceType DST)
+        private static DataProvider ConvertToDaProvider(DataSourceType dataSourceType)
         {
             DataProvider r = null;
-            switch (DST)
+            switch (dataSourceType)
             {
                 case DataSourceType.AccessDataSource:
                     r = null;// DataProvider.OleDBDataProvider;

@@ -87,11 +87,11 @@
     <Compile Include="StockChartCtrl.Designer.cs">
       <DependentUpon>StockChartCtrl.cs</DependentUpon>
     </Compile>
-    <Compile Include="SystemSetting.cs">
-      <SubType>Form</SubType>
+    <Compile Include="SystemSettingCtrl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SystemSetting.Designer.cs">
-      <DependentUpon>SystemSetting.cs</DependentUpon>
+    <Compile Include="SystemSettingCtrl.Designer.cs">
+      <DependentUpon>SystemSettingCtrl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +108,8 @@
     <EmbeddedResource Include="StockChartCtrl.resx">
       <DependentUpon>StockChartCtrl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SystemSetting.resx">
-      <DependentUpon>SystemSetting.cs</DependentUpon>
+    <EmbeddedResource Include="SystemSettingCtrl.resx">
+      <DependentUpon>SystemSettingCtrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

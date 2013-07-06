@@ -41,12 +41,11 @@
             this.txtSheBaoOfCompany = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtHouse = new System.Windows.Forms.TextBox();
-            this.txtCompanyMessage = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtQuotedSalary = new System.Windows.Forms.TextBox();
             this.btnCalculate = new System.Windows.Forms.Button();
-            this.txtPersonMessage = new System.Windows.Forms.RichTextBox();
+            this.txtSalaryMessage = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -69,12 +68,11 @@
             this.tableLayoutPanel1.Controls.Add(this.txtSheBaoOfCompany, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.txtHouse, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtCompanyMessage, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.label11, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtQuotedSalary, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnCalculate, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.txtPersonMessage, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txtSalaryMessage, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -197,16 +195,6 @@
             this.txtHouse.Size = new System.Drawing.Size(179, 20);
             this.txtHouse.TabIndex = 4;
             // 
-            // txtCompanyMessage
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.txtCompanyMessage, 2);
-            this.txtCompanyMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCompanyMessage.Location = new System.Drawing.Point(3, 123);
-            this.txtCompanyMessage.Name = "txtCompanyMessage";
-            this.txtCompanyMessage.Size = new System.Drawing.Size(279, 270);
-            this.txtCompanyMessage.TabIndex = 12;
-            this.txtCompanyMessage.Text = "";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -245,15 +233,15 @@
             this.btnCalculate.UseVisualStyleBackColor = true;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
-            // txtPersonMessage
+            // txtSalaryMessage
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.txtPersonMessage, 2);
-            this.txtPersonMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPersonMessage.Location = new System.Drawing.Point(288, 123);
-            this.txtPersonMessage.Name = "txtPersonMessage";
-            this.txtPersonMessage.Size = new System.Drawing.Size(279, 270);
-            this.txtPersonMessage.TabIndex = 12;
-            this.txtPersonMessage.Text = "";
+            this.tableLayoutPanel1.SetColumnSpan(this.txtSalaryMessage, 4);
+            this.txtSalaryMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSalaryMessage.Location = new System.Drawing.Point(3, 123);
+            this.txtSalaryMessage.Name = "txtSalaryMessage";
+            this.txtSalaryMessage.Size = new System.Drawing.Size(564, 270);
+            this.txtSalaryMessage.TabIndex = 12;
+            this.txtSalaryMessage.Text = "";
             // 
             // SalaryCalculator
             // 
@@ -287,13 +275,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtHouse;
-        private System.Windows.Forms.RichTextBox txtCompanyMessage;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtQuotedSalary;
         private System.Windows.Forms.Button btnCalculate;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusMessage;
-        private System.Windows.Forms.RichTextBox txtPersonMessage;
+        private System.Windows.Forms.RichTextBox txtSalaryMessage;
 
     }
 }

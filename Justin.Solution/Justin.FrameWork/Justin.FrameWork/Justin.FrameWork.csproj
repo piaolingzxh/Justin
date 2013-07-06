@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\Library\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -55,10 +59,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BulkCopyOracle.cs" />
+    <Compile Include="BulkCopySQL.cs" />
+    <Compile Include="Entities\SerializableDictionary~.cs" />
     <Compile Include="Extensions\IEnumerableEx.cs" />
     <Compile Include="Entities\BindingCollection~.cs" />
     <Compile Include="Extensions\CellSetEx.cs" />
+    <Compile Include="Helper\EncryptHelper.cs" />
+    <Compile Include="Helper\DBHelper.cs" />
+    <Compile Include="Helper\OracleHelper2.cs" />
     <Compile Include="Helper\MdxHelper.cs" />
+    <Compile Include="IBulkCopy.cs" />
     <Compile Include="Settings\Constants.cs" />
     <Compile Include="Entities\DisplayAttribute.cs" />
     <Compile Include="Entities\Factor.cs" />
@@ -74,12 +85,15 @@
     <Compile Include="Helper\SqlHelper.cs" />
     <Compile Include="Helper\SqliteHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="obj\Utility\JCodeCompiler.cs" />
-    <Compile Include="obj\Utility\JMail.cs" />
+    <Compile Include="Utility\JCodeCompiler.cs" />
+    <Compile Include="Utility\JMail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Helper\App.config" />
     <None Include="Justin.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

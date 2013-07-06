@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Data;
 using System.Xml;
+using System.Globalization;
 
 namespace Justin.FrameWork.Extensions
 {
@@ -575,5 +576,10 @@ namespace Justin.FrameWork.Extensions
         }
 
         #endregion
+
+        public static bool Contains(this IEnumerable<string> source, string value, bool ignoreCase)
+        {
+            return source.Contains(value, StringComparer.Create(CultureInfo.CurrentCulture, true)); 
+        }
     }
 }

@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.CodeCompiler", "Justin.Controls.CodeCompiler\Justin.Controls.CodeCompiler.csproj", "{6941552A-4FD4-4F07-98E2-F8A10FCC0086}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.JsonView", "Justin.Controls.JsonView\Justin.Controls.JsonView.csproj", "{BB49DE23-C34D-4457-9F25-34CA6277813D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.Mondrian", "Justin.Controls.Mondrian\Justin.Controls.Mondrian.csproj", "{D6701E81-57AA-4348-8AE7-7BB2BB94C826}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E} = {F1BA0A66-6D68-4142-83D8-C96A81A6862E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.CodeSnippet", "Justin.Controls.CodeSnippet\Justin.Controls.CodeSnippet.csproj", "{BCE992B5-1055-4531-A1C6-E15209D27270}"
 EndProject
@@ -18,6 +22,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.WordView", "Justin.Controls.WordView\Justin.Controls.WordView.csproj", "{69463078-58BF-47A8-9464-FB3C3B1AF449}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.TextEditor", "Justin.Controls.TextEditor\Justin.Controls.TextEditor.csproj", "{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork", "..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj", "{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.Web", "..\Justin.FrameWork\Justin.FrameWork.Web\Justin.FrameWork.Web.csproj", "{827AC6D8-2001-47C9-9260-DB68E698AD5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", "..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj", "{F1BA0A66-6D68-4142-83D8-C96A81A6862E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Log", "..\Justin.FrameWork\Justin.Log\Justin.Log.csproj", "{FB90C580-4E99-4921-B352-7704032AE2F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI.ETL", "Justin.BI.ETL\Justin.BI.ETL.csproj", "{B79A6450-85A9-43C9-B895-CF11D572E056}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI.OLAP", "Justin.BI.OLAP\Justin.BI.OLAP.csproj", "{232D990D-5BA8-4A5A-8028-72FA408204DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +80,30 @@ Global
 		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{827AC6D8-2001-47C9-9260-DB68E698AD5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827AC6D8-2001-47C9-9260-DB68E698AD5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827AC6D8-2001-47C9-9260-DB68E698AD5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827AC6D8-2001-47C9-9260-DB68E698AD5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79A6450-85A9-43C9-B895-CF11D572E056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79A6450-85A9-43C9-B895-CF11D572E056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79A6450-85A9-43C9-B895-CF11D572E056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79A6450-85A9-43C9-B895-CF11D572E056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

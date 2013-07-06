@@ -11,6 +11,7 @@ using Justin.Log;
 using Justin.Stock.Controls;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
+using Justin.Stock.Service;
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
 
@@ -24,6 +25,8 @@ namespace Justin.Stock.Controls
         //DataGridView contextMenuSourceGridView = null;
         string CurrentStockCode { get; set; }
         StockDAL stockDAL = new StockDAL();
+        SystemSettingCtrl settingCtrl = new SystemSettingCtrl();
+
         public MyStock()
         {
             InitializeComponent();
@@ -48,6 +51,10 @@ namespace Justin.Stock.Controls
 
             #endregion
             dgvStocksetting.AutoGenerateColumns = false;
+
+            this.tabPageSetting.Controls.Clear();
+            this.tabPageSetting.Controls.Add(settingCtrl);
+
         }
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
@@ -59,10 +66,7 @@ namespace Justin.Stock.Controls
                 this.Hide();
             }
         }
-        private void btnUpdateStockInfo_Click(object sender, EventArgs e)
-        {
-            var list = StockService.AllStocks;
-        }
+
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -75,13 +79,10 @@ namespace Justin.Stock.Controls
                     RefreshPersonalStockSetting();
                     break;
                 case 2:
-                    //for (int i = this.tabPageStockChart.Controls.Count; i > 0; i--)
-                    //{
-                    //    StockChartCtrl ctrol = this.tabPageStockChart.Controls[i - 1] as StockChartCtrl;
-                    //    ctrol.Dispose();
-                    //}
-                    //tabPageStockChart.Controls.Clear();
                     ShowChart(ChartType.TimeSheet, true);
+                    break;
+                case 3:
+                    settingCtrl.RefreshSetting();
                     break;
             }
         }
@@ -113,14 +114,14 @@ namespace Justin.Stock.Controls
         //从股票大全里边，添加股票代码到自选
         private void btnQueryStock_Click(object sender, EventArgs e)
         {
-            List<Tuple<string, string, string>> allStocks = StockService.AllStocks;
+            List<StockBaseInfo> allStocks = stockDAL.GetAllStocks();
             if (!string.IsNullOrEmpty(txtSrockName.Text))
             {
                 string value = txtSrockName.Text.Trim();
-                allStocks = allStocks.Where(row => row.Item1.IndexOf(value) >= 0 || row.Item2.IndexOf(value) >= 0 || row.Item3.IndexOf(value) >= 0).ToList();
+                allStocks = allStocks.Where(row => row.StockCode.IndexOf(value) >= 0 || row.StockName.IndexOf(value) >= 0 || row.StockNo.IndexOf(value) >= 0 || row.SpellingInShort.IndexOf(value) >= 0).ToList();
             }
 
-            dgvQueryResultStocks.DataSource = new BindingList<Tuple<string, string, string>>(allStocks);
+            dgvQueryResultStocks.DataSource = new BindingList<StockBaseInfo>(allStocks);
         }
         private void dgvQueryResultStocks_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -226,14 +227,23 @@ namespace Justin.Stock.Controls
                     row.Cells["HasProfitOrLoss"].Value = StockInfo.GetProfitOrLossHistoryData(objProfitOrLossHistory.ToString()).Sum();
                 }
             }
-            List<StockInfo> stockList = stockDAL.getAllMyStock();
-            foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
+            //List<StockInfo> stockList = stockDAL.getAllMyStock();
+            if (!string.IsNullOrEmpty(CurrentStockCode))
             {
-                if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())
-                    dataRow.Selected = true;
+                foreach (DataGridViewRow dataRow in dgvStocksetting.Rows)
+                {
+                    if (CurrentStockCode == dataRow.Cells["StockCode"].Value.ToString())
+                        dataRow.Selected = true;
+                }
             }
         }
 
+        private void btnUpdateStockInfo_Click(object sender, EventArgs e)
+        {
+            var list = StockService.AllStocks;
+            stockDAL.ResetAllStocks(list);
+
+        }
 
 
         #endregion
@@ -377,11 +387,13 @@ namespace Justin.Stock.Controls
             StockChart chart = new StockChart();
             chart.Show(stockNo, chartType);
         }
-        public new void Show()
+        public void Show(int tabIndex = 0)
         {
             StockService.AddEvent(ShowMyStockInfoChanged);
             base.Show();
+            tabControl1.SelectedIndex = tabIndex;
         }
+
         public new void Hide()
         {
             StockService.RemoveEvent(ShowMyStockInfoChanged);

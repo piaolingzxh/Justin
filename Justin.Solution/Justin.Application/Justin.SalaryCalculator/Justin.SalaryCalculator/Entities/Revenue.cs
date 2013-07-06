@@ -23,7 +23,7 @@ namespace Justin.SalaryCalculator.Entities
     [XmlRoot("Level")]
     public class RevenueLevel
     {
-        [XmlAttribute("value")]
+        [XmlAttribute("Value")]
         public int Level { get; set; }
         [XmlAttribute()]
         public double Max { get; set; }

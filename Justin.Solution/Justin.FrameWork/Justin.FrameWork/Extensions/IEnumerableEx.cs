@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Justin.FrameWork
+namespace Justin.FrameWork.Extensions
 {
     public static class IEnumerableEx
     {
 
-        public static bool Contains<TSource>(this IEnumerable<TSource> source, string value, bool ignoreCase)
+        public static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value, bool ignoreCase)
         {
-            EqualityComparer<TSource> comparer = EqualityComparer<TSource>.Default;
-
             foreach (var item in source)
             {
+                
                 if (item is ValueType || item is String)
                 {
                     if (string.Compare(item.ToString(), value.ToString(), ignoreCase) == 0)

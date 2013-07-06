@@ -90,7 +90,7 @@ namespace Justin.Stock.Service.Models
             }
         }
 
-        public List<Tuple<string, string, string>> GetAllStocks()
+        public List<StockBaseInfo> GetAllStocks()
         {
             throw new NotImplementedException();
         }

@@ -69,6 +69,10 @@ namespace Justin.Stock
                 e.Cancel = true;
                 this.Hide();
             }
+            else
+            {
+                CloseMe();
+            }
         }
 
         #endregion
@@ -81,7 +85,7 @@ namespace Justin.Stock
         }
         private void MonitorMenuItem_Click(object sender, EventArgs e)
         {
-            myStock.Show();
+            myStock.Show(0);
         }
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
@@ -103,8 +107,7 @@ namespace Justin.Stock
 
         private void settingMenuItem_Click(object sender, EventArgs e)
         {
-            SystemSetting setting = new SystemSetting();
-            setting.Show();
+            myStock.Show(3);
         }
         private void noticeMenu_MouseClick(object sender, MouseEventArgs e)
         {
@@ -253,7 +256,7 @@ namespace Justin.Stock
             {
                 deskStockCtrl1.RemoveDisplayHandler();
                 deskStockCtrl1.RemoveWarnHandler();
-
+                deskStockCtrl1.CloseChildrenForm();
             }
             using (new JStopWatch().Start(LogMode.Info, "", "UnregisterHotkeys"))
             {

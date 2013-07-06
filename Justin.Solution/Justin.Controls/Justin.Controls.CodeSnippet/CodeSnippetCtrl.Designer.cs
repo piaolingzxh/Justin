@@ -35,13 +35,16 @@
             this.tvDirectory = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openWithToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageListOfDirectory = new System.Windows.Forms.ImageList(this.components);
             this.txtFolder = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.editorContainer = new System.Windows.Forms.Panel();
-            this.txtFileName = new System.Windows.Forms.RichTextBox();
             this.btnCloseOpen = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtFileName = new System.Windows.Forms.RichTextBox();
+            this.comboBoxHighlightingStrategy = new System.Windows.Forms.ComboBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -50,6 +53,7 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -105,16 +109,24 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openWithToolStripMenuItem});
+            this.openWithToolStripMenuItem,
+            this.openAsTextToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(123, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 48);
             // 
             // openWithToolStripMenuItem
             // 
             this.openWithToolStripMenuItem.Name = "openWithToolStripMenuItem";
-            this.openWithToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.openWithToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.openWithToolStripMenuItem.Text = "打开方式";
             this.openWithToolStripMenuItem.Click += new System.EventHandler(this.openWithToolStripMenuItem_Click);
+            // 
+            // openAsTextToolStripMenuItem
+            // 
+            this.openAsTextToolStripMenuItem.Name = "openAsTextToolStripMenuItem";
+            this.openAsTextToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.openAsTextToolStripMenuItem.Text = "以为本方式打开";
+            this.openAsTextToolStripMenuItem.Click += new System.EventHandler(this.openAsTextToolStripMenuItem_Click);
             // 
             // imageListOfDirectory
             // 
@@ -146,8 +158,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 601F));
             this.tableLayoutPanel1.Controls.Add(this.editorContainer, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtFileName, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnCloseOpen, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -165,16 +177,6 @@
             this.editorContainer.Size = new System.Drawing.Size(595, 395);
             this.editorContainer.TabIndex = 3;
             // 
-            // txtFileName
-            // 
-            this.txtFileName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtFileName.Location = new System.Drawing.Point(23, 3);
-            this.txtFileName.Name = "txtFileName";
-            this.txtFileName.ReadOnly = true;
-            this.txtFileName.Size = new System.Drawing.Size(595, 24);
-            this.txtFileName.TabIndex = 2;
-            this.txtFileName.Text = "";
-            // 
             // btnCloseOpen
             // 
             this.btnCloseOpen.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -185,6 +187,48 @@
             this.btnCloseOpen.TabIndex = 4;
             this.btnCloseOpen.UseVisualStyleBackColor = true;
             this.btnCloseOpen.Click += new System.EventHandler(this.btnCloseOpen_Click);
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel3.Controls.Add(this.txtFileName, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.comboBoxHighlightingStrategy, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(595, 24);
+            this.tableLayoutPanel3.TabIndex = 5;
+            // 
+            // txtFileName
+            // 
+            this.txtFileName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFileName.Location = new System.Drawing.Point(3, 3);
+            this.txtFileName.Name = "txtFileName";
+            this.txtFileName.ReadOnly = true;
+            this.txtFileName.Size = new System.Drawing.Size(509, 18);
+            this.txtFileName.TabIndex = 2;
+            this.txtFileName.Text = "";
+            // 
+            // comboBoxHighlightingStrategy
+            // 
+            this.comboBoxHighlightingStrategy.FormattingEnabled = true;
+            this.comboBoxHighlightingStrategy.Items.AddRange(new object[] {
+            "XML",
+            "C#",
+            "Java",
+            "C++.NET",
+            "BAT",
+            "HTML",
+            "TeX"});
+            this.comboBoxHighlightingStrategy.Location = new System.Drawing.Point(518, 3);
+            this.comboBoxHighlightingStrategy.Name = "comboBoxHighlightingStrategy";
+            this.comboBoxHighlightingStrategy.Size = new System.Drawing.Size(74, 21);
+            this.comboBoxHighlightingStrategy.TabIndex = 3;
+            this.comboBoxHighlightingStrategy.SelectedIndexChanged += new System.EventHandler(this.comboBoxHighlightingStrategy_SelectedIndexChanged);
             // 
             // CodeSnippetCtrl
             // 
@@ -202,6 +246,7 @@
             this.tableLayoutPanel2.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -221,5 +266,8 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ImageList imageListOfDirectory;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.ComboBox comboBoxHighlightingStrategy;
+        private System.Windows.Forms.ToolStripMenuItem openAsTextToolStripMenuItem;
     }
 }

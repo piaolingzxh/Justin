@@ -59,8 +59,7 @@ namespace Justin.SalaryCalculator
             salaryInfo.Calculate();
 
             string[] salaryString = GetSalaryString(salaryInfo);
-            txtCompanyMessage.Text = salaryString[0];
-            txtPersonMessage.Text = salaryString[1];
+            txtSalaryMessage.Text = salaryString[5];
         }
 
         #region 函数
@@ -153,31 +152,58 @@ namespace Justin.SalaryCalculator
         {
             StringBuilder sbCompany = new StringBuilder();
             StringBuilder sbPerson = new StringBuilder();
+            StringBuilder sbBeforeSalaryChanged = new StringBuilder().AppendLine("税改前：");
+            StringBuilder sbAfterSalaryChanged = new StringBuilder().AppendLine("税改后：");
+            StringBuilder salaryMsg = new StringBuilder();
+            int padCount = 17;
 
-            string salary = string.Format("总工资：{0}{2}社保基数{1}{2}保险+公积金", salaryInfo.TotalSalary, salaryInfo.QuotedSalary, Environment.NewLine);
-            sbCompany.Append(salary).AppendLine();
-            sbPerson.Append(salary).AppendLine();
+            string salaryBaseInfo = string.Format("总工资：{0}{2}社保基数:{1}{2}保险+公积金", salaryInfo.TotalSalary, salaryInfo.QuotedSalary, Environment.NewLine);
+            salaryMsg.AppendLine(salaryBaseInfo).Append("公司部分".PadRight(padCount, ' ')).Append("个人部分").AppendLine();
+            sbCompany.AppendLine("公司部分：");
+            sbPerson.AppendLine("个人部分：");
             foreach (Insurance insurance in salaryInfo.Insurances)
             {
-                sbCompany.AppendFormat("{0}:{1}￥", insurance.PayPercent.InsuranceType.GetDisplay(), insurance.CompanyPayMoney).AppendLine();
-                sbPerson.AppendFormat("{0}:{1}￥", insurance.PayPercent.InsuranceType.GetDisplay(), insurance.PersonPayMoney).AppendLine();
+                string project = insurance.PayPercent.InsuranceType.GetDisplay().PadLeft(4, ' ');
+                sbCompany.AppendFormat("{0}:{1}￥", project, insurance.CompanyPayMoney).AppendLine();
+                sbPerson.AppendFormat("{0}:{1}￥", project, insurance.PersonPayMoney).AppendLine();
+                salaryMsg.AppendFormat("{0}:￥{1}￥{2}", project, insurance.CompanyPayMoney.ToString().PadRight(10, ' '), insurance.PersonPayMoney).AppendLine();
             }
+            salaryMsg.Append("税前".PadRight(padCount, ' ')).Append("税后").AppendLine();
+            int shouldSalary1 = (int)(salaryInfo.RevenueSalary - salaryInfo.RevenueLeveles[0].RevenueBase);
+            int shouldSalary2 = (int)(salaryInfo.RevenueSalary - salaryInfo.RevenueLeveles[1].RevenueBase);
 
-            sbCompany.AppendFormat("应税￥：{0}", salaryInfo.RevenueSalary - salaryInfo.RevenueLeveles[0].RevenueBase).AppendLine();
-            sbPerson.AppendFormat("应税￥：{0}", salaryInfo.RevenueSalary - salaryInfo.RevenueLeveles[1].RevenueBase).AppendLine();
+            salaryMsg.AppendFormat("应税：{0}￥{1}￥", shouldSalary1.ToString().PadLeft(7, ' '), shouldSalary2.ToString().PadLeft(7, ' ')).AppendLine();
+            sbBeforeSalaryChanged.AppendFormat("应税￥：{0}", shouldSalary1).AppendLine();
+            sbAfterSalaryChanged.AppendFormat("应税￥：{0}", shouldSalary2).AppendLine();
 
-            sbCompany.AppendFormat("扣税比例：{0}", salaryInfo.RevenueLeveles[0].Leveles[0].Percent).AppendLine();
-            sbPerson.AppendFormat("扣税比例：{0}", salaryInfo.RevenueLeveles[1].Leveles[0].Percent).AppendLine();
+            double p1 = salaryInfo.RevenueLeveles[0].Leveles[0].Percent;
+            double p2 = salaryInfo.RevenueLeveles[1].Leveles[0].Percent;
+            salaryMsg.AppendFormat("扣税比例：{0}%{1}%", p1.ToString().PadLeft(4, ' '), p2.ToString().PadLeft(7, ' ')).AppendLine();
+            sbBeforeSalaryChanged.AppendFormat("扣税比例：{0}", p1).AppendLine();
+            sbAfterSalaryChanged.AppendFormat("扣税比例：{0}", p2).AppendLine();
+
+            int s1 = (int)salaryInfo.Revenue[0];
+            int s2 = (int)salaryInfo.Revenue[1];
+            salaryMsg.AppendFormat("扣税：{0}￥{1}￥", s1.ToString().PadLeft(7, ' '), s2.ToString().PadLeft(7, ' ')).AppendLine();
+            sbBeforeSalaryChanged.AppendFormat("扣税￥：{0}", s1).AppendLine();
+            sbAfterSalaryChanged.AppendFormat("扣税￥：{0}", s2).AppendLine();
 
 
-            sbCompany.AppendFormat("扣税￥：{0}", salaryInfo.Revenue[0]).AppendLine();
-            sbPerson.AppendFormat("扣税￥：{0}", salaryInfo.Revenue[1]).AppendLine();
+            int f1 = (int)salaryInfo.FinalSalary[0];
+            int f2 = (int)salaryInfo.FinalSalary[1];
+            salaryMsg.AppendFormat("实发：{0}￥{1}￥", f1.ToString().PadLeft(7, ' '), f2.ToString().PadLeft(7, ' '));
+            sbBeforeSalaryChanged.AppendFormat("实发￥：{0}", f1).AppendLine();
+            sbAfterSalaryChanged.AppendFormat("实发￥：{0}", f2).AppendLine();
 
-            sbCompany.AppendFormat("实发￥：{0}", salaryInfo.FinalSalary[0]).AppendLine();
-            sbPerson.AppendFormat("实发￥：{0}", salaryInfo.FinalSalary[1]).AppendLine();
-            string[] salaryString = new string[2];
-            salaryString[0] = sbCompany.ToString();
-            salaryString[1] = sbPerson.ToString();
+            string[] salaryString = new string[6];
+            salaryString[0] = salaryBaseInfo;
+            salaryString[1] = sbCompany.ToString();
+            salaryString[2] = sbPerson.ToString();
+            salaryString[3] = sbBeforeSalaryChanged.ToString();
+            salaryString[4] = sbAfterSalaryChanged.ToString();
+            salaryString[5] = salaryMsg.ToString();
+
+
             return salaryString;
         }
 
