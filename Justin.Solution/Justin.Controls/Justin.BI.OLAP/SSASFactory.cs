@@ -109,7 +109,7 @@ namespace Justin.BI.OLAP
                 server.Databases[databaseName].Drop();
             }
         }
-        private void CreateDim(Database database, DataSourceView dataSourceView, IDim dim)
+        private void CreateDim(Database database, DataSourceView dataSourceView, Justin.BI.OLAP.Entities.Dimension dim)
         {
             Dimension dimension;
             if (!database.Dimensions.ContainsName(dim.Name))
@@ -229,7 +229,6 @@ namespace Justin.BI.OLAP
             return true;
         }
 
-
         private DataSet GenerateDWSchema(List<String> tableNames, string dbSchema = "dbo")
         {
             OleDbConnection con = new OleDbConnection(dwConnectionString);
@@ -256,38 +255,211 @@ namespace Justin.BI.OLAP
             return new DataItem(parTableName, parColumnName, OleDbTypeConverter.GetRestrictedOleDbType(dataColumn.DataType));
         }
 
-        public void CreateSolution(ISolution solution)
+        public void CreateSolution(Justin.BI.OLAP.Entities.Cube cube)
         {
             this.CheckConnect();
-            Database database = this.CreateDatabaseIfNotExist(solution.Name);
+            Database database = this.CreateDatabaseIfNotExist(cube.Name);
 
-            DataSource dataSource = this.CreateDataSourceIfNotExist(database, solution.Name);
+            DataSource dataSource = this.CreateDataSourceIfNotExist(database, cube.Name);
 
-            List<string> allTableNames = this.GetSchemaNames(solution);
+            List<string> allTableNames = this.GetSchemaNames(cube);
 
-            DataSourceView dataSourceView = this.CreateDataSourceViewIfNotExist(database, solution.Name, allTableNames);
+            DataSourceView dataSourceView = this.CreateDataSourceViewIfNotExist(database, cube.Name, allTableNames);
 
-            foreach (var item in solution.Dims)
+            foreach (var item in cube.Dimensions)
             {
                 this.CreateDim(database, dataSourceView, item);
             }
+            Cube ssasCube = database.Cubes.FindByName(cube.Name);
+            if (ssasCube != null)
+                ssasCube.Drop();
+            ssasCube = database.Cubes.Add(cube.Name, cube.Name);
+            database.Update();
+            MeasureGroup group = ssasCube.MeasureGroups.FindByName(cube.Name);
+            if (group != null)
+                group.Drop();
+            group = ssasCube.MeasureGroups.Add(cube.Name, cube.Name);
 
-            foreach (var item in solution.Cubes)
+            group.Measures.Clear();
+            foreach (var item in cube.Measures)
             {
+                Measure measure = new Measure(item.Name, item.Name);
+                group.Measures.Add(measure);
 
             }
-        }
-        public void DeleteSolution(ISolution solution)
-        {
-            this.DeleteDatabase(solution.Name);
+            group.Update();
+            ssasCube.Update();
+
+
         }
 
-        public List<string> GetSchemaNames(ISolution solution)
+        public void CreateCubeInner(Database db, Justin.BI.OLAP.Entities.Cube cube)
+        {
+
+            Cube ssasCube = db.Cubes.FindByName(cube.Name);
+            if (ssasCube != null)
+                ssasCube.Drop();
+            ssasCube = db.Cubes.Add(cube.Name, cube.Name);
+
+            ssasCube.Source = new DataSourceViewBinding(db.Name);
+            ssasCube.StorageMode = StorageMode.Molap;
+
+            foreach (var item in cube.Dimensions)
+            {
+                CubeDimension dim = ssasCube.Dimensions.FindByName(item.Name);
+                if (dim == null)
+                    dim = ssasCube.Dimensions.Add(item.Name);
+            }
+
+            CreateInternetSalesMeasureGroup(ssasCube, cube);
+
+
+
+            ssasCube.Update(UpdateOptions.ExpandFull);
+        }
+
+        public void CreateInternetSalesMeasureGroup(Microsoft.AnalysisServices.Cube ssasCube, Justin.BI.OLAP.Entities.Cube cube)
+        {
+            // Create the Internet Sales measure group
+            Database db = ssasCube.Parent;
+            MeasureGroup mg = ssasCube.MeasureGroups.Add("Internet Sales");
+            mg.StorageMode = StorageMode.Molap;
+            mg.ProcessingMode = ProcessingMode.LazyAggregations;
+            mg.Type = MeasureGroupType.Sales;
+
+            #region Create measures
+
+            Measure meas;
+
+            //meas = mg.Measures.Add("Internet Sales Amount");                                         //加一个维度
+            //meas.AggregateFunction = AggregationFunction.Sum;                                        //维度的计算方法
+            //meas.MeasureExpression = "[Internet Sales Amount] * [Average Rate]";                     //维度表达式
+            //meas.FormatString = "Currency";                                                          //维度格式字符
+            //meas.Source = CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "SalesAmount"); //
+
+            meas = mg.Measures.Add("Internet Order Quantity");
+            meas.AggregateFunction = AggregationFunction.Sum;
+            meas.FormatString = "#,#";
+            meas.Source = CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "OrderQuantity");
+
+            meas = mg.Measures.Add("Internet Unit Price");
+            meas.AggregateFunction = AggregationFunction.Sum;
+            meas.FormatString = "Currency";
+            meas.Visible = false;
+            meas.Source = CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "UnitPrice");
+
+            //meas = mg.Measures.Add("Internet Total Product Cost");
+            //meas.AggregateFunction = AggregationFunction.Sum;
+            //meas.MeasureExpression = "[Internet Total Product Cost] * [Average Rate]";
+            //meas.FormatString = "Currency";
+            //meas.Source = CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "TotalProductCost");
+
+            meas = mg.Measures.Add("Internet Order Count");
+            meas.AggregateFunction = AggregationFunction.Count;
+            meas.FormatString = "#,#";
+            meas.Source = CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "ProductKey");
+
+            #endregion
+
+            #region Create measure group dimensions
+
+            CubeDimension cubeDim;
+            RegularMeasureGroupDimension regMgDim;
+            ManyToManyMeasureGroupDimension mmMgDim;
+            MeasureGroupAttribute mgAttr;
+
+            //cubeDim = cube.Dimensions.GetByName("Date");
+            //regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            //mg.Dimensions.Add(regMgDim);
+            //mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Date").ID);
+            //mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "OrderDateKey"));
+
+            //cubeDim = cube.Dimensions.GetByName("Ship Date");
+            //regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            //mg.Dimensions.Add(regMgDim);
+            //mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Date").ID);
+            //mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "ShipDateKey"));
+
+            //cubeDim = cube.Dimensions.GetByName("Delivery Date");
+            //regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            //mg.Dimensions.Add(regMgDim);
+            //mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Date").ID);
+            //mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "DueDateKey"));
+
+            cubeDim = ssasCube.Dimensions.GetByName("Customer");
+            regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            mg.Dimensions.Add(regMgDim);
+            mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Full Name").ID);
+            mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "CustomerKey"));
+
+            //cubeDim = cube.Dimensions.GetByName("Product");
+            //regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            //mg.Dimensions.Add(regMgDim);
+            //mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Product Name").ID);
+            //mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "ProductKey"));
+
+            //cubeDim = cube.Dimensions.GetByName("Source Currency");
+            //regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            //mg.Dimensions.Add(regMgDim);
+            //mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Currency").ID);
+            //mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "CurrencyKey"));
+
+            //cubeDim = cube.Dimensions.GetByName("Sales Reason");
+            //mmMgDim = new ManyToManyMeasureGroupDimension();
+            //mmMgDim.CubeDimensionID = cubeDim.ID;
+            //mmMgDim.MeasureGroupID = cube.MeasureGroups.GetByName("Sales Reasons").ID;
+            //mg.Dimensions.Add(mmMgDim);
+
+            //cubeDim = cube.Dimensions.GetByName("Internet Sales Order Details");
+            //regMgDim = new RegularMeasureGroupDimension(cubeDim.ID);
+            //mg.Dimensions.Add(regMgDim);
+            //mgAttr = regMgDim.Attributes.Add(cubeDim.Dimension.Attributes.GetByName("Sales Order Key").ID);
+            //mgAttr.Type = MeasureGroupAttributeType.Granularity;
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "SalesOrderNumber"));
+            //mgAttr.KeyColumns.Add(CreateDataItem(db.DataSourceViews[0], "FactInternetSales", "SalesOrderLineNumber"));
+
+            #endregion
+
+            #region Create partitions
+
+            Partition part;
+
+            part = mg.Partitions.Add("Internet_Sales_184");
+            part.StorageMode = StorageMode.Molap;
+            part.Source = new QueryBinding(db.DataSources[0].ID, "SELECT * FROM [dbo].[FactInternetSales] WHERE OrderDateKey <= '184'");
+            part.Annotations.Add("LastOrderDateKey", "184");
+
+            part = mg.Partitions.Add("Internet_Sales_549");
+            part.StorageMode = StorageMode.Molap;
+            part.Source = new QueryBinding(db.DataSources[0].ID, "SELECT * FROM [dbo].[FactInternetSales] WHERE OrderDateKey > '184' AND OrderDateKey <= '549'");
+            part.Annotations.Add("LastOrderDateKey", "549");
+
+            part = mg.Partitions.Add("Internet_Sales_914");
+            part.StorageMode = StorageMode.Molap;
+            part.Source = new QueryBinding(db.DataSources[0].ID, "SELECT * FROM [dbo].[FactInternetSales] WHERE OrderDateKey > '549' AND OrderDateKey <= '914'");
+            part.Annotations.Add("LastOrderDateKey", "914");
+
+            #endregion
+
+            ssasCube.Update(UpdateOptions.ExpandFull);
+        }
+        public void DeleteSolution(Justin.BI.OLAP.Entities.Cube cube)
+        {
+            this.DeleteDatabase(cube.Name);
+        }
+
+        public List<string> GetSchemaNames(Justin.BI.OLAP.Entities.Cube cube)
         {
             List<string> tables = new List<string>();
-            if (solution.Dims == null || solution.Dims.Count < 1)
+            if (cube.Dimensions == null || cube.Dimensions.Count < 1)
                 return tables;
-            foreach (var dim in solution.Dims)
+            foreach (var dim in cube.Dimensions)
             {
                 if (dim.Levels != null && dim.Levels.Count > 0)
                 {

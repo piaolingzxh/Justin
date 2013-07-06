@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text;
-using Microsoft.AnalysisServices;
+using Justin.BI.OLAP.Entities;
+using Justin.FrameWork.Helper;
 
 namespace Justin.BI.OLAP
 {
@@ -32,33 +33,44 @@ namespace Justin.BI.OLAP
         }
         public static void test1()
         {
-            string dwConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=MondrianDB;User Id=sa;Password=sa;";
+            string dwConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=OLAPDW;User Id=sa;Password=sa;";
             string olapConnectionString = "Data Source = .;Provider=msolap";
             //OleDbConnection con = new OleDbConnection(dwConnStr);
             //con.Open();
+            Cube cube = new Cube("OLAP_SSAS");
+            var customerDim = new Dimension("CustomerDim");
+            customerDim.Levels = new List<Level>();
+            customerDim.Levels.Add(new Level("customerlevel", "customerlevel") { SourceTable = "Customers", KeyColumn = "Id", NameColumn = "Name" });
+            cube.Dimensions.Add(customerDim);
 
-            SSASSolution solution = new SSASSolution("BITheme");
-            var customerDim = new SSASDim("CustomerDim");
-            customerDim.Levels = new List<ILevel>();
-            customerDim.Levels.Add(new SSASLevel("customerlevel", "customerlevel") { SourceTable = "Customer", KeyColumn = "Id", NameColumn = "Name" });
-            solution.Dims.Add(customerDim);
+
+            var ProductDim = new Dimension("ProductDim");
+            ProductDim.Levels = new List<Level>();
+            ProductDim.Levels.Add(new Level("Productlevel", "Productlevel") { SourceTable = "Products", KeyColumn = "Id", NameColumn = "Name" });
+            cube.Dimensions.Add(ProductDim);
 
 
-            var ProductDim = new SSASDim("ProductDim");
-            ProductDim.Levels = new List<ILevel>();
-            ProductDim.Levels.Add(new SSASLevel("Productlevel", "Productlevel") { SourceTable = "Product", KeyColumn = "Id", NameColumn = "Name" });
-            solution.Dims.Add(ProductDim);
+            var employeeDim = new Dimension("EmployeeDim");
+            employeeDim.Levels = new List<Level>();
+            employeeDim.Levels.Add(new Level("EmployeeLevel", "EmployeeLevel") { SourceTable = "Employees", KeyColumn = "Id", NameColumn = "Name" });
+            cube.Dimensions.Add(employeeDim);
 
+            cube.Measures.Add(new Measure() { Name = "ProductCount", ColumnName = "ProductCount" });
+            cube.Measures.Add(new Measure() { Name = "UnitPrice", ColumnName = "UnitPrice" });
 
             //var DateDim = new SSASDim("DateDim");
             //DateDim.Levels = new List<ILevel>();
             //DateDim.Levels.Add(new Level("Datelevel", "Datelevel") { SourceTable = "" });
             //solution.Dims.Add(DateDim);
 
+           
+
+            SerializeHelper.XmlSerializeToFile(cube, "solution.xml", true);
+            Cube s = SerializeHelper.XmlDeserializeFromFile<Cube>("solution.xml");
 
             SSASFactory factory = new SSASFactory(dwConnStr, olapConnectionString);
-            factory.DeleteSolution(solution);
-            factory.CreateSolution(solution);
+            factory.DeleteSolution(cube);
+            factory.CreateSolution(cube);
 
 
             Console.WriteLine("OK");

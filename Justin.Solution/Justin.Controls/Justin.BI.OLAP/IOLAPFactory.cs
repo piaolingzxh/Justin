@@ -7,8 +7,8 @@ namespace Justin.BI.OLAP
 {
     public interface IOLAPFactory
     {
-        void CreateSolution(ISolution solution);
-        void DeleteSolution(ISolution solution);
+        void CreateSolution(Justin.BI.OLAP.Entities.Cube cube);
+        void DeleteSolution(Justin.BI.OLAP.Entities.Cube cube);
 
     }
 }
