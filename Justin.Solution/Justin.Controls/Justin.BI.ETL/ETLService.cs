@@ -30,7 +30,7 @@ namespace Justin.BI.ETL
                 bcp = new BulkCopyOracle();
             }
             if (clearDataBeforeETL)
-                bcp.TruncateTable(DestinationConnection, etlInfo.DestinationTableName);
+                DBHelper.TruncateTable(DestinationConnection, etlInfo.DestinationTableName);
             int success = 0;
             while (result > 0)
             {

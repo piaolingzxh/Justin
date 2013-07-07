@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Microsoft.AnalysisServices;
@@ -32,7 +33,15 @@ namespace Justin.BI.OLAP
         }
         public static void test1()
         {
+
+
             string dwConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=MondrianDB;User Id=sa;Password=sa;";
+
+            OleDbConnectionStringBuilder sb = new  OleDbConnectionStringBuilder(dwConnStr);
+            sb.Remove("provider");
+            SqlConnection sqlconn = new SqlConnection(sb.ConnectionString);
+            sqlconn.Open();
+
             string olapConnectionString = "Data Source = .;Provider=msolap";
             //OleDbConnection con = new OleDbConnection(dwConnStr);
             //con.Open();

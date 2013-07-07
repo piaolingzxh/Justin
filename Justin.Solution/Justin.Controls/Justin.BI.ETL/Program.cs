@@ -18,14 +18,8 @@ namespace Justin.BI.ETL
         public static void Main()
         {
             OleDbConnection conn = new OleDbConnection("Provider=OraOLEDB.Oracle;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.4.194)(PORT=1521))(CONNECT_DATA=(SID=bi)));User Id=orcl;Password=orcl;");
-                  
-            conn.Open();
-            OleDbCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = "select * from d_app";
-            OleDbDataAdapter ada = new OleDbDataAdapter(cmd);
-           DataTable table=new DataTable();
-           ada.Fill(table);
+            DBHelper.TruncateTable(conn, "Client");
 
             //Test();
             ETLServiceTest();
@@ -51,7 +45,7 @@ namespace Justin.BI.ETL
             table.Fields.Add(new Field() { Name = "SYS_LOAD_TIME", FieldType = DbType.DateTime });
             table.Fields.Add(new Field() { Name = "SYS_END_TIME", FieldType = DbType.DateTime });
             table.Fields.Add(new Field() { Name = "SYS_START_TIME", FieldType = DbType.DateTime });
-                           
+
             #endregion
 
             DbConnection sourceConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"]);

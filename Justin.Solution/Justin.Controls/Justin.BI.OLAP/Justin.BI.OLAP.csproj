@@ -57,6 +57,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSASFactory.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
