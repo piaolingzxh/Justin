@@ -194,6 +194,7 @@
     <Content Include="ico\tool.ico" />
     <None Include="Justin.Toolbox.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
