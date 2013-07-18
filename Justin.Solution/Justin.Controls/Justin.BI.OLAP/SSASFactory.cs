@@ -11,6 +11,12 @@ using Microsoft.AnalysisServices;
 
 namespace Justin.BI.OLAP
 {
+    public interface IOLAPFactory
+    {
+        void CreateSolution(Justin.BI.OLAP.Entities.Solution solution);
+        void DeleteSolution(Justin.BI.OLAP.Entities.Solution solution);
+
+    }
     public class SSASFactory : IOLAPFactory
     {
         private static string DefaultHierarchy = "DefaultHierarchy";
@@ -39,35 +45,47 @@ namespace Justin.BI.OLAP
             server.Connect(olapConnectionString);
         }
 
-        private Database CreateDatabase(string databaseName)
+        #region Database
+
+        private Database CreateDatabase(string dataBaseId, string dataBaseName)
         {
             Database db = null;
             if ((server != null) && (server.Connected))
             {
-                db = server.Databases.FindByName(databaseName);
+                db = server.Databases.FindByName(dataBaseName);
                 if (db != null)
                 {
                     db.Drop();
                 }
 
-                db = server.Databases.Add(databaseName);
+                db = server.Databases.Add(dataBaseName, dataBaseId);
                 db.Update();
             }
             return db;
         }
-        private Database ProcessDatabase(Database db, ProcessType pt)
+        private void DeleteDatabase(string databaseName)
         {
-            db.Process(pt);
-            return db;
+            if (server.Databases.ContainsName(databaseName))
+            {
+                server.Databases[databaseName].Drop();
+            }
+        }
+        private Database ProcessDatabase(Database database, ProcessType processType)
+        {
+            database.Process(processType);
+            return database;
         }
 
+        #endregion
 
-        private DataSource CreateDataSource(Database dataBase, String strDataSourceName)
+        #region DataSource
+
+        private DataSource CreateDataSource(Database dataBase, string dataSourceId, String dataSourceName)
         {
-            DataSource dataSource = dataBase.DataSources.FindByName(strDataSourceName);
+            DataSource dataSource = dataBase.DataSources.FindByName(dataSourceName);
             if (dataSource != null)
                 dataSource.Drop();
-            dataSource = dataBase.DataSources.Add(strDataSourceName, strDataSourceName);
+            dataSource = dataBase.DataSources.Add(dataSourceName, dataSourceId);
             dataSource.ConnectionString = this.dwOleDbConnectionString;
             //OleDbConnectionStringBuilder builder = new OleDbConnectionStringBuilder(dwOleDbConnectionString);
             //dataSource.ManagedProvider = builder.Provider;
@@ -76,7 +94,42 @@ namespace Justin.BI.OLAP
             return dataSource;
         }
 
+        private DataSourceView CreateDataSourceView(Database database, string dataSourceViewId, string dataSourceViewName, List<String> tableNames)
+        {
+            DataSourceView dataSourceView;
+            if (!database.DataSourceViews.ContainsName(dataSourceViewName))
+            {
+                DataSet dataSet = GenerateDWSchema(tableNames);
+                dataSourceView = database.DataSourceViews.Add(dataSourceViewName, dataSourceViewId);
+                dataSourceView.DataSourceID = dataSourceViewId;
+                dataSourceView.Schema = dataSet;
+                dataSourceView.Update();
+            }
+            else
+            {
+                dataSourceView = database.DataSourceViews.GetByName(dataSourceViewName);
+            }
+            return dataSourceView;
+        }
+        private DataSet GenerateDWSchema(List<String> tableNames, string dbSchema = "dbo")
+        {
+            DataSet dataSet = new DataSet();
+            OleDbConnection oleDbConn = new OleDbConnection(this.dwOleDbConnectionString);
 
+            foreach (var tableName in tableNames)
+            {
+                string sql = string.Format("select * from {0} where 0=1", tableName);
+                OleDbDataAdapter adapter = new OleDbDataAdapter(sql, oleDbConn);
+                DataTable[] dataTables = adapter.FillSchema(dataSet, SchemaType.Mapped, tableName);
+                DataTable dataTable = dataTables[0];
+                dataTable.ExtendedProperties.Add("TableType", "Table"); //为表增加扩展属性
+                dataTable.ExtendedProperties.Add("DbSchemaName", dbSchema);
+                dataTable.ExtendedProperties.Add("DbTableName", tableName);
+                dataTable.ExtendedProperties.Add("FriendlyName", tableName);
+            }
+            return dataSet;
+        }
+        //例子
         static DataSourceView CreateDataSourceView(Database db, string strDataSourceName)
         {
             // Create the data source view
@@ -195,7 +248,6 @@ namespace Justin.BI.OLAP
             dataTables = null;
             adapter = null;
         }
-
         static void AddComputedColumn(DataSourceView dsv, OleDbConnection connection, String tableName, String computedColumnName, String expression)
         {
             DataSet tmpDataSet = new DataSet();
@@ -222,14 +274,12 @@ namespace Justin.BI.OLAP
             adapter = null;
             tmpDataSet = null;
         }
-
         static void AddRelation(DataSourceView dsv, String fkTableName, String fkColumnName, String pkTableName, String pkColumnName)
         {
             DataColumn fkColumn = dsv.Schema.Tables[fkTableName].Columns[fkColumnName];
             DataColumn pkColumn = dsv.Schema.Tables[pkTableName].Columns[pkColumnName];
             dsv.Schema.Relations.Add("FK_" + fkTableName + "_" + fkColumnName, pkColumn, fkColumn, true);
         }
-
         static void AddCompositeRelation(DataSourceView dsv, String fkTableName, String pkTableName, String columnName1, String columnName2)
         {
             DataColumn[] fkColumns = new DataColumn[2];
@@ -243,34 +293,11 @@ namespace Justin.BI.OLAP
             dsv.Schema.Relations.Add("FK_" + fkTableName + "_" + columnName1 + "_" + columnName2, pkColumns, fkColumns, true);
         }
 
+        #endregion
 
-        #region  liumr
-        private DataSourceView CreateDataSourceView(Database database, string viewName, List<String> tableNames)
-        {
-            DataSourceView dataSourceView;
-            if (!database.DataSourceViews.ContainsName(viewName))
-            {
-                DataSet dataSet = GenerateDWSchema(tableNames);
-                dataSourceView = database.DataSourceViews.Add(viewName, viewName);
-                dataSourceView.DataSourceID = viewName;
-                dataSourceView.Schema = dataSet;
-                dataSourceView.Update();
-            }
-            else
-            {
-                dataSourceView = database.DataSourceViews.GetByName(viewName);
-            }
-            return dataSourceView;
-        }
+        #region 维度
 
-        private void DeleteDatabase(string databaseName)
-        {
-            if (server.Databases.ContainsName(databaseName))
-            {
-                server.Databases[databaseName].Drop();
-            }
-        }
-        private void CreateDim(Database database, DataSourceView dataSourceView, IDim dim)
+        private void CreateDim(Database database, DataSourceView dataSourceView, Justin.BI.OLAP.Entities.Dimension dim)
         {
             Dimension dimension;
             if (!database.Dimensions.ContainsName(dim.Name))
@@ -279,7 +306,7 @@ namespace Justin.BI.OLAP
                 dimension.UnknownMember = UnknownMemberBehavior.Hidden;
                 dimension.AttributeAllMemberName = "all";
                 dimension.StorageMode = DimensionStorageMode.Molap;
-                dimension.Source = new DataSourceViewBinding(database.Name);
+                dimension.Source = new DataSourceViewBinding(dataSourceView.ID);
                 dimension.Type = DimensionType.Regular;
             }
             else
@@ -299,8 +326,8 @@ namespace Justin.BI.OLAP
                             this.CreateDimensionAttributeForLevel(
                                     dimension
                                     , dataSourceView
-                                    , level.Name
                                     , level.ID
+                                    , level.Name
                                     , level.SourceTable
                                     , level.KeyColumn
                                     , level.NameColumn
@@ -329,6 +356,7 @@ namespace Justin.BI.OLAP
                     {
                         hierarchy = dimension.Hierarchies[tempHierarchy.Name];
                     }
+
                     if (tempHierarchy.Levels != null && tempHierarchy.Levels.Count > 0)
                     {
                         foreach (var tempLevel in tempHierarchy.Levels)
@@ -350,7 +378,9 @@ namespace Justin.BI.OLAP
             dimension.Update();
 
         }
-        public bool CreateDimensionAttributeForLevel(Dimension dimension, DataSourceView dataSourceView, String levelName, String id, String table, String keyColumn, String nameColumn, AttributeUsage attributeUsage, OrderBy orderBy, AttributeType attribType, bool visible)
+        public bool CreateDimensionAttributeForLevel(Dimension dimension, DataSourceView dataSourceView,
+            String levelId, String levelName, String tableName, String keyColumn, String nameColumn,
+            AttributeUsage attributeUsage, OrderBy orderBy, AttributeType attribType, bool visible)
         {
             if (dimension.Attributes == null)
             {
@@ -360,7 +390,7 @@ namespace Justin.BI.OLAP
             DimensionAttribute dimAttrib;
             if (!dimension.Attributes.ContainsName(levelName))
             {
-                dimAttrib = dimension.Attributes.Add(levelName, id);
+                dimAttrib = dimension.Attributes.Add(levelName, levelId);
                 dimAttrib.Usage = attributeUsage;
                 dimAttrib.OrderBy = orderBy;
                 dimAttrib.Type = attribType;
@@ -375,49 +405,19 @@ namespace Justin.BI.OLAP
                 //}
                 dimAttrib.MembersWithData = MembersWithData.NonLeafDataHidden;
 
-                DataItem diKey = CreateDataItem(dataSourceView, table, keyColumn);
+                DataItem diKey = CreateDataItem(dataSourceView, tableName, keyColumn);
                 dimAttrib.KeyColumns.Add(diKey);
                 if (!String.IsNullOrEmpty(nameColumn))
                 {
-                    DataItem diName = CreateDataItem(dataSourceView, table, nameColumn);
+                    DataItem diName = CreateDataItem(dataSourceView, tableName, nameColumn);
                     dimAttrib.NameColumn = diName;
 
-                    DataItem diValue = CreateDataItem(dataSourceView, table, nameColumn);
+                    DataItem diValue = CreateDataItem(dataSourceView, tableName, nameColumn);
                     dimAttrib.ValueColumn = diValue;
                 }
                 return true;
             }
             return true;
-        }
-
-
-        private DataSet GenerateDWSchema(List<String> tableNames, string dbSchema = "dbo")
-        {
-            //OleDbConnection con = new OleDbConnection(dwOleDbConnectionString);
-
-            //DataSet dataSet = new DataSet();
-            //foreach (String tableName in tableNames)
-            //{
-            //    string sql = "Select * From [" + dbSchema + "].[" + tableName + "] Where 1=0";
-            //    OleDbDataAdapter sqlDataAdapter = new OleDbDataAdapter(sql, con);
-            //    sqlDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-            //    DataTable[] dataTables = sqlDataAdapter.FillSchema(dataSet, SchemaType.Mapped, tableName);
-            //    DataTable dataTable = dataTables[0];
-            //    dataTable.ExtendedProperties.Add("TableType", "Table"); //为表增加扩展属性
-            //    dataTable.ExtendedProperties.Add("DbSchemaName", dbSchema);
-            //    dataTable.ExtendedProperties.Add("DbTableName", tableName);
-            //    dataTable.ExtendedProperties.Add("FriendlyName", tableName);
-            //}
-            DataSet dataSet = new DataSet();
-            OleDbConnection oleDbConn = new OleDbConnection(this.dwOleDbConnectionString);
-
-            foreach (var tableName in tableNames)
-            {
-                string sql = string.Format("select * from {0} where 0=1", tableName);
-                OleDbDataAdapter adapter = new OleDbDataAdapter(sql, oleDbConn);
-                adapter.FillSchema(dataSet, SchemaType.Mapped, tableName);
-            }
-            return dataSet;
         }
         private DataItem CreateDataItem(DataSourceView parDsv, string parTableName, string parColumnName)
         {
@@ -426,69 +426,134 @@ namespace Justin.BI.OLAP
             return new DataItem(parTableName, parColumnName, OleDbTypeConverter.GetRestrictedOleDbType(dataColumn.DataType));
         }
 
-        public void CreateSolution(ISolution solution)
+        #endregion
+
+        #region Cube
+        private void CreateCube(Database database, DataSourceView dataSourceView, Justin.BI.OLAP.Entities.Cube cube)
         {
-            this.Connect();
-            Database database = this.CreateDatabase(solution.Name);
 
-            DataSource dataSource = this.CreateDataSource(database, solution.Name);
+            Cube ssasCube = database.Cubes.Find(cube.ID);
+            if (ssasCube != null)
+                ssasCube.Drop();
 
-            List<string> allTableNames = this.GetSchemaNames(solution);
-
-            DataSourceView dataSourceView = this.CreateDataSourceView(database, solution.Name, allTableNames);
-
-            foreach (var item in solution.Dims)
+            ssasCube = database.Cubes.Add(cube.Name, cube.ID);
+            ssasCube.Source = new DataSourceViewBinding(dataSourceView.ID);
+            ssasCube.StorageMode = StorageMode.Molap;
+            ssasCube.Visible = true;
+            foreach (var item in cube.Dimensions)
             {
-                this.CreateDim(database, dataSourceView, item);
+                ssasCube.Dimensions.Add(item.ID);
             }
 
-            foreach (var item in solution.Cubes)
-            {
+            var defaultGroup = ssasCube.MeasureGroups.Add("Default");
+            defaultGroup.StorageMode = StorageMode.Molap;
+            defaultGroup.ProcessingMode = ProcessingMode.LazyAggregations;
 
+
+            foreach (var measure in cube.Measures)
+            {
+                var ssasMeasure = new Measure(measure.Name, measure.ID);
+                ssasMeasure.AggregateFunction = measure.AggregationFunction;
+                ssasMeasure.Source = this.CreateDataItem(dataSourceView, cube.TableName, measure.ColumnName);
+                defaultGroup.Measures.Add(ssasMeasure);
             }
-        }
-        public void DeleteSolution(ISolution solution)
-        {
-            this.DeleteDatabase(solution.Name);
-        }
-
-
-
-        public List<string> GetSchemaNames(ISolution solution)
-        {
-            List<string> tables = new List<string>();
-            if (solution.Dims == null || solution.Dims.Count < 1)
-                return tables;
-            foreach (var dim in solution.Dims)
+            foreach (var dim in cube.Dimensions)
             {
-                if (dim.Levels != null && dim.Levels.Count > 0)
+                var cubeDim = ssasCube.Dimensions.Find(dim.ID);
+                var groupDim = defaultGroup.Dimensions.Add(dim.ID);
+                string levelId = "";
+                for (int i = 0; i < cubeDim.Attributes.Count; i++)
                 {
-                    foreach (var level in dim.Levels)
+                    if (cubeDim.Dimension.Attributes[i].Usage == AttributeUsage.Key)
                     {
-                        if (!tables.Contains(level.SourceTable))
-                            tables.Add(level.SourceTable);
+                        levelId = cubeDim.Dimension.Attributes[i].ID;
+                        break;
                     }
                 }
-                if (dim.Hierarchies != null && dim.Hierarchies.Count > 0)
+                var measureGroupAttribute = groupDim.Attributes.Add(levelId);
+                measureGroupAttribute.Type = MeasureGroupAttributeType.Granularity;
+
+                measureGroupAttribute.KeyColumns.Add(CreateDataItem(dataSourceView, cube.TableName, dim.FKColumn));
+
+            }
+
+            ssasCube.Update(UpdateOptions.ExpandFull);
+            ssasCube.Process();
+            //  ssasCube.Update();
+
+            //   defaultGroup.Update();
+
+        }
+
+        #endregion
+
+        public List<string> GetSchemaNames(Justin.BI.OLAP.Entities.Solution solution)
+        {
+            List<string> tables = new List<string>();
+
+            if (solution.Cubes == null || solution.Cubes.Count < 1)
+            {
+                return tables;
+            }
+
+            foreach (var cube in solution.Cubes)
+            {
+                tables.Add(cube.TableName);
+
+                if (cube.Dimensions == null || cube.Dimensions.Count < 1)
+                    continue;
+                foreach (var dim in cube.Dimensions)
                 {
-                    foreach (var hierarchy in dim.Hierarchies)
+                    if (dim.Levels != null && dim.Levels.Count > 0)
                     {
-                        if (hierarchy.Levels != null || hierarchy.Levels.Count > 0)
+                        foreach (var level in dim.Levels)
                         {
-                            foreach (var level in hierarchy.Levels)
+                            if (!tables.Contains(level.SourceTable))
+                                tables.Add(level.SourceTable);
+                        }
+                    }
+                    if (dim.Hierarchies != null && dim.Hierarchies.Count > 0)
+                    {
+                        foreach (var hierarchy in dim.Hierarchies)
+                        {
+                            if (hierarchy.Levels != null || hierarchy.Levels.Count > 0)
                             {
-                                if (!tables.Contains(level.SourceTable))
-                                    tables.Add(level.SourceTable);
+                                foreach (var level in hierarchy.Levels)
+                                {
+                                    if (!tables.Contains(level.SourceTable))
+                                        tables.Add(level.SourceTable);
+                                }
                             }
                         }
                     }
                 }
             }
-
             return tables;
         }
 
-        #endregion
+        public void CreateSolution(Justin.BI.OLAP.Entities.Solution solution)
+        {
+            List<string> allTableNames = this.GetSchemaNames(solution);
+
+            this.Connect();
+            Database database = this.CreateDatabase(solution.ID, solution.Name);
+            DataSource dataSource = this.CreateDataSource(database, solution.ID, solution.Name);
+            DataSourceView dataSourceView = this.CreateDataSourceView(database, solution.ID, solution.Name, allTableNames);
+
+            foreach (var cube in solution.Cubes)
+            {
+                foreach (var dim in cube.Dimensions)
+                {
+                    this.CreateDim(database, dataSourceView, dim);
+                }
+                this.CreateCube(database, dataSourceView, cube);
+
+            }
+        }
+        public void DeleteSolution(Justin.BI.OLAP.Entities.Solution solution)
+        {
+            this.DeleteDatabase(solution.Name);
+        }
 
 
     }

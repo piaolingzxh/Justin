@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
@@ -15,26 +16,19 @@ namespace Justin.BI.ETL
 {
     public class ETLService
     {
-        public void Process(ETLInfo etlInfo, DbConnection sourceConnection, DbConnection DestinationConnection, bool clearDataBeforeETL = false, Action<int> callback = null, int pageSize = 10000)
+        public void Process(ETLInfo etlInfo, string oleDbConnstring , string  destinationOleDbConnectionString, bool clearDataBeforeETL = false, Action<int> callback = null, int pageSize = 10000)
         {
             int pageIndex = 0;
             int result = 1;
-            IBulkCopy bcp = null;
-
-            if (DestinationConnection is SqlConnection)
-            {
-                bcp = new BulkCopySQL();
-            }
-            else
-            {
-                bcp = new BulkCopyOracle();
-            }
+            BulkCopy bcp = new BulkCopy(oleDbConnstring);
+            OleDbConnection sourceConn = new OleDbConnection(oleDbConnstring);
+            OleDbConnection dstConnection = new OleDbConnection(destinationOleDbConnectionString);
             if (clearDataBeforeETL)
-                DBHelper.TruncateTable(DestinationConnection, etlInfo.DestinationTableName);
+                DBHelper.TruncateTable(dstConnection, etlInfo.DestinationTableName);
             int success = 0;
             while (result > 0)
             {
-                result = BulkCopyByPage(etlInfo, pageSize, pageIndex, bcp, sourceConnection, DestinationConnection);
+                result = BulkCopyByPage(etlInfo, pageSize, pageIndex, bcp, sourceConn, dstConnection);
                 pageIndex++;
                 success += result;
                 if (callback != null && result > 0)
@@ -42,7 +36,7 @@ namespace Justin.BI.ETL
             }
         }
 
-        private int BulkCopyByPage(ETLInfo etlInfo, int pageSize, int pageIndex, IBulkCopy bcp, DbConnection sourceConnection, DbConnection DestinationConnection)
+        private int BulkCopyByPage(ETLInfo etlInfo, int pageSize, int pageIndex, BulkCopy bcp, OleDbConnection sourceConnection, DbConnection DestinationConnection)
         {
             string sql = etlInfo.SourceTable.ToQuerySQL(pageSize, pageIndex); ;
 
@@ -52,7 +46,7 @@ namespace Justin.BI.ETL
                 if (dt == null || dt.Rows.Count == 0)
                     return 0;
 
-                bcp.Insert(DestinationConnection, etlInfo.DestinationTableName, dt, etlInfo.ColumnMapping, DataRowState.Unchanged);
+                bcp.Insert(etlInfo.DestinationTableName, dt, etlInfo.ColumnMapping);
                 return dt.Rows.Count;
             }
             catch (Exception ex)
@@ -63,10 +57,10 @@ namespace Justin.BI.ETL
             }
         }
 
-        public void Process(string etlInfoFilePath, DbConnection sourceConnection, DbConnection DestinationConnection, bool clearDataBeforeETL = false, Action<int> callback = null, int pageSize = 10000)
+        public void Process(string etlInfoFilePath, string oleDbConnstring, string destinationOleDbConnectionString, bool clearDataBeforeETL = false, Action<int> callback = null, int pageSize = 10000)
         {
             ETLInfo etlInfo = SerializeHelper.XmlDeserializeFromFile<ETLInfo>(etlInfoFilePath);
-            this.Process(etlInfo, sourceConnection, DestinationConnection, clearDataBeforeETL, callback, pageSize);
+            this.Process(etlInfo, oleDbConnstring, destinationOleDbConnectionString, clearDataBeforeETL, callback, pageSize);
         }
 
         public void CheckConn(DbConnection sourceConnection, DbConnection DestinationConnection)

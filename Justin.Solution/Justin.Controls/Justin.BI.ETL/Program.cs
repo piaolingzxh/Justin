@@ -48,11 +48,11 @@ namespace Justin.BI.ETL
 
             #endregion
 
-            DbConnection sourceConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["mssql"]);
-            DbConnection dstConn = DBHelper.GetConnection(ConfigurationManager.ConnectionStrings["oracle"]);
+            string  sourceOleDbConnString = ConfigurationManager.ConnectionStrings["mssql"].ConnectionString;
+            string dstOleDbConnString =ConfigurationManager.ConnectionStrings["oracle"].ConnectionString;
 
             string sql = "select CLIENT_KEY,SYS_DISPLAY,SYS_LOAD_TIME,SYS_END_TIME,SYS_START_TIME,SYS_KEY from D_CLIENT";
-            View view = new View(sql, sourceConn);
+            View view = new View(sql, sourceOleDbConnString);
             view.OrderBy.Add(new Field() { Name = "SYS_KEY", FieldType = DbType.String });
 
             ETLInfo etlInfo = new ETLInfo(table, "Client");
@@ -61,7 +61,7 @@ namespace Justin.BI.ETL
             ETLInfo e2 = SerializeHelper.XmlDeserializeFromFile<ETLInfo>("table.xml");
             SerializeHelper.XmlSerializeToFile(e2, "table2.xml", true);
 
-            new ETLService().Process("table.xml", sourceConn, dstConn, true, new Program().ShowMsg);
+            new ETLService().Process("table.xml", sourceOleDbConnString, dstOleDbConnString, true, new Program().ShowMsg);
 
             watch.Stop();
             Console.WriteLine("耗时{0}毫秒", watch.ElapsedMilliseconds);

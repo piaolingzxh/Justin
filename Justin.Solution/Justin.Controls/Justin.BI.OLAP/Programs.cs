@@ -4,7 +4,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Microsoft.AnalysisServices;
+using Justin.BI.OLAP.Entities;
 
 namespace Justin.BI.OLAP
 {
@@ -33,30 +33,22 @@ namespace Justin.BI.OLAP
         }
         public static void test1()
         {
+            string dwOleDbConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=OLAPDW;User Id=sa;Password=sa;";
+            string olapConnString = "Data Source = .;Provider=msolap";
+
+            Solution solution = new Solution("SSAS_OLAP", "SSAS 测试");
+            Cube salesCube = new Cube("Sales", "销售");
+            salesCube.TableName = "SaleHistory";
+            solution.Cubes.Add(salesCube);
+
+            var customerDim = new Dimension("CustomerDim", "客户维") { FKColumn = "CustomerId" };
+            customerDim.Levels.Add(new Level("customerlevel", "客户") { SourceTable = "Customer", KeyColumn = "Id", NameColumn = "Name" });
+            salesCube.Dimensions.Add(customerDim);
 
 
-            string dwConnStr = "Provider=sqloledb;Data Source=.;Initial Catalog=MondrianDB;User Id=sa;Password=sa;";
-
-            OleDbConnectionStringBuilder sb = new  OleDbConnectionStringBuilder(dwConnStr);
-            sb.Remove("provider");
-            SqlConnection sqlconn = new SqlConnection(sb.ConnectionString);
-            sqlconn.Open();
-
-            string olapConnectionString = "Data Source = .;Provider=msolap";
-            //OleDbConnection con = new OleDbConnection(dwConnStr);
-            //con.Open();
-
-            SSASSolution solution = new SSASSolution("BITheme");
-            var customerDim = new SSASDim("CustomerDim");
-            customerDim.Levels = new List<ILevel>();
-            customerDim.Levels.Add(new SSASLevel("customerlevel", "customerlevel") { SourceTable = "Customer", KeyColumn = "Id", NameColumn = "Name" });
-            solution.Dims.Add(customerDim);
-
-
-            var ProductDim = new SSASDim("ProductDim");
-            ProductDim.Levels = new List<ILevel>();
-            ProductDim.Levels.Add(new SSASLevel("Productlevel", "Productlevel") { SourceTable = "Product", KeyColumn = "Id", NameColumn = "Name" });
-            solution.Dims.Add(ProductDim);
+            var ProductDim = new Dimension("ProductDim", "产品维") { FKColumn = "ProductId" };
+            ProductDim.Levels.Add(new Level("Productlevel", "产品") { SourceTable = "Product", KeyColumn = "Id", NameColumn = "Name" });
+            salesCube.Dimensions.Add(ProductDim);
 
 
             //var DateDim = new SSASDim("DateDim");
@@ -64,8 +56,10 @@ namespace Justin.BI.OLAP
             //DateDim.Levels.Add(new Level("Datelevel", "Datelevel") { SourceTable = "" });
             //solution.Dims.Add(DateDim);
 
+            salesCube.Measures.Add(new Measure("ProductCount", "产品数量") { ColumnName = "ProductCount" });
+            salesCube.Measures.Add(new Measure("UnitPrice", "产品单价") { ColumnName = "UnitPrice" });
 
-            SSASFactory factory = new SSASFactory(dwConnStr, olapConnectionString);
+            SSASFactory factory = new SSASFactory(dwOleDbConnStr, olapConnString);
             factory.DeleteSolution(solution);
             factory.CreateSolution(solution);
 

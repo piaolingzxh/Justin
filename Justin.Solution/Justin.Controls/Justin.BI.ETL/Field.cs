@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -118,11 +119,11 @@ order by {1} desc";
         {
             this.OrderBy = new List<Field>();
         }
-        public View(string sql, DbConnection dbConnection)
+        public View(string sql, string oleDbConnString)
             : this()
         {
             this.SQL = sql;
-            this.Connection = dbConnection;
+            this.Connection = new OleDbConnection(oleDbConnString);
         }
 
         private DbConnection Connection { get; set; }

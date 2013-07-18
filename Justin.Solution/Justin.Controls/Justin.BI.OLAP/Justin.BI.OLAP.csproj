@@ -50,10 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IOLAPFactory.cs" />
     <Compile Include="Programs.cs" />
     <Compile Include="Entities\SSAS.cs" />
-    <Compile Include="interf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSASFactory.cs" />
   </ItemGroup>

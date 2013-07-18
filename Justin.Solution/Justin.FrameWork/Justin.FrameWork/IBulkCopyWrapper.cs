@@ -239,7 +239,25 @@ namespace Justin.FrameWork
                     bulkCopyWrapper = new SqlBulkCopyWrapper(new SqlConnection(oleDbStringBuilder.ConnectionString));
                     break;
                 case "oraoledb":
-                    bulkCopyWrapper = new SqlBulkCopyWrapper(new OracleConnection(oleDbStringBuilder.ConnectionString));
+                    bulkCopyWrapper = new OracleBulkCopyWrapper(new OracleConnection(oleDbStringBuilder.ConnectionString));
+                    break;
+                default: throw new Exception("Not Support OleDbConnection");
+            }
+        }
+        public BulkCopy(string oleDbConnString)
+        {
+            OleDbConnectionStringBuilder oleDbStringBuilder = new OleDbConnectionStringBuilder(oleDbConnString);
+            string provider = oleDbStringBuilder.Provider;
+            oleDbStringBuilder.Remove("provider");
+
+            IBulkCopyWrapper bulkCopyWrapper = null;
+            switch (provider)
+            {
+                case "sqloledb":
+                    bulkCopyWrapper = new SqlBulkCopyWrapper(new SqlConnection(oleDbStringBuilder.ConnectionString));
+                    break;
+                case "oraoledb":
+                    bulkCopyWrapper = new OracleBulkCopyWrapper(new OracleConnection(oleDbStringBuilder.ConnectionString));
                     break;
                 default: throw new Exception("Not Support OleDbConnection");
             }
