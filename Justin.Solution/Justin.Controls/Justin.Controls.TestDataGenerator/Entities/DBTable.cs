@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,7 +81,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
     public class DBColumn
     {
         public string ColumnName { get; set; }
-        public SqlDbType DbType { get; set; }
+        public JFieldType DbType { get; set; }
         public int Length { get; set; }
         public bool AllowNull { get; set; }
 

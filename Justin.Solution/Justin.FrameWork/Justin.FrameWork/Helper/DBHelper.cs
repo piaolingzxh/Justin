@@ -14,6 +14,11 @@ namespace Justin.FrameWork.Helper
 {
     public class DBHelper
     {
+        public static void TruncateTable(DbConnection conn, string tableName)
+        {
+            DbCommand cmd = PrepareCommand(conn, null, string.Format("truncate table {0}", tableName));
+            cmd.ExecuteNonQuery();
+        }
         public static int ExecuteNonQuery(DbConnection connection, string cmdText)
         {
             DbCommand cmd = PrepareCommand(connection, null, cmdText);
@@ -113,48 +118,26 @@ namespace Justin.FrameWork.Helper
 
         }
 
-        public static void Insert(DbConnection conn, string tableName, DataTable sourceData, Dictionary<string, string> columnMappings = null, DataRowState state = DataRowState.Added)
-        {
-            IBulkCopy bulkCopy = null;
 
-            if (conn is SqlConnection)
-            {
-                bulkCopy = new BulkCopySQL();
-            }
-            else if (conn is Oracle.DataAccess.Client.OracleConnection)
-            {
-                bulkCopy = new BulkCopyOracle();
-            }
-            if (bulkCopy == null)
-            {
-                throw new Exception("不支持该Connection");
-            }
-            bulkCopy.Insert(conn, tableName, sourceData, columnMappings, state);
+        public static void BulkInsert(DbConnection conn, string providerName, string tableName, DataTable sourceData, DataRowState state, Dictionary<string, string> columnMappings = null)
+        {
+            BulkCopy bulkCopy = new BulkCopy(conn.ConnectionString, BulkCopy.GetSupportedDBType(providerName));
+            bulkCopy.Insert(tableName, sourceData, state, columnMappings);
+
         }
-        public static void InsertTruncateTable(DbConnection conn, string tableName)
-        {
-            IBulkCopy bulkCopy = null;
 
-            if (conn is SqlConnection)
-            {
-                bulkCopy = new BulkCopySQL();
-            }
-            else if (conn is Oracle.DataAccess.Client.OracleConnection)
-            {
-                bulkCopy = new BulkCopyOracle();
-            }
-            if (bulkCopy == null)
-            {
-                throw new Exception("不支持该Connection");
-            }
-            bulkCopy.TruncateTable(conn, tableName);
+        public static void BulkInsert(DbConnection conn, string providerName, string tableName, DataTable sourceData, Dictionary<string, string> columnMappings = null)
+        {
+            BulkCopy bulkCopy = new BulkCopy(conn.ConnectionString, BulkCopy.GetSupportedDBType(providerName));
+            bulkCopy.Insert(tableName, sourceData, columnMappings);
+
         }
 
         public static DbConnection GetConnection(ConnectionStringSettings connectionStringSettings)
         {
             return GetConnection(connectionStringSettings.ConnectionString, connectionStringSettings.ProviderName);
         }
-        public static DbConnection GetConnection(string connectionString,string providerName)
+        public static DbConnection GetConnection(string connectionString, string providerName)
         {
             DbConnection conn = null;
             switch (providerName)
@@ -166,6 +149,7 @@ namespace Justin.FrameWork.Helper
             }
             return conn;
         }
+
 
     }
 }

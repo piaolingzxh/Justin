@@ -25,7 +25,7 @@ namespace Justin.Toolbox
         {
             comboBoxSQLDBType.Items.Clear();
 
-            foreach (var item in Enum.GetNames(typeof(SqlDbType)))
+            foreach (var item in Enum.GetNames(typeof(JFieldType)))
             {
                 comboBoxSQLDBType.Items.Add(item);
             }
@@ -37,7 +37,7 @@ namespace Justin.Toolbox
             {
                 ColumnName = txtColumnName.Text,
                 AllowNull = checkBoxAllowNull.Checked,
-                DbType = SqlDbType.NVarChar,
+                DbType =  JFieldType.String,
             };
             int length = 0;
             if (!string.IsNullOrEmpty(txtLength.Text))
@@ -48,8 +48,8 @@ namespace Justin.Toolbox
 
             if (!string.IsNullOrEmpty(comboBoxSQLDBType.Text))
             {
-                SqlDbType dbType;
-                if (Enum.TryParse<SqlDbType>(comboBoxSQLDBType.Text, out dbType))
+                JFieldType dbType;
+                if (Enum.TryParse<JFieldType>(comboBoxSQLDBType.Text, out dbType))
                 {
                     dbColumn.DbType = dbType;
                 }

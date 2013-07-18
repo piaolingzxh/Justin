@@ -93,7 +93,7 @@ namespace Justin.Controls.TestDataGenerator
                 string fieldName = tvDst.SelectedNode.Tag.ToString();
                 string tableName = tvDst.SelectedNode.Parent.Tag.ToString();
                 JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
-                field.ValueType = (JValueType)Enum.Parse(typeof(JValueType), cBoxValueType.Text, true);
+                field.ValueType = (JFieldType)Enum.Parse(typeof(JFieldType), cBoxValueType.Text, true);
                 field.SetVisible(bool.Parse(cBoxVisible.Text));
 
                 field.FirstOperand = operandCtrl1.GetOperateNum();
@@ -263,11 +263,11 @@ namespace Justin.Controls.TestDataGenerator
         {
             var fieldNode = new TreeNode(field.FieldName);
             fieldNode.Tag = field.FieldName;
-            if (field.ValueType == JValueType.DateTime)
+            if (field.ValueType == JFieldType.DateTime)
             {
                 fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 4;
             }
-            else if (field.ValueType == JValueType.Numeric)
+            else if (field.ValueType == JFieldType.Numeric)
             {
                 fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 5;
             }

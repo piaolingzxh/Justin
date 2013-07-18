@@ -15,7 +15,7 @@ namespace Justin.FrameWork
             OracleConnection oracleConn = conn as OracleConnection;
             Check(oracleConn);
 
-            using (OracleBulkCopy sqlBC = new OracleBulkCopy(oracleConn))
+            using (OracleBulkCopyWrapper sqlBC = new OracleBulkCopyWrapper(oracleConn))
             {
                 sqlBC.BatchSize = 10000;
                 sqlBC.BulkCopyTimeout = 1200;
@@ -45,14 +45,7 @@ namespace Justin.FrameWork
             Insert(oracleConn, tableName, sourceData, columnMappings, state);
         }
 
-        public void TruncateTable(DbConnection conn, string tableName)
-        {
-            Check(conn);
-            OracleConnection oracleConn = conn as OracleConnection;
-            OracleCommand cmd = new OracleCommand(string.Format("truncate table {0}", tableName), oracleConn);
-            cmd.CommandTimeout = 600;
-            cmd.ExecuteNonQuery();
-        }
+        
 
         public void Check(DbConnection conn)
         {

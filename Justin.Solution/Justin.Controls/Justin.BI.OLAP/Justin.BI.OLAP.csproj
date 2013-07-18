@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="IOLAPFactory.cs" />
     <Compile Include="Programs.cs" />
     <Compile Include="Entities\SSAS.cs" />
@@ -63,9 +62,6 @@
       <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
       <Name>Justin.FrameWork</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="OLAPDW.SQL" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
