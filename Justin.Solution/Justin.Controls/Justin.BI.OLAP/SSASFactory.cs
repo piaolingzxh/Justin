@@ -94,7 +94,7 @@ namespace Justin.BI.OLAP
             return dataSource;
         }
 
-        private DataSourceView CreateDataSourceView(Database database, string dataSourceViewId, string dataSourceViewName, List<String> tableNames)
+        private DataSourceView CreateDataSourceView(Database database, string dataSourceViewId, string dataSourceViewName, List<String> tableNames, List<ForeignKeyInfo> foreignKeys)
         {
             DataSourceView dataSourceView;
             if (!database.DataSourceViews.ContainsName(dataSourceViewName))
@@ -103,12 +103,21 @@ namespace Justin.BI.OLAP
                 dataSourceView = database.DataSourceViews.Add(dataSourceViewName, dataSourceViewId);
                 dataSourceView.DataSourceID = dataSourceViewId;
                 dataSourceView.Schema = dataSet;
+
+
+                foreach (ForeignKeyInfo foreignKey in foreignKeys)
+                {
+                    this.CreateViewRelation(dataSourceView, foreignKey.ForeignKeyTable, foreignKey.ForeignKeyColumn, foreignKey.PrimaryKeyTable, foreignKey.PrimaryKeyColumn);
+                }
+
                 dataSourceView.Update();
             }
             else
             {
                 dataSourceView = database.DataSourceViews.GetByName(dataSourceViewName);
             }
+
+
             return dataSourceView;
         }
         private DataSet GenerateDWSchema(List<String> tableNames, string dbSchema = "dbo")
@@ -129,6 +138,29 @@ namespace Justin.BI.OLAP
             }
             return dataSet;
         }
+        public void CreateViewRelation(DataSourceView dataSourceView, String parFkTableName, String parFkColumnName, String parPkTableName, String parPkColumnName)
+        {
+            DataColumn fkColumn = dataSourceView.Schema.Tables[parFkTableName].Columns[parFkColumnName];
+            DataColumn pkColumn = dataSourceView.Schema.Tables[parPkTableName].Columns[parPkColumnName];
+            string fkName = "FK_" + parFkTableName + "_" + parPkTableName;
+            fkName = GetFKName(dataSourceView, fkName, 0);
+            dataSourceView.Schema.Relations.Add(fkName, pkColumn, fkColumn);
+        }
+        private string GetFKName(DataSourceView dataSourceView, string name, int idx)
+        {
+            string temp = name;
+            foreach (DataRelation dr in dataSourceView.Schema.Relations)
+            {
+                if (dr.RelationName == name)
+                {
+                    idx++;
+                    temp += idx.ToString();
+                    return GetFKName(dataSourceView, temp, idx);
+                }
+            }
+            return name;
+        }
+
         //例子
         static DataSourceView CreateDataSourceView(Database db, string strDataSourceName)
         {
@@ -331,14 +363,13 @@ namespace Justin.BI.OLAP
                                     , level.SourceTable
                                     , level.KeyColumn
                                     , level.NameColumn
-                                    , AttributeUsage.Key
+                                    , AttributeUsage.Regular
                                     , OrderBy.Key
                                     , AttributeType.Regular
                                     , true);
                             Level lv = hierarchy.Levels.Add(level.Name);
                             lv.SourceAttributeID = dimension.Attributes.GetByName(level.Name).ID;
-                        }
-
+                        }    
                     }
                 }
             }
@@ -487,9 +518,10 @@ namespace Justin.BI.OLAP
 
         #endregion
 
-        public List<string> GetSchemaNames(Justin.BI.OLAP.Entities.Solution solution)
+        public List<string> GetAllTableNames(Justin.BI.OLAP.Entities.Solution solution, out  List<ForeignKeyInfo> ForeignKeys)
         {
             List<string> tables = new List<string>();
+            ForeignKeys = new List<ForeignKeyInfo>();
 
             if (solution.Cubes == null || solution.Cubes.Count < 1)
             {
@@ -498,7 +530,10 @@ namespace Justin.BI.OLAP
 
             foreach (var cube in solution.Cubes)
             {
-                tables.Add(cube.TableName);
+                if (!tables.Contains(cube.TableName))
+                {
+                    tables.Add(cube.TableName);
+                }
 
                 if (cube.Dimensions == null || cube.Dimensions.Count < 1)
                     continue;
@@ -509,7 +544,10 @@ namespace Justin.BI.OLAP
                         foreach (var level in dim.Levels)
                         {
                             if (!tables.Contains(level.SourceTable))
+                            {
                                 tables.Add(level.SourceTable);
+                                ForeignKeys.Add(new ForeignKeyInfo() { ForeignKeyTable = cube.TableName, ForeignKeyColumn = dim.FKColumn, PrimaryKeyTable = level.SourceTable, PrimaryKeyColumn = level.KeyColumn });
+                            }
                         }
                     }
                     if (dim.Hierarchies != null && dim.Hierarchies.Count > 0)
@@ -521,7 +559,10 @@ namespace Justin.BI.OLAP
                                 foreach (var level in hierarchy.Levels)
                                 {
                                     if (!tables.Contains(level.SourceTable))
+                                    {
                                         tables.Add(level.SourceTable);
+                                        ForeignKeys.Add(new ForeignKeyInfo() { ForeignKeyTable = cube.TableName, ForeignKeyColumn = dim.FKColumn, PrimaryKeyTable = level.SourceTable, PrimaryKeyColumn = level.KeyColumn });
+                                    }
                                 }
                             }
                         }
@@ -533,12 +574,13 @@ namespace Justin.BI.OLAP
 
         public void CreateSolution(Justin.BI.OLAP.Entities.Solution solution)
         {
-            List<string> allTableNames = this.GetSchemaNames(solution);
+            List<ForeignKeyInfo> foreignKeys = new List<ForeignKeyInfo>();
+            List<string> allTableNames = this.GetAllTableNames(solution, out foreignKeys);
 
             this.Connect();
             Database database = this.CreateDatabase(solution.ID, solution.Name);
             DataSource dataSource = this.CreateDataSource(database, solution.ID, solution.Name);
-            DataSourceView dataSourceView = this.CreateDataSourceView(database, solution.ID, solution.Name, allTableNames);
+            DataSourceView dataSourceView = this.CreateDataSourceView(database, solution.ID, solution.Name, allTableNames,foreignKeys);
 
             foreach (var cube in solution.Cubes)
             {
@@ -556,5 +598,13 @@ namespace Justin.BI.OLAP
         }
 
 
+    }
+
+    public class ForeignKeyInfo
+    {
+        public string ForeignKeyTable { get; set; }
+        public string ForeignKeyColumn { get; set; }
+        public string PrimaryKeyTable { get; set; }
+        public string PrimaryKeyColumn { get; set; }
     }
 }

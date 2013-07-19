@@ -37,17 +37,17 @@ namespace Justin.BI.OLAP
             string olapConnString = "Data Source = .;Provider=msolap";
 
             Solution solution = new Solution("SSAS_OLAP", "SSAS 测试");
-            Cube salesCube = new Cube("Sales", "销售");
+            Cube salesCube = new Cube("SalesCube", "Sales");
             salesCube.TableName = "SaleHistory";
             solution.Cubes.Add(salesCube);
 
-            var customerDim = new Dimension("CustomerDim", "客户维") { FKColumn = "CustomerId" };
-            customerDim.Levels.Add(new Level("customerlevel", "客户") { SourceTable = "Customer", KeyColumn = "Id", NameColumn = "Name" });
+            var customerDim = new Dimension("CustomerDim", "Customer") { FKColumn = "CustomerId" };
+            customerDim.Levels.Add(new Level("customerlevel", "Customer") { SourceTable = "Customer", KeyColumn = "Id", NameColumn = "Name" });
             salesCube.Dimensions.Add(customerDim);
 
 
-            var ProductDim = new Dimension("ProductDim", "产品维") { FKColumn = "ProductId" };
-            ProductDim.Levels.Add(new Level("Productlevel", "产品") { SourceTable = "Product", KeyColumn = "Id", NameColumn = "Name" });
+            var ProductDim = new Dimension("ProductDim", "Product") { FKColumn = "ProductId" };
+            ProductDim.Levels.Add(new Level("Productlevel", "Product") { SourceTable = "Product", KeyColumn = "Id", NameColumn = "Name" });
             salesCube.Dimensions.Add(ProductDim);
 
 
@@ -56,8 +56,8 @@ namespace Justin.BI.OLAP
             //DateDim.Levels.Add(new Level("Datelevel", "Datelevel") { SourceTable = "" });
             //solution.Dims.Add(DateDim);
 
-            salesCube.Measures.Add(new Measure("ProductCount", "产品数量") { ColumnName = "ProductCount" });
-            salesCube.Measures.Add(new Measure("UnitPrice", "产品单价") { ColumnName = "UnitPrice" });
+            salesCube.Measures.Add(new Measure("ProductCount", "ProductCount") { ColumnName = "ProductCount" });
+            salesCube.Measures.Add(new Measure("UnitPrice", "UnitPrice") { ColumnName = "UnitPrice" });
 
             SSASFactory factory = new SSASFactory(dwOleDbConnStr, olapConnString);
             factory.DeleteSolution(solution);
