@@ -331,84 +331,96 @@ namespace Justin.BI.OLAP
 
         private void CreateDim(Database database, DataSourceView dataSourceView, Justin.BI.OLAP.Entities.Dimension dim)
         {
-            Dimension dimension;
-            if (!database.Dimensions.ContainsName(dim.Name))
+            Dimension ssasDimension;
+            if (!database.Dimensions.Contains(dim.ID))
             {
-                dimension = database.Dimensions.Add(dim.Name, dim.ID);
-                dimension.UnknownMember = UnknownMemberBehavior.Hidden;
-                dimension.AttributeAllMemberName = "all";
-                dimension.StorageMode = DimensionStorageMode.Molap;
-                dimension.Source = new DataSourceViewBinding(dataSourceView.ID);
-                dimension.Type = DimensionType.Regular;
+                ssasDimension = database.Dimensions.Add(dim.Name, dim.ID);
+                ssasDimension.UnknownMember = UnknownMemberBehavior.Hidden;
+                ssasDimension.AttributeAllMemberName = "all";
+                ssasDimension.StorageMode = DimensionStorageMode.Molap;
+                ssasDimension.Source = new DataSourceViewBinding(dataSourceView.ID);
+                ssasDimension.Type = DimensionType.Regular;
             }
             else
             {
-                dimension = database.Dimensions[dim.Name];
+                ssasDimension = database.Dimensions[dim.ID];
             }
             if ((dim.Hierarchies == null || dim.Hierarchies.Count == 0) && (dim.Levels != null && dim.Levels.Count != 0))
             {
-                if (!dimension.Hierarchies.ContainsName(DefaultHierarchy))
+                if (!ssasDimension.Hierarchies.Contains(DefaultHierarchy))
                 {
-                    Hierarchy hierarchy = dimension.Hierarchies.Add(DefaultHierarchy);
-                    hierarchy.AllMemberName = "all";
-                    foreach (var level in dim.Levels)
-                    {
-                        if (!hierarchy.Levels.ContainsName(level.Name))
-                        {
-                            this.CreateDimensionAttributeForLevel(
-                                    dimension
-                                    , dataSourceView
-                                    , level.ID
-                                    , level.Name
-                                    , level.SourceTable
-                                    , level.KeyColumn
-                                    , level.NameColumn
-                                    , AttributeUsage.Regular
-                                    , OrderBy.Key
-                                    , AttributeType.Regular
-                                    , true);
-                            Level lv = hierarchy.Levels.Add(level.Name);
-                            lv.SourceAttributeID = dimension.Attributes.GetByName(level.Name).ID;
-                        }    
-                    }
+                    Hierarchy ssasHierarchy = ssasDimension.Hierarchies.Add(DefaultHierarchy, DefaultHierarchy);
+                    ssasHierarchy.AllMemberName = "all";
+                    CreateLevels(ssasDimension, ssasHierarchy, dataSourceView, dim.Levels);
                 }
             }
             else
             {
-                foreach (var tempHierarchy in dim.Hierarchies)
+                foreach (var outerHierarchy in dim.Hierarchies)
                 {
-                    Hierarchy hierarchy;
-                    if (!dimension.Hierarchies.ContainsName(tempHierarchy.Name))
+                    Hierarchy ssasHierarchy;
+                    if (!ssasDimension.Hierarchies.Contains(outerHierarchy.ID))
                     {
-                        hierarchy = dimension.Hierarchies.Add(tempHierarchy.Name);
-                        hierarchy.AllMemberName = "all";
+                        ssasHierarchy = ssasDimension.Hierarchies.Add(outerHierarchy.Name, outerHierarchy.ID);
+                        ssasHierarchy.AllMemberName = "all";
                     }
                     else
                     {
-                        hierarchy = dimension.Hierarchies[tempHierarchy.Name];
+                        ssasHierarchy = ssasDimension.Hierarchies[outerHierarchy.ID];
                     }
 
-                    if (tempHierarchy.Levels != null && tempHierarchy.Levels.Count > 0)
+                    if (outerHierarchy.Levels != null && outerHierarchy.Levels.Count > 0)
                     {
-                        foreach (var tempLevel in tempHierarchy.Levels)
-                        {
-                            Level level;
-                            if (hierarchy.Levels.ContainsName(tempLevel.Name))
-                            {
-                                level = hierarchy.Levels.Add(tempLevel.Name);
-                                level.SourceAttributeID = dimension.Attributes.GetByName(tempLevel.Name).ID;
-                            }
-                            else
-                            {
-                                level = hierarchy.Levels[tempLevel.Name];
-                            }
-                        }
+                        CreateLevels(ssasDimension, ssasHierarchy, dataSourceView, outerHierarchy.Levels);
                     }
                 }
             }
-            dimension.Update();
+            ssasDimension.Update();
 
         }
+        private void CreateLevels(Dimension ssasDimension, Hierarchy ssasHierarchy, DataSourceView dataSourceView, List<Justin.BI.OLAP.Entities.Level> outerLevels)
+        {
+            var miniOuterLevel = outerLevels[outerLevels.Count - 1];
+            this.CreateDimensionAttributeForLevel(
+                        ssasDimension
+                        , dataSourceView
+                        , miniOuterLevel.ID
+                        , miniOuterLevel.Name
+                        , miniOuterLevel.SourceTable
+                        , miniOuterLevel.KeyColumn
+                        , miniOuterLevel.NameColumn
+                        , AttributeUsage.Key
+                        , OrderBy.Key
+                        , AttributeType.Regular
+                        , true);
+
+            foreach (var outerLevel in outerLevels)
+            {
+                Level ssasLevel;
+                if (!ssasHierarchy.Levels.Contains(outerLevel.ID))
+                {
+                    this.CreateDimensionAttributeForLevel(
+                        ssasDimension
+                        , dataSourceView
+                        , outerLevel.ID
+                        , outerLevel.Name
+                        , outerLevel.SourceTable
+                        , outerLevel.KeyColumn
+                        , outerLevel.NameColumn
+                        , AttributeUsage.Regular
+                        , OrderBy.Key
+                        , AttributeType.Regular
+                        , true);
+                    ssasLevel = ssasHierarchy.Levels.Add(outerLevel.Name);
+                    ssasLevel.SourceAttributeID = ssasDimension.Attributes.GetByName(outerLevel.Name).ID;
+                }
+                else
+                {
+                    ssasLevel = ssasHierarchy.Levels[outerLevel.ID];
+                }
+            }
+        }
+        //--------------------
         public bool CreateDimensionAttributeForLevel(Dimension dimension, DataSourceView dataSourceView,
             String levelId, String levelName, String tableName, String keyColumn, String nameColumn,
             AttributeUsage attributeUsage, OrderBy orderBy, AttributeType attribType, bool visible)
@@ -419,7 +431,7 @@ namespace Justin.BI.OLAP
             }
 
             DimensionAttribute dimAttrib;
-            if (!dimension.Attributes.ContainsName(levelName))
+            if (!dimension.Attributes.Contains(levelId))
             {
                 dimAttrib = dimension.Attributes.Add(levelName, levelId);
                 dimAttrib.Usage = attributeUsage;
@@ -460,7 +472,7 @@ namespace Justin.BI.OLAP
         #endregion
 
         #region Cube
-        private void CreateCube(Database database, DataSourceView dataSourceView, Justin.BI.OLAP.Entities.Cube cube)
+        private void CreateCube(Database database,DataSource dataSource, DataSourceView dataSourceView, Justin.BI.OLAP.Entities.Cube cube)
         {
 
             Cube ssasCube = database.Cubes.Find(cube.ID);
@@ -483,10 +495,12 @@ namespace Justin.BI.OLAP
 
             foreach (var measure in cube.Measures)
             {
-                var ssasMeasure = new Measure(measure.Name, measure.ID);
-                ssasMeasure.AggregateFunction = measure.AggregationFunction;
+                var ssasMeasure = defaultGroup.Measures.Add(measure.Name, measure.ID);
                 ssasMeasure.Source = this.CreateDataItem(dataSourceView, cube.TableName, measure.ColumnName);
-                defaultGroup.Measures.Add(ssasMeasure);
+                ssasMeasure.AggregateFunction = measure.AggregationFunction;
+                //measure.FormatString = format;// "000,000.##";
+                //measure.Description = description;
+                //measure.DisplayFolder = folderName;
             }
             foreach (var dim in cube.Dimensions)
             {
@@ -507,17 +521,23 @@ namespace Justin.BI.OLAP
                 measureGroupAttribute.KeyColumns.Add(CreateDataItem(dataSourceView, cube.TableName, dim.FKColumn));
 
             }
-
+            CreatePartition(defaultGroup, dataSource, cube.TableName, DateTime.Now);
             ssasCube.Update(UpdateOptions.ExpandFull);
             ssasCube.Process();
-            //  ssasCube.Update();
-
-            //   defaultGroup.Update();
 
         }
 
         #endregion
-
+        public void CreatePartition(MeasureGroup measureGroup, DataSource relationalDataSource, String tableName, DateTime dateTime)
+        {
+            string partitionName = tableName + DateTime.Now.ToString("yyyyMM");
+            if (measureGroup.Partitions.IndexOfName(partitionName) < 0)
+            {
+                var partition = measureGroup.Partitions.Add(partitionName);
+                partition.Source = new QueryBinding(relationalDataSource.ID, "Select * From " + tableName);
+                partition.StorageMode = StorageMode.Molap;
+            }
+        }
         public List<string> GetAllTableNames(Justin.BI.OLAP.Entities.Solution solution, out  List<ForeignKeyInfo> ForeignKeys)
         {
             List<string> tables = new List<string>();
@@ -580,7 +600,7 @@ namespace Justin.BI.OLAP
             this.Connect();
             Database database = this.CreateDatabase(solution.ID, solution.Name);
             DataSource dataSource = this.CreateDataSource(database, solution.ID, solution.Name);
-            DataSourceView dataSourceView = this.CreateDataSourceView(database, solution.ID, solution.Name, allTableNames,foreignKeys);
+            DataSourceView dataSourceView = this.CreateDataSourceView(database, solution.ID, solution.Name, allTableNames, foreignKeys);
 
             foreach (var cube in solution.Cubes)
             {
@@ -588,7 +608,7 @@ namespace Justin.BI.OLAP
                 {
                     this.CreateDim(database, dataSourceView, dim);
                 }
-                this.CreateCube(database, dataSourceView, cube);
+                this.CreateCube(database,dataSource ,dataSourceView, cube);
 
             }
         }
@@ -596,6 +616,8 @@ namespace Justin.BI.OLAP
         {
             this.DeleteDatabase(solution.Name);
         }
+
+
 
 
     }
