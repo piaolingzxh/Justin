@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Justin.BI.OLAP.Entities;
+using Justin.FrameWork.Helper;
 
 namespace Justin.BI.OLAP
 {
@@ -12,20 +13,6 @@ namespace Justin.BI.OLAP
     {
         public static void Main()
         {
-            //string connStr =@"Provider=MSOLAP;Data Source=192.168.4.194;UserName=BISERVER194\BI;Password=123qwe!@#;";
-            //string connStr = @"Provider=MSOLAP.4;Data Source=192.168.4.32;";
-
-            //Server server = new Server();
-
-            //try
-            //{
-            //    server.Connect(connStr);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.ToString());
-            //}
-
             test1();
             Console.WriteLine("OK");
             Console.Read();
@@ -58,6 +45,10 @@ namespace Justin.BI.OLAP
 
             salesCube.Measures.Add(new Measure("ProductCount", "ProductCount") { ColumnName = "ProductCount" });
             salesCube.Measures.Add(new Measure("UnitPrice", "UnitPrice") { ColumnName = "UnitPrice" });
+
+            SerializeHelper.XmlSerializeToFile(solution, "solution.xml", true);
+            var newSolution = SerializeHelper.XmlDeserializeFromFile<Solution>("solution.xml");
+            SerializeHelper.XmlSerializeToFile(newSolution, "solution_new.xml", true);
 
             SSASFactory factory = new SSASFactory(dwOleDbConnStr, olapConnString);
             factory.DeleteSolution(solution);

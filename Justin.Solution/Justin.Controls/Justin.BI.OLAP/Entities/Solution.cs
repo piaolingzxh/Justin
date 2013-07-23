@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Justin.BI.OLAP.Entities
 {
@@ -20,12 +21,16 @@ namespace Justin.BI.OLAP.Entities
             this.Measures = new List<Measure>();
             this.Dimensions = new List<Dimension>();
         }
-        public string ID { get; private set; }
-        public string Name { get; private set; }
+        [XmlAttribute()]
+        public string ID { get; set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
+        [XmlAttribute()]
+        public string TableName { get; set; }
+
         public List<Measure> Measures { get; set; }
         public List<Dimension> Dimensions { get; set; }
 
-        public string TableName { get; set; }
     }
     public class Measure
     {
@@ -41,8 +46,11 @@ namespace Justin.BI.OLAP.Entities
             this.Name = name;
             AggregationFunction = Microsoft.AnalysisServices.AggregationFunction.Sum;
         }
-        public string ID { get; private set; }
-        public string Name { get; private set; }
+        [XmlAttribute()]
+        public string ID { get; set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
+        [XmlAttribute()]
         public string ColumnName { get; set; }
         public Microsoft.AnalysisServices.AggregationFunction AggregationFunction { get; set; }
     }
@@ -61,14 +69,16 @@ namespace Justin.BI.OLAP.Entities
             this.Hierarchies = new List<Hierarchy>();
             this.Levels = new List<Level>();
         }
-        public string ID { get; private set; }
-        public string Name { get; private set; }
-
+        [XmlAttribute()]
+        public string ID { get; set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
+        [XmlAttribute()]
+        public string FKColumn { get; set; }
 
         public List<Level> Levels { get; set; }
         public List<Hierarchy> Hierarchies { get; set; }
 
-        public string FKColumn { get; set; }
     }
 
     public class Hierarchy
@@ -85,9 +95,11 @@ namespace Justin.BI.OLAP.Entities
             this.Name = name;
             this.Levels = new List<Level>();
         }
-        public string ID { get; private set; }
+        [XmlAttribute()]
+        public string ID { get; set; }
 
-        public string Name { get; private set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
 
         public List<Level> Levels { get; set; }
     }
@@ -105,13 +117,19 @@ namespace Justin.BI.OLAP.Entities
             this.ID = id;
             this.Name = name;
         }
-        public string ID { get; private set; }
-        public string Name { get; private set; }
+        [XmlAttribute()]
+        public string ID { get; set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
+        [XmlAttribute()]
         public string SourceTable { get; set; }
 
 
+        [XmlAttribute()]
         public string KeyColumn { get; set; }
+        [XmlAttribute()]
         public string NameColumn { get; set; }
+        [XmlAttribute()]
         public string OrderColumn { get; set; }
 
     }
@@ -130,8 +148,10 @@ namespace Justin.BI.OLAP.Entities
             this.Name = name;
             this.Cubes = new List<Cube>();
         }
-        public string ID { get; private set; }
-        public string Name { get; private set; }
+        [XmlAttribute()]
+        public string ID { get; set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
         public List<Cube> Cubes { get; set; }
 
     }
