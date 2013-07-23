@@ -98,6 +98,12 @@ namespace Justin.FrameWork.Helper
             return cmd;
         }
 
+        public static void TruncateTable(OleDbConnection conn, string tableName)
+        {
+            OleDbCommand cmd = PrepareOleDbCommand(conn, null, string.Format("truncate table {0}", tableName));
+            cmd.ExecuteNonQuery();
+        }
+
         public static void BulkInsert(OleDbConnection conn, string tableName, DataTable sourceData, DataRowState state, Dictionary<string, string> columnMappings = null)
         {
             BulkCopy bulkCopy = new BulkCopy(conn);
