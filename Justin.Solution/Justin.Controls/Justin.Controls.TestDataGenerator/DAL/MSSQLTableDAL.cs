@@ -77,9 +77,9 @@ where object_name(B.parent_object_id)='{0}';
 
         protected override void FillPrimaryKey(DBTable table)
         {
-            OleDbDataReader rdPK = DBHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_PrimaryKeys, table.TableName));
+            OleDbDataReader rdPK = OleDbHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_PrimaryKeys, table.TableName));
             //List<DBColumn> fields = new List<DBColumn>();
-            OleDbDataReader rdIdentity = DBHelper.ExecuteReader(this.OleDbConnStr, string.Format(format_GetAllIdentityColumn, table.TableName));
+            OleDbDataReader rdIdentity = OleDbHelper.ExecuteReader(this.OleDbConnStr, string.Format(format_GetAllIdentityColumn, table.TableName));
             string identityColumnName = "";
             if (rdIdentity.HasRows)
             {
@@ -142,7 +142,7 @@ where object_name(B.parent_object_id)='{0}';
 
         public List<string> GetAllTables()
         {
-            OleDbDataReader rd = DBHelper.ExecuteReader(this.OleDbConnStr, SQL_GET_ALL_Tables);
+            OleDbDataReader rd = OleDbHelper.ExecuteReader(this.OleDbConnStr, SQL_GET_ALL_Tables);
             List<string> tableNames = new List<string>();
             while (rd.Read())
             {
@@ -181,7 +181,7 @@ where object_name(B.parent_object_id)='{0}';
 
         protected virtual void FillFields(DBTable table)
         {
-            OleDbDataReader rd = DBHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_FIELDS, table.TableName));
+            OleDbDataReader rd = OleDbHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_FIELDS, table.TableName));
             List<DBColumn> fields = new List<DBColumn>();
 
             while (rd.Read())
@@ -213,7 +213,7 @@ where object_name(B.parent_object_id)='{0}';
         }
         protected virtual void FillPrimaryKey(DBTable table)
         {
-            OleDbDataReader rdPK = DBHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_PrimaryKeys, table.TableName));
+            OleDbDataReader rdPK = OleDbHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_PrimaryKeys, table.TableName));
 
             while (rdPK.Read())
             {
@@ -229,7 +229,7 @@ where object_name(B.parent_object_id)='{0}';
         }
         protected virtual void FillForeignKey(DBTable table)
         {
-            OleDbDataReader rdfk = DBHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_ForeignKeys, table.TableName));
+            OleDbDataReader rdfk = OleDbHelper.ExecuteReader(this.OleDbConnStr, string.Format(this.Format_GET_ALL_ForeignKeys, table.TableName));
 
             while (rdfk.Read())
             {
