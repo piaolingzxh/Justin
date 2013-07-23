@@ -16,6 +16,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.Executer", "Justin.Controls.Executer\Justin.Controls.Executer.csproj", "{6EE7E46D-DC3A-45AB-A696-18E1C7489748}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI.DBLibrary", "Justin.BI.DBLibrary\Justin.BI.DBLibrary.csproj", "{B58020EB-6EC4-42F1-A81D-3004481B9B8D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.TestDataGenerator", "Justin.Controls.TestDataGenerator\Justin.Controls.TestDataGenerator.csproj", "{C8130A39-3C8C-40C5-9955-C1BC871AD981}"
 EndProject
@@ -31,12 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Log", "..\Justin.FrameWork\Justin.Log\Justin.Log.csproj", "{FB90C580-4E99-4921-B352-7704032AE2F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI.ETL", "Justin.BI.ETL\Justin.BI.ETL.csproj", "{B79A6450-85A9-43C9-B895-CF11D572E056}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI.OLAP", "Justin.BI.OLAP\Justin.BI.OLAP.csproj", "{232D990D-5BA8-4A5A-8028-72FA408204DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI", "Justin.BI\Justin.BI.csproj", "{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,14 +94,10 @@ Global
 		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B79A6450-85A9-43C9-B895-CF11D572E056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B79A6450-85A9-43C9-B895-CF11D572E056}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B79A6450-85A9-43C9-B895-CF11D572E056}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B79A6450-85A9-43C9-B895-CF11D572E056}.Release|Any CPU.Build.0 = Release|Any CPU
-		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{232D990D-5BA8-4A5A-8028-72FA408204DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
