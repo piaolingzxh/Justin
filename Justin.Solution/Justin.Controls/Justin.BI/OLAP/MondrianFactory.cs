@@ -27,6 +27,7 @@ namespace Justin.BI.OLAP
                 var mCube = new Cube(outerCube.ID);
                 mCube.Caption = mCube.Description = outerCube.Name;
                 mCube.Table = new Table(outerCube.TableName);
+                //维度
                 foreach (var outerDimension in outerCube.Dimensions)
                 {
                     var mDimension = new Dimension(outerDimension.ID);
@@ -35,12 +36,14 @@ namespace Justin.BI.OLAP
 
                     if (outerDimension.Hierarchies != null && outerDimension.Hierarchies.Count > 1)
                     {
+                        //层次
                         foreach (var outerHierarchie in outerDimension.Hierarchies)
                         {
                             var mHierarchie = new Hierarchy(outerHierarchie.ID);
                             mHierarchie.Caption = mHierarchie.Description = outerHierarchie.Name;
                             mHierarchie.allLevelName = mHierarchie.allMemberCaption = mHierarchie.AllMemberName = "all";
                             mHierarchie.Table = new Table(outerHierarchie.Levels[0].SourceTable);
+                            //粒度
                             foreach (var outerLevel in outerHierarchie.Levels)
                             {
                                 var mLevel = new Level(outerLevel.ID);
@@ -49,9 +52,24 @@ namespace Justin.BI.OLAP
                                 mLevel.NameColumn = outerLevel.KeyColumn;
                                 mLevel.Column = outerLevel.KeyColumn;
                                 mLevel.CaptionColumn = outerLevel.NameColumn;
-                                //mLevel.Closure = new Closure("");
-                                //mLevel.Closure.
-                                //mLevel.Table = outerLevel.SourceTable;
+                                //TODO:Mondrian父子维处理
+
+                                if (!string.IsNullOrEmpty(outerLevel.ParentColumn))
+                                {
+                                    #region Closure
+                                                                           
+                                    mLevel.Closure = new Closure(outerLevel.SourceTable + "_C");
+                                    mLevel.Closure.ParentColumn = outerLevel.ParentColumn;
+                                    mLevel.Closure.ChildColumn = outerLevel.KeyColumn;
+
+                                    mLevel.Closure.Table = new Table(outerLevel.SourceTable + "_C");
+
+                                    #endregion
+
+
+
+                                    mLevel.Table = outerLevel.SourceTable;
+                                }
                                 mHierarchie.Levels.Add(mLevel);
                             }
                             mDimension.Hierarchies.Add(mHierarchie);
@@ -59,10 +77,12 @@ namespace Justin.BI.OLAP
                     }
                     else
                     {
+                        //默认层次
                         var mDefaultHierarchie = new Hierarchy("Default");
                         mDefaultHierarchie.Caption = mDefaultHierarchie.Description = "Default";
                         mDefaultHierarchie.allLevelName = mDefaultHierarchie.allMemberCaption = mDefaultHierarchie.AllMemberName = "all";
                         mDefaultHierarchie.Table = new Table(outerDimension.Levels[0].SourceTable);
+                        //默认粒度
                         foreach (var outerLevel in outerDimension.Levels)
                         {
                             var mLevel = new Level(outerLevel.ID);
@@ -71,9 +91,10 @@ namespace Justin.BI.OLAP
                             mLevel.NameColumn = outerLevel.KeyColumn;
                             mLevel.Column = outerLevel.KeyColumn;
                             mLevel.CaptionColumn = outerLevel.NameColumn;
+                            mLevel.Table = outerLevel.SourceTable;
+
                             //mLevel.Closure = new Closure("");
                             //mLevel.Closure.
-                            mLevel.Table = outerLevel.SourceTable;
                             mDefaultHierarchie.Levels.Add(mLevel);
                         }
                         mDimension.Hierarchies.Add(mDefaultHierarchie);

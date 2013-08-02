@@ -27,10 +27,13 @@ namespace Justin.BI.ETL
             while (result > 0)
             {
                 result = BulkCopyByPage(etlInfo, pageSize, pageIndex, bcp, sourceConn, dstConnection);
-                pageIndex++;
-                success += result;
-                if (callback != null && result > 0)
-                    callback(success);
+                if (result > 0)
+                {
+                    pageIndex++;
+                    success += result;
+                    if (callback != null)
+                        callback(success);
+                }    
             }
         }
 

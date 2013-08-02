@@ -33,6 +33,9 @@ namespace Justin.BI.OLAP.Entity
         public string NameColumn { get; set; }
         [XmlAttribute()]
         public string OrderColumn { get; set; }
+        [XmlAttribute()]
+        public string ParentColumn { get; set; }
+
 
     }
 }

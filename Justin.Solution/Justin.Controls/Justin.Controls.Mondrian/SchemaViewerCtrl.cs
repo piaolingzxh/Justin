@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using Justin.BI.OLAP.Entity.Mondrian;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.FormUI;
@@ -617,7 +618,7 @@ namespace Justin.Controls.Mondrian
                     {
 
                     }
-                    else if (data is View)
+                    else if (data is Justin.BI.OLAP.Entity.Mondrian.View)
                     {
 
                     }

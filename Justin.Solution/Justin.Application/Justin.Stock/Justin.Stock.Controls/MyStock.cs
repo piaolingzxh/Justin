@@ -389,6 +389,10 @@ namespace Justin.Stock.Controls
         }
         public void Show(int tabIndex = 0)
         {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
             StockService.AddEvent(ShowMyStockInfoChanged);
             base.Show();
             tabControl1.SelectedIndex = tabIndex;

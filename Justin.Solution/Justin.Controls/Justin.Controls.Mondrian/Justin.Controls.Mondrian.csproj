@@ -56,9 +56,6 @@
     <Compile Include="doc\CDATA.cs" />
     <Compile Include="doc\Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schema.cs" />
-    <Compile Include="SchemaEx.cs" />
-    <Compile Include="SchemaSerializer.cs" />
     <Compile Include="SchemaViewerCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,6 +72,12 @@
     <EmbeddedResource Include="SchemaViewerCtrl.resx">
       <DependentUpon>SchemaViewerCtrl.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Justin.BI\Justin.BI.csproj">
+      <Project>{5d71ce68-55e3-4e0d-aa92-9dd85140bdf5}</Project>
+      <Name>Justin.BI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

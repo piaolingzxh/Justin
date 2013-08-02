@@ -11,7 +11,6 @@ namespace Justin.BI
     {
         public static void Main()
         {
-
             OLAPTest.Mondrian_OLAP(@"D:\Programs\MondrianServer\webapps\mondrian\WEB-INF\queries\Justin_Mondrian.xml");
             Console.WriteLine("OK");
             Console.Read();

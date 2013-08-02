@@ -127,9 +127,7 @@ namespace Justin.Stock
 
         private void SaveFormPosition()
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            string xmlData = SerializeHelper.XmlSerialize<JSettings>(Constants.Setting);
-            xmlDoc.LoadXml(xmlData);
+
             if (Constants.Setting.DBPath == Constants.DefaultDBPath)
             {
                 Constants.Setting.DBPath = Path.GetFileName(Constants.DefaultDBPath);
@@ -138,7 +136,8 @@ namespace Justin.Stock
             Constants.Setting.StartPosition.Left = this.Left;
             Constants.Setting.StartPosition.Height = this.Height;
             Constants.Setting.StartPosition.Width = this.Width;
-            xmlDoc.Save(fileName);
+
+            SerializeHelper.XmlSerializeToFile<JSettings>(Constants.Setting, fileName, true);
         }
 
         #endregion
