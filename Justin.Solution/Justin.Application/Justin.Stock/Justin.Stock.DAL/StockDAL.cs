@@ -54,7 +54,7 @@ namespace Justin.Stock.DAL
                 BuyCount = reader["BuyCount"].Value<int>(),
                 BuyPrice = reader["BuyPrice"].Value<decimal>(),
                 ShowInFolatWindow = reader["ShowInFolatWindow"].Value<bool>(),
-                Order = reader["Order"].Value<int>(),
+                Order = reader["Order"].Value<decimal>(),
                 ProfitOrLossHistory = reader["ProfitOrLossHistory"].Value<string>(),
                 Warn = reader["Warn"].Value<bool>(),
             };

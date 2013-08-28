@@ -121,6 +121,7 @@ namespace Justin.Stock.Controls
                                               , rtStock.SpellingInShort.PadLeft(4, ' ')                                             //简称
                                               , priceNow.ToString().PadLeft(6, ' ')                                                 //当前价格
                                               , (rtStock.SurgedRange.ToString() + "%").PadLeft(7, ' ')                              //当日涨幅
+                                              , (rtStock.CurrentProfitOrLoss.ToString()).PadLeft(6, ' ')                               //当前盈亏
                                              , Math.Round(rtStock.SumProfitOrLoss, 0).ToString().PadLeft(6, ' ')                                              //总盈亏
                                               , (Math.Round(rtStock.SumProfitOrLossPercent * 100, 2).ToString() + "%").PadLeft(8, ' ')      //总盈亏比例
                                              , Math.Round(rtStock.BuyPrice, 2).ToString().PadLeft(6, ' ')                           //成本价
@@ -182,7 +183,8 @@ namespace Justin.Stock.Controls
                 columnNamesLabel.Text = string.Format(Constants.Setting.DeskDisplayFormat
                                                , "Name".PadLeft(4, ' ')                                                     //简称
                                                , "Now¥".PadLeft(6, ' ')                                                 //当前价格
-                                               , "↓↑%".PadLeft(7, ' ')                                                 //当日涨幅
+                                               , "↓↑%".PadLeft(6, ' ')                                                 //当日涨幅
+                                               , "PF".PadLeft(6, ' ')                                                   //总盈亏        
                                               , "∑PF".PadLeft(6, ' ')                                                   //总盈亏
                                                , "∑PF%".PadLeft(8, ' ')                                               //总盈亏比例
                                               , "Cost¥".PadLeft(6, ' ')                                                   //成本价
@@ -373,6 +375,10 @@ namespace Justin.Stock.Controls
                 return;
             this.ShowChart(stockLabel.Tag.ToString(), ChartType.KOfMonth);
         }
+        private void monitorStockMenuItem_Click(object sender, EventArgs e)
+        {
+            myStock.Show(0);
+        }
         private void personalStocksMenuItem_Click(object sender, EventArgs e)
         {
             myStock.Show(1);
@@ -430,5 +436,7 @@ namespace Justin.Stock.Controls
             stockLabel.Dock = DockStyle.Fill;
             return stockLabel;
         }
+
+
     }
 }

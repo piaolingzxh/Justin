@@ -36,6 +36,7 @@
             this.MonthKMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.personalStocksMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemSettingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monitorStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deskMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,53 +47,61 @@
             this.DayKMenuItem,
             this.WeekKMenuItem,
             this.MonthKMenuItem,
+            this.monitorStockMenuItem,
             this.personalStocksMenuItem,
             this.systemSettingMenuItem});
             this.deskMenu.Name = "contextMenuStrip1";
-            this.deskMenu.Size = new System.Drawing.Size(150, 136);
+            this.deskMenu.Size = new System.Drawing.Size(153, 180);
             this.deskMenu.Opening += new System.ComponentModel.CancelEventHandler(this.deskMenu_Opening);
             // 
             // timeSheetMenuItem
             // 
             this.timeSheetMenuItem.Name = "timeSheetMenuItem";
-            this.timeSheetMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.timeSheetMenuItem.Size = new System.Drawing.Size(152, 22);
             this.timeSheetMenuItem.Text = "TimeSheet";
             this.timeSheetMenuItem.Click += new System.EventHandler(this.timeSheetMenuItem_Click);
             // 
             // DayKMenuItem
             // 
             this.DayKMenuItem.Name = "DayKMenuItem";
-            this.DayKMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.DayKMenuItem.Size = new System.Drawing.Size(152, 22);
             this.DayKMenuItem.Text = "DayK";
             this.DayKMenuItem.Click += new System.EventHandler(this.DayKMenuItem_Click);
             // 
             // WeekKMenuItem
             // 
             this.WeekKMenuItem.Name = "WeekKMenuItem";
-            this.WeekKMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.WeekKMenuItem.Size = new System.Drawing.Size(152, 22);
             this.WeekKMenuItem.Text = "WeekK";
             this.WeekKMenuItem.Click += new System.EventHandler(this.WeekKMenuItem_Click);
             // 
             // MonthKMenuItem
             // 
             this.MonthKMenuItem.Name = "MonthKMenuItem";
-            this.MonthKMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.MonthKMenuItem.Size = new System.Drawing.Size(152, 22);
             this.MonthKMenuItem.Text = "MonthK";
             this.MonthKMenuItem.Click += new System.EventHandler(this.MonthKMenuItem_Click);
             // 
             // personalStocksMenuItem
             // 
             this.personalStocksMenuItem.Name = "personalStocksMenuItem";
-            this.personalStocksMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.personalStocksMenuItem.Size = new System.Drawing.Size(152, 22);
             this.personalStocksMenuItem.Text = "Personal";
             this.personalStocksMenuItem.Click += new System.EventHandler(this.personalStocksMenuItem_Click);
             // 
             // systemSettingMenuItem
             // 
             this.systemSettingMenuItem.Name = "systemSettingMenuItem";
-            this.systemSettingMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.systemSettingMenuItem.Size = new System.Drawing.Size(152, 22);
             this.systemSettingMenuItem.Text = "SystemSetting";
             this.systemSettingMenuItem.Click += new System.EventHandler(this.systemSettingMenuItem_Click);
+            // 
+            // monitorStockMenuItem
+            // 
+            this.monitorStockMenuItem.Name = "monitorStockMenuItem";
+            this.monitorStockMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.monitorStockMenuItem.Text = "Monitor";
+            this.monitorStockMenuItem.Click += new System.EventHandler(this.monitorStockMenuItem_Click);
             // 
             // DeskStockCtrl
             // 
@@ -116,5 +125,6 @@
         private System.Windows.Forms.ToolStripMenuItem MonthKMenuItem;
         private System.Windows.Forms.ToolStripMenuItem personalStocksMenuItem;
         private System.Windows.Forms.ToolStripMenuItem systemSettingMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem monitorStockMenuItem;
     }
 }

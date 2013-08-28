@@ -15,7 +15,7 @@ namespace Justin.Stock.Controls.Entities
         public static string SettingFileName = "JStock.xml";
         public static string SettingFilePath = "";
         public static string DefaultDBPath = Path.Combine(Application.StartupPath, "JStock.db3");
-        public static string DefaultDeskDisplayFormat = "{0}:{1}{2}{3}{4}{5}{6}{7}{8}{9}";
+        public static string DefaultDeskDisplayFormat = "{0}:{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}";
         public static string DefaultDeskDisplayFormatTips = @"0：简称
 1：当前价格
 2：当日涨幅

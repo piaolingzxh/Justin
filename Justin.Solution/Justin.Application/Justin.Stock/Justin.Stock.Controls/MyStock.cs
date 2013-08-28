@@ -236,6 +236,7 @@ namespace Justin.Stock.Controls
                         dataRow.Selected = true;
                 }
             }
+            Constants.ResetMyStock();
         }
 
         private void btnUpdateStockInfo_Click(object sender, EventArgs e)
