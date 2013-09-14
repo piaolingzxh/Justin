@@ -11,10 +11,11 @@ using System.Windows.Forms;
 using Justin.Core;
 using Justin.Workspace;
 using Justin.FrameWork.Helper;
-using Justin.FrameWork.Settings;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Configuration;
 using System.Globalization;
+using Justin.FrameWork.Utility;
+using Justin.FrameWork.Settings;
 
 namespace Justin.Workspace
 {
@@ -263,7 +264,7 @@ namespace Justin.Workspace
             ToolStripMenuItem tsItem = sender as ToolStripMenuItem;
             Justin.Core.MenuItem data = tsItem.Tag as Justin.Core.MenuItem;
             openFileDialog1.InitialDirectory = Constants.ConfigFileFolder;//注意这里写路径时要用c:\\而不是c:\
-            openFileDialog1.Filter = Tools.GetOpenFileDialogFilter(data.Extensions);
+            openFileDialog1.Filter = Tools.GetFileDialogFilter(data.Extensions);
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FilterIndex = 1;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)

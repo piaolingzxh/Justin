@@ -9,6 +9,6 @@ namespace Justin.FrameWork.WinForm.Models
     {
         string Extension { get; }
         void LoadFile(string fileName);
-        void SaveFile(string fileName);
+        void SaveFile(string fileName,string extensions);
     }
 }

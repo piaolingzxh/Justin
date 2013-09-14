@@ -19,7 +19,7 @@ namespace Justin.Toolbox
             InitializeComponent();
             this.jEditorCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) => { this.jEditorCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.jEditorCtrl1.SaveFile(fileName); };
+            this.SaveAction = (fileName) => { this.jEditorCtrl1.SaveFile(fileName,this.Extension); };
      
         }
         public JEditor(string[] args)

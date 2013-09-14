@@ -26,7 +26,7 @@ namespace Justin.Toolbox
             InitializeComponent();
             this.schemaViewerCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) => { this.schemaViewerCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.schemaViewerCtrl1.SaveFile(fileName); };
+            this.SaveAction = (fileName) => { this.schemaViewerCtrl1.SaveFile(fileName,this.Extension); };
      
         }
         public MondrianSchemaWorkbench(string[] args)

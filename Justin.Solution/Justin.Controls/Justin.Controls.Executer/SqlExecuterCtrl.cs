@@ -180,7 +180,7 @@ namespace Justin.Controls.Executer
 
         private void btnModifySQLFileContent_Click(object sender, EventArgs e)
         {
-            this.SaveFile(this.FileName);
+            this.SaveFile(this.FileName,this.Extension);
         }
 
         private void btnShowLineNum_Click(object sender, EventArgs e)

@@ -34,9 +34,10 @@
             this.DayKMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WeekKMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MonthKMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monitorStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.personalStocksMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemSettingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.monitorStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deskMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,9 +50,10 @@
             this.MonthKMenuItem,
             this.monitorStockMenuItem,
             this.personalStocksMenuItem,
-            this.systemSettingMenuItem});
+            this.systemSettingMenuItem,
+            this.topMostToolStripMenuItem});
             this.deskMenu.Name = "contextMenuStrip1";
-            this.deskMenu.Size = new System.Drawing.Size(153, 180);
+            this.deskMenu.Size = new System.Drawing.Size(153, 202);
             this.deskMenu.Opening += new System.ComponentModel.CancelEventHandler(this.deskMenu_Opening);
             // 
             // timeSheetMenuItem
@@ -82,6 +84,13 @@
             this.MonthKMenuItem.Text = "MonthK";
             this.MonthKMenuItem.Click += new System.EventHandler(this.MonthKMenuItem_Click);
             // 
+            // monitorStockMenuItem
+            // 
+            this.monitorStockMenuItem.Name = "monitorStockMenuItem";
+            this.monitorStockMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.monitorStockMenuItem.Text = "Monitor";
+            this.monitorStockMenuItem.Click += new System.EventHandler(this.monitorStockMenuItem_Click);
+            // 
             // personalStocksMenuItem
             // 
             this.personalStocksMenuItem.Name = "personalStocksMenuItem";
@@ -96,12 +105,12 @@
             this.systemSettingMenuItem.Text = "SystemSetting";
             this.systemSettingMenuItem.Click += new System.EventHandler(this.systemSettingMenuItem_Click);
             // 
-            // monitorStockMenuItem
+            // topMostToolStripMenuItem
             // 
-            this.monitorStockMenuItem.Name = "monitorStockMenuItem";
-            this.monitorStockMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.monitorStockMenuItem.Text = "Monitor";
-            this.monitorStockMenuItem.Click += new System.EventHandler(this.monitorStockMenuItem_Click);
+            this.topMostToolStripMenuItem.Name = "topMostToolStripMenuItem";
+            this.topMostToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.topMostToolStripMenuItem.Text = "TopMost";
+            this.topMostToolStripMenuItem.Click += new System.EventHandler(this.topMostToolStripMenuItem_Click);
             // 
             // DeskStockCtrl
             // 
@@ -126,5 +135,6 @@
         private System.Windows.Forms.ToolStripMenuItem personalStocksMenuItem;
         private System.Windows.Forms.ToolStripMenuItem systemSettingMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monitorStockMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem topMostToolStripMenuItem;
     }
 }

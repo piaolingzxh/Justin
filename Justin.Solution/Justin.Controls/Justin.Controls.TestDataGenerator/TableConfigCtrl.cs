@@ -134,7 +134,7 @@ namespace Justin.Controls.TestDataGenerator
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
-            base.SaveFile(this.FileName);
+            base.SaveFile(this.FileName,this.Extension);
         }
         private void btnGenerateData_Click(object sender, EventArgs e)
         {

@@ -56,7 +56,7 @@ namespace Justin.Toolbox
             };
             this.SaveAction = (fileName) =>
             {
-                this.tableConfigCtrl1.SaveFile(fileName);
+                this.tableConfigCtrl1.SaveFile(fileName,this.Extension);
             };
         }
         public TableConfigurator(string[] args)

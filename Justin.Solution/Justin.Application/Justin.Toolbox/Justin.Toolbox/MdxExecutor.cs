@@ -24,8 +24,15 @@ namespace Justin.Toolbox
             InitializeComponent();
             this.mdxExecuterCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) => { this.mdxExecuterCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.mdxExecuterCtrl1.SaveFile(fileName); };
+            this.SaveAction = (fileName) => { this.mdxExecuterCtrl1.SaveFile(fileName,this.Extension); };
+            this.FormClosing += MdxExecutor_FormClosing;
 
+
+        }
+
+        void MdxExecutor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.mdxExecuterCtrl1.SaveFile(this.FileName,this.Extension);
         }
         /// <summary>
         ///     

@@ -349,6 +349,9 @@ namespace Justin.Stock.Controls
             {
                 stockLabel = sourceControl as Label;
             }
+            Form form = this.FindForm();
+            if (form != null)
+                this.topMostToolStripMenuItem.Checked = form.TopMost;
         }
 
         private void timeSheetMenuItem_Click(object sender, EventArgs e)
@@ -435,6 +438,13 @@ namespace Justin.Stock.Controls
             stockLabel.Font = new Font("Consolas", 8F, System.Drawing.FontStyle.Regular);
             stockLabel.Dock = DockStyle.Fill;
             return stockLabel;
+        }
+
+        private void topMostToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form form = this.FindForm();
+            if (form != null)
+                form.TopMost = !form.TopMost;
         }
 
 
