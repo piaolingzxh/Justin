@@ -13,6 +13,7 @@ using Justin.FrameWork.Helper;
 using System.IO;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
+using System.Diagnostics;
 namespace Justin.Controls.Executer
 {
     public partial class MdxExecuterCtrl : JUserControl, IFile
@@ -61,6 +62,8 @@ namespace Justin.Controls.Executer
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
+            Stopwatch watch = Stopwatch.StartNew();
+
             try
             {
                 gvMdxresult.DataSource = null;
@@ -80,6 +83,11 @@ namespace Justin.Controls.Executer
             catch (Exception ex)
             {
                 this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
+            }
+            finally
+            {
+                watch.Stop();
+                this.ShowMessage(string.Format("查询耗时{0}毫秒,", watch.ElapsedMilliseconds));
             }
         }
 
@@ -104,6 +112,8 @@ namespace Justin.Controls.Executer
 
         private void btnExecuteDataSet_Click(object sender, EventArgs e)
         {
+            Stopwatch watch = Stopwatch.StartNew();
+
             try
             {
                 gvMdxresult.DataSource = null;
@@ -120,6 +130,11 @@ namespace Justin.Controls.Executer
             catch (Exception ex)
             {
                 this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
+            }
+            finally
+            {
+                watch.Stop();
+                this.ShowMessage(string.Format("查询耗时{0}毫秒,", watch.ElapsedMilliseconds));
             }
         }
 

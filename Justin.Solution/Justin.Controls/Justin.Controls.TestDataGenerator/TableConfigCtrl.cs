@@ -149,8 +149,15 @@ namespace Justin.Controls.TestDataGenerator
                 {
                     File.Delete(fileName);
                 }
-                TableSetting.Process(this.ConnStr);
-                this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
+                try
+                {
+                    TableSetting.Process(this.ConnStr);       
+                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
+                }
+                catch (Exception ex)
+                {
+                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成失败:{2}!", TableSetting.TableName, fileName,ex.ToString()));
+                }
             });
         }
         private void btnExecuteTableSQL_Click(object sender, EventArgs e)

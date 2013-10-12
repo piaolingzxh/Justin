@@ -31,6 +31,8 @@ namespace Justin.Toolbox
         public TestDataGenerator()
         {
             InitializeComponent();
+            TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
+
         }
 
         public TestDataGenerator(string connStr)

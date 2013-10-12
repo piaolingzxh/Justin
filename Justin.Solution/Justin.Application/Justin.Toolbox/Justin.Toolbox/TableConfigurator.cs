@@ -30,7 +30,6 @@ namespace Justin.Toolbox
         {
 
             InitializeComponent();
-            TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
             string fieldValueFormat = ConfigurationManager.AppSettings["FieldValueFormat"];
             if (!string.IsNullOrEmpty(fieldValueFormat))
             {
