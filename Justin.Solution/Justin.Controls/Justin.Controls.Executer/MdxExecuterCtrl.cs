@@ -77,6 +77,10 @@ namespace Justin.Controls.Executer
                 gvMdxresult.DataSource = dt;
                 ShowResult(dt);
             }
+            catch (AdomdException aex)
+            {
+                this.ShowMessage(string.Format("Mdx查询出错{0},", aex.ToString()));
+            }
             catch (Exception ex)
             {
                 this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
@@ -147,6 +151,29 @@ namespace Justin.Controls.Executer
         private void btnDefaultConnStr_Click(object sender, EventArgs e)
         {
             this.txtConnectionString.Text = DefaultConnStr;
+        }
+
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            if (gvMdxresult.DataSource != null && gvMdxresult.DataSource is DataTable)
+            {
+                DataTable dt = gvMdxresult.DataSource as DataTable;
+
+                SaveFileDialog sfd = new SaveFileDialog();
+                //设置文件类型 
+                sfd.Filter = "Excel文件（*.xls）|*.xls";
+                //设置默认文件类型显示顺序 
+                sfd.FilterIndex = 1;
+                //保存对话框是否记忆上次打开的目录 
+                sfd.RestoreDirectory = true;
+
+                //点了保存按钮进入 
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    ExcelHelper.Output(dt, sfd.FileName);
+                }
+            }
+            this.ShowMessage("导出成功");
         }
 
     }

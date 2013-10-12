@@ -95,6 +95,7 @@
     <Content Include="Images\clear.png" />
     <Content Include="Images\conn.png" />
     <Content Include="Images\edit1.png" />
+    <None Include="Images\excel.PNG" />
     <Content Include="Images\execute.png" />
     <Content Include="Images\ExecuteAll.png" />
     <Content Include="Images\ExecuteByLine.png" />

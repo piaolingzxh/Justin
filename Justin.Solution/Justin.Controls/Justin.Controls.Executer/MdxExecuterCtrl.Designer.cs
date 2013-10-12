@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.txtMdx = new ICSharpCode.TextEditor.TextEditorControl();
@@ -47,6 +47,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnConnectOLAP = new System.Windows.Forms.Button();
+            this.btnExportExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -115,6 +116,7 @@
             this.tableLayoutPanel6.Controls.Add(this.btnExecuteDataSet, 0, 3);
             this.tableLayoutPanel6.Controls.Add(this.button2, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.btnDefaultConnStr, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.btnExportExcel, 0, 5);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(829, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -133,6 +135,7 @@
             // 
             // btnClear
             // 
+            this.btnClear.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnClear.Image = global::Justin.Controls.Executer.Properties.Resources.clear;
             this.btnClear.Location = new System.Drawing.Point(3, 123);
             this.btnClear.Name = "btnClear";
@@ -144,6 +147,7 @@
             // 
             // btnExecute
             // 
+            this.btnExecute.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExecute.Image = global::Justin.Controls.Executer.Properties.Resources.execute;
             this.btnExecute.Location = new System.Drawing.Point(3, 33);
             this.btnExecute.Name = "btnExecute";
@@ -155,6 +159,7 @@
             // 
             // btnExecuteDataSet
             // 
+            this.btnExecuteDataSet.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnExecuteDataSet.Image = global::Justin.Controls.Executer.Properties.Resources.execute;
             this.btnExecuteDataSet.Location = new System.Drawing.Point(3, 93);
             this.btnExecuteDataSet.Name = "btnExecuteDataSet";
@@ -166,6 +171,7 @@
             // 
             // button2
             // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button2.Image = global::Justin.Controls.Executer.Properties.Resources.execute;
             this.button2.Location = new System.Drawing.Point(3, 63);
             this.button2.Name = "button2";
@@ -177,10 +183,11 @@
             // 
             // btnDefaultConnStr
             // 
+            this.btnDefaultConnStr.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDefaultConnStr.Image = global::Justin.Controls.Executer.Properties.Resources.conn;
             this.btnDefaultConnStr.Location = new System.Drawing.Point(3, 3);
             this.btnDefaultConnStr.Name = "btnDefaultConnStr";
-            this.btnDefaultConnStr.Size = new System.Drawing.Size(38, 23);
+            this.btnDefaultConnStr.Size = new System.Drawing.Size(38, 24);
             this.btnDefaultConnStr.TabIndex = 6;
             this.btnDefaultConnStr.Tag = "Set Default OLAP Connection String";
             this.btnDefaultConnStr.UseVisualStyleBackColor = true;
@@ -204,34 +211,34 @@
             // gvMdxresult
             // 
             this.gvMdxresult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvMdxresult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvMdxresult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.gvMdxresult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gvMdxresult.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gvMdxresult.DefaultCellStyle = dataGridViewCellStyle11;
             this.gvMdxresult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvMdxresult.Location = new System.Drawing.Point(3, 29);
             this.gvMdxresult.Name = "gvMdxresult";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvMdxresult.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvMdxresult.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.gvMdxresult.Size = new System.Drawing.Size(870, 241);
             this.gvMdxresult.TabIndex = 4;
             // 
@@ -294,6 +301,18 @@
             this.btnConnectOLAP.UseVisualStyleBackColor = true;
             this.btnConnectOLAP.Click += new System.EventHandler(this.btnConnectOLAP_Click);
             // 
+            // btnExportExcel
+            // 
+            this.btnExportExcel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExportExcel.Image = global::Justin.Controls.Executer.Properties.Resources.excel;
+            this.btnExportExcel.Location = new System.Drawing.Point(3, 153);
+            this.btnExportExcel.Name = "btnExportExcel";
+            this.btnExportExcel.Size = new System.Drawing.Size(38, 24);
+            this.btnExportExcel.TabIndex = 5;
+            this.btnExportExcel.Tag = "Clear Query Result";
+            this.btnExportExcel.UseVisualStyleBackColor = true;
+            this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
+            // 
             // MdxExecuterCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,6 +355,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnDefaultConnStr;
+        private System.Windows.Forms.Button btnExportExcel;
 
     }
 }

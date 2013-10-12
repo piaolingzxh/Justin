@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Olapdemo.cs" />
     <Compile Include="IOLAPFactory.cs" />
     <Compile Include="Programs.cs" />
     <Compile Include="Entities\SSAS.cs" />
