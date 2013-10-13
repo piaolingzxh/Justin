@@ -51,13 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD:Justin.Solution/Justin.Controls/Justin.BI.OLAP/Justin.BI.OLAP.csproj
-    <Compile Include="Olapdemo.cs" />
-    <Compile Include="IOLAPFactory.cs" />
-    <Compile Include="Programs.cs" />
-    <Compile Include="Entities\SSAS.cs" />
-    <Compile Include="interf.cs" />
-=======
     <Compile Include="Program.cs" />
     <Compile Include="ETL\ETLService.cs" />
     <Compile Include="ETL\ETLTest.cs" />
@@ -83,7 +76,6 @@
     <Compile Include="OLAP\MondrianFactory.cs" />
     <Compile Include="OLAP\SSASFactory.cs" />
     <Compile Include="OLAP\OLAPTest.cs" />
->>>>>>> 01102e3e00d138963affa3ccaa83b598f16d9eb1:Justin.Solution/Justin.Controls/Justin.BI/Justin.BI.csproj
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +89,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
