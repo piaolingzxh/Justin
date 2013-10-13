@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Justin.FrameWork.WinForm.Utility;
 using WeifenLuo.WinFormsUI.Docking;
 using Justin.FrameWork.WinForm.Models;
+using Justin.FrameWork.Utility;
 
 namespace Justin.Core
 {
@@ -57,7 +58,7 @@ namespace Justin.Core
             if (this is IFile)
             {
                 IFile file = this as IFile;
-                this.saveFileDialog1.Filter = Tools.GetOpenFileDialogFilter(file.Extension);
+                this.saveFileDialog1.Filter = Tools.GetFileDialogFilter(file.Extension);
             }
         }
 
@@ -79,14 +80,14 @@ namespace Justin.Core
         private ToolStripMenuItem FormatFileToolStripMenuItem;
         private void FormatFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.SaveFile(this.FileName);
+            this.SaveFile(this.FileName,this.GetExtension());
             JFormat.FormatFile(this.FileName);
             this.LoadFile(this.FileName);
         }
         private ToolStripMenuItem SaveFileToolStripMenuItem;
         private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.SaveFile(this.FileName);
+            this.SaveFile(this.FileName,this.GetExtension());
         }
         private ToolStripMenuItem SaveFileAsToolStripMenuItem;
         private void SaveFileAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,7 +95,7 @@ namespace Justin.Core
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 this.FileName = saveFileDialog1.FileName;
-                this.SaveFile(saveFileDialog1.FileName);
+                this.SaveFile(saveFileDialog1.FileName,this.GetExtension());
             }
 
         }
@@ -244,8 +245,10 @@ namespace Justin.Core
         {
             this.Text = Path.GetFileName(this.FileName);
         }
-        public virtual void SaveFile(string fileName)
+        public virtual void SaveFile(string fileName,string extensions)
         {
+            saveFileDialog1.Filter = Tools.GetFileDialogFilter(extensions);
+            saveFileDialog1.FilterIndex = 1;
             string tempFileName = "";
             if (string.IsNullOrEmpty(fileName))
             {
@@ -270,7 +273,7 @@ namespace Justin.Core
         {
             if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
             {
-                this.ShowMessage(string.Format("文件{0}不存在", fileName));
+                this.ShowMessage(string.Format("文件[{0}]不存在", fileName));
                 return;
             }
             if (LoadAction != null)
@@ -279,6 +282,16 @@ namespace Justin.Core
             }
             this.FileName = fileName;
             OnFileChanged(fileName);
+        }
+
+        public string GetExtension()
+        {
+            if (this is IFile)
+            { 
+                IFile file= this as IFile;
+                return file.Extension;
+            }
+            return "";
         }
 
         #endregion
@@ -322,6 +335,8 @@ namespace Justin.Core
                 this.statusStrip1.Visible = value;
             }
         }
+
+
 
     }
 }

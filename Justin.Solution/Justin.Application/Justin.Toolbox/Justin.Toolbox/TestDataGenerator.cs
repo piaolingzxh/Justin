@@ -31,6 +31,8 @@ namespace Justin.Toolbox
         public TestDataGenerator()
         {
             InitializeComponent();
+            TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
+
         }
 
         public TestDataGenerator(string connStr)
@@ -136,7 +138,7 @@ namespace Justin.Toolbox
             this.CheckConnStringAssigned(() =>
             {
                 string tableNameFilter = txtTableNameFilter.Text;
-                MSSQLTableDAL tableDAL = new MSSQLTableDAL(this.ConnStr);
+                TableDAL tableDAL = new MSSQLTableDAL(this.ConnStr);
                 IEnumerable<string> dsTables = tableDAL.GetAllTables();
                 if (!string.IsNullOrEmpty(tableNameFilter))
                 {
@@ -166,7 +168,7 @@ namespace Justin.Toolbox
 
                 tvSource.Nodes.Clear();
                 tvSource.ImageList = imageList1;
-                MSSQLTableDAL tableDAL = new MSSQLTableDAL(this.ConnStr);
+                TableDAL tableDAL = new MSSQLTableDAL(this.ConnStr);
                 var dbTables = tableDAL.GetAllTableSchema(tableNames);
                 foreach (var dbTable in dbTables)
                 {

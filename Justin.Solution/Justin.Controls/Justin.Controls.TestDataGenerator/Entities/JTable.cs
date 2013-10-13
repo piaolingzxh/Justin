@@ -11,6 +11,7 @@ using Justin.Controls.TestDataGenerator.DAL;
 using Justin.Controls.TestDataGenerator.Utility;
 using System.IO;
 using Justin.FrameWork.Helper;
+using System.Data.OleDb;
 namespace Justin.Controls.TestDataGenerator.Entities
 {
     public delegate void SQLProcess(StringBuilder sqlBuilder, JTable table);
@@ -52,13 +53,13 @@ namespace Justin.Controls.TestDataGenerator.Entities
         public static string NumericFieldValueFormat = "{0}";
         public static string StringFieldValueFormat = "'{0}'";
         public static string DateTimeFieldValueFormat = "{{ts'{0}'}}";
-        private string GetFileValueFormat(JValueType valueType)
+        private string GetFileValueFormat(JFieldType valueType)
         {
             switch (valueType)
             {
-                case JValueType.Numeric: return NumericFieldValueFormat + ",";
-                case JValueType.String: return StringFieldValueFormat + ",";
-                case JValueType.DateTime: return DateTimeFieldValueFormat + ",";
+                case JFieldType.Numeric: return NumericFieldValueFormat + ",";
+                case JFieldType.String: return StringFieldValueFormat + ",";
+                case JFieldType.DateTime: return DateTimeFieldValueFormat + ",";
                 default: return StringFieldValueFormat;
             }
         }
@@ -72,7 +73,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
             {
                 connStr = this.ConnStr;
             }
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (OleDbConnection conn = new OleDbConnection(connStr))
             {
 
                 JTable table = this;
@@ -104,11 +105,11 @@ namespace Justin.Controls.TestDataGenerator.Entities
                             object value2 = field.SecondOperand == null ? null : field.SecondOperand.GetValue(conn, fieldValuesOfCurrentRow);
                             object value = value1;
 
-                            if (field.Operator != null && field.SecondOperand != null && field.SecondOperand.ValueType == JValueType.Numeric)
+                            if (field.Operator != null && field.SecondOperand != null && field.SecondOperand.ValueType == JFieldType.Numeric)
                             {
                                 switch (field.FirstOperand.ValueType)
                                 {
-                                    case JValueType.DateTime:
+                                    case JFieldType.DateTime:
                                         DateTime dtValue1 = DateTime.Parse(value1.ToJString(DateTime.Now.ToString()));
                                         double dtParameter = double.Parse(value2.ToJString("0"));
 
@@ -121,7 +122,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
                                             case "%": throw new FieldValueTypeNotSupportOperatorException(field.FieldName, field.ValueType, "%");
                                         }
                                         break;
-                                    case JValueType.Numeric:
+                                    case JFieldType.Numeric:
                                         double numericParameter1 = double.Parse(value1.ToJString("0"));
                                         double numericParameter2 = double.Parse(value2.ToJString("0"));
                                         switch (field.Operator)
@@ -133,7 +134,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
                                             case "%": value = (int)numericParameter1 % (int)numericParameter2; break;
                                         }
                                         break;
-                                    case JValueType.String:
+                                    case JFieldType.String:
                                         string strValue1 = value1.ToJString("");
                                         string strValue2 = value2.ToJString("");
 
@@ -151,7 +152,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
                             fieldValueBuilder.AppendFormat(
                              GetFileValueFormat(field.ValueType)
-                             , field.ValueType == JValueType.DateTime ? DateTime.Parse(value.ToString()).ToString("yyyy-MM-dd HH:mm:ss") : value
+                             , field.ValueType == JFieldType.DateTime ? DateTime.Parse(value.ToString()).ToString("yyyy-MM-dd HH:mm:ss") : value
                                 );
                             fieldValuesOfCurrentRow.Add(field.FieldName, value);
                         }
@@ -187,7 +188,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
                 }
             }
         }
-        private NotSupportedException GetException(string filedName, JValueType valueType, JValueCategroy sourceValueCategroy)
+        private NotSupportedException GetException(string filedName, JFieldType valueType, JValueCategroy sourceValueCategroy)
         {
             throw new NotSupportedException(string.Format("{0}不支持{1},Filed:{2}", valueType.ToString(), sourceValueCategroy.ToString(), filedName));
         }
@@ -219,7 +220,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
         public JField(DBColumn column)
         {
             this.FieldName = column.ColumnName;
-            this.ValueType = JField.GetJValueType(column.DbType);
+            this.ValueType = column.DbType;
             this.FirstOperand = new JOperateNum(this.FieldName, this.ValueType);
             this.AllowNull = column.AllowNull;
             if (column is DBPrimaryKey)
@@ -246,7 +247,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
         public bool AllowNull { get; set; }
         public int Order { get; set; }
 
-        public JValueType ValueType { get; set; }
+        public JFieldType ValueType { get; set; }
         public JOperateNum FirstOperand { get; set; }
         public JOperateNum SecondOperand { get; set; }
         public string Operator { get; set; }
@@ -266,42 +267,42 @@ namespace Justin.Controls.TestDataGenerator.Entities
                 Visible = true;
             }
         }
-        private static JValueType GetJValueType(SqlDbType dbType)
+        private static JFieldType GetJValueType(OleDbType dbType)
         {
 
             switch (dbType)
             {
-                case SqlDbType.BigInt: return JValueType.Numeric;
-                case SqlDbType.Binary: return JValueType.String;
-                case SqlDbType.Bit: return JValueType.String;
-                case SqlDbType.Char: return JValueType.String;
-                case SqlDbType.DateTime: return JValueType.DateTime;
-                case SqlDbType.Decimal: return JValueType.Numeric;
-                case SqlDbType.Float: return JValueType.Numeric;
-                case SqlDbType.Image: return JValueType.String;
-                case SqlDbType.Int: return JValueType.Numeric;
-                case SqlDbType.Money: return JValueType.Numeric;
-                case SqlDbType.NChar: return JValueType.String;
-                case SqlDbType.NText: return JValueType.String;
-                case SqlDbType.NVarChar: return JValueType.String;
-                case SqlDbType.Real: return JValueType.String;
-                case SqlDbType.UniqueIdentifier: return JValueType.String;
-                case SqlDbType.SmallDateTime: return JValueType.DateTime;
-                case SqlDbType.SmallInt: return JValueType.Numeric;
-                case SqlDbType.SmallMoney: return JValueType.Numeric;
-                case SqlDbType.Text: return JValueType.String;
-                case SqlDbType.Timestamp: return JValueType.DateTime;
-                case SqlDbType.TinyInt: return JValueType.Numeric;
-                case SqlDbType.VarBinary: return JValueType.String;
-                case SqlDbType.VarChar: return JValueType.String;
-                case SqlDbType.Variant: return JValueType.String;
-                case SqlDbType.Xml: return JValueType.String;
-                case SqlDbType.Udt: return JValueType.String;
-                case SqlDbType.Structured: return JValueType.String;
-                case SqlDbType.Date: return JValueType.DateTime;
-                case SqlDbType.Time: return JValueType.DateTime;
-                case SqlDbType.DateTime2: return JValueType.DateTime;
-                case SqlDbType.DateTimeOffset: return JValueType.DateTime;
+                //case SqlDbType.BigInt: return JValueType.Numeric;
+                //case SqlDbType.Binary: return JValueType.String;
+                //case SqlDbType.Bit: return JValueType.String;
+                //case SqlDbType.Char: return JValueType.String;
+                //case SqlDbType.DateTime: return JValueType.DateTime;
+                //case SqlDbType.Decimal: return JValueType.Numeric;
+                //case SqlDbType.Float: return JValueType.Numeric;
+                //case SqlDbType.Image: return JValueType.String;
+                //case SqlDbType.Int: return JValueType.Numeric;
+                //case SqlDbType.Money: return JValueType.Numeric;
+                //case SqlDbType.NChar: return JValueType.String;
+                //case SqlDbType.NText: return JValueType.String;
+                //case SqlDbType.NVarChar: return JValueType.String;
+                //case SqlDbType.Real: return JValueType.String;
+                //case SqlDbType.UniqueIdentifier: return JValueType.String;
+                //case SqlDbType.SmallDateTime: return JValueType.DateTime;
+                //case SqlDbType.SmallInt: return JValueType.Numeric;
+                //case SqlDbType.SmallMoney: return JValueType.Numeric;
+                //case SqlDbType.Text: return JValueType.String;
+                //case SqlDbType.Timestamp: return JValueType.DateTime;
+                //case SqlDbType.TinyInt: return JValueType.Numeric;
+                //case SqlDbType.VarBinary: return JValueType.String;
+                //case SqlDbType.VarChar: return JValueType.String;
+                //case SqlDbType.Variant: return JValueType.String;
+                //case SqlDbType.Xml: return JValueType.String;
+                //case SqlDbType.Udt: return JValueType.String;
+                //case SqlDbType.Structured: return JValueType.String;
+                //case SqlDbType.Date: return JValueType.DateTime;
+                //case SqlDbType.Time: return JValueType.DateTime;
+                //case SqlDbType.DateTime2: return JValueType.DateTime;
+                //case SqlDbType.DateTimeOffset: return JValueType.DateTime;
             }
             throw new NotSupportedException();
         }
@@ -313,7 +314,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
     {
         public string TableName { get; set; }
         public string fieldName { get; set; }
-        public object[] Values { get; set; }
+        public object Value { get; set; }
     }
     public class JOperateNum
     {
@@ -322,9 +323,9 @@ namespace Justin.Controls.TestDataGenerator.Entities
         public JOperateNum()
         {
             this.Values = new List<object>();
-            this.ValueType = JValueType.Numeric;
+            this.ValueType = JFieldType.Numeric;
         }
-        public JOperateNum(string fieldName, JValueType valueType)
+        public JOperateNum(string fieldName, JFieldType valueType)
             : this()
         {
             this.FieldName = fieldName;
@@ -332,7 +333,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
             this.Values = new List<object>();
         }
         private string FieldName { get; set; }
-        public JValueType ValueType { get; set; }
+        public JFieldType ValueType { get; set; }
         public JValueCategroy ValueCategroy { get; set; }
 
         //Range或Sequence
@@ -353,7 +354,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
         public string OtherFiledName { get; set; }
 
 
-        public object GetValue(SqlConnection conn, Dictionary<string, object> fieldValuesOfCurrentRow)
+        public object GetValue(OleDbConnection conn, Dictionary<string, object> fieldValuesOfCurrentRow)
         {
             if (this == null)
             {
@@ -381,7 +382,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
                     switch (this.ValueType)
                     {
-                        case JValueType.DateTime:
+                        case JFieldType.DateTime:
 
                             #region Range
 
@@ -395,7 +396,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
                             #endregion
 
-                        case JValueType.Numeric:
+                        case JFieldType.Numeric:
 
                             #region Range
 
@@ -416,9 +417,9 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
                             #endregion
 
-                        case JValueType.String:
+                        case JFieldType.String:
 
-                            value = String.Format(this.Format, rd.Next((Int32)this.MinValue, (Int32)this.MaxValue));
+                            value = String.Format(string.IsNullOrEmpty(this.Format) ? "{0}" : this.Format, rd.Next((Int32)this.MinValue, (Int32)this.MaxValue));
 
                             break;
 
@@ -433,14 +434,14 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
                     switch (this.ValueType)
                     {
-                        case JValueType.DateTime:
+                        case JFieldType.DateTime:
                             #region Sequence
 
                             throw new FieldValueTypeNotSupportValueCategroyException(this.FieldName, this.ValueType, this.ValueCategroy);
 
                             #endregion
 
-                        case JValueType.Numeric:
+                        case JFieldType.Numeric:
                             #region Sequence
 
                             value = this.MinValue;
@@ -449,9 +450,9 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
                             #endregion
 
-                        case JValueType.String:
+                        case JFieldType.String:
 
-                            value = String.Format(this.Format, this.MinValue);
+                            value = String.Format(string.IsNullOrEmpty(this.Format) ? "{0}" : this.Format, this.MinValue);
                             this.MinValue = int.Parse(this.MinValue.ToJString("0")) + int.Parse(this.Step.ToJString("0"));
                             break;
 
@@ -479,10 +480,10 @@ namespace Justin.Controls.TestDataGenerator.Entities
                         {
                             fieldName = refColumnName,
                             TableName = refTableName,
-                            Values = CommonDAL.GetValues(conn, refTableName, refColumnName, refFilter).ToArray()
+                            Value = CommonDAL.GetValue(conn, refTableName, refColumnName, refFilter)
                         };
 
-                    value = tempData.Values[rd.Next(0, tempData.Values.Count())];
+                    value = tempData.Value;
                     break;
 
                     #endregion
@@ -520,7 +521,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
         OtherField
     }
 
-    public enum JValueType
+    public enum JFieldType
     {
         Numeric,
         String,
@@ -533,7 +534,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
     public class FieldValueTypeNotSupportValueCategroyException : NotSupportedException
     {
-        public FieldValueTypeNotSupportValueCategroyException(string filedName, JValueType valueType, JValueCategroy sourceValueCategroy)
+        public FieldValueTypeNotSupportValueCategroyException(string filedName, JFieldType valueType, JValueCategroy sourceValueCategroy)
             : base(string.Format("{0}不支持{1},Filed:{2}", valueType.ToString(), sourceValueCategroy.ToString(), filedName))
         {
         }
@@ -541,7 +542,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
     }
     public class FieldValueTypeNotSupportOperatorException : NotSupportedException
     {
-        public FieldValueTypeNotSupportOperatorException(string filedName, JValueType valueType, string operate)
+        public FieldValueTypeNotSupportOperatorException(string filedName, JFieldType valueType, string operate)
             : base(string.Format("{0}不支持{1},Filed:{2}", valueType.ToString(), operate, filedName))
         {
         }

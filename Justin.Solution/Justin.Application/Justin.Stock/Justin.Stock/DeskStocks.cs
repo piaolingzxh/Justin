@@ -87,6 +87,14 @@ namespace Justin.Stock
         {
             myStock.Show(0);
         }
+        private void personalMenuItem_Click(object sender, EventArgs e)
+        {
+            myStock.Show(1);
+        }
+        private void settingMenuItem_Click(object sender, EventArgs e)
+        {
+            myStock.Show(3);
+        }
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
             forceClose = true;
@@ -105,10 +113,6 @@ namespace Justin.Stock
             }
         }
 
-        private void settingMenuItem_Click(object sender, EventArgs e)
-        {
-            myStock.Show(3);
-        }
         private void noticeMenu_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
@@ -127,9 +131,7 @@ namespace Justin.Stock
 
         private void SaveFormPosition()
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            string xmlData = SerializeHelper.XmlSerialize<JSettings>(Constants.Setting);
-            xmlDoc.LoadXml(xmlData);
+
             if (Constants.Setting.DBPath == Constants.DefaultDBPath)
             {
                 Constants.Setting.DBPath = Path.GetFileName(Constants.DefaultDBPath);
@@ -138,7 +140,8 @@ namespace Justin.Stock
             Constants.Setting.StartPosition.Left = this.Left;
             Constants.Setting.StartPosition.Height = this.Height;
             Constants.Setting.StartPosition.Width = this.Width;
-            xmlDoc.Save(fileName);
+
+            SerializeHelper.XmlSerializeToFile<JSettings>(Constants.Setting, fileName, true);
         }
 
         #endregion
@@ -284,6 +287,8 @@ namespace Justin.Stock
         {
             this.topMostMenuItem.Checked = this.TopMost;
         }
+
+
 
     }
 }

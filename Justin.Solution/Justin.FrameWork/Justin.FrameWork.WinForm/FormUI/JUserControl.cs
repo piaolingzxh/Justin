@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.Utility;
 
 namespace Justin.FrameWork.WinForm.FormUI
 {
@@ -16,12 +17,16 @@ namespace Justin.FrameWork.WinForm.FormUI
 
         public virtual string FileName { get; set; }
 
-        public virtual void SaveFile(string fileName)
+        public virtual void SaveFile(string fileName,string extensions)
         {
+           
             string tempFileName = "";
             if (string.IsNullOrEmpty(fileName))
             {
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                var form = this.FindForm();
+                saveFileDialog1.Filter = Tools.GetFileDialogFilter(extensions);
+                saveFileDialog1.FilterIndex = 1;
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     tempFileName = saveFileDialog1.FileName;
@@ -36,7 +41,7 @@ namespace Justin.FrameWork.WinForm.FormUI
                 if (SaveAction != null)
                 {
                     SaveAction(tempFileName);
-                    this.ShowMessage(string.Format("文件【{0}】保存成功!",   fileName));
+                    this.ShowMessage(string.Format("文件【{0}】保存成功!", fileName));
                 }
                 this.FileName = tempFileName;
             }

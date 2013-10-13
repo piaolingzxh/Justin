@@ -59,8 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BulkCopyOracle.cs" />
-    <Compile Include="BulkCopySQL.cs" />
     <Compile Include="Entities\SerializableDictionary~.cs" />
     <Compile Include="Extensions\IEnumerableEx.cs" />
     <Compile Include="Entities\BindingCollection~.cs" />
@@ -68,9 +66,11 @@
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\EncryptHelper.cs" />
     <Compile Include="Helper\DBHelper.cs" />
+    <Compile Include="Helper\OleDbHelper.cs" />
     <Compile Include="Helper\OracleHelper2.cs" />
     <Compile Include="Helper\MdxHelper.cs" />
-    <Compile Include="IBulkCopy.cs" />
+    <Compile Include="IBulkCopyWrapper.cs" />
+    <Compile Include="Utility\Tools.cs" />
     <Compile Include="Settings\Constants.cs" />
     <Compile Include="Entities\DisplayAttribute.cs" />
     <Compile Include="Entities\Factor.cs" />

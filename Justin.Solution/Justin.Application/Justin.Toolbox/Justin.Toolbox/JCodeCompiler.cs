@@ -30,7 +30,7 @@ namespace Justin.Toolbox
             CodeComplierCtrl.JDKPath = ConfigurationManager.AppSettings["JDKPath"];
             this.codeComplierCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
             this.LoadAction = (fileName) => { this.codeComplierCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.codeComplierCtrl1.SaveFile(fileName); };
+            this.SaveAction = (fileName) => { this.codeComplierCtrl1.SaveFile(fileName,this.Extension); };
         }
         /// <summary>
         ///     

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{232D990D-5BA8-4A5A-8028-72FA408204DE}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Justin.BI.OLAP</RootNamespace>
-    <AssemblyName>Justin.BI.OLAP</AssemblyName>
+    <RootNamespace>Justin.BI</RootNamespace>
+    <AssemblyName>Justin.BI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Release\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,6 +42,7 @@
       <HintPath>..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,13 +51,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD:Justin.Solution/Justin.Controls/Justin.BI.OLAP/Justin.BI.OLAP.csproj
     <Compile Include="Olapdemo.cs" />
     <Compile Include="IOLAPFactory.cs" />
     <Compile Include="Programs.cs" />
     <Compile Include="Entities\SSAS.cs" />
     <Compile Include="interf.cs" />
+=======
+    <Compile Include="Program.cs" />
+    <Compile Include="ETL\ETLService.cs" />
+    <Compile Include="ETL\ETLTest.cs" />
+    <Compile Include="ETL\Entity\ETLInfo.cs" />
+    <Compile Include="ETL\Entity\View.cs" />
+    <Compile Include="ETL\Entity\Table.cs" />
+    <Compile Include="ETL\Entity\ETLSource.cs" />
+    <Compile Include="ETL\Entity\PrimaryKey.cs" />
+    <Compile Include="ETL\Entity\ForeKey.cs" />
+    <Compile Include="ETL\Entity\Field.cs" />
+    <Compile Include="OLAP\Entity\Aggregator.cs" />
+    <Compile Include="OLAP\Entity\ForeignKeyInfo.cs" />
+    <Compile Include="OLAP\Entity\LevelEntity.cs" />
+    <Compile Include="OLAP\Entity\HierarchyEntity.cs" />
+    <Compile Include="OLAP\Entity\DimensionEntity.cs" />
+    <Compile Include="OLAP\Entity\MeasureEntity.cs" />
+    <Compile Include="OLAP\Entity\CubeEntity.cs" />
+    <Compile Include="OLAP\Entity\Mondrian\Schema.cs" />
+    <Compile Include="OLAP\Entity\Mondrian\SchemaEx.cs" />
+    <Compile Include="OLAP\Entity\Mondrian\SchemaSerializer.cs" />
+    <Compile Include="OLAP\Entity\Solution.cs" />
+    <Compile Include="OLAP\IOLAPFactory.cs" />
+    <Compile Include="OLAP\MondrianFactory.cs" />
+    <Compile Include="OLAP\SSASFactory.cs" />
+    <Compile Include="OLAP\OLAPTest.cs" />
+>>>>>>> 01102e3e00d138963affa3ccaa83b598f16d9eb1:Justin.Solution/Justin.Controls/Justin.BI/Justin.BI.csproj
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SSASFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
@@ -65,8 +93,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OLAPDW.SQL" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

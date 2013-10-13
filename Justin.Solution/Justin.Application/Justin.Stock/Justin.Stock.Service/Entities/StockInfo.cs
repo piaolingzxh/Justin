@@ -27,7 +27,7 @@ namespace Justin.Stock.Service.Entities
         /// <summary>
         /// 显示排序
         /// </summary>
-        public int Order { get; set; }
+        public decimal Order { get; set; }
         /// <summary>
         /// 历史盈亏
         /// </summary>

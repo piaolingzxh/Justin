@@ -236,6 +236,7 @@ namespace Justin.Stock.Controls
                         dataRow.Selected = true;
                 }
             }
+            Constants.ResetMyStock();
         }
 
         private void btnUpdateStockInfo_Click(object sender, EventArgs e)
@@ -389,6 +390,10 @@ namespace Justin.Stock.Controls
         }
         public void Show(int tabIndex = 0)
         {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
             StockService.AddEvent(ShowMyStockInfoChanged);
             base.Show();
             tabControl1.SelectedIndex = tabIndex;

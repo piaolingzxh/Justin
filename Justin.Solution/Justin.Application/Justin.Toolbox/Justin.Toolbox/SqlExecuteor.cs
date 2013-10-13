@@ -28,7 +28,7 @@ namespace Justin.Toolbox
                 this.sqlExecuterCtrl1.LoadFile(fileName);
                 this.ShowInStatus(this.ConnStr);
             };
-            this.SaveAction = (fileName) => { this.sqlExecuterCtrl1.SaveFile(fileName); };
+            this.SaveAction = (fileName) => { this.sqlExecuterCtrl1.SaveFile(fileName,this.Extension); };
         }
         /// <summary>
         ///     

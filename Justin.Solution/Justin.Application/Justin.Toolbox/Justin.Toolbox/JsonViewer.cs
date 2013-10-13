@@ -21,7 +21,7 @@ namespace Justin.Toolbox
             InitializeComponent();
             this.jsonViewCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) => { this.jsonViewCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.jsonViewCtrl1.SaveFile(fileName); };
+            this.SaveAction = (fileName) => { this.jsonViewCtrl1.SaveFile(fileName,this.Extension); };
         
         }
         public JsonViewer(string[] args)

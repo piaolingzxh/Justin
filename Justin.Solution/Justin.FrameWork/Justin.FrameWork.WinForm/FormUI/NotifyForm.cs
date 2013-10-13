@@ -103,5 +103,10 @@ namespace Justin.FrameWork.WinForm.FormUI
             this.TopMost = !this.TopMost;
         }
 
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            this.TopMostMenuItem.Checked = this.TopMost;
+        }
+
     }
 }

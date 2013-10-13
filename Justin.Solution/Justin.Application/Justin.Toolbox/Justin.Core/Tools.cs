@@ -8,7 +8,7 @@ namespace Justin.Core
     public class Tools
     {
         public const string OpenFileDialogFilterFormart = "{1}文件(*.{0})|*.{0}|";
-        public static string GetOpenFileDialogFilter(string extensionsString)
+        public static string GetFileDialogFilter(string extensionsString)
         {
 
             StringBuilder sb = new StringBuilder();

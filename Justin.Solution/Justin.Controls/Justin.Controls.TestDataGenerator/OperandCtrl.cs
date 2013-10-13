@@ -32,7 +32,7 @@ namespace Justin.Controls.TestDataGenerator
             {
                 JOperateNum num = OperateNum;
                 if (num == null)
-                    num = new JOperateNum(this.FieldName, JValueType.Numeric);
+                    num = new JOperateNum(this.FieldName, JFieldType.Numeric);
 
                 num.ValueCategroy = valueCategroy;
                 //Range或者Sequence

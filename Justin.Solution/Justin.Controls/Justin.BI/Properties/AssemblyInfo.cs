@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Justin.BI.OLAP")]
+[assembly: AssemblyTitle("Justin.BI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Justin.BI.OLAP")]
+[assembly: AssemblyProduct("Justin.BI")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fc0bbf10-e68c-416d-8cb8-cb197356c237")]
+[assembly: Guid("574dc6fb-ae6c-4238-99e8-d47066a98983")]
 
 // Version information for an assembly consists of the following four values:
 //

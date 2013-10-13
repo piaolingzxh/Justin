@@ -34,10 +34,11 @@
             this.noticeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.topMostMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MonitorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monitorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DetailInfoToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.deskStockCtrl1 = new Justin.Stock.Controls.DeskStockCtrl();
+            this.personalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noticeMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,38 +53,39 @@
             // 
             this.noticeMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.topMostMenuItem,
+            this.monitorMenuItem,
+            this.personalMenuItem,
             this.settingMenuItem,
-            this.MonitorMenuItem,
             this.exitMenuItem});
             this.noticeMenu.Name = "contextMenuStrip1";
-            this.noticeMenu.Size = new System.Drawing.Size(123, 92);
+            this.noticeMenu.Size = new System.Drawing.Size(153, 136);
             this.noticeMenu.Opening += new System.ComponentModel.CancelEventHandler(this.noticeMenu_Opening);
             // 
             // topMostMenuItem
             // 
             this.topMostMenuItem.Name = "topMostMenuItem";
-            this.topMostMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.topMostMenuItem.Size = new System.Drawing.Size(152, 22);
             this.topMostMenuItem.Text = "TopMost";
             this.topMostMenuItem.Click += new System.EventHandler(this.topMostMenuItem_Click);
             // 
             // settingMenuItem
             // 
             this.settingMenuItem.Name = "settingMenuItem";
-            this.settingMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.settingMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingMenuItem.Text = "Settings";
             this.settingMenuItem.Click += new System.EventHandler(this.settingMenuItem_Click);
             // 
-            // MonitorMenuItem
+            // monitorMenuItem
             // 
-            this.MonitorMenuItem.Name = "MonitorMenuItem";
-            this.MonitorMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.MonitorMenuItem.Text = "Monitor";
-            this.MonitorMenuItem.Click += new System.EventHandler(this.MonitorMenuItem_Click);
+            this.monitorMenuItem.Name = "monitorMenuItem";
+            this.monitorMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.monitorMenuItem.Text = "Monitor";
+            this.monitorMenuItem.Click += new System.EventHandler(this.MonitorMenuItem_Click);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
@@ -94,6 +96,13 @@
             this.deskStockCtrl1.Name = "deskStockCtrl1";
             this.deskStockCtrl1.Size = new System.Drawing.Size(303, 106);
             this.deskStockCtrl1.TabIndex = 2;
+            // 
+            // personalMenuItem
+            // 
+            this.personalMenuItem.Name = "personalMenuItem";
+            this.personalMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.personalMenuItem.Text = "Person";
+            this.personalMenuItem.Click += new System.EventHandler(this.personalMenuItem_Click);
             // 
             // DeskStocks
             // 
@@ -125,8 +134,9 @@
         private System.Windows.Forms.ToolStripMenuItem topMostMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
         private System.Windows.Forms.ToolTip DetailInfoToolTip;
-        private System.Windows.Forms.ToolStripMenuItem MonitorMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem monitorMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingMenuItem;
         private Controls.DeskStockCtrl deskStockCtrl1;
+        private System.Windows.Forms.ToolStripMenuItem personalMenuItem;
     }
 }

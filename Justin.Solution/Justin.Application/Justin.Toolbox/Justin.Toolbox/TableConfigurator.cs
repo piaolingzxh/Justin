@@ -30,7 +30,6 @@ namespace Justin.Toolbox
         {
 
             InitializeComponent();
-            TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
             string fieldValueFormat = ConfigurationManager.AppSettings["FieldValueFormat"];
             if (!string.IsNullOrEmpty(fieldValueFormat))
             {
@@ -56,7 +55,7 @@ namespace Justin.Toolbox
             };
             this.SaveAction = (fileName) =>
             {
-                this.tableConfigCtrl1.SaveFile(fileName);
+                this.tableConfigCtrl1.SaveFile(fileName,this.Extension);
             };
         }
         public TableConfigurator(string[] args)

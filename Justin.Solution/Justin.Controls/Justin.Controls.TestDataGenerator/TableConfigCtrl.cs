@@ -93,7 +93,7 @@ namespace Justin.Controls.TestDataGenerator
                 string fieldName = tvDst.SelectedNode.Tag.ToString();
                 string tableName = tvDst.SelectedNode.Parent.Tag.ToString();
                 JField field = TableSetting.Fields.Where(f => f.FieldName == fieldName).FirstOrDefault();
-                field.ValueType = (JValueType)Enum.Parse(typeof(JValueType), cBoxValueType.Text, true);
+                field.ValueType = (JFieldType)Enum.Parse(typeof(JFieldType), cBoxValueType.Text, true);
                 field.SetVisible(bool.Parse(cBoxVisible.Text));
 
                 field.FirstOperand = operandCtrl1.GetOperateNum();
@@ -134,7 +134,7 @@ namespace Justin.Controls.TestDataGenerator
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
-            base.SaveFile(this.FileName);
+            base.SaveFile(this.FileName,this.Extension);
         }
         private void btnGenerateData_Click(object sender, EventArgs e)
         {
@@ -149,8 +149,15 @@ namespace Justin.Controls.TestDataGenerator
                 {
                     File.Delete(fileName);
                 }
-                TableSetting.Process(this.ConnStr);
-                this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
+                try
+                {
+                    TableSetting.Process(this.ConnStr);       
+                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
+                }
+                catch (Exception ex)
+                {
+                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成失败:{2}!", TableSetting.TableName, fileName,ex.ToString()));
+                }
             });
         }
         private void btnExecuteTableSQL_Click(object sender, EventArgs e)
@@ -263,11 +270,11 @@ namespace Justin.Controls.TestDataGenerator
         {
             var fieldNode = new TreeNode(field.FieldName);
             fieldNode.Tag = field.FieldName;
-            if (field.ValueType == JValueType.DateTime)
+            if (field.ValueType == JFieldType.DateTime)
             {
                 fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 4;
             }
-            else if (field.ValueType == JValueType.Numeric)
+            else if (field.ValueType == JFieldType.Numeric)
             {
                 fieldNode.ImageIndex = fieldNode.SelectedImageIndex = 5;
             }

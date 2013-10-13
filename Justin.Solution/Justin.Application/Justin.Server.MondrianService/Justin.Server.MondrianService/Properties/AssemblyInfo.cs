@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Justin.BI.ETL")]
+[assembly: AssemblyTitle("Justin.Server.MondrianService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Justin.BI.ETL")]
+[assembly: AssemblyProduct("Justin.Server.MondrianService")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ada5420f-d961-4b03-93c3-d9dee9c42e2b")]
+[assembly: Guid("931f7066-15c1-4c05-8b91-ac4c6106ff7e")]
 
 // Version information for an assembly consists of the following four values:
 //

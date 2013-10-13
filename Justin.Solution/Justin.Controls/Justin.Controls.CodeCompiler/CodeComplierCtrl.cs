@@ -35,7 +35,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnCompiler_Click(object sender, EventArgs e)
         {
-            this.SaveFile(FileName);
+            this.SaveFile(FileName,this.Extension);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -45,7 +45,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            this.SaveFile(FileName);
+            this.SaveFile(FileName,this.Extension);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -55,7 +55,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnShowILCode_Click(object sender, EventArgs e)
         {
-            this.SaveFile(FileName);
+            this.SaveFile(FileName,this.Extension);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;

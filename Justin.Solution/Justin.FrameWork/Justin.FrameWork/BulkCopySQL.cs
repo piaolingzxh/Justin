@@ -15,7 +15,7 @@ namespace Justin.FrameWork
             SqlConnection sqlConn = conn as SqlConnection;
             Check(conn);
 
-            using (SqlBulkCopy sqlBC = new SqlBulkCopy(sqlConn))
+            using (SqlBulkCopyWrapper sqlBC = new SqlBulkCopyWrapper(sqlConn))
             {
                 sqlBC.BatchSize = 10000;
                 sqlBC.BulkCopyTimeout = 600;
@@ -47,14 +47,7 @@ namespace Justin.FrameWork
             Insert(sqlConn, tableName, sourceData, columnMappings, state);
         }
 
-        public void TruncateTable(DbConnection conn, string tableName)
-        {
-            Check(conn);
-            SqlConnection sqlConn = conn as SqlConnection;
-            SqlCommand cmd = new SqlCommand(string.Format("truncate table {0}", tableName), sqlConn);
-            cmd.CommandTimeout = 600;
-            cmd.ExecuteNonQuery();
-        }
+         
 
         public void Check(DbConnection conn)
         {
