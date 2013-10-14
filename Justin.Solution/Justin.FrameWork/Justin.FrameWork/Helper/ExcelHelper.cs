@@ -11,7 +11,7 @@ namespace Justin.FrameWork.Helper
     {
         public  static void Output(DataTable dt, string fileName)
         {
-            Stream myStream = File.Open(fileName,FileMode.OpenOrCreate,FileAccess.ReadWrite);
+            Stream myStream = File.Open(fileName,FileMode.Create,FileAccess.ReadWrite);
             StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
             string columnTitle = "";
             try
