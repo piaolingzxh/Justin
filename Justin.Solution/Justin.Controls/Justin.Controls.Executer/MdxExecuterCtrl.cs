@@ -179,16 +179,15 @@ namespace Justin.Controls.Executer
                 sfd.Filter = "Excel文件（*.xls）|*.xls";
                 //设置默认文件类型显示顺序 
                 sfd.FilterIndex = 1;
-                //保存对话框是否记忆上次打开的目录 
-                sfd.RestoreDirectory = true;
 
                 //点了保存按钮进入 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     ExcelHelper.Output(dt, sfd.FileName);
                 }
+                this.ShowMessage("导出成功！");
             }
-            this.ShowMessage("导出成功");
+            this.ShowMessage("没有数据可以导出！");
         }
 
     }
