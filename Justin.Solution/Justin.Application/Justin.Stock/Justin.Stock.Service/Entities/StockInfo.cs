@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Justin.Stock.Service.Entities
 {
-    public class StockInfo
+    public class StockInfo : StockBaseInfo
     {
         #region 非实时数据
 
-        public string Code { get; set; }
-        public string No { get; set; }
-        public string Name { get; set; }
-        public string SpellingInShort { get; set; }
+        //public string Code { get; set; }
+        //public string No { get; set; }
+        //public string Name { get; set; }
+        //public string SpellingInShort { get; set; }
         public decimal WarnPrice_Min { get; set; }
         public decimal WarnPrice_Max { get; set; }
         public decimal WarnPercent_Max { get; set; }

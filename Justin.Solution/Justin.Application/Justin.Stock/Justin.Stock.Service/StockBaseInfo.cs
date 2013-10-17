@@ -10,21 +10,35 @@ namespace Justin.Stock.Service
         public StockBaseInfo() { }
         public StockBaseInfo(string code, string no, string name)
         {
-            this.StockCode = code;
-            this.StockNo = no;
-            this.StockName = name;
+            this.Code = code;
+            this.No = no;
+            this.Name = name;
 
         }
-        public string StockName { get; set; }
-        public string StockCode { get; set; }
-        public string StockNo { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string No { get; set; }
         public string SpellingInShort { get; set; }
 
-        public bool IsGemBoard
+        public string CategroyDesc
         {
             get
             {
-                return this.StockNo.StartsWith("300");
+                string desc = "";
+                string no = this.No;
+                if (no.StartsWith("300"))
+                { desc = "创业版"; }
+                else if (no.StartsWith("600") || no.StartsWith("601"))
+                { desc = "沪市A股"; }
+                else if (no.StartsWith("900"))
+                { desc = "沪市B股"; }
+                else if (no.StartsWith("000"))
+                { desc = "深市A股"; }
+                else if (no.StartsWith("002"))
+                { desc = "中小板"; }
+                else if (no.StartsWith("200"))
+                { desc = "沪市B股"; }
+                return desc;
             }
         }
 

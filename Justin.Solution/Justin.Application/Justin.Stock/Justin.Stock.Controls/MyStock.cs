@@ -118,7 +118,7 @@ namespace Justin.Stock.Controls
             if (!string.IsNullOrEmpty(txtSrockName.Text))
             {
                 string value = txtSrockName.Text.Trim();
-                allStocks = allStocks.Where(row => row.StockCode.IndexOf(value) >= 0 || row.StockName.IndexOf(value) >= 0 || row.StockNo.IndexOf(value) >= 0 || row.SpellingInShort.IndexOf(value) >= 0).ToList();
+                allStocks = allStocks.Where(row => row.Code.IndexOf(value) >= 0 || row.Name.IndexOf(value) >= 0 || row.No.IndexOf(value) >= 0 || row.SpellingInShort.IndexOf(value) >= 0).ToList();
             }
 
             dgvQueryResultStocks.DataSource = new BindingList<StockBaseInfo>(allStocks);

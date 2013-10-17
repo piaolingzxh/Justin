@@ -205,7 +205,7 @@ CREATE TABLE [MyStocks] (
             StringBuilder sb = new StringBuilder();
             foreach (var item in allStocks)
             {
-                sb.AppendFormat(insertSqlFormat, item.StockCode, item.StockNo, item.StockName, item.SpellingInShort).AppendLine();
+                sb.AppendFormat(insertSqlFormat, item.Code, item.No, item.Name, item.SpellingInShort).AppendLine();
             }
 
             SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, sb.ToString(), null);
@@ -244,10 +244,10 @@ CREATE TABLE [MyStocks] (
         {
             StockBaseInfo stock = new StockBaseInfo()
             {
-                StockCode = reader["StockCode"].Value<string>(),
-                StockName = reader["StockName"].Value<string>(),
+                Code = reader["StockCode"].Value<string>(),
+                Name = reader["StockName"].Value<string>(),
                 SpellingInShort = reader["SpellingInShort"].Value<string>(),
-                StockNo = reader["StockNo"].Value<string>(),
+                No = reader["StockNo"].Value<string>(),
             };
             return stock;
         }
