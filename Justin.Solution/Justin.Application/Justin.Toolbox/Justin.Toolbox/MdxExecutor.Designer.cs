@@ -34,7 +34,7 @@
             // 
             // mdxExecuterCtrl1
             // 
-            this.mdxExecuterCtrl1.ConnStr = "Provider=mondrian;Data Source=http://localhost:8080/mondrian350_oracle/xmla";
+            this.mdxExecuterCtrl1.ConnStr = "";
             this.mdxExecuterCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mdxExecuterCtrl1.FileName = null;
             this.mdxExecuterCtrl1.Location = new System.Drawing.Point(0, 0);
