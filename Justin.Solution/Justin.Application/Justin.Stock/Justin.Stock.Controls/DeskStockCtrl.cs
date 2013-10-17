@@ -104,7 +104,7 @@ namespace Justin.Stock.Controls
                 var stocks = stockList.Where(row => row.ShowInFolatWindow).OrderByDescending(row => row.Order).ThenByDescending(row => row.BuyCount);
                 foreach (var rtStock in stocks)
                 {
-                    Label stockLabel = this.GetNewlabel();
+                    Label stockLabel = this.GetNewlabel(rtStock.Order == -1);
 
                     #region 股票桌面信息
 
@@ -430,12 +430,12 @@ namespace Justin.Stock.Controls
 
         #endregion
 
-        private Label GetNewlabel()
+        private Label GetNewlabel(bool bold = false)
         {
             Label stockLabel = new Label();
             stockLabel.ContextMenuStrip = deskMenu;
             stockLabel.Width = 200;
-            stockLabel.Font = new Font("Consolas", 8F, System.Drawing.FontStyle.Regular);
+            stockLabel.Font = new Font("Consolas", 8F, bold ? FontStyle.Bold : FontStyle.Regular);
             stockLabel.Dock = DockStyle.Fill;
             return stockLabel;
         }
