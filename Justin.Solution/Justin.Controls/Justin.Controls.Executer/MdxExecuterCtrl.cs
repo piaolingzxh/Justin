@@ -100,6 +100,8 @@ namespace Justin.Controls.Executer
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
             this.SetToolTipsForButton(new ToolTip());
+            if (string.IsNullOrEmpty(txtConnectionString.Text))
+                this.txtConnectionString.Text = MdxExecuterCtrl.DefaultConnStr;
         }
 
         public override string ConnStr
@@ -147,10 +149,6 @@ namespace Justin.Controls.Executer
             get { return ".mdx"; }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            this.txtConnectionString.Text = "Provider=mondrian;Data Source=http://localhost:8080/mondrian_mssql/xmla;Initial Catalog=gtp;";
-        }
 
         private void btnClear_Click(object sender, EventArgs e)
         {

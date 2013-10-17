@@ -43,10 +43,6 @@
     <Reference Include="AssociationManager">
       <HintPath>..\..\..\Common\Library\AssociationManager.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.TextEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
-    </Reference>
     <Reference Include="Justin.Controls.CodeCompiler">
       <HintPath>..\..\..\Release\Justin.Controls.CodeCompiler.dll</HintPath>
     </Reference>
@@ -61,13 +57,16 @@
     </Reference>
     <Reference Include="Justin.FrameWork">
       <HintPath>..\..\..\Release\Justin.FrameWork.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Justin.FrameWork.WinForm">
       <HintPath>..\..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Justin.Log, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d146da2c886820c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Release\Justin.Log.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -76,6 +75,7 @@
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog">
       <HintPath>..\..\..\Common\Library\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
       <HintPath>..\..\..\Common\Library\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
@@ -98,6 +98,7 @@
     <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Common\Library\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +182,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\Common\Library\AStyle.exe">
+      <Link>AStyle.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="images\ArrowDown.bmp" />
     <Content Include="images\ArrowUp.bmp" />
     <None Include="images\back.png" />
@@ -272,6 +277,7 @@
     <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
       <Project>{2fa07381-d81f-4ba2-a9de-f084529d835c}</Project>
       <Name>Justin.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

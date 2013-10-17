@@ -20,6 +20,13 @@ namespace Justin.Stock.Service
         public string StockNo { get; set; }
         public string SpellingInShort { get; set; }
 
+        public bool IsGemBoard
+        {
+            get
+            {
+                return this.StockNo.StartsWith("300");
+            }
+        }
 
 
     }
