@@ -66,6 +66,11 @@
             this.tabPageAllStockList = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvQueryResultStocks = new System.Windows.Forms.DataGridView();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategroyDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.txtSrockName = new System.Windows.Forms.TextBox();
             this.btnQueryStock = new System.Windows.Forms.Button();
@@ -104,11 +109,7 @@
             this.tabPageStockChart = new System.Windows.Forms.TabPage();
             this.tabPageSetting = new System.Windows.Forms.TabPage();
             this.stockChartCtrl = new Justin.Stock.StockChartCtrl();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CategroyDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deletePersonalStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockSettingsContextMenu.SuspendLayout();
             this.queryResultStocksContextMenu.SuspendLayout();
             this.tabPagePersonalOption.SuspendLayout();
@@ -135,45 +136,46 @@
             // 
             this.stockSettingsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.保存ToolStripMenuItem,
+            this.deletePersonalStockMenuItem,
             this.timeSheetMenuItem,
             this.dayLineMenuItem,
             this.weekLinepMenuItem,
             this.monthLineMenuItem});
             this.stockSettingsContextMenu.Name = "MySrockMenu";
-            this.stockSettingsContextMenu.Size = new System.Drawing.Size(99, 114);
+            this.stockSettingsContextMenu.Size = new System.Drawing.Size(153, 158);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // timeSheetMenuItem
             // 
             this.timeSheetMenuItem.Name = "timeSheetMenuItem";
-            this.timeSheetMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.timeSheetMenuItem.Size = new System.Drawing.Size(152, 22);
             this.timeSheetMenuItem.Text = "分时";
             this.timeSheetMenuItem.Click += new System.EventHandler(this.timeSheetMenuItem_Click);
             // 
             // dayLineMenuItem
             // 
             this.dayLineMenuItem.Name = "dayLineMenuItem";
-            this.dayLineMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.dayLineMenuItem.Size = new System.Drawing.Size(152, 22);
             this.dayLineMenuItem.Text = "日线";
             this.dayLineMenuItem.Click += new System.EventHandler(this.dayKMenuItem_Click);
             // 
             // weekLinepMenuItem
             // 
             this.weekLinepMenuItem.Name = "weekLinepMenuItem";
-            this.weekLinepMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.weekLinepMenuItem.Size = new System.Drawing.Size(152, 22);
             this.weekLinepMenuItem.Text = "周线";
             this.weekLinepMenuItem.Click += new System.EventHandler(this.weekKMenuItem_Click);
             // 
             // monthLineMenuItem
             // 
             this.monthLineMenuItem.Name = "monthLineMenuItem";
-            this.monthLineMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.monthLineMenuItem.Size = new System.Drawing.Size(152, 22);
             this.monthLineMenuItem.Text = "月线";
             this.monthLineMenuItem.Click += new System.EventHandler(this.monthKMenuItem_Click);
             // 
@@ -499,6 +501,43 @@
             this.dgvQueryResultStocks.Size = new System.Drawing.Size(851, 382);
             this.dgvQueryResultStocks.TabIndex = 10;
             this.dgvQueryResultStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvQueryResultStocks_CellMouseDown);
+            // 
+            // Code
+            // 
+            this.Code.ContextMenuStrip = this.queryResultStocksContextMenu;
+            this.Code.DataPropertyName = "Code";
+            this.Code.HeaderText = "Code";
+            this.Code.Name = "Code";
+            this.Code.Width = 57;
+            // 
+            // No
+            // 
+            this.No.DataPropertyName = "No";
+            this.No.HeaderText = "No";
+            this.No.Name = "No";
+            this.No.Width = 46;
+            // 
+            // _Name
+            // 
+            this._Name.DataPropertyName = "Name";
+            this._Name.HeaderText = "StockName";
+            this._Name.Name = "_Name";
+            this._Name.Width = 88;
+            // 
+            // InShort
+            // 
+            this.InShort.DataPropertyName = "SpellingInShort";
+            this.InShort.HeaderText = "InShort";
+            this.InShort.Name = "InShort";
+            this.InShort.Width = 66;
+            // 
+            // CategroyDesc
+            // 
+            this.CategroyDesc.DataPropertyName = "CategroyDesc";
+            this.CategroyDesc.HeaderText = "Categroy";
+            this.CategroyDesc.Name = "CategroyDesc";
+            this.CategroyDesc.ReadOnly = true;
+            this.CategroyDesc.Width = 74;
             // 
             // tableLayoutPanel3
             // 
@@ -904,42 +943,12 @@
             this.stockChartCtrl.Size = new System.Drawing.Size(877, 461);
             this.stockChartCtrl.TabIndex = 0;
             // 
-            // Code
+            // deletePersonalStockMenuItem
             // 
-            this.Code.ContextMenuStrip = this.queryResultStocksContextMenu;
-            this.Code.DataPropertyName = "Code";
-            this.Code.HeaderText = "Code";
-            this.Code.Name = "Code";
-            this.Code.Width = 57;
-            // 
-            // No
-            // 
-            this.No.DataPropertyName = "No";
-            this.No.HeaderText = "No";
-            this.No.Name = "No";
-            this.No.Width = 46;
-            // 
-            // _Name
-            // 
-            this._Name.DataPropertyName = "Name";
-            this._Name.HeaderText = "StockName";
-            this._Name.Name = "_Name";
-            this._Name.Width = 88;
-            // 
-            // InShort
-            // 
-            this.InShort.DataPropertyName = "SpellingInShort";
-            this.InShort.HeaderText = "InShort";
-            this.InShort.Name = "InShort";
-            this.InShort.Width = 66;
-            // 
-            // CategroyDesc
-            // 
-            this.CategroyDesc.DataPropertyName = "CategroyDesc";
-            this.CategroyDesc.HeaderText = "Categroy";
-            this.CategroyDesc.Name = "CategroyDesc";
-            this.CategroyDesc.ReadOnly = true;
-            this.CategroyDesc.Width = 74;
+            this.deletePersonalStockMenuItem.Name = "deletePersonalStockMenuItem";
+            this.deletePersonalStockMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deletePersonalStockMenuItem.Text = "删除";
+            this.deletePersonalStockMenuItem.Click += new System.EventHandler(this.deletePersonalStockMenuItem_Click);
             // 
             // MyStock
             // 
@@ -1058,6 +1067,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn _Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn InShort;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategroyDesc;
+        private System.Windows.Forms.ToolStripMenuItem deletePersonalStockMenuItem;
 
     }
 }

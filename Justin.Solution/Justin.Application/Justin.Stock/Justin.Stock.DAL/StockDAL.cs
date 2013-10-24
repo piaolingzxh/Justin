@@ -93,15 +93,15 @@ CREATE TABLE [MyStocks] (
 
         #region 添加自选
 
-        public void InsertStock(string code, string no, string name, string shortName)
+        public void InsertStock(string code, string no, string name, string shortName,decimal order)
         {
             string CHECK_SQL_FORMAT = "select count(*) from MyStocks where Code='{0}'";
-            string INSERT_SQL_FORMAT = @"insert into MyStocks(Code,No,Name,SpellingInShort,ShowInFolatWindow)values('{0}','{1}','{2}','{3}','false')";
+            string INSERT_SQL_FORMAT = @"insert into MyStocks(Code,No,Name,SpellingInShort,ShowInFolatWindow,[Order])values('{0}','{1}','{2}','{3}',1,{4})";
 
             int count = int.Parse(SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, String.Format(CHECK_SQL_FORMAT, code), null).ToString());
             if (count < 1)
             {
-                string insertSQL = string.Format(INSERT_SQL_FORMAT, code, no, name, shortName);
+                string insertSQL = string.Format(INSERT_SQL_FORMAT, code, no, name, shortName,order);
                 SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, insertSQL, null);
             }
 

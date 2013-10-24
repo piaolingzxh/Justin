@@ -146,7 +146,7 @@ namespace Justin.Stock.Controls
             string shortName = row.Cells["InShort"].Value.ToString();
 
 
-            stockDAL.InsertStock(code, no, name, shortName);
+            stockDAL.InsertStock(code, no, name, shortName, StockService.MyStock.Min(r => r.Order) -(decimal) 0.01);
             RefreshPersonalStockSetting();
 
         }
@@ -173,6 +173,14 @@ namespace Justin.Stock.Controls
                 }
             }
             CurrentStockCode = dgvStocksetting.SelectedRows[0].Cells["StockCode"].Value.Value<String>();
+        }
+        private void deletePersonalStockMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = dgvStocksetting.SelectedRows[0];
+
+            string code = row.Cells["StockCode"].Value.ToString();
+            stockDAL.DeleteStock(code);
+            RefreshPersonalStockSetting();
         }
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -468,6 +476,8 @@ namespace Justin.Stock.Controls
         }
 
         #endregion
+
+        
 
     }
 }
