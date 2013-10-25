@@ -18,6 +18,7 @@ namespace Justin.Toolbox
         public CubeViewer()
         {
             InitializeComponent();
+            
         }
 
         private void CubeViewer_Load(object sender, EventArgs e)

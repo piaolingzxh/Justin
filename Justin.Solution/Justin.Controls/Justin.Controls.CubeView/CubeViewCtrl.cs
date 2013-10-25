@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using Justin.FrameWork.WinForm.FormUI;
 using Microsoft.AnalysisServices.AdomdClient;
+using Justin.FrameWork.Extensions;
 
 namespace Justin.Controls.CubeView
 {
@@ -59,29 +60,43 @@ namespace Justin.Controls.CubeView
         {
             if (string.IsNullOrEmpty(txtConnectionString.Text))
                 this.txtConnectionString.Text = CubeViewCtrl.DefaultConnStr;
-
-
+            //co = new CubeOperate(this.ConnStr);
+            //if (tvServerInfo.Nodes.Count < 1)
+            //    Bindcatalog();
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
             co = new CubeOperate(this.ConnStr);
-            BindCategroy();
+            BindServerInfo();
         }
 
         #region 服务器连接信息
 
-        private void BindCategroy()
+        private void BindServerInfo()
         {
-            TreeNode tvCategroyInfo = new TreeNode("Categroy");
-            tvCategroyInfo.Name = "Categroy";
-            tvCategroyInfo.SelectedImageKey = tvCategroyInfo.ImageKey = "Categroy";
-            tvCategroyInfo.Nodes.Add("Cubes_", "Cubes", "Cubes", "Cubes");
-            tvCategroyInfo.Nodes.Add("Dimensions_", "Dimensions", "Dims", "Dims");
-            tvServerInfo.Nodes.Add(tvCategroyInfo);
+            tvServerInfo.Nodes.Clear();
+            var catalogs = co.Cubes.Select(r => r.Properties["CATALOG_NAME"].Value.ToString()).Distinct();
+            foreach (var catalog in catalogs)
+            {
+                TreeNode catalogNode = new TreeNode(catalog);
+                catalogNode.Name = "catalog";
+                catalogNode.SelectedImageKey = catalogNode.ImageKey = "Catalog";
+                var tempCubes = co.Cubes.Where(r => r.Properties["CATALOG_NAME"].Value.ToString().Equals(catalog));
+                BindCatalog(catalogNode, catalog, tempCubes);
+            }
+        }
 
-            BindServerCubes(tvCategroyInfo.Nodes["Cubes_"], co.Cubes);
-            BindServerDimensions(tvCategroyInfo.Nodes["Dimensions_"], co.Dimensions);
+        private void BindCatalog(TreeNode catalogNode, string catalog, IEnumerable<CubeDef> cubes)
+        {
+            catalogNode.Nodes.Add("Cubes_", "Cubes", "Cubes", "Cubes");
+            catalogNode.Nodes.Add("Dimensions_", "Dimensions", "Dims", "Dims");
+            catalogNode.Expand();
+            tvServerInfo.Nodes.Add(catalogNode);
+
+            BindServerCubes(catalogNode.Nodes["Cubes_"], cubes);
+            var dimensions = co.Dimensions.Where(r => r.Properties["CATALOG_NAME"].Value.ToString().Equals(catalog));
+            BindServerDimensions(catalogNode.Nodes["Dimensions_"], dimensions);
         }
         private void BindServerCubes(TreeNode cubeNodeRoot, IEnumerable<CubeDef> cubes)
         {
@@ -97,6 +112,7 @@ namespace Justin.Controls.CubeView
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 cubeNodeRoot.Nodes.Add(tempNode);
             }
+            cubeNodeRoot.Expand();
         }
         private void BindServerDimensions(TreeNode dimensionNodeRoot, IEnumerable<CubeDef> dimensions)
         {
@@ -112,6 +128,7 @@ namespace Justin.Controls.CubeView
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 dimensionNodeRoot.Nodes.Add(tempNode);
             }
+            dimensionNodeRoot.Expand();
         }
         #endregion
 
@@ -123,6 +140,7 @@ namespace Justin.Controls.CubeView
             tvCubeInfo.Nodes.Clear();
             tvCubeInfo.Nodes.Add("Cube_", "Cube", "Cube", "Cube");
             tvCubeInfo.Nodes[0].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
+            tvCubeInfo.Nodes[0].Expand();
 
             BindMeasuresForCube(co.GetMeasures(cubeName));
             BindDimensionsForCube(cubeDef);
@@ -147,18 +165,26 @@ namespace Justin.Controls.CubeView
             MeasuresRoot.Nodes.Clear();
 
             if (measures == null) return;
-
-            foreach (var item in measures)
+            var groups = measures.Select(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString()).Distinct();
+            foreach (var group in groups.OrderBy(r => r))
             {
-                string name = item.Name;//.Replace("$", "");
-                string caption = item.Caption;//.Replace("$", "");
-                TreeNode tempNode = new TreeNode(caption);
-                tempNode.Name = name;
-                tempNode.Tag = item;
-                tempNode.SelectedImageKey = tempNode.ImageKey = "Measure";
-                tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                MeasuresRoot.Nodes.Add(tempNode);
+                var tempMeasures = measures.Where(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString().Equals(group));
+                MeasuresRoot.Nodes.Add(group, group, "Group", "Group");
+                foreach (var item in tempMeasures.OrderBy(r => r.Caption))
+                {
+                    string name = item.Name;//.Replace("$", "");
+                    string caption = item.Caption;//.Replace("$", "");
+                    TreeNode tempNode = new TreeNode(caption);
+                    tempNode.Name = name;
+                    tempNode.Tag = item;
+                    bool visible = item.Properties["MEASURE_IS_VISIBLE"].Value.Value<bool>(true);
+                    string key = string.IsNullOrEmpty(item.Expression) ? "Measure" : "CalMeasure";
+                    tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
+                    tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                    MeasuresRoot.Nodes[group].Nodes.Add(tempNode);
+                }
             }
+
         }
 
         private void BindDimensionsForCube(CubeDef cubeDef)
@@ -180,7 +206,8 @@ namespace Justin.Controls.CubeView
                 string caption = item.Caption.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
-                tempNode.SelectedImageKey = tempNode.ImageKey = "Dim";
+                bool visible = item.Properties["DIMENSION_IS_VISIBLE"].Value.Value<bool>(true);
+                tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Dim" : "Dim";
                 BindHierarchies(tempNode, item.Hierarchies);
                 CubeNode.Nodes.Add(tempNode);
             }
@@ -195,7 +222,10 @@ namespace Justin.Controls.CubeView
                 string caption = hierarchy.Caption.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
-                tempNode.SelectedImageKey = tempNode.ImageKey = hierarchy.Levels.Count > 2 ? "Hie" : "Level";
+
+                bool visible = hierarchy.Properties["HIERARCHY_IS_VISIBLE"].Value.Value<bool>(true);
+                string key = hierarchy.Levels.Count > 2 ? "Hie" : "Level";
+                tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
                 BindLevels(tempNode, hierarchy.Levels);
                 dimNode.Nodes.Add(tempNode);
             }
@@ -210,7 +240,8 @@ namespace Justin.Controls.CubeView
                 string caption = level.Caption.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
-                tempNode.SelectedImageKey = tempNode.ImageKey = "Level";
+                bool visible = level.Properties["LEVEL_IS_VISIBLE"].Value.Value<bool>(true);
+                tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Level" : "Level";
                 tempNode.Tag = level;
                 root.Nodes.Add(tempNode);
             }

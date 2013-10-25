@@ -88,12 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\CalMeasure.png" />
-    <Content Include="Images\Categroy.png" />
+    <Content Include="Images\Catalog.png" />
     <Content Include="Images\conn.png" />
     <Content Include="Images\Cube.png" />
     <Content Include="Images\Cubes.png" />
     <Content Include="Images\Dim.png" />
     <Content Include="Images\Dims.png" />
+    <Content Include="Images\Group.png" />
     <Content Include="Images\Hie.png" />
     <Content Include="Images\Level.png" />
     <Content Include="Images\Measure.png" />

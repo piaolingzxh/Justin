@@ -89,17 +89,18 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "CalMeasure");
-            this.imageList1.Images.SetKeyName(1, "Categroy");
-            this.imageList1.Images.SetKeyName(2, "conn");
-            this.imageList1.Images.SetKeyName(3, "Cube");
-            this.imageList1.Images.SetKeyName(4, "Cubes");
-            this.imageList1.Images.SetKeyName(5, "Dim");
-            this.imageList1.Images.SetKeyName(6, "Dims");
-            this.imageList1.Images.SetKeyName(7, "Hie");
-            this.imageList1.Images.SetKeyName(8, "Level");
-            this.imageList1.Images.SetKeyName(9, "Measure");
-            this.imageList1.Images.SetKeyName(10, "Self_Hie");
-            this.imageList1.Images.SetKeyName(11, "Member");
+            this.imageList1.Images.SetKeyName(1, "conn");
+            this.imageList1.Images.SetKeyName(2, "Dim");
+            this.imageList1.Images.SetKeyName(3, "Dims");
+            this.imageList1.Images.SetKeyName(4, "Hie");
+            this.imageList1.Images.SetKeyName(5, "Level");
+            this.imageList1.Images.SetKeyName(6, "Measure");
+            this.imageList1.Images.SetKeyName(7, "Self_Hie");
+            this.imageList1.Images.SetKeyName(8, "Member");
+            this.imageList1.Images.SetKeyName(9, "Catalog");
+            this.imageList1.Images.SetKeyName(10, "Group");
+            this.imageList1.Images.SetKeyName(11, "Cubes");
+            this.imageList1.Images.SetKeyName(12, "Cube");
             // 
             // btnConnect
             // 
