@@ -24,7 +24,7 @@ namespace Justin.Toolbox
             InitializeComponent();
             this.mdxExecuterCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) => { this.mdxExecuterCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.mdxExecuterCtrl1.SaveFile(fileName,this.Extension); };
+            this.SaveAction = (fileName) => { this.mdxExecuterCtrl1.SaveFile(fileName, this.Extension); };
             this.FormClosing += MdxExecutor_FormClosing;
 
 
@@ -32,7 +32,7 @@ namespace Justin.Toolbox
 
         void MdxExecutor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.mdxExecuterCtrl1.SaveFile(this.FileName,this.Extension);
+            this.mdxExecuterCtrl1.SaveFile(this.FileName, this.Extension);
         }
         /// <summary>
         ///     
@@ -58,7 +58,12 @@ namespace Justin.Toolbox
         private void MdxExecutor_Load(object sender, EventArgs e)
         {
             this.LoadFile(this.FileName);
-            MdxExecuterCtrl.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
+            try
+            {
+                MdxExecuterCtrl.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
+            }
+            catch { }
+
         }
 
         #region 继承

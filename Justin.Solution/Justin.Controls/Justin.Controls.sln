@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.CodeCompiler", "Justin.Controls.CodeCompiler\Justin.Controls.CodeCompiler.csproj", "{6941552A-4FD4-4F07-98E2-F8A10FCC0086}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F1BA0A66-6D68-4142-83D8-C96A81A6862E} = {F1BA0A66-6D68-4142-83D8-C96A81A6862E}
@@ -58,6 +58,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Log", "..\Justin.FrameWork\Justin.Log\Justin.Log.csproj", "{FB90C580-4E99-4921-B352-7704032AE2F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI", "Justin.BI\Justin.BI.csproj", "{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.CubeView", "Justin.Controls.CubeView\Justin.Controls.CubeView.csproj", "{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

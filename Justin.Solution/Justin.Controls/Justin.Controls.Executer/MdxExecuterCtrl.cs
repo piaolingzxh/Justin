@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.AnalysisServices.AdomdClient;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
-using System.IO;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
-using System.Diagnostics;
+using Microsoft.AnalysisServices.AdomdClient;
 namespace Justin.Controls.Executer
 {
     public partial class MdxExecuterCtrl : JUserControl, IFile
@@ -97,11 +97,26 @@ namespace Justin.Controls.Executer
 
         private void MdxExecuterCtrl_Load(object sender, EventArgs e)
         {
+
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
+            txtMdx.ActiveTextAreaControl.AllowDrop = true;
+            txtMdx.ActiveTextAreaControl.TextArea.DragDrop += new DragEventHandler(txtMdx_DragDrop);
+            this.txtMdx.ActiveTextAreaControl.TextArea.DragEnter += new DragEventHandler(txtMdx_DragEnter);
             this.SetToolTipsForButton(new ToolTip());
             if (string.IsNullOrEmpty(txtConnectionString.Text))
                 this.txtConnectionString.Text = MdxExecuterCtrl.DefaultConnStr;
+        }
+
+        void txtMdx_DragDrop(object sender, DragEventArgs e)
+        {
+            TreeNode node = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            string text = string.IsNullOrEmpty(node.Name) ? node.Text : node.Name;
+            txtMdx.ActiveTextAreaControl.TextArea.InsertString("[" + text + "]");
+        }
+        private void txtMdx_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
         }
 
         public override string ConnStr

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
-using Justin.Log;
 using Justin.FrameWork.WinForm.FormUI;
-using Justin.FrameWork.WinForm.Models;
 using Justin.FrameWork.WinForm.Helper;
+using Justin.FrameWork.WinForm.Models;
+using Justin.Log;
 
 namespace Justin.Controls.Executer
 {
@@ -180,7 +180,7 @@ namespace Justin.Controls.Executer
 
         private void btnModifySQLFileContent_Click(object sender, EventArgs e)
         {
-            this.SaveFile(this.FileName,this.Extension);
+            this.SaveFile(this.FileName, this.Extension);
         }
 
         private void btnShowLineNum_Click(object sender, EventArgs e)
@@ -224,6 +224,7 @@ namespace Justin.Controls.Executer
             openFileDialog.FilterIndex = 1;
 
             #endregion
+            txtSQLPreview.AllowDrop = true;
         }
 
         public string Extension

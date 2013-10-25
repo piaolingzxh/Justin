@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", "..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj", "{F1BA0A66-6D68-4142-83D8-C96A81A6862E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork", "..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj", "{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}"
@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.TextEditor"
 		{FB90C580-4E99-4921-B352-7704032AE2F7} = {FB90C580-4E99-4921-B352-7704032AE2F7}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.CubeView", "..\..\Justin.Controls\Justin.Controls.CubeView\Justin.Controls.CubeView.csproj", "{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,10 @@ Global
 		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

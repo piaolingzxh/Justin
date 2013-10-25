@@ -30,8 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.TextEditor">
+    <Reference Include="ICSharpCode.TextEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Justin.FrameWork, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48d83e4bfa0cc209, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
