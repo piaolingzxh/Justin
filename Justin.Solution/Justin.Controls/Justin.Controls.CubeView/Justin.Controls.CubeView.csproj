@@ -77,9 +77,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\conn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
       <Project>{F1BA0A66-6D68-4142-83D8-C96A81A6862E}</Project>
       <Name>Justin.FrameWork.WinForm</Name>
@@ -88,6 +85,19 @@
       <Project>{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}</Project>
       <Name>Justin.FrameWork</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\CalMeasure.png" />
+    <Content Include="Images\Categroy.png" />
+    <Content Include="Images\conn.png" />
+    <Content Include="Images\Cube.png" />
+    <Content Include="Images\Cubes.png" />
+    <Content Include="Images\Dim.png" />
+    <Content Include="Images\Dims.png" />
+    <Content Include="Images\Hie.png" />
+    <Content Include="Images\Level.png" />
+    <Content Include="Images\Measure.png" />
+    <Content Include="Images\Self_Hie.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

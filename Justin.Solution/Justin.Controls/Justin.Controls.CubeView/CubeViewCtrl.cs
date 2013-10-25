@@ -53,29 +53,32 @@ namespace Justin.Controls.CubeView
                 return connection;
             }
         }
+
+
         private void CubeViewCtrl_Load(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtConnectionString.Text))
                 this.txtConnectionString.Text = CubeViewCtrl.DefaultConnStr;
-            tvServerinfo.AllowDrop = true;
-            tvCubeInfo.AllowDrop = true;
-            tvServerinfo.Nodes.Clear();
-            tvServerinfo.Nodes.Add("Cubes_", "Cubes");
-            tvServerinfo.Nodes.Add("Dimensions_", "Dimensions");
+
+
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
             co = new CubeOperate(this.ConnStr);
-            InitTree();
+            BindCategroy();
         }
-        private void InitTree()
+        private void BindCategroy()
         {
+            TreeNode tvCategroyInfo = new TreeNode("Categroy");
+            tvCategroyInfo.Name = "Categroy";
+            tvCategroyInfo.SelectedImageKey = tvCategroyInfo.ImageKey = "Categroy";
+            tvCategroyInfo.Nodes.Add("Cubes_", "Cubes", "Cubes", "Cubes");
+            tvCategroyInfo.Nodes.Add("Dimensions_", "Dimensions", "Dims", "Dims");
+            tvServerInfo.Nodes.Add(tvCategroyInfo);
 
-            BindServerCubes(tvServerinfo.Nodes["Cubes_"], co.Cubes);
-            BindServerDimensions(tvServerinfo.Nodes["Dimensions_"], co.Dimensions);
-
-
+            BindServerCubes(tvCategroyInfo.Nodes["Cubes_"], co.Cubes);
+            BindServerDimensions(tvCategroyInfo.Nodes["Dimensions_"], co.Dimensions);
         }
 
         private void BindServerCubes(TreeNode cubeNodeRoot, IEnumerable<CubeDef> cubes)
@@ -88,6 +91,7 @@ namespace Justin.Controls.CubeView
                 string caption = item.Caption;//.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Cube";
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 cubeNodeRoot.Nodes.Add(tempNode);
             }
@@ -102,6 +106,7 @@ namespace Justin.Controls.CubeView
                 string caption = item.Caption.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Dim";
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 dimensionNodeRoot.Nodes.Add(tempNode);
             }
@@ -110,15 +115,31 @@ namespace Justin.Controls.CubeView
         {
             CubeDef cubeDef = co.GetCube(cubeName);
             tvCubeInfo.Nodes.Clear();
+            tvCubeInfo.Nodes.Add("Cube_", "Cube", "Cube", "Cube");
+            tvCubeInfo.Nodes[0].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
+
             BindMeasuresForCube(co.GetMeasures(cubeName));
             BindDimensionsForCube(cubeDef);
 
         }
+
+        private TreeNode CubeNode
+        {
+            get
+            {
+                return tvCubeInfo.Nodes[0];
+            }
+        }
+        private TreeNode MeasuresRoot
+        {
+            get
+            {
+                return tvCubeInfo.Nodes[0].Nodes["Measures_"];
+            }
+        }
         private void BindMeasuresForCube(IEnumerable<Measure> measures)
         {
-            TreeNode measureRootNode = new TreeNode("Measures");
-            measureRootNode.Name = "Measures_";
-            tvCubeInfo.Nodes.Add(measureRootNode);
+            MeasuresRoot.Nodes.Clear();
 
             if (measures == null) return;
 
@@ -129,66 +150,67 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.Tag = item;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Measure";
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                measureRootNode.Nodes.Add(tempNode);
+                MeasuresRoot.Nodes.Add(tempNode);
             }
         }
         private void BindDimensionsForCube(CubeDef cubeDef)
         {
             IEnumerable<Dimension> dimensions = cubeDef.Dimensions.Cast<Dimension>();
             if (dimensions == null) return;
-            for (int i = tvCubeInfo.Nodes.Count - 1; i >= 0; i--)
+            for (int i = CubeNode.Nodes.Count - 1; i >= 0; i--)
             {
-                if (!tvCubeInfo.Nodes[i].Name.Equals("Measures_", StringComparison.CurrentCultureIgnoreCase))
+                if (!CubeNode.Nodes[i].Name.Equals("Measures_", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    tvCubeInfo.Nodes.RemoveAt(i);
+                    CubeNode.Nodes.RemoveAt(i);
                 }
             }
 
             foreach (var item in dimensions)
             {
+                if (item.Name.Equals("Measures") || item.Caption.Equals("Measures")) continue;
                 string name = item.Name.Replace("$", "");
                 string caption = item.Caption.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Dim";
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                tvCubeInfo.Nodes.Add(tempNode);
+                CubeNode.Nodes.Add(tempNode);
             }
         }
 
 
         private void browerCubeInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tvServerinfo.SelectedNode.Parent != null && tvServerinfo.SelectedNode.Parent.Name.Equals("Cubes_"))
+            if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
             {
-                BindCubeInfo(tvServerinfo.SelectedNode.Name);
+                BindCubeInfo(tvServerInfo.SelectedNode.Name);
             }
         }
 
-        private void tvServerinfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void tvServerInfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            tvServerinfo.SelectedNode = e.Node;
+            tvServerInfo.SelectedNode = e.Node;
         }
 
-        private void tvServerinfo_AfterSelect(object sender, TreeViewEventArgs e)
+        private void tvServerInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (tvServerinfo.SelectedNode.Parent != null && tvServerinfo.SelectedNode.Parent.Name.Equals("Cubes_"))
+            if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
             {
-                BindCubeInfo(tvServerinfo.SelectedNode.Name);
+                BindCubeInfo(tvServerInfo.SelectedNode.Name);
             }
-            //richTextBox1.AppendText(string.Format("Name:{0},Text:{1}{2}", tvServerinfo.SelectedNode.Name, tvServerinfo.SelectedNode.Text, Environment.NewLine));
-            if (string.IsNullOrEmpty(tvServerinfo.SelectedNode.Name))
+            if (string.IsNullOrEmpty(tvServerInfo.SelectedNode.Name))
             {
-                MessageBox.Show("");
+                MessageBox.Show("节点Name不能为空");
             }
         }
 
         private void tvCubeInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            //richTextBox1.AppendText(string.Format("Name:{0},Text:{1}{2}", tvCubeInfo.SelectedNode.Name, tvCubeInfo.SelectedNode.Text, Environment.NewLine));
             if (string.IsNullOrEmpty(tvCubeInfo.SelectedNode.Name))
             {
-                MessageBox.Show("");
+                MessageBox.Show("节点Name不能为空");
             }
         }
 
@@ -197,52 +219,14 @@ namespace Justin.Controls.CubeView
             tvCubeInfo.SelectedNode = e.Node;
         }
 
-        private void tvServerinfo_ItemDrag(object sender, ItemDragEventArgs e)
+        private void tvServerInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            File.AppendAllText(@"d:\drag.log", "tvServerinfo_ItemDrag" + Environment.NewLine);
-
-            //if (e.Button == MouseButtons.Left)
-            //{
             DoDragDrop(e.Item, DragDropEffects.All);
-            //}
-            File.AppendAllText(@"d:\drag.log", "tvServerinfo_ItemDrag" + Environment.NewLine);
-
-        }
-
-        private void tvServerinfo_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode"))
-            {
-                e.Effect = DragDropEffects.Move;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
-        private void tvCubeInfo_DragEnter(object sender, DragEventArgs e)
-        {
-            //if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode"))
-            //{
-            //    e.Effect = DragDropEffects.Move;
-            //}
-            //else
-            //{
-            //    e.Effect = DragDropEffects.None;
-            //}
         }
 
         private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            File.AppendAllText(@"d:\drag.log", "tvCubeInfo_ItemDrag" + Environment.NewLine);
-
-            //if (e.Button == MouseButtons.Left)
-            //{
             DoDragDrop(e.Item, DragDropEffects.All);
-            //}
-            File.AppendAllText(@"d:\drag.log", "tvCubeInfo_ItemDrag" + Environment.NewLine);
-
         }
 
     }

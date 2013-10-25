@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CubeViewCtrl));
             this.txtConnectionString = new System.Windows.Forms.TextBox();
-            this.tvServerinfo = new System.Windows.Forms.TreeView();
+            this.tvServerInfo = new System.Windows.Forms.TreeView();
             this.serverMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.browerCubeInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnConnect = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -53,18 +55,20 @@
             this.txtConnectionString.Size = new System.Drawing.Size(498, 20);
             this.txtConnectionString.TabIndex = 0;
             // 
-            // tvServerinfo
+            // tvServerInfo
             // 
-            this.tvServerinfo.ContextMenuStrip = this.serverMenu;
-            this.tvServerinfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvServerinfo.Location = new System.Drawing.Point(0, 0);
-            this.tvServerinfo.Name = "tvServerinfo";
-            this.tvServerinfo.Size = new System.Drawing.Size(181, 411);
-            this.tvServerinfo.TabIndex = 2;
-            this.tvServerinfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvServerinfo_ItemDrag);
-            this.tvServerinfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvServerinfo_AfterSelect);
-            this.tvServerinfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvServerinfo_NodeMouseClick);
-            this.tvServerinfo.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvServerinfo_DragEnter);
+            this.tvServerInfo.ContextMenuStrip = this.serverMenu;
+            this.tvServerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvServerInfo.ImageIndex = 0;
+            this.tvServerInfo.ImageList = this.imageList1;
+            this.tvServerInfo.Location = new System.Drawing.Point(0, 0);
+            this.tvServerInfo.Name = "tvServerInfo";
+            this.tvServerInfo.SelectedImageIndex = 0;
+            this.tvServerInfo.Size = new System.Drawing.Size(181, 411);
+            this.tvServerInfo.TabIndex = 2;
+            this.tvServerInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvServerInfo_ItemDrag);
+            this.tvServerInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvServerInfo_AfterSelect);
+            this.tvServerInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvServerInfo_NodeMouseClick);
             // 
             // serverMenu
             // 
@@ -79,6 +83,22 @@
             this.browerCubeInfoToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.browerCubeInfoToolStripMenuItem.Text = "Brower";
             this.browerCubeInfoToolStripMenuItem.Click += new System.EventHandler(this.browerCubeInfoToolStripMenuItem_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "CalMeasure");
+            this.imageList1.Images.SetKeyName(1, "Categroy");
+            this.imageList1.Images.SetKeyName(2, "conn");
+            this.imageList1.Images.SetKeyName(3, "Cube");
+            this.imageList1.Images.SetKeyName(4, "Cubes");
+            this.imageList1.Images.SetKeyName(5, "Dim");
+            this.imageList1.Images.SetKeyName(6, "Dims");
+            this.imageList1.Images.SetKeyName(7, "Hie");
+            this.imageList1.Images.SetKeyName(8, "Level");
+            this.imageList1.Images.SetKeyName(9, "Measure");
+            this.imageList1.Images.SetKeyName(10, "Self_Hie");
             // 
             // btnConnect
             // 
@@ -117,7 +137,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tvServerinfo);
+            this.splitContainer1.Panel1.Controls.Add(this.tvServerInfo);
             // 
             // splitContainer1.Panel2
             // 
@@ -129,14 +149,16 @@
             // tvCubeInfo
             // 
             this.tvCubeInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvCubeInfo.ImageIndex = 0;
+            this.tvCubeInfo.ImageList = this.imageList1;
             this.tvCubeInfo.Location = new System.Drawing.Point(0, 0);
             this.tvCubeInfo.Name = "tvCubeInfo";
+            this.tvCubeInfo.SelectedImageIndex = 0;
             this.tvCubeInfo.Size = new System.Drawing.Size(363, 411);
             this.tvCubeInfo.TabIndex = 0;
             this.tvCubeInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvCubeInfo_ItemDrag);
             this.tvCubeInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCubeInfo_AfterSelect);
             this.tvCubeInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCubeInfo_NodeMouseClick);
-            this.tvCubeInfo.DragEnter += new System.Windows.Forms.DragEventHandler(this.tvCubeInfo_DragEnter);
             // 
             // CubeViewCtrl
             // 
@@ -161,12 +183,13 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtConnectionString;
-        private System.Windows.Forms.TreeView tvServerinfo;
+        private System.Windows.Forms.TreeView tvServerInfo;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView tvCubeInfo;
         private System.Windows.Forms.ContextMenuStrip serverMenu;
         private System.Windows.Forms.ToolStripMenuItem browerCubeInfoToolStripMenuItem;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
