@@ -22,7 +22,7 @@
       <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.JsonViewer,,Justin.Toolbox" Extensions=".json,.*" />
       <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java,.*" Class="Justin.Toolbox.JCodeCompiler,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="JEditor" Text="JEditor" IsFile="false" Extensions=".*" Class="Justin.Toolbox.JEditor,,Justin.Toolbox" />
-
+      <MenuItem Type="Menu" Name="CubeViewer" Text="CubeViewer" IsFile="false" Class="Justin.Toolbox.CubeViewer,,Justin.Toolbox" />
     </Open>
     <Tools>
       <MenuItem Type="Menu" Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.FileAssociation,," />

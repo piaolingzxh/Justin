@@ -97,6 +97,7 @@
     <Content Include="Images\Hie.png" />
     <Content Include="Images\Level.png" />
     <Content Include="Images\Measure.png" />
+    <Content Include="Images\Member.png" />
     <Content Include="Images\Self_Hie.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

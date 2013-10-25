@@ -99,6 +99,7 @@
             this.imageList1.Images.SetKeyName(8, "Level");
             this.imageList1.Images.SetKeyName(9, "Measure");
             this.imageList1.Images.SetKeyName(10, "Self_Hie");
+            this.imageList1.Images.SetKeyName(11, "Member");
             // 
             // btnConnect
             // 
@@ -159,6 +160,7 @@
             this.tvCubeInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvCubeInfo_ItemDrag);
             this.tvCubeInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCubeInfo_AfterSelect);
             this.tvCubeInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCubeInfo_NodeMouseClick);
+            this.tvCubeInfo.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCubeInfo_NodeMouseDoubleClick);
             // 
             // CubeViewCtrl
             // 

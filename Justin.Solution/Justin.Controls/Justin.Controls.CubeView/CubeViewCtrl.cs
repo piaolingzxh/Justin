@@ -68,6 +68,9 @@ namespace Justin.Controls.CubeView
             co = new CubeOperate(this.ConnStr);
             BindCategroy();
         }
+
+        #region 服务器连接信息
+
         private void BindCategroy()
         {
             TreeNode tvCategroyInfo = new TreeNode("Categroy");
@@ -80,7 +83,6 @@ namespace Justin.Controls.CubeView
             BindServerCubes(tvCategroyInfo.Nodes["Cubes_"], co.Cubes);
             BindServerDimensions(tvCategroyInfo.Nodes["Dimensions_"], co.Dimensions);
         }
-
         private void BindServerCubes(TreeNode cubeNodeRoot, IEnumerable<CubeDef> cubes)
         {
             cubeNodeRoot.Nodes.Clear();
@@ -111,6 +113,10 @@ namespace Justin.Controls.CubeView
                 dimensionNodeRoot.Nodes.Add(tempNode);
             }
         }
+        #endregion
+
+        #region 加载单个Cube信息
+
         private void BindCubeInfo(string cubeName)
         {
             CubeDef cubeDef = co.GetCube(cubeName);
@@ -122,7 +128,6 @@ namespace Justin.Controls.CubeView
             BindDimensionsForCube(cubeDef);
 
         }
-
         private TreeNode CubeNode
         {
             get
@@ -155,6 +160,7 @@ namespace Justin.Controls.CubeView
                 MeasuresRoot.Nodes.Add(tempNode);
             }
         }
+
         private void BindDimensionsForCube(CubeDef cubeDef)
         {
             IEnumerable<Dimension> dimensions = cubeDef.Dimensions.Cast<Dimension>();
@@ -175,25 +181,89 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Dim";
-                tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                BindHierarchies(tempNode, item.Hierarchies);
                 CubeNode.Nodes.Add(tempNode);
             }
         }
-
-
-        private void browerCubeInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BindHierarchies(TreeNode dimNode, HierarchyCollection hierarchies)
         {
-            if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
+            if (hierarchies == null || hierarchies.Count == 0) return;
+
+            foreach (var hierarchy in hierarchies)
             {
-                BindCubeInfo(tvServerInfo.SelectedNode.Name);
+                string name = hierarchy.Name.Replace("$", "");
+                string caption = hierarchy.Caption.Replace("$", "");
+                TreeNode tempNode = new TreeNode(caption);
+                tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = hierarchy.Levels.Count > 2 ? "Hie" : "Level";
+                BindLevels(tempNode, hierarchy.Levels);
+                dimNode.Nodes.Add(tempNode);
             }
         }
+        private void BindLevels(TreeNode root, LevelCollection levels)
+        {
+            if (levels == null || levels.Count == 0) return;
+
+            foreach (var level in levels)
+            {
+                string name = level.Name.Replace("$", "");
+                string caption = level.Caption.Replace("$", "");
+                TreeNode tempNode = new TreeNode(caption);
+                tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Level";
+                tempNode.Tag = level;
+                root.Nodes.Add(tempNode);
+            }
+        }
+
+        private void ExpendMembers(TreeNode root)
+        {
+            if (!root.ImageKey.Equals("Level") && !root.ImageKey.Equals("Member")) return;
+            if (root.Nodes.Count > 0) return;
+            MemberCollection members = null;
+            if (root.ImageKey.Equals("Level"))
+            {
+                Level level = root.Tag as Level;
+                members = level.GetMembers();
+
+
+            }
+            else if (root.ImageKey.Equals("Member"))
+            {
+                Member member = root.Tag as Member;
+                members = member.GetChildren();
+            }
+            else
+            {
+                return;
+            }
+            if (members == null || members.Count <= 0) return;
+            foreach (var member in members)
+            {
+                string name = member.Name.Replace("$", "");
+                string caption = member.Caption.Replace("$", "");
+                TreeNode tempNode = new TreeNode(caption);
+                tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Member";
+                tempNode.Tag = member;
+
+                root.Nodes.Add(tempNode);
+            }
+
+            root.Expand();
+        }
+
+
+
+
+        #endregion
+
+        #region Treeview 操作
 
         private void tvServerInfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             tvServerInfo.SelectedNode = e.Node;
         }
-
         private void tvServerInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
@@ -205,12 +275,16 @@ namespace Justin.Controls.CubeView
                 MessageBox.Show("节点Name不能为空");
             }
         }
-
-        private void tvCubeInfo_AfterSelect(object sender, TreeViewEventArgs e)
+        private void tvServerInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            if (string.IsNullOrEmpty(tvCubeInfo.SelectedNode.Name))
+            //DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void browerCubeInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
             {
-                MessageBox.Show("节点Name不能为空");
+                BindCubeInfo(tvServerInfo.SelectedNode.Name);
             }
         }
 
@@ -218,16 +292,29 @@ namespace Justin.Controls.CubeView
         {
             tvCubeInfo.SelectedNode = e.Node;
         }
-
-        private void tvServerInfo_ItemDrag(object sender, ItemDragEventArgs e)
+        private void tvCubeInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.All);
+            if (string.IsNullOrEmpty(tvCubeInfo.SelectedNode.Name))
+            {
+                MessageBox.Show("节点Name不能为空");
+            }
         }
-
         private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.All);
+            DoDragDrop(e.Item, DragDropEffects.Move | DragDropEffects.Copy);
         }
+
+        private void tvCubeInfo_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node != null && (e.Node.ImageKey == "Level" || e.Node.ImageKey == "Member"))
+            {
+                ExpendMembers(e.Node);
+            }
+        }
+        #endregion
+
+
+
 
     }
 }
