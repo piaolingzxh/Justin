@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Justin.FrameWork.WinForm.FormUI;
 using Microsoft.AnalysisServices.AdomdClient;
 using Justin.FrameWork.Extensions;
+using Justin.FrameWork.WinForm.Properties;
+using ICSharpCode.TextEditor.Document;
 
 namespace Justin.Controls.CubeView
 {
@@ -58,8 +60,15 @@ namespace Justin.Controls.CubeView
 
         private void CubeViewCtrl_Load(object sender, EventArgs e)
         {
+            //this.btnCloseOpen.Image = Resources.opened;
+
             if (string.IsNullOrEmpty(txtConnectionString.Text))
                 this.txtConnectionString.Text = CubeViewCtrl.DefaultConnStr;
+            txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
+            txtMdx.Encoding = Encoding.GetEncoding("GB2312");
+            txtMdx.ActiveTextAreaControl.AllowDrop = true;
+            txtMdx.ActiveTextAreaControl.TextArea.DragDrop += new DragEventHandler(txtMdx_DragDrop);
+            this.txtMdx.ActiveTextAreaControl.TextArea.DragEnter += new DragEventHandler(txtMdx_DragEnter);
             //co = new CubeOperate(this.ConnStr);
             //if (tvServerInfo.Nodes.Count < 1)
             //    Bindcatalog();
@@ -138,7 +147,7 @@ namespace Justin.Controls.CubeView
         {
             CubeDef cubeDef = co.GetCube(cubeName);
             tvCubeInfo.Nodes.Clear();
-            tvCubeInfo.Nodes.Add("Cube_", "Cube", "Cube", "Cube");
+            tvCubeInfo.Nodes.Add("Cube_", cubeDef.Caption, "Cube", "Cube");
             tvCubeInfo.Nodes[0].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
             tvCubeInfo.Nodes[0].Expand();
 
@@ -208,6 +217,7 @@ namespace Justin.Controls.CubeView
                 tempNode.Name = name;
                 bool visible = item.Properties["DIMENSION_IS_VISIBLE"].Value.Value<bool>(true);
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Dim" : "Dim";
+                tempNode.Tag = item;
                 BindHierarchies(tempNode, item.Hierarchies);
                 CubeNode.Nodes.Add(tempNode);
             }
@@ -222,7 +232,7 @@ namespace Justin.Controls.CubeView
                 string caption = hierarchy.Caption.Replace("$", "");
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
-
+                tempNode.Tag = hierarchy;
                 bool visible = hierarchy.Properties["HIERARCHY_IS_VISIBLE"].Value.Value<bool>(true);
                 string key = hierarchy.Levels.Count > 2 ? "Hie" : "Level";
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
@@ -329,10 +339,27 @@ namespace Justin.Controls.CubeView
             {
                 MessageBox.Show("节点Name不能为空");
             }
+            if (tvCubeInfo.SelectedNode.Tag == null) return;
+            TreeNode tempNode = tvCubeInfo.SelectedNode;
+            DataTable table = null;
+            switch (tvCubeInfo.SelectedNode.ImageKey)
+            {
+                case "Cube": CubeDef cube = tempNode.Tag as CubeDef; table = cube.Properties.PrepareData(); break;
+                case "Measure":
+                case "CalMeasure": Measure measure = tempNode.Tag as Measure; table = measure.Properties.PrepareData(); break;
+                case "Dim": Dimension dim = tempNode.Tag as Dimension; table = dim.Properties.PrepareData(); break;
+                case "Hie": Hierarchy hie = tempNode.Tag as Hierarchy; table = hie.Properties.PrepareData(); break;
+                case "Level": Level level = tempNode.Tag as Level; table = level.Properties.PrepareData(); break;
+                case "Member": Member member = tempNode.Tag as Member; table = member.Properties.PrepareData(); break;
+
+            }
+
+            dgvObjectInfo.DataSource = table;
+
         }
         private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.Move | DragDropEffects.Copy);
+            DoDragDrop(e.Item, DragDropEffects.Copy);
         }
 
         private void tvCubeInfo_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -344,8 +371,51 @@ namespace Justin.Controls.CubeView
         }
         #endregion
 
+        private void btnCloseOpen_Click(object sender, EventArgs e)
+        {
+            //if (this.btnCloseOpen.Image == Resources.closed)
+            //{
+            //    this.splitContainer1.Panel2.Show();
+            //}
+            //else
+            //{
+            //    this.splitContainer1.Panel2.Hide();
+            //}
+        }
 
 
+        void txtMdx_DragDrop(object sender, DragEventArgs e)
+        {
+            TreeNode node = (TreeNode)e.Data.GetData(typeof(TreeNode));
+            string text = string.IsNullOrEmpty(node.Name) ? node.Text : node.Name;
+            txtMdx.ActiveTextAreaControl.TextArea.InsertString("[" + text + "]");
+        }
+        private void txtMdx_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
 
+
+    }
+
+    public static class CollectionHelper
+    {
+        public static DataTable PrepareData(this Microsoft.AnalysisServices.AdomdClient.PropertyCollection collection)
+        {
+            DataTable table = new DataTable();
+
+            var list = collection.Cast<Property>();
+            foreach (var item in list)
+            {
+                table.Columns.Add(item.Name.ToLower(), item.Type);
+            }
+            DataRow row = table.NewRow();
+            foreach (var item in list)
+            {
+                row[item.Name.ToLower()] = item.Value == null ? DBNull.Value : item.Value;
+            }
+            table.Rows.Add(row);
+            return table;
+        }
     }
 }

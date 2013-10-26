@@ -60,6 +60,11 @@
     <Compile Include="Extensions\ControlEx.cs" />
     <Compile Include="Extensions\FormEx.cs" />
     <Compile Include="Extensions\TreeViewEx.cs" />
+    <Compile Include="FormUI\SplitContainerEx\CollapsePanel.cs" />
+    <Compile Include="FormUI\SplitContainerEx\ControlPaintEx.cs" />
+    <Compile Include="FormUI\SplitContainerEx\ControlState.cs" />
+    <Compile Include="FormUI\SplitContainerEx\GraphicsPathHelper.cs" />
+    <Compile Include="FormUI\SplitContainerEx\InterpolationModeGraphics.cs" />
     <Compile Include="FormUI\JUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,11 +81,21 @@
       <DependentUpon>NotifyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormUI\PropertyGrid\ObjectDescriptionProvider.cs" />
+    <Compile Include="FormUI\SplitContainerEx\RegionHelper.cs" />
+    <Compile Include="FormUI\SplitContainerEx\RenderHelper.cs" />
+    <Compile Include="FormUI\SplitContainerEx\RoundStyle.cs" />
     <Compile Include="FormUI\SharpCodeTextEditor\TextEditorControlEx.cs" />
     <Compile Include="FormUI\SharpCodeTextEditor\HighlightGroup.cs" />
     <Compile Include="FormUI\SharpCodeTextEditor\TextEditorSearcher.cs" />
     <Compile Include="FormUI\SharpCodeTextEditor\TextRange.cs" />
     <Compile Include="FormUI\SharpCodeTextEditor\XmlFoldingStrategy.cs" />
+    <Compile Include="FormUI\SplitContainerEx\SmoothingModeGraphics.cs" />
+    <Compile Include="FormUI\SplitContainerEx\SplitContainerEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormUI\SplitContainerEx\SpliterPanelState.cs" />
+    <Compile Include="FormUI\SplitContainerEx\TextRenderingHintGraphics.cs" />
+    <Compile Include="FormUI\SplitContainerEx\ThumbArrowDirection.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\NotifyHelper.cs" />
     <Compile Include="Models\IFile.cs" />
@@ -104,7 +119,7 @@
       <DependentUpon>NotifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

@@ -89,6 +89,7 @@
   <ItemGroup>
     <Content Include="Images\CalMeasure.png" />
     <Content Include="Images\Catalog.png" />
+    <Content Include="Images\closed.gif" />
     <Content Include="Images\conn.png" />
     <Content Include="Images\Cube.png" />
     <Content Include="Images\Cubes.png" />
@@ -99,7 +100,9 @@
     <Content Include="Images\Level.png" />
     <Content Include="Images\Measure.png" />
     <Content Include="Images\Member.png" />
+    <Content Include="Images\opened.gif" />
     <Content Include="Images\Self_Hie.png" />
+    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
