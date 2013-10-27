@@ -20,12 +20,19 @@ namespace Justin.Toolbox
             InitializeComponent();
             
         }
-
+        public CubeViewer(string[] args)
+            : this()
+        {
+            if (args != null)
+            {
+                this.ConnStr = args[0];
+            }
+        }
         private void CubeViewer_Load(object sender, EventArgs e)
         {
             try
             {
-                CubeViewCtrl.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
+                CubeViewCtrlSetting.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
             }
             catch { }
         }

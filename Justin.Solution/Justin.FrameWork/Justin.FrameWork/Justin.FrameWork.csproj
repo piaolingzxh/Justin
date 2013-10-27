@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\CDATA.cs" />
     <Compile Include="Entities\SQLDialect.cs" />
     <Compile Include="Entities\SerializableDictionary~.cs" />
     <Compile Include="Extensions\IEnumerableEx.cs" />

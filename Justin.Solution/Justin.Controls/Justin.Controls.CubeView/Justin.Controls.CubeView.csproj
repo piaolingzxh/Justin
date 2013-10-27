@@ -85,12 +85,17 @@
       <Project>{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}</Project>
       <Name>Justin.FrameWork</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Justin.Controls.Executer\Justin.Controls.Executer.csproj">
+      <Project>{6EE7E46D-DC3A-45AB-A696-18E1C7489748}</Project>
+      <Name>Justin.Controls.Executer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\CalMeasure.png" />
     <Content Include="Images\Catalog.png" />
     <Content Include="Images\closed.gif" />
     <Content Include="Images\conn.png" />
+    <Content Include="Images\SingleHie.png" />
     <Content Include="Images\Cube.png" />
     <Content Include="Images\Cubes.png" />
     <Content Include="Images\Dim.png" />
@@ -102,7 +107,7 @@
     <Content Include="Images\Member.png" />
     <Content Include="Images\opened.gif" />
     <Content Include="Images\Self_Hie.png" />
-    <Content Include="TextFile1.txt" />
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -31,109 +31,74 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtMdx = new ICSharpCode.TextEditor.TextEditorControl();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelMdx = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
             this.btnExecuteDataSet = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnDefaultConnStr = new System.Windows.Forms.Button();
             this.btnExportExcel = new System.Windows.Forms.Button();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.txtConnectionString = new System.Windows.Forms.TextBox();
+            this.txtMdx = new ICSharpCode.TextEditor.TextEditorControl();
+            this.button1 = new System.Windows.Forms.Button();
             this.gvMdxresult = new System.Windows.Forms.DataGridView();
             this.txtResult = new System.Windows.Forms.TextBox();
-            this.txtConnectionString = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnConnectOLAP = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
+            this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.tableLayoutresult = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelMdx.SuspendLayout();
+            this.tableLayoutPanelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvMdxresult)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
+            this.splitContainerEx1.Panel1.SuspendLayout();
+            this.splitContainerEx1.Panel2.SuspendLayout();
+            this.splitContainerEx1.SuspendLayout();
+            this.tableLayoutresult.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // tableLayoutPanelMdx
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 38);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.tableLayoutPanelMdx.ColumnCount = 2;
+            this.tableLayoutPanelMdx.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelMdx.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelMdx.Controls.Add(this.tableLayoutPanelButtons, 1, 1);
+            this.tableLayoutPanelMdx.Controls.Add(this.txtConnectionString, 0, 0);
+            this.tableLayoutPanelMdx.Controls.Add(this.txtMdx, 0, 1);
+            this.tableLayoutPanelMdx.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanelMdx.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelMdx.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelMdx.Name = "tableLayoutPanelMdx";
+            this.tableLayoutPanelMdx.RowCount = 2;
+            this.tableLayoutPanelMdx.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelMdx.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelMdx.Size = new System.Drawing.Size(882, 280);
+            this.tableLayoutPanelMdx.TabIndex = 0;
             // 
-            // splitContainer1.Panel1
+            // tableLayoutPanelButtons
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer1.Size = new System.Drawing.Size(876, 519);
-            this.splitContainer1.SplitterDistance = 242;
-            this.splitContainer1.TabIndex = 5;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.txtMdx, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 242F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(876, 242);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // txtMdx
-            // 
-            this.txtMdx.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMdx.Location = new System.Drawing.Point(3, 3);
-            this.txtMdx.Name = "txtMdx";
-            this.txtMdx.ShowEOLMarkers = true;
-            this.txtMdx.ShowSpaces = true;
-            this.txtMdx.ShowTabs = true;
-            this.txtMdx.ShowVRuler = true;
-            this.txtMdx.Size = new System.Drawing.Size(820, 236);
-            this.txtMdx.TabIndex = 2;
-            this.txtMdx.Text = "\r\nSELECT \r\nNON EMPTY\r\n{\r\n    [Measures].[ZCHTAmount],[Measures].[ZCHTCount]\r\n}\r\n " +
-    "ON COLUMNS,\r\nNON EMPTY\r\n{\r\n   [ProjectDim.hieInfo].[Project].Members\r\n}\r\nON ROWS" +
-    "\r\nFROM ZCHT_BsJe";
-            // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.ColumnCount = 1;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Controls.Add(this.btnClear, 0, 4);
-            this.tableLayoutPanel6.Controls.Add(this.btnExecute, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.btnExecuteDataSet, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.button2, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.btnDefaultConnStr, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.btnExportExcel, 0, 5);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(829, 3);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 9;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(44, 236);
-            this.tableLayoutPanel6.TabIndex = 4;
+            this.tableLayoutPanelButtons.ColumnCount = 1;
+            this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelButtons.Controls.Add(this.btnClear, 0, 4);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnExecute, 0, 1);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnExecuteDataSet, 0, 3);
+            this.tableLayoutPanelButtons.Controls.Add(this.button2, 0, 2);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnDefaultConnStr, 0, 0);
+            this.tableLayoutPanelButtons.Controls.Add(this.btnExportExcel, 0, 5);
+            this.tableLayoutPanelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(835, 33);
+            this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
+            this.tableLayoutPanelButtons.RowCount = 9;
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(44, 244);
+            this.tableLayoutPanelButtons.TabIndex = 4;
             // 
             // btnClear
             // 
@@ -207,25 +172,47 @@
             this.btnExportExcel.UseVisualStyleBackColor = true;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
-            // tableLayoutPanel3
+            // txtConnectionString
             // 
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.gvMdxresult, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.txtResult, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(876, 273);
-            this.tableLayoutPanel3.TabIndex = 0;
+            this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConnectionString.Location = new System.Drawing.Point(3, 3);
+            this.txtConnectionString.Name = "txtConnectionString";
+            this.txtConnectionString.ReadOnly = true;
+            this.txtConnectionString.Size = new System.Drawing.Size(826, 20);
+            this.txtConnectionString.TabIndex = 5;
+            // 
+            // txtMdx
+            // 
+            this.txtMdx.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMdx.Location = new System.Drawing.Point(3, 33);
+            this.txtMdx.Name = "txtMdx";
+            this.txtMdx.ShowEOLMarkers = true;
+            this.txtMdx.ShowSpaces = true;
+            this.txtMdx.ShowTabs = true;
+            this.txtMdx.ShowVRuler = true;
+            this.txtMdx.Size = new System.Drawing.Size(826, 244);
+            this.txtMdx.TabIndex = 2;
+            this.txtMdx.Text = "\r\nSELECT \r\nNON EMPTY\r\n{\r\n    [Measures].[ZCHTAmount],[Measures].[ZCHTCount]\r\n}\r\n " +
+    "ON COLUMNS,\r\nNON EMPTY\r\n{\r\n   [ProjectDim.hieInfo].[Project].Members\r\n}\r\nON ROWS" +
+    "\r\nFROM ZCHT_BsJe";
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Image = global::Justin.Controls.Executer.Properties.Resources.conn;
+            this.button1.Location = new System.Drawing.Point(835, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(44, 24);
+            this.button1.TabIndex = 6;
+            this.button1.Tag = "Set Default OLAP Connection String";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnDefaultConnStr_Click);
             // 
             // gvMdxresult
             // 
             this.gvMdxresult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.gvMdxresult.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gvMdxresult.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -244,7 +231,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.gvMdxresult.DefaultCellStyle = dataGridViewCellStyle2;
             this.gvMdxresult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gvMdxresult.Location = new System.Drawing.Point(3, 29);
+            this.gvMdxresult.Location = new System.Drawing.Point(3, 28);
             this.gvMdxresult.Name = "gvMdxresult";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -254,7 +241,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gvMdxresult.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.gvMdxresult.Size = new System.Drawing.Size(870, 241);
+            this.gvMdxresult.Size = new System.Drawing.Size(876, 245);
             this.gvMdxresult.TabIndex = 4;
             // 
             // txtResult
@@ -263,102 +250,83 @@
             this.txtResult.Location = new System.Drawing.Point(3, 3);
             this.txtResult.Name = "txtResult";
             this.txtResult.ReadOnly = true;
-            this.txtResult.Size = new System.Drawing.Size(870, 20);
+            this.txtResult.Size = new System.Drawing.Size(876, 20);
             this.txtResult.TabIndex = 5;
             // 
-            // txtConnectionString
+            // splitContainerEx1
             // 
-            this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConnectionString.Location = new System.Drawing.Point(3, 3);
-            this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(820, 20);
-            this.txtConnectionString.TabIndex = 0;
+            this.splitContainerEx1.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
+            this.splitContainerEx1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEx1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEx1.Name = "splitContainerEx1";
+            this.splitContainerEx1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // tableLayoutPanel1
+            // splitContainerEx1.Panel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(882, 560);
-            this.tableLayoutPanel1.TabIndex = 6;
+            this.splitContainerEx1.Panel1.Controls.Add(this.tableLayoutPanelMdx);
             // 
-            // tableLayoutPanel4
+            // splitContainerEx1.Panel2
             // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.txtConnectionString, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.btnConnectOLAP, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(876, 29);
-            this.tableLayoutPanel4.TabIndex = 6;
+            this.splitContainerEx1.Panel2.Controls.Add(this.tableLayoutresult);
+            this.splitContainerEx1.Size = new System.Drawing.Size(882, 560);
+            this.splitContainerEx1.SplitterDistance = 280;
+            this.splitContainerEx1.TabIndex = 6;
             // 
-            // btnConnectOLAP
+            // tableLayoutresult
             // 
-            this.btnConnectOLAP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnConnectOLAP.Image = global::Justin.Controls.Executer.Properties.Resources.conn;
-            this.btnConnectOLAP.Location = new System.Drawing.Point(829, 3);
-            this.btnConnectOLAP.Name = "btnConnectOLAP";
-            this.btnConnectOLAP.Size = new System.Drawing.Size(44, 23);
-            this.btnConnectOLAP.TabIndex = 1;
-            this.btnConnectOLAP.Tag = "Connection OLAP Server";
-            this.btnConnectOLAP.UseVisualStyleBackColor = true;
-            this.btnConnectOLAP.Click += new System.EventHandler(this.btnConnectOLAP_Click);
+            this.tableLayoutresult.ColumnCount = 1;
+            this.tableLayoutresult.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutresult.Controls.Add(this.gvMdxresult, 0, 1);
+            this.tableLayoutresult.Controls.Add(this.txtResult, 0, 0);
+            this.tableLayoutresult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutresult.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutresult.Name = "tableLayoutresult";
+            this.tableLayoutresult.RowCount = 2;
+            this.tableLayoutresult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutresult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutresult.Size = new System.Drawing.Size(882, 276);
+            this.tableLayoutresult.TabIndex = 0;
             // 
             // MdxExecuterCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.splitContainerEx1);
             this.Name = "MdxExecuterCtrl";
             this.Size = new System.Drawing.Size(882, 560);
             this.Load += new System.EventHandler(this.MdxExecuterCtrl_Load);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanelMdx.ResumeLayout(false);
+            this.tableLayoutPanelMdx.PerformLayout();
+            this.tableLayoutPanelButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvMdxresult)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
+            this.splitContainerEx1.Panel1.ResumeLayout(false);
+            this.splitContainerEx1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
+            this.splitContainerEx1.ResumeLayout(false);
+            this.tableLayoutresult.ResumeLayout(false);
+            this.tableLayoutresult.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnConnectOLAP;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private ICSharpCode.TextEditor.TextEditorControl txtMdx;
         private System.Windows.Forms.DataGridView gvMdxresult;
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.Button btnExecuteDataSet;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMdx;
         private System.Windows.Forms.TextBox txtResult;
-        private System.Windows.Forms.TextBox txtConnectionString;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelButtons;
         private System.Windows.Forms.Button btnDefaultConnStr;
         private System.Windows.Forms.Button btnExportExcel;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutresult;
+        private System.Windows.Forms.TextBox txtConnectionString;
+        private System.Windows.Forms.Button button1;
 
     }
 }

@@ -100,7 +100,7 @@ namespace Justin.FrameWork.WinForm.FormUI.SplitContainerEx
                             break;
 
                     }
-                    _spliterPanelState = value;
+                    //_spliterPanelState = value;
                 }
             }
         }
@@ -139,6 +139,7 @@ namespace Justin.FrameWork.WinForm.FormUI.SplitContainerEx
                     base.SplitterDistance = width - base.SplitterWidth- base.Padding.Vertical;
                 }
                 base.Invalidate(base.SplitterRectangle);
+                _spliterPanelState = SpliterPanelState.Collapsed;
             }
         }
 
@@ -157,6 +158,8 @@ namespace Justin.FrameWork.WinForm.FormUI.SplitContainerEx
                 }
                 base.SplitterDistance = _lastDistance;
                 base.Invalidate(base.SplitterRectangle);
+                _spliterPanelState = SpliterPanelState.Expanded;
+
             }
         }
 

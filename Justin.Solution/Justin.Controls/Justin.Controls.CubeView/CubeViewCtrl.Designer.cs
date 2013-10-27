@@ -37,27 +37,41 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnConnect = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
-            this.splitContainerEx2 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.splitContainerMain = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.splitContainerServerAndCubeInfo = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.tabControlmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.saveMdxInCurrentTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveMdxInAllTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadMdxFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tvCubeInfo = new System.Windows.Forms.TreeView();
-            this.splitContainerEx3 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.cubeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.generateSampleMdxTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainerDataAndMdx = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.dgvObjectInfo = new System.Windows.Forms.DataGridView();
-            this.txtMdx = new ICSharpCode.TextEditor.TextEditorControl();
+            this.tabControlMdxEditorCollection = new System.Windows.Forms.TabControl();
+            this.tabPageDefault = new System.Windows.Forms.TabPage();
+            this.mdxExecuterCtrl1 = new Justin.Controls.Executer.MdxExecuterCtrl();
+            this.closeAllTabsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeCurrentTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
-            this.splitContainerEx1.Panel1.SuspendLayout();
-            this.splitContainerEx1.Panel2.SuspendLayout();
-            this.splitContainerEx1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx2)).BeginInit();
-            this.splitContainerEx2.Panel1.SuspendLayout();
-            this.splitContainerEx2.Panel2.SuspendLayout();
-            this.splitContainerEx2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx3)).BeginInit();
-            this.splitContainerEx3.Panel1.SuspendLayout();
-            this.splitContainerEx3.Panel2.SuspendLayout();
-            this.splitContainerEx3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
+            this.splitContainerMain.Panel1.SuspendLayout();
+            this.splitContainerMain.Panel2.SuspendLayout();
+            this.splitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerServerAndCubeInfo)).BeginInit();
+            this.splitContainerServerAndCubeInfo.Panel1.SuspendLayout();
+            this.splitContainerServerAndCubeInfo.Panel2.SuspendLayout();
+            this.splitContainerServerAndCubeInfo.SuspendLayout();
+            this.tabControlmenu.SuspendLayout();
+            this.cubeMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataAndMdx)).BeginInit();
+            this.splitContainerDataAndMdx.Panel1.SuspendLayout();
+            this.splitContainerDataAndMdx.Panel2.SuspendLayout();
+            this.splitContainerDataAndMdx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjectInfo)).BeginInit();
+            this.tabControlMdxEditorCollection.SuspendLayout();
+            this.tabPageDefault.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtConnectionString
@@ -65,7 +79,7 @@
             this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConnectionString.Location = new System.Drawing.Point(3, 3);
             this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(335, 20);
+            this.txtConnectionString.Size = new System.Drawing.Size(790, 20);
             this.txtConnectionString.TabIndex = 0;
             // 
             // tvServerInfo
@@ -77,7 +91,8 @@
             this.tvServerInfo.Location = new System.Drawing.Point(0, 0);
             this.tvServerInfo.Name = "tvServerInfo";
             this.tvServerInfo.SelectedImageIndex = 0;
-            this.tvServerInfo.Size = new System.Drawing.Size(182, 411);
+            this.tvServerInfo.ShowNodeToolTips = true;
+            this.tvServerInfo.Size = new System.Drawing.Size(173, 395);
             this.tvServerInfo.TabIndex = 2;
             this.tvServerInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvServerInfo_ItemDrag);
             this.tvServerInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvServerInfo_AfterSelect);
@@ -114,14 +129,15 @@
             this.imageList1.Images.SetKeyName(10, "Group");
             this.imageList1.Images.SetKeyName(11, "Cubes");
             this.imageList1.Images.SetKeyName(12, "Cube");
+            this.imageList1.Images.SetKeyName(13, "SingleHie");
             // 
             // btnConnect
             // 
             this.btnConnect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnConnect.Image = global::Justin.Controls.CubeView.Properties.Resources.conn;
-            this.btnConnect.Location = new System.Drawing.Point(344, 3);
+            this.btnConnect.Location = new System.Drawing.Point(799, 3);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(207, 24);
+            this.btnConnect.Size = new System.Drawing.Size(94, 24);
             this.btnConnect.TabIndex = 1;
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -130,115 +146,202 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 213F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.txtConnectionString, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnConnect, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.splitContainerEx1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.splitContainerMain, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(554, 447);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(896, 431);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // splitContainerEx1
+            // splitContainerMain
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.splitContainerEx1, 2);
-            this.splitContainerEx1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEx1.Location = new System.Drawing.Point(3, 33);
-            this.splitContainerEx1.Name = "splitContainerEx1";
+            this.splitContainerMain.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
+            this.tableLayoutPanel1.SetColumnSpan(this.splitContainerMain, 2);
+            this.splitContainerMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerMain.Location = new System.Drawing.Point(3, 33);
+            this.splitContainerMain.Name = "splitContainerMain";
             // 
-            // splitContainerEx1.Panel1
+            // splitContainerMain.Panel1
             // 
-            this.splitContainerEx1.Panel1.Controls.Add(this.tvServerInfo);
+            this.splitContainerMain.Panel1.Controls.Add(this.splitContainerServerAndCubeInfo);
+            this.splitContainerMain.Panel1MinSize = 200;
             // 
-            // splitContainerEx1.Panel2
+            // splitContainerMain.Panel2
             // 
-            this.splitContainerEx1.Panel2.Controls.Add(this.splitContainerEx2);
-            this.splitContainerEx1.Size = new System.Drawing.Size(548, 411);
-            this.splitContainerEx1.SplitterDistance = 182;
-            this.splitContainerEx1.TabIndex = 4;
+            this.splitContainerMain.Panel2.Controls.Add(this.splitContainerDataAndMdx);
+            this.splitContainerMain.Size = new System.Drawing.Size(890, 395);
+            this.splitContainerMain.SplitterDistance = 376;
+            this.splitContainerMain.TabIndex = 4;
             // 
-            // splitContainerEx2
+            // splitContainerServerAndCubeInfo
             // 
-            this.splitContainerEx2.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
-            this.splitContainerEx2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.splitContainerEx2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEx2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerEx2.Name = "splitContainerEx2";
+            this.splitContainerServerAndCubeInfo.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerServerAndCubeInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerServerAndCubeInfo.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerServerAndCubeInfo.Name = "splitContainerServerAndCubeInfo";
             // 
-            // splitContainerEx2.Panel1
+            // splitContainerServerAndCubeInfo.Panel1
             // 
-            this.splitContainerEx2.Panel1.Controls.Add(this.tvCubeInfo);
+            this.splitContainerServerAndCubeInfo.Panel1.Controls.Add(this.tvServerInfo);
             // 
-            // splitContainerEx2.Panel2
+            // splitContainerServerAndCubeInfo.Panel2
             // 
-            this.splitContainerEx2.Panel2.Controls.Add(this.splitContainerEx3);
-            this.splitContainerEx2.Size = new System.Drawing.Size(362, 411);
-            this.splitContainerEx2.SplitterDistance = 176;
-            this.splitContainerEx2.TabIndex = 0;
+            this.splitContainerServerAndCubeInfo.Panel2.ContextMenuStrip = this.tabControlmenu;
+            this.splitContainerServerAndCubeInfo.Panel2.Controls.Add(this.tvCubeInfo);
+            this.splitContainerServerAndCubeInfo.Size = new System.Drawing.Size(376, 395);
+            this.splitContainerServerAndCubeInfo.SplitterDistance = 173;
+            this.splitContainerServerAndCubeInfo.TabIndex = 3;
+            // 
+            // tabControlmenu
+            // 
+            this.tabControlmenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveMdxInCurrentTabPageToolStripMenuItem,
+            this.saveMdxInAllTabPageToolStripMenuItem,
+            this.loadMdxFileToolStripMenuItem,
+            this.closeAllTabsToolStripMenuItem,
+            this.closeCurrentTabToolStripMenuItem});
+            this.tabControlmenu.Name = "tabControlmenu";
+            this.tabControlmenu.Size = new System.Drawing.Size(230, 136);
+            // 
+            // saveMdxInCurrentTabPageToolStripMenuItem
+            // 
+            this.saveMdxInCurrentTabPageToolStripMenuItem.Name = "saveMdxInCurrentTabPageToolStripMenuItem";
+            this.saveMdxInCurrentTabPageToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.saveMdxInCurrentTabPageToolStripMenuItem.Text = "Save Mdx In Current TabPage";
+            this.saveMdxInCurrentTabPageToolStripMenuItem.Click += new System.EventHandler(this.saveMdxInCurrentTabPageToolStripMenuItem_Click);
+            // 
+            // saveMdxInAllTabPageToolStripMenuItem
+            // 
+            this.saveMdxInAllTabPageToolStripMenuItem.Name = "saveMdxInAllTabPageToolStripMenuItem";
+            this.saveMdxInAllTabPageToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.saveMdxInAllTabPageToolStripMenuItem.Text = "Save Mdx In All TabPage";
+            this.saveMdxInAllTabPageToolStripMenuItem.Click += new System.EventHandler(this.saveMdxInAllTabPageToolStripMenuItem_Click);
+            // 
+            // loadMdxFileToolStripMenuItem
+            // 
+            this.loadMdxFileToolStripMenuItem.Name = "loadMdxFileToolStripMenuItem";
+            this.loadMdxFileToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.loadMdxFileToolStripMenuItem.Text = "Load Saved Mdx File";
+            this.loadMdxFileToolStripMenuItem.Click += new System.EventHandler(this.loadMdxFileToolStripMenuItem_Click);
             // 
             // tvCubeInfo
             // 
+            this.tvCubeInfo.ContextMenuStrip = this.cubeMenu;
             this.tvCubeInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvCubeInfo.ImageIndex = 0;
             this.tvCubeInfo.ImageList = this.imageList1;
             this.tvCubeInfo.Location = new System.Drawing.Point(0, 0);
             this.tvCubeInfo.Name = "tvCubeInfo";
             this.tvCubeInfo.SelectedImageIndex = 0;
-            this.tvCubeInfo.Size = new System.Drawing.Size(176, 411);
+            this.tvCubeInfo.Size = new System.Drawing.Size(199, 395);
             this.tvCubeInfo.TabIndex = 0;
             this.tvCubeInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvCubeInfo_ItemDrag);
             this.tvCubeInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCubeInfo_AfterSelect);
             this.tvCubeInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCubeInfo_NodeMouseClick);
             this.tvCubeInfo.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCubeInfo_NodeMouseDoubleClick);
             // 
-            // splitContainerEx3
+            // cubeMenu
             // 
-            this.splitContainerEx3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.splitContainerEx3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEx3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerEx3.Name = "splitContainerEx3";
-            this.splitContainerEx3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.cubeMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generateSampleMdxTabPageToolStripMenuItem});
+            this.cubeMenu.Name = "serverMenu";
+            this.cubeMenu.Size = new System.Drawing.Size(190, 26);
             // 
-            // splitContainerEx3.Panel1
+            // generateSampleMdxTabPageToolStripMenuItem
             // 
-            this.splitContainerEx3.Panel1.Controls.Add(this.dgvObjectInfo);
+            this.generateSampleMdxTabPageToolStripMenuItem.Name = "generateSampleMdxTabPageToolStripMenuItem";
+            this.generateSampleMdxTabPageToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.generateSampleMdxTabPageToolStripMenuItem.Text = "Generate Sample Mdx";
+            this.generateSampleMdxTabPageToolStripMenuItem.Click += new System.EventHandler(this.generateSampleMdxTabPageToolStripMenuItem_Click);
             // 
-            // splitContainerEx3.Panel2
+            // splitContainerDataAndMdx
             // 
-            this.splitContainerEx3.Panel2.Controls.Add(this.txtMdx);
-            this.splitContainerEx3.Size = new System.Drawing.Size(182, 411);
-            this.splitContainerEx3.SplitterDistance = 87;
-            this.splitContainerEx3.TabIndex = 0;
+            this.splitContainerDataAndMdx.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerDataAndMdx.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerDataAndMdx.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerDataAndMdx.Name = "splitContainerDataAndMdx";
+            this.splitContainerDataAndMdx.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerDataAndMdx.Panel1
+            // 
+            this.splitContainerDataAndMdx.Panel1.Controls.Add(this.dgvObjectInfo);
+            // 
+            // splitContainerDataAndMdx.Panel2
+            // 
+            this.splitContainerDataAndMdx.Panel2.Controls.Add(this.tabControlMdxEditorCollection);
+            this.splitContainerDataAndMdx.Size = new System.Drawing.Size(510, 395);
+            this.splitContainerDataAndMdx.SplitterDistance = 82;
+            this.splitContainerDataAndMdx.TabIndex = 0;
             // 
             // dgvObjectInfo
             // 
             this.dgvObjectInfo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvObjectInfo.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvObjectInfo.BackgroundColor = System.Drawing.Color.White;
             this.dgvObjectInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObjectInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvObjectInfo.Location = new System.Drawing.Point(0, 0);
             this.dgvObjectInfo.Name = "dgvObjectInfo";
-            this.dgvObjectInfo.Size = new System.Drawing.Size(182, 87);
+            this.dgvObjectInfo.Size = new System.Drawing.Size(510, 82);
             this.dgvObjectInfo.TabIndex = 0;
             // 
-            // txtMdx
+            // tabControlMdxEditorCollection
             // 
-            this.txtMdx.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMdx.Location = new System.Drawing.Point(0, 0);
-            this.txtMdx.Name = "txtMdx";
-            this.txtMdx.ShowEOLMarkers = true;
-            this.txtMdx.ShowSpaces = true;
-            this.txtMdx.ShowTabs = true;
-            this.txtMdx.ShowVRuler = true;
-            this.txtMdx.Size = new System.Drawing.Size(182, 320);
-            this.txtMdx.TabIndex = 3;
-            this.txtMdx.Text = "\r\nSELECT \r\nNON EMPTY\r\n{\r\n    [Measures].[ZCHTAmount],[Measures].[ZCHTCount]\r\n}\r\n " +
+            this.tabControlMdxEditorCollection.ContextMenuStrip = this.tabControlmenu;
+            this.tabControlMdxEditorCollection.Controls.Add(this.tabPageDefault);
+            this.tabControlMdxEditorCollection.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMdxEditorCollection.HotTrack = true;
+            this.tabControlMdxEditorCollection.Location = new System.Drawing.Point(0, 0);
+            this.tabControlMdxEditorCollection.Name = "tabControlMdxEditorCollection";
+            this.tabControlMdxEditorCollection.SelectedIndex = 0;
+            this.tabControlMdxEditorCollection.Size = new System.Drawing.Size(510, 309);
+            this.tabControlMdxEditorCollection.TabIndex = 1;
+            this.tabControlMdxEditorCollection.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabControlMdxEditorCollection_MouseDown);
+            // 
+            // tabPageDefault
+            // 
+            this.tabPageDefault.Controls.Add(this.mdxExecuterCtrl1);
+            this.tabPageDefault.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDefault.Name = "tabPageDefault";
+            this.tabPageDefault.Size = new System.Drawing.Size(502, 283);
+            this.tabPageDefault.TabIndex = 0;
+            this.tabPageDefault.Text = "Default";
+            this.tabPageDefault.UseVisualStyleBackColor = true;
+            // 
+            // mdxExecuterCtrl1
+            // 
+            this.mdxExecuterCtrl1.ConnStr = "";
+            this.mdxExecuterCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mdxExecuterCtrl1.FileName = null;
+            this.mdxExecuterCtrl1.Location = new System.Drawing.Point(0, 0);
+            this.mdxExecuterCtrl1.Mdx = "\r\nSELECT \r\nNON EMPTY\r\n{\r\n    [Measures].[ZCHTAmount],[Measures].[ZCHTCount]\r\n}\r\n " +
     "ON COLUMNS,\r\nNON EMPTY\r\n{\r\n   [ProjectDim.hieInfo].[Project].Members\r\n}\r\nON ROWS" +
     "\r\nFROM ZCHT_BsJe";
+            this.mdxExecuterCtrl1.Name = "mdxExecuterCtrl1";
+            this.mdxExecuterCtrl1.Size = new System.Drawing.Size(502, 283);
+            this.mdxExecuterCtrl1.TabIndex = 0;
+            // 
+            // closeAllTabsToolStripMenuItem
+            // 
+            this.closeAllTabsToolStripMenuItem.Name = "closeAllTabsToolStripMenuItem";
+            this.closeAllTabsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.closeAllTabsToolStripMenuItem.Text = "Close All Tabs";
+            this.closeAllTabsToolStripMenuItem.Click += new System.EventHandler(this.closeAllTabsToolStripMenuItem_Click);
+            // 
+            // closeCurrentTabToolStripMenuItem
+            // 
+            this.closeCurrentTabToolStripMenuItem.Name = "closeCurrentTabToolStripMenuItem";
+            this.closeCurrentTabToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.closeCurrentTabToolStripMenuItem.Text = "Close Current Tab";
+            this.closeCurrentTabToolStripMenuItem.Click += new System.EventHandler(this.closeCurrentTabToolStripMenuItem_Click);
             // 
             // CubeViewCtrl
             // 
@@ -247,24 +350,28 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "CubeViewCtrl";
-            this.Size = new System.Drawing.Size(554, 447);
+            this.Size = new System.Drawing.Size(896, 431);
             this.Load += new System.EventHandler(this.CubeViewCtrl_Load);
             this.serverMenu.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.splitContainerEx1.Panel1.ResumeLayout(false);
-            this.splitContainerEx1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
-            this.splitContainerEx1.ResumeLayout(false);
-            this.splitContainerEx2.Panel1.ResumeLayout(false);
-            this.splitContainerEx2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx2)).EndInit();
-            this.splitContainerEx2.ResumeLayout(false);
-            this.splitContainerEx3.Panel1.ResumeLayout(false);
-            this.splitContainerEx3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx3)).EndInit();
-            this.splitContainerEx3.ResumeLayout(false);
+            this.splitContainerMain.Panel1.ResumeLayout(false);
+            this.splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
+            this.splitContainerMain.ResumeLayout(false);
+            this.splitContainerServerAndCubeInfo.Panel1.ResumeLayout(false);
+            this.splitContainerServerAndCubeInfo.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerServerAndCubeInfo)).EndInit();
+            this.splitContainerServerAndCubeInfo.ResumeLayout(false);
+            this.tabControlmenu.ResumeLayout(false);
+            this.cubeMenu.ResumeLayout(false);
+            this.splitContainerDataAndMdx.Panel1.ResumeLayout(false);
+            this.splitContainerDataAndMdx.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataAndMdx)).EndInit();
+            this.splitContainerDataAndMdx.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjectInfo)).EndInit();
+            this.tabControlMdxEditorCollection.ResumeLayout(false);
+            this.tabPageDefault.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -279,10 +386,20 @@
         private System.Windows.Forms.ContextMenuStrip serverMenu;
         private System.Windows.Forms.ToolStripMenuItem browerCubeInfoToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
-        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
-        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx2;
-        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx3;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerMain;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerDataAndMdx;
         private System.Windows.Forms.DataGridView dgvObjectInfo;
-        private ICSharpCode.TextEditor.TextEditorControl txtMdx;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerServerAndCubeInfo;
+        private System.Windows.Forms.ContextMenuStrip cubeMenu;
+        private System.Windows.Forms.TabControl tabControlMdxEditorCollection;
+        private System.Windows.Forms.ToolStripMenuItem generateSampleMdxTabPageToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip tabControlmenu;
+        private System.Windows.Forms.ToolStripMenuItem saveMdxInCurrentTabPageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveMdxInAllTabPageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadMdxFileToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPageDefault;
+        private Executer.MdxExecuterCtrl mdxExecuterCtrl1;
+        private System.Windows.Forms.ToolStripMenuItem closeAllTabsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeCurrentTabToolStripMenuItem;
     }
 }

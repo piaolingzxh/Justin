@@ -346,6 +346,28 @@ namespace Justin.FrameWork.Extensions
             var value = method.Invoke(obj, parameters);
             return (value is T ? (T)value : default(T));
         }
+        public static Object GetPropertyValue(this object obj, string propertyName)
+        {
+            var type = obj.GetType();
+            var property = type.GetProperty(propertyName);
+
+            if (property == null)
+                throw new ArgumentException(string.Format("Property '{0}' not found.", propertyName), propertyName);
+
+            var value = property.GetValue(obj, null);
+            return value;
+        }
+        public static T GetPropertyValue<T>(this object obj, string propertyName)
+        {
+            var type = obj.GetType();
+            var property = type.GetProperty(propertyName);
+
+            if (property == null)
+                throw new ArgumentException(string.Format("Property '{0}' not found.", propertyName), propertyName);
+
+            var value = property.GetValue(obj, null);
+            return (value is T ? (T)value : default(T));
+        }
         public static T GetPropertyValue<T>(this object obj, string propertyName, T defaultValue)
         {
             var type = obj.GetType();
@@ -579,7 +601,32 @@ namespace Justin.FrameWork.Extensions
 
         public static bool Contains(this IEnumerable<string> source, string value, bool ignoreCase)
         {
-            return source.Contains(value, StringComparer.Create(CultureInfo.CurrentCulture, true)); 
+            return source.Contains(value, StringComparer.Create(CultureInfo.CurrentCulture, true));
+        }
+
+
+        public static string ToDragText(this  object dragData, string property = "")
+        {
+            if (dragData == null) return "";
+
+            Type dragDataType = dragData.GetType();
+            if (dragDataType.IsValueType || dragDataType.Equals(typeof(System.String)))
+            {
+                return dragData.ToJString();
+            }
+            else
+            {
+                if (!property.Contains("."))
+                {
+                    if (string.IsNullOrEmpty(property))
+                        return dragData.ToJString();
+                    return dragData.GetPropertyValue(property).ToJString();
+                }
+
+                string crtProperty = property.Substring(0, property.IndexOf("."));
+                string otherProperties = property.Substring(property.IndexOf(".") + 1);
+                return dragData.GetPropertyValue(crtProperty).ToDragText(otherProperties);
+            }
         }
     }
 }

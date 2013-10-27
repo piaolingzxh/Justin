@@ -29,9 +29,11 @@ namespace Justin.Controls.Executer
             {
                 this.txtMdx.SaveFile(fileName);
             };
+            txtMdx.ActiveTextAreaControl.AllowDrop = true;
+            txtMdx.ActiveTextAreaControl.TextArea.DragDrop += new DragEventHandler(txtMdx_DragDrop);
+            this.txtMdx.ActiveTextAreaControl.TextArea.DragEnter += new DragEventHandler(txtMdx_DragEnter);
         }
 
-        public static string DefaultConnStr { get; set; }
         public AdomdConnection Connection
         {
             get
@@ -97,26 +99,49 @@ namespace Justin.Controls.Executer
 
         private void MdxExecuterCtrl_Load(object sender, EventArgs e)
         {
-
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
-            txtMdx.ActiveTextAreaControl.AllowDrop = true;
-            txtMdx.ActiveTextAreaControl.TextArea.DragDrop += new DragEventHandler(txtMdx_DragDrop);
-            this.txtMdx.ActiveTextAreaControl.TextArea.DragEnter += new DragEventHandler(txtMdx_DragEnter);
+
             this.SetToolTipsForButton(new ToolTip());
             if (string.IsNullOrEmpty(txtConnectionString.Text))
-                this.txtConnectionString.Text = MdxExecuterCtrl.DefaultConnStr;
+                this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
         void txtMdx_DragDrop(object sender, DragEventArgs e)
         {
             TreeNode node = (TreeNode)e.Data.GetData(typeof(TreeNode));
-            string text = string.IsNullOrEmpty(node.Name) ? node.Text : node.Name;
-            txtMdx.ActiveTextAreaControl.TextArea.InsertString("[" + text + "]");
+            string dragText = "";
+            switch (node.ImageKey)
+            {
+                case "Cube": dragText = GetDragText(node, new string[] { "Tag.Name" }); break;
+                case "Dim": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                case "SingeHie":
+                case "Hie": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                case "Level": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                case "Member": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                case "Measure": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                case "CalMeasure": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                default: return;
+            }
+            txtMdx.ActiveTextAreaControl.TextArea.InsertString(dragText);
         }
         private void txtMdx_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
+        }
+        private string GetDragText(TreeNode node, string[] pathOfPropertyNames)
+        {
+            for (int i = 0; i < pathOfPropertyNames.Count(); i++)
+            {
+                string propertyPath = pathOfPropertyNames[i];
+                string dragText = node.ToDragText(propertyPath);
+                if (string.IsNullOrEmpty(dragText))
+                {
+                    continue;
+                }
+                return dragText;
+            }
+            return "";
         }
 
         public override string ConnStr
@@ -164,7 +189,17 @@ namespace Justin.Controls.Executer
             get { return ".mdx"; }
         }
 
-
+        public string Mdx
+        {
+            get
+            {
+                return txtMdx.Text;
+            }
+            set
+            {
+                txtMdx.Text = value;
+            }
+        }
         private void btnClear_Click(object sender, EventArgs e)
         {
             this.gvMdxresult.DataSource = null;
@@ -178,7 +213,7 @@ namespace Justin.Controls.Executer
 
         private void btnDefaultConnStr_Click(object sender, EventArgs e)
         {
-            this.txtConnectionString.Text = DefaultConnStr;
+            this.txtConnectionString.Text =MdxExecuterCtrlSetting. DefaultConnStr;
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)
@@ -203,5 +238,11 @@ namespace Justin.Controls.Executer
             this.ShowMessage("没有数据可以导出！");
         }
 
+    }
+
+
+    public class MdxExecuterCtrlSetting
+    {
+        public static string DefaultConnStr { get; set; }
     }
 }

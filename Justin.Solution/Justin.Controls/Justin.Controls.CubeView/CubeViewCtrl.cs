@@ -12,6 +12,11 @@ using Microsoft.AnalysisServices.AdomdClient;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.WinForm.Properties;
 using ICSharpCode.TextEditor.Document;
+using Justin.Controls.Executer;
+using Justin.FrameWork.Settings;
+using Justin.FrameWork.Helper;
+using System.Xml.Serialization;
+using Justin.FrameWork;
 
 namespace Justin.Controls.CubeView
 {
@@ -20,8 +25,9 @@ namespace Justin.Controls.CubeView
         public CubeViewCtrl()
         {
             InitializeComponent();
+
         }
-        public static string DefaultConnStr { get; set; }
+
         public override string ConnStr
         {
             get
@@ -57,27 +63,27 @@ namespace Justin.Controls.CubeView
             }
         }
 
-
         private void CubeViewCtrl_Load(object sender, EventArgs e)
         {
-            //this.btnCloseOpen.Image = Resources.opened;
-
             if (string.IsNullOrEmpty(txtConnectionString.Text))
-                this.txtConnectionString.Text = CubeViewCtrl.DefaultConnStr;
-            txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
-            txtMdx.Encoding = Encoding.GetEncoding("GB2312");
-            txtMdx.ActiveTextAreaControl.AllowDrop = true;
-            txtMdx.ActiveTextAreaControl.TextArea.DragDrop += new DragEventHandler(txtMdx_DragDrop);
-            this.txtMdx.ActiveTextAreaControl.TextArea.DragEnter += new DragEventHandler(txtMdx_DragEnter);
-            //co = new CubeOperate(this.ConnStr);
-            //if (tvServerInfo.Nodes.Count < 1)
-            //    Bindcatalog();
+            {
+                this.txtConnectionString.Text = CubeViewCtrlSetting.DefaultConnStr;
+            }
+            MdxExecuterCtrlSetting.DefaultConnStr = CubeViewCtrlSetting.DefaultConnStr;
+            //splitContainerMain.Collapse();
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            co = new CubeOperate(this.ConnStr);
-            BindServerInfo();
+            try
+            {
+                co = new CubeOperate(this.ConnStr);
+                BindServerInfo();
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessage(ex);
+            }
         }
 
         #region 服务器连接信息
@@ -145,41 +151,63 @@ namespace Justin.Controls.CubeView
 
         private void BindCubeInfo(string cubeName)
         {
+            if (tvCubeInfo.Nodes[cubeName] != null)
+            {
+                tvCubeInfo.Nodes.RemoveByKey(cubeName);
+            }
             CubeDef cubeDef = co.GetCube(cubeName);
-            tvCubeInfo.Nodes.Clear();
-            tvCubeInfo.Nodes.Add("Cube_", cubeDef.Caption, "Cube", "Cube");
-            tvCubeInfo.Nodes[0].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
-            tvCubeInfo.Nodes[0].Expand();
+            tvCubeInfo.Nodes.Add(cubeDef.Name, cubeDef.Caption, "Cube", "Cube");
+            tvCubeInfo.Nodes[cubeDef.Name].Tag = cubeDef;
+            tvCubeInfo.Nodes[cubeDef.Name].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
+            tvCubeInfo.Nodes[cubeDef.Name].Expand();
 
-            BindMeasuresForCube(co.GetMeasures(cubeName));
+            BindMeasuresForCube(cubeName);
             BindDimensionsForCube(cubeDef);
 
         }
-        private TreeNode CubeNode
+        private TreeNode GetCubeNode(string cubeName)
         {
-            get
-            {
-                return tvCubeInfo.Nodes[0];
-            }
+            return tvCubeInfo.Nodes[cubeName];
         }
-        private TreeNode MeasuresRoot
+        private TreeNode GetMeasuresRoot(string cubeName)
         {
-            get
-            {
-                return tvCubeInfo.Nodes[0].Nodes["Measures_"];
-            }
+            return tvCubeInfo.Nodes[cubeName].Nodes["Measures_"];
         }
-        private void BindMeasuresForCube(IEnumerable<Measure> measures)
+        private void BindMeasuresForCube(string cubeName)
         {
-            MeasuresRoot.Nodes.Clear();
+            IEnumerable<Measure> measures = co.GetMeasures(cubeName);
+            TreeNode rootOfMeasures = GetMeasuresRoot(cubeName);
+            rootOfMeasures.Nodes.Clear();
 
             if (measures == null) return;
-            var groups = measures.Select(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString()).Distinct();
-            foreach (var group in groups.OrderBy(r => r))
+            bool hasGroup = measures.FirstOrDefault().Properties.Find("MEASUREGROUP_NAME") != null;
+            if (hasGroup)
             {
-                var tempMeasures = measures.Where(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString().Equals(group));
-                MeasuresRoot.Nodes.Add(group, group, "Group", "Group");
-                foreach (var item in tempMeasures.OrderBy(r => r.Caption))
+                var groups = measures.Select(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString()).Distinct();
+                foreach (var group in groups.OrderBy(r => r))
+                {
+                    var tempMeasures = measures.Where(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString().Equals(group));
+                    rootOfMeasures.Nodes.Add(group, group, "Group", "Group");
+                    foreach (var item in tempMeasures.OrderBy(r => r.Caption))
+                    {
+                        string name = item.Name;//.Replace("$", "");
+                        string caption = item.Caption;//.Replace("$", "");
+                        TreeNode tempNode = new TreeNode(caption);
+                        tempNode.Name = name;
+                        tempNode.Tag = item;
+                        bool visible = item.Properties["MEASURE_IS_VISIBLE"].Value.Value<bool>(true);
+                        Property expressionProperty = item.Properties.Find("EXPRESSION");
+                        string expression = expressionProperty == null ? "" : expressionProperty.Value.ToJString();
+                        string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
+                        tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
+                        tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                        rootOfMeasures.Nodes[group].Nodes.Add(tempNode);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in measures.OrderBy(r => r.Caption))
                 {
                     string name = item.Name;//.Replace("$", "");
                     string caption = item.Caption;//.Replace("$", "");
@@ -187,10 +215,12 @@ namespace Justin.Controls.CubeView
                     tempNode.Name = name;
                     tempNode.Tag = item;
                     bool visible = item.Properties["MEASURE_IS_VISIBLE"].Value.Value<bool>(true);
-                    string key = string.IsNullOrEmpty(item.Expression) ? "Measure" : "CalMeasure";
+                    Property expressionProperty = item.Properties.Find("EXPRESSION");
+                    string expression = expressionProperty == null ? "" : expressionProperty.Value.ToJString();
+                    string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
                     tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
                     tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                    MeasuresRoot.Nodes[group].Nodes.Add(tempNode);
+                    rootOfMeasures.Nodes.Add(tempNode);
                 }
             }
 
@@ -200,11 +230,12 @@ namespace Justin.Controls.CubeView
         {
             IEnumerable<Dimension> dimensions = cubeDef.Dimensions.Cast<Dimension>();
             if (dimensions == null) return;
-            for (int i = CubeNode.Nodes.Count - 1; i >= 0; i--)
+            TreeNode cubeNode = GetCubeNode(cubeDef.Name);
+            for (int i = cubeNode.Nodes.Count - 1; i >= 0; i--)
             {
-                if (!CubeNode.Nodes[i].Name.Equals("Measures_", StringComparison.CurrentCultureIgnoreCase))
+                if (!cubeNode.Nodes[i].Name.Equals("Measures_", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    CubeNode.Nodes.RemoveAt(i);
+                    cubeNode.Nodes.RemoveAt(i);
                 }
             }
 
@@ -219,7 +250,7 @@ namespace Justin.Controls.CubeView
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Dim" : "Dim";
                 tempNode.Tag = item;
                 BindHierarchies(tempNode, item.Hierarchies);
-                CubeNode.Nodes.Add(tempNode);
+                cubeNode.Nodes.Add(tempNode);
             }
         }
         private void BindHierarchies(TreeNode dimNode, HierarchyCollection hierarchies)
@@ -234,7 +265,7 @@ namespace Justin.Controls.CubeView
                 tempNode.Name = name;
                 tempNode.Tag = hierarchy;
                 bool visible = hierarchy.Properties["HIERARCHY_IS_VISIBLE"].Value.Value<bool>(true);
-                string key = hierarchy.Levels.Count > 2 ? "Hie" : "Level";
+                string key = hierarchy.Levels.Count > 2 ? "Hie" : "SingleHie";
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
                 BindLevels(tempNode, hierarchy.Levels);
                 dimNode.Nodes.Add(tempNode);
@@ -266,8 +297,6 @@ namespace Justin.Controls.CubeView
             {
                 Level level = root.Tag as Level;
                 members = level.GetMembers();
-
-
             }
             else if (root.ImageKey.Equals("Member"))
             {
@@ -294,9 +323,6 @@ namespace Justin.Controls.CubeView
             root.Expand();
         }
 
-
-
-
         #endregion
 
         #region Treeview 操作
@@ -307,10 +333,6 @@ namespace Justin.Controls.CubeView
         }
         private void tvServerInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
-            {
-                BindCubeInfo(tvServerInfo.SelectedNode.Name);
-            }
             if (string.IsNullOrEmpty(tvServerInfo.SelectedNode.Name))
             {
                 MessageBox.Show("节点Name不能为空");
@@ -323,15 +345,42 @@ namespace Justin.Controls.CubeView
 
         private void browerCubeInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tvServerInfo.SelectedNode.Parent != null && tvServerInfo.SelectedNode.Parent.Name.Equals("Cubes_"))
+            try
             {
-                BindCubeInfo(tvServerInfo.SelectedNode.Name);
+                var selectNode = tvServerInfo.SelectedNode;
+
+                if (selectNode.Parent != null && selectNode.Parent.Name.Equals("Cubes_") && selectNode.ImageKey.Equals("Cube"))
+                {
+                    BindCubeInfo(selectNode.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessage(ex);
             }
         }
 
         private void tvCubeInfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             tvCubeInfo.SelectedNode = e.Node;
+        }
+
+        public TreeNode GetCubeNode(TreeNode node)
+        {
+            TreeNode parentNode = node.Parent;
+
+            while (parentNode != null)
+            {
+                if (parentNode.Parent == null)
+                {
+                    return parentNode;
+                }
+                else
+                {
+                    parentNode = parentNode.Parent;
+                }
+            }
+            return node;
         }
         private void tvCubeInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -348,6 +397,7 @@ namespace Justin.Controls.CubeView
                 case "Measure":
                 case "CalMeasure": Measure measure = tempNode.Tag as Measure; table = measure.Properties.PrepareData(); break;
                 case "Dim": Dimension dim = tempNode.Tag as Dimension; table = dim.Properties.PrepareData(); break;
+                case "SingeHie":
                 case "Hie": Hierarchy hie = tempNode.Tag as Hierarchy; table = hie.Properties.PrepareData(); break;
                 case "Level": Level level = tempNode.Tag as Level; table = level.Properties.PrepareData(); break;
                 case "Member": Member member = tempNode.Tag as Member; table = member.Properties.PrepareData(); break;
@@ -355,7 +405,6 @@ namespace Justin.Controls.CubeView
             }
 
             dgvObjectInfo.DataSource = table;
-
         }
         private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
@@ -364,42 +413,176 @@ namespace Justin.Controls.CubeView
 
         private void tvCubeInfo_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Node != null && (e.Node.ImageKey == "Level" || e.Node.ImageKey == "Member"))
+            try
             {
-                ExpendMembers(e.Node);
+                if (e.Node != null && (e.Node.ImageKey == "Level" || e.Node.ImageKey == "Member"))
+                {
+                    ExpendMembers(e.Node);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessage(ex);
             }
         }
         #endregion
 
-        private void btnCloseOpen_Click(object sender, EventArgs e)
+        private string GenerateSampleMdx()
         {
-            //if (this.btnCloseOpen.Image == Resources.closed)
-            //{
-            //    this.splitContainer1.Panel2.Show();
-            //}
-            //else
-            //{
-            //    this.splitContainer1.Panel2.Hide();
-            //}
+
+            if (tvCubeInfo.SelectedNode == null) return "";
+
+            TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
+            string measureExpression = (cubeNode.Nodes[0].Nodes[0].Tag as Measure).UniqueName;
+
+            string dimensionExpression = (cubeNode.Nodes[1].Nodes[0].Tag as Hierarchy).UniqueName; ;
+
+            return string.Format(@"
+SELECT 
+NON EMPTY
+{{
+    {0}
+}}
+ ON COLUMNS,
+NON EMPTY
+{{
+   {1}.Members
+}}
+ON ROWS
+FROM [{2}]
+", measureExpression, dimensionExpression, cubeNode.Name);
         }
 
-
-        void txtMdx_DragDrop(object sender, DragEventArgs e)
+        private void generateSampleMdxTabPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreeNode node = (TreeNode)e.Data.GetData(typeof(TreeNode));
-            string text = string.IsNullOrEmpty(node.Name) ? node.Text : node.Name;
-            txtMdx.ActiveTextAreaControl.TextArea.InsertString("[" + text + "]");
+            TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
+            AddMdxEditorTabPage(cubeNode.Text, this.ConnStr, GenerateSampleMdx());
         }
-        private void txtMdx_DragEnter(object sender, DragEventArgs e)
+        private void AddMdxEditorTabPage(string cubeText, string connStr, string mdx)
         {
-            e.Effect = DragDropEffects.Copy;
+            TabPage page = new TabPage(cubeText);
+            MdxExecuterCtrl mdxEditor = new MdxExecuterCtrl();
+            mdxEditor.ConnStr = connStr;
+            mdxEditor.Mdx = mdx;
+            mdxEditor.Dock = DockStyle.Fill;
+            page.Controls.Add(mdxEditor);
+            tabControlMdxEditorCollection.TabPages.Add(page);
+        }
+        private void saveMdxInCurrentTabPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<MdxCodeSnip> list = new List<MdxCodeSnip>();
+            MdxExecuterCtrl editor = FindCtrl(tabControlMdxEditorCollection.SelectedTab);
+            list.Add(new MdxCodeSnip()
+            {
+                Name = tabControlMdxEditorCollection.SelectedTab.Text,
+                ConnStr = editor.ConnStr,
+                Mdx = editor.Mdx
+            });
+            SaveToFile(list);
+
+        }
+        private MdxExecuterCtrl FindCtrl(TabPage page)
+        {
+            var ctrl = page.Controls.Cast<Control>().Where(r => r.GetType().Equals(typeof(MdxExecuterCtrl))).FirstOrDefault();
+            return ctrl as MdxExecuterCtrl;
         }
 
+        private void saveMdxInAllTabPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<MdxCodeSnip> list = new List<MdxCodeSnip>();
+
+            foreach (TabPage currentTabPage in tabControlMdxEditorCollection.TabPages)
+            {
+                MdxExecuterCtrl editor = FindCtrl(currentTabPage);
+                list.Add(new MdxCodeSnip()
+                {
+                    Name = currentTabPage.Text,
+                    ConnStr = editor.ConnStr,
+                    Mdx = editor.Mdx
+                });
+            }
+            SaveToFile(list);
+        }
+
+        private void SaveToFile(List<MdxCodeSnip> list)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            var form = this.FindForm();
+            saveFileDialog1.InitialDirectory = Constants.ConfigFileFolder;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.Filter = "xml Files (.xml)|*.xml|All Files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 1;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveFileDialog1.FileName;
+                SerializeHelper.XmlSerializeToFile<List<MdxCodeSnip>>(list, fileName, true);
+            }
+
+        }
+
+        private void tabControlMdxEditorCollection_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point pt = new Point(e.X, e.Y);
+
+            for (int i = 0; i < tabControlMdxEditorCollection.TabCount; i++)
+            {
+                Rectangle recTab = tabControlMdxEditorCollection.GetTabRect(i);
+                if (recTab.Contains(pt))
+                {
+                    tabControlMdxEditorCollection.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        private void loadMdxFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            string folder = Constants.ConfigFileFolder;
+            fileDialog.InitialDirectory = folder;
+            fileDialog.RestoreDirectory = true;
+
+            fileDialog.Filter = "XML Files (.txt)|*.xml|All Files (*.*)|*.*";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                List<MdxCodeSnip> list = SerializeHelper.XmlDeserializeFromFile<List<MdxCodeSnip>>(fileDialog.FileName);
+                if (list == null) return;
+                foreach (var item in list)
+                {
+                    AddMdxEditorTabPage(item.Name, item.ConnStr, item.Mdx);
+                }
+            }
+        }
+
+        private void closeAllTabsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMdxEditorCollection.TabPages.Clear();
+        }
+
+        private void closeCurrentTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMdxEditorCollection.TabPages.Remove(tabControlMdxEditorCollection.SelectedTab);
+        }
 
     }
+    public class MdxCodeSnip
+    {
+        public string Name { get; set; }
+        public string ConnStr { get; set; }
+        public CDATA Mdx { get; set; }
 
+    }
     public static class CollectionHelper
     {
+        public static string Display(this Microsoft.AnalysisServices.AdomdClient.PropertyCollection collection)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in collection.Cast<Property>())
+            {
+                sb.AppendFormat("{0}    {1} {2}", item.Name, item.Type.ToString(), item.Value == null ? " " : item.Value).AppendLine();
+            }
+            return sb.ToString();
+        }
         public static DataTable PrepareData(this Microsoft.AnalysisServices.AdomdClient.PropertyCollection collection)
         {
             DataTable table = new DataTable();
@@ -417,5 +600,30 @@ namespace Justin.Controls.CubeView
             table.Rows.Add(row);
             return table;
         }
+
+        public static List<TreeNode> GetCheckNodes(this TreeView tree)
+        {
+            List<TreeNode> checkedNodes = new List<TreeNode>();
+            foreach (TreeNode item in tree.Nodes)
+            {
+                item.PrepareCheckNodesInner(checkedNodes);
+            }
+            return checkedNodes;
+        }
+        public static void PrepareCheckNodesInner(this TreeNode node, List<TreeNode> checkedNodes)
+        {
+            foreach (TreeNode item in node.Nodes)
+            {
+                if (item.Checked)
+                {
+                    checkedNodes.Add(item);
+                }
+                item.PrepareCheckNodesInner(checkedNodes);
+            }
+        }
+    }
+    public class CubeViewCtrlSetting
+    {
+        public static string DefaultConnStr { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace Justin.Toolbox
             this.LoadFile(this.FileName);
             try
             {
-                MdxExecuterCtrl.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
+                MdxExecuterCtrlSetting.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
             }
             catch { }
 
