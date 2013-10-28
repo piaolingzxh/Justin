@@ -45,17 +45,29 @@
             this.loadMdxFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllTabsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCurrentTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainerCubeInfo = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboxFilterType = new System.Windows.Forms.ComboBox();
+            this.txtFilterName = new System.Windows.Forms.TextBox();
+            this.txtFilterText = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtFilterUniqueName = new System.Windows.Forms.TextBox();
+            this.btnCancelFilter = new System.Windows.Forms.Button();
+            this.btnFilter = new System.Windows.Forms.Button();
             this.tvCubeInfo = new System.Windows.Forms.TreeView();
             this.cubeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.generateSampleMdxTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCurrentCubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainerDataAndMdx = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.dgvObjectInfo = new System.Windows.Forms.DataGridView();
             this.tabControlMdxEditorCollection = new System.Windows.Forms.TabControl();
             this.tabPageDefault = new System.Windows.Forms.TabPage();
             this.mdxExecuterCtrl1 = new Justin.Controls.Executer.MdxExecuterCtrl();
-            this.collapseAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -67,6 +79,11 @@
             this.splitContainerServerAndCubeInfo.Panel2.SuspendLayout();
             this.splitContainerServerAndCubeInfo.SuspendLayout();
             this.tabControlmenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerCubeInfo)).BeginInit();
+            this.splitContainerCubeInfo.Panel1.SuspendLayout();
+            this.splitContainerCubeInfo.Panel2.SuspendLayout();
+            this.splitContainerCubeInfo.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.cubeMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataAndMdx)).BeginInit();
             this.splitContainerDataAndMdx.Panel1.SuspendLayout();
@@ -198,7 +215,7 @@
             // splitContainerServerAndCubeInfo.Panel2
             // 
             this.splitContainerServerAndCubeInfo.Panel2.ContextMenuStrip = this.tabControlmenu;
-            this.splitContainerServerAndCubeInfo.Panel2.Controls.Add(this.tvCubeInfo);
+            this.splitContainerServerAndCubeInfo.Panel2.Controls.Add(this.splitContainerCubeInfo);
             this.splitContainerServerAndCubeInfo.Size = new System.Drawing.Size(376, 395);
             this.splitContainerServerAndCubeInfo.SplitterDistance = 173;
             this.splitContainerServerAndCubeInfo.TabIndex = 3;
@@ -249,6 +266,160 @@
             this.closeCurrentTabToolStripMenuItem.Text = "Close Current Tab";
             this.closeCurrentTabToolStripMenuItem.Click += new System.EventHandler(this.closeCurrentTabToolStripMenuItem_Click);
             // 
+            // splitContainerCubeInfo
+            // 
+            this.splitContainerCubeInfo.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerCubeInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerCubeInfo.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerCubeInfo.Name = "splitContainerCubeInfo";
+            this.splitContainerCubeInfo.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerCubeInfo.Panel1
+            // 
+            this.splitContainerCubeInfo.Panel1.Controls.Add(this.tableLayoutPanel2);
+            this.splitContainerCubeInfo.Panel1MinSize = 130;
+            // 
+            // splitContainerCubeInfo.Panel2
+            // 
+            this.splitContainerCubeInfo.Panel2.Controls.Add(this.tvCubeInfo);
+            this.splitContainerCubeInfo.Size = new System.Drawing.Size(199, 395);
+            this.splitContainerCubeInfo.SplitterDistance = 130;
+            this.splitContainerCubeInfo.TabIndex = 1;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cboxFilterType, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.txtFilterName, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.txtFilterText, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.txtFilterUniqueName, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.btnCancelFilter, 1, 5);
+            this.tableLayoutPanel2.Controls.Add(this.btnFilter, 0, 5);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 6;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(199, 130);
+            this.tableLayoutPanel2.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 25);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "过滤类型";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxFilterType
+            // 
+            this.cboxFilterType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxFilterType.FormattingEnabled = true;
+            this.cboxFilterType.Location = new System.Drawing.Point(83, 3);
+            this.cboxFilterType.Name = "cboxFilterType";
+            this.cboxFilterType.Size = new System.Drawing.Size(113, 21);
+            this.cboxFilterType.TabIndex = 1;
+            // 
+            // txtFilterName
+            // 
+            this.txtFilterName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFilterName.Location = new System.Drawing.Point(83, 28);
+            this.txtFilterName.Name = "txtFilterName";
+            this.txtFilterName.Size = new System.Drawing.Size(113, 20);
+            this.txtFilterName.TabIndex = 3;
+            // 
+            // txtFilterText
+            // 
+            this.txtFilterText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFilterText.Location = new System.Drawing.Point(83, 53);
+            this.txtFilterText.Name = "txtFilterText";
+            this.txtFilterText.Size = new System.Drawing.Size(113, 20);
+            this.txtFilterText.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Name";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 25);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Text";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 75);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 25);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "UniqueName";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtFilterUniqueName
+            // 
+            this.txtFilterUniqueName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFilterUniqueName.Location = new System.Drawing.Point(83, 78);
+            this.txtFilterUniqueName.Name = "txtFilterUniqueName";
+            this.txtFilterUniqueName.Size = new System.Drawing.Size(113, 20);
+            this.txtFilterUniqueName.TabIndex = 7;
+            // 
+            // btnCancelFilter
+            // 
+            this.btnCancelFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCancelFilter.Location = new System.Drawing.Point(83, 103);
+            this.btnCancelFilter.Name = "btnCancelFilter";
+            this.btnCancelFilter.Size = new System.Drawing.Size(113, 24);
+            this.btnCancelFilter.TabIndex = 8;
+            this.btnCancelFilter.Text = "取消过滤";
+            this.btnCancelFilter.UseVisualStyleBackColor = true;
+            this.btnCancelFilter.Click += new System.EventHandler(this.btnCancelFilter_Click);
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.Location = new System.Drawing.Point(3, 103);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(74, 24);
+            this.btnFilter.TabIndex = 8;
+            this.btnFilter.Text = "过滤";
+            this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
+            // 
             // tvCubeInfo
             // 
             this.tvCubeInfo.ContextMenuStrip = this.cubeMenu;
@@ -258,7 +429,7 @@
             this.tvCubeInfo.Location = new System.Drawing.Point(0, 0);
             this.tvCubeInfo.Name = "tvCubeInfo";
             this.tvCubeInfo.SelectedImageIndex = 0;
-            this.tvCubeInfo.Size = new System.Drawing.Size(199, 395);
+            this.tvCubeInfo.Size = new System.Drawing.Size(199, 261);
             this.tvCubeInfo.TabIndex = 0;
             this.tvCubeInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvCubeInfo_ItemDrag);
             this.tvCubeInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCubeInfo_AfterSelect);
@@ -273,7 +444,7 @@
             this.closeAllCubesToolStripMenuItem,
             this.collapseAllCubesToolStripMenuItem});
             this.cubeMenu.Name = "serverMenu";
-            this.cubeMenu.Size = new System.Drawing.Size(190, 114);
+            this.cubeMenu.Size = new System.Drawing.Size(190, 92);
             // 
             // generateSampleMdxTabPageToolStripMenuItem
             // 
@@ -295,6 +466,13 @@
             this.closeAllCubesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.closeAllCubesToolStripMenuItem.Text = "Close All Cubes";
             this.closeAllCubesToolStripMenuItem.Click += new System.EventHandler(this.closeAllCubesToolStripMenuItem_Click);
+            // 
+            // collapseAllCubesToolStripMenuItem
+            // 
+            this.collapseAllCubesToolStripMenuItem.Name = "collapseAllCubesToolStripMenuItem";
+            this.collapseAllCubesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.collapseAllCubesToolStripMenuItem.Text = "Collapse All Cubes";
+            this.collapseAllCubesToolStripMenuItem.Click += new System.EventHandler(this.collapseAllCubesToolStripMenuItem_Click);
             // 
             // splitContainerDataAndMdx
             // 
@@ -363,13 +541,6 @@
             this.mdxExecuterCtrl1.Size = new System.Drawing.Size(502, 283);
             this.mdxExecuterCtrl1.TabIndex = 0;
             // 
-            // collapseAllCubesToolStripMenuItem
-            // 
-            this.collapseAllCubesToolStripMenuItem.Name = "collapseAllCubesToolStripMenuItem";
-            this.collapseAllCubesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.collapseAllCubesToolStripMenuItem.Text = "Collapse All Cubes";
-            this.collapseAllCubesToolStripMenuItem.Click += new System.EventHandler(this.collapseAllCubesToolStripMenuItem_Click);
-            // 
             // CubeViewCtrl
             // 
             this.AllowDrop = true;
@@ -391,6 +562,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerServerAndCubeInfo)).EndInit();
             this.splitContainerServerAndCubeInfo.ResumeLayout(false);
             this.tabControlmenu.ResumeLayout(false);
+            this.splitContainerCubeInfo.Panel1.ResumeLayout(false);
+            this.splitContainerCubeInfo.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerCubeInfo)).EndInit();
+            this.splitContainerCubeInfo.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.cubeMenu.ResumeLayout(false);
             this.splitContainerDataAndMdx.Panel1.ResumeLayout(false);
             this.splitContainerDataAndMdx.Panel2.ResumeLayout(false);
@@ -431,5 +608,17 @@
         private System.Windows.Forms.ToolStripMenuItem closeCurrentCubeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllCubesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem collapseAllCubesToolStripMenuItem;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerCubeInfo;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cboxFilterType;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtFilterName;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TextBox txtFilterText;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtFilterUniqueName;
+        private System.Windows.Forms.Button btnCancelFilter;
+        private System.Windows.Forms.Button btnFilter;
     }
 }

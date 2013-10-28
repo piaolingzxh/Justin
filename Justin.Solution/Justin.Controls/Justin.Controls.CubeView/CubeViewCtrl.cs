@@ -70,7 +70,8 @@ namespace Justin.Controls.CubeView
                 this.txtConnectionString.Text = CubeViewCtrlSetting.DefaultConnStr;
             }
             MdxExecuterCtrlSetting.DefaultConnStr = CubeViewCtrlSetting.DefaultConnStr;
-            //splitContainerMain.Collapse();
+            cboxFilterType.Items.Clear();
+            cboxFilterType.Items.AddRange(Enum.GetNames(typeof(FilterType)));
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -586,6 +587,132 @@ FROM [{2}]
             //    item.Expand();
             //}
         }
+        private List<string> cubeNames = new List<string>();
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            cubeNames.Clear();
+            cubeNames.AddRange(GetNodes(FilterType.Cube).Select(cube => cube.Name));
+
+            FilterType filterType = (FilterType)Enum.Parse(typeof(FilterType), cboxFilterType.Text.Trim());
+            List<TreeNode> nodes = GetNodes(filterType);
+            List<TreeNode> resultNodes = new List<TreeNode>();
+            resultNodes.AddRange(nodes);
+            foreach (TreeNode node in resultNodes)
+            {
+                if (!FilterType.Cube.Equals(filterType))
+                {
+                    if (!string.IsNullOrEmpty(txtFilterUniqueName.Text.Trim()))
+                    {
+                        resultNodes = resultNodes.Where(
+                            row => row.Tag.GetPropertyValue("UniqueName").ToString().Contains(txtFilterUniqueName.Text.Trim())
+                            ).ToList();
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(txtFilterName.Text.Trim()))
+                {
+                    resultNodes = resultNodes.Where(
+                        row => row.Name.Contains(txtFilterName.Text.Trim())
+                        ).ToList();
+                }
+                if (!string.IsNullOrEmpty(txtFilterText.Text.Trim()))
+                {
+                    resultNodes = resultNodes.Where(
+                        row => row.Text.Contains(txtFilterText.Text.Trim())
+                        ).ToList();
+                }
+
+            }
+
+            foreach (TreeNode item in nodes)
+            {
+                if (!resultNodes.Contains(item))
+                {
+                    //Item：非结果值
+                    //在父节点中，把非结果值都删掉
+                    TreeNode parent = item.Parent;
+                    if (parent != null)
+                    {
+                        parent.Nodes.Remove(item);
+                        //删除其他非结果值
+                        for (int i = parent.Nodes.Count - 1; i >= 0; i--)
+                        {
+                            TreeNode nodeTemp = parent.Nodes[i];
+                            if (!resultNodes.Contains(nodeTemp))
+                            {
+                                parent.Nodes.Remove(nodeTemp);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        public List<TreeNode> GetNodes(FilterType filterType)
+        {
+            List<TreeNode> list = new List<TreeNode>();
+            switch (filterType)
+            {
+                case FilterType.Cube:
+                    list.AddRange(tvCubeInfo.Nodes.Cast<TreeNode>());
+                    break;
+                case FilterType.Dimension:
+                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                       cube =>
+                       {
+                           list.AddRange(cube.Nodes.Cast<TreeNode>().Where(dim => dim.ImageKey.Equals("Dim")));
+                       });
+                    break;
+                case FilterType.Hierarchy:
+                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                          cube =>
+                          {
+                              cube.Nodes.Cast<TreeNode>().ForEach(dim =>
+                              {
+                                  list.AddRange(dim.Nodes.Cast<TreeNode>().Where(hierarchy => hierarchy.ImageKey.Equals("Hie") || hierarchy.ImageKey.Equals("SingleHie")));
+                              });
+                          });
+                    break;
+                case FilterType.Level:
+                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                 cube =>
+                 {
+                     cube.Nodes.Cast<TreeNode>().ForEach(dim =>
+                     {
+                         dim.Nodes.Cast<TreeNode>().ForEach(hierarchy =>
+                         {
+                             list.AddRange(hierarchy.Nodes.Cast<TreeNode>().Where(level => level.ImageKey.Equals("Hie") || level.ImageKey.Equals("SingleHie")));
+                         });
+                     });
+                 });
+                    break;
+                case FilterType.Measure:
+                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                 cube =>
+                 {
+                     cube.Nodes.Cast<TreeNode>().ForEach(measures =>
+                     {
+                         measures.Nodes.Cast<TreeNode>().ForEach(group =>
+                         {
+                             list.AddRange(group.Nodes.Cast<TreeNode>().Where(measure => measure.ImageKey.Equals("Measure") || measure.ImageKey.Equals("CalMeasure")));
+                         });
+                     });
+                 });
+                    break;
+                default: return list;
+            }
+
+            return list;
+        }
+
+        private void btnCancelFilter_Click(object sender, EventArgs e)
+        {
+            foreach (var item in cubeNames)
+            {
+                BindCubeInfo(item);
+            }
+        }
 
     }
     public class MdxCodeSnip
@@ -648,5 +775,15 @@ FROM [{2}]
     public class CubeViewCtrlSetting
     {
         public static string DefaultConnStr { get; set; }
+    }
+
+    public enum FilterType
+    {
+        Cube,
+        Measure,
+        Dimension,
+        Hierarchy,
+        Level,
+        Member,
     }
 }
