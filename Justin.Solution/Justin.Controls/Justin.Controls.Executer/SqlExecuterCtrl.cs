@@ -45,6 +45,27 @@ namespace Justin.Controls.Executer
             };
         }
 
+        public string Extension
+        {
+            get { return ".sql"; }
+        }
+
+        #region override
+
+        public override string FileName
+        {
+            get
+            {
+                return txtSQLFileName.Text;
+            }
+            set
+            {
+                txtSQLFileName.Text = value;
+            }
+        }
+
+        #endregion
+
         #region 按钮事件
 
         private void btnBrowerSQLFile_Click(object sender, EventArgs e)
@@ -227,25 +248,6 @@ namespace Justin.Controls.Executer
             txtSQLPreview.AllowDrop = true;
         }
 
-        public string Extension
-        {
-            get { return ".sql"; }
-        }
 
-        #region override
-
-        public override string FileName
-        {
-            get
-            {
-                return txtSQLFileName.Text;
-            }
-            set
-            {
-                txtSQLFileName.Text = value;
-            }
-        }
-
-        #endregion
     }
 }

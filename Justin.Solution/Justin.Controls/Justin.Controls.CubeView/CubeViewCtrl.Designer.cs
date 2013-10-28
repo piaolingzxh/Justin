@@ -114,7 +114,6 @@
             this.tvServerInfo.ShowNodeToolTips = true;
             this.tvServerInfo.Size = new System.Drawing.Size(173, 395);
             this.tvServerInfo.TabIndex = 2;
-            this.tvServerInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvServerInfo_ItemDrag);
             this.tvServerInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvServerInfo_AfterSelect);
             this.tvServerInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvServerInfo_NodeMouseClick);
             // 

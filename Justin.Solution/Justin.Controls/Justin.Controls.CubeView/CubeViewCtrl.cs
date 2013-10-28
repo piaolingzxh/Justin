@@ -22,12 +22,6 @@ namespace Justin.Controls.CubeView
 {
     public partial class CubeViewCtrl : JUserControl
     {
-        public CubeViewCtrl()
-        {
-            InitializeComponent();
-
-        }
-
         public override string ConnStr
         {
             get
@@ -63,6 +57,11 @@ namespace Justin.Controls.CubeView
             }
         }
 
+        public CubeViewCtrl()
+        {
+            InitializeComponent();
+        }
+
         private void CubeViewCtrl_Load(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtConnectionString.Text))
@@ -73,7 +72,6 @@ namespace Justin.Controls.CubeView
             cboxFilterType.Items.Clear();
             cboxFilterType.Items.AddRange(Enum.GetNames(typeof(FilterType)));
         }
-
         private void btnConnect_Click(object sender, EventArgs e)
         {
             try
@@ -166,14 +164,7 @@ namespace Justin.Controls.CubeView
             BindDimensionsForCube(cubeDef);
 
         }
-        private TreeNode GetCubeNode(string cubeName)
-        {
-            return tvCubeInfo.Nodes[cubeName];
-        }
-        private TreeNode GetMeasuresRoot(string cubeName)
-        {
-            return tvCubeInfo.Nodes[cubeName].Nodes["Measures_"];
-        }
+
         private void BindMeasuresForCube(string cubeName)
         {
             IEnumerable<Measure> measures = co.GetMeasures(cubeName);
@@ -325,9 +316,18 @@ namespace Justin.Controls.CubeView
             root.Expand();
         }
 
+        private TreeNode GetCubeNode(string cubeName)
+        {
+            return tvCubeInfo.Nodes[cubeName];
+        }
+        private TreeNode GetMeasuresRoot(string cubeName)
+        {
+            return tvCubeInfo.Nodes[cubeName].Nodes["Measures_"];
+        }
+
         #endregion
 
-        #region Treeview 操作
+        #region ServerInfo Treeview 操作
 
         private void tvServerInfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -340,11 +340,6 @@ namespace Justin.Controls.CubeView
                 MessageBox.Show("节点Name不能为空");
             }
         }
-        private void tvServerInfo_ItemDrag(object sender, ItemDragEventArgs e)
-        {
-            //DoDragDrop(e.Item, DragDropEffects.Move);
-        }
-
         private void browerCubeInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -362,28 +357,10 @@ namespace Justin.Controls.CubeView
             }
         }
 
-        private void tvCubeInfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            tvCubeInfo.SelectedNode = e.Node;
-        }
+        #endregion
 
-        public TreeNode GetCubeNode(TreeNode node)
-        {
-            TreeNode parentNode = node.Parent;
+        #region CubeInfo Treeview 操作
 
-            while (parentNode != null)
-            {
-                if (parentNode.Parent == null)
-                {
-                    return parentNode;
-                }
-                else
-                {
-                    parentNode = parentNode.Parent;
-                }
-            }
-            return node;
-        }
         private void tvCubeInfo_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (string.IsNullOrEmpty(tvCubeInfo.SelectedNode.Name))
@@ -408,11 +385,10 @@ namespace Justin.Controls.CubeView
 
             dgvObjectInfo.DataSource = table;
         }
-        private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
+        private void tvCubeInfo_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.Copy);
+            tvCubeInfo.SelectedNode = e.Node;
         }
-
         private void tvCubeInfo_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             try
@@ -427,8 +403,48 @@ namespace Justin.Controls.CubeView
                 this.ShowMessage(ex);
             }
         }
-        #endregion
+        private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
 
+        //Treeview 菜单
+        private void generateSampleMdxTabPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
+            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, this.ConnStr, GenerateSampleMdx());
+        }
+        private void closeCurrentCubeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode currentCubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
+            tvCubeInfo.Nodes.Remove(currentCubeNode);
+        }
+        private void closeAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvCubeInfo.Nodes.Clear();
+        }
+        private void collapseAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvCubeInfo.CollapseAll();
+        }
+
+        public TreeNode GetCubeNode(TreeNode node)
+        {
+            TreeNode parentNode = node.Parent;
+
+            while (parentNode != null)
+            {
+                if (parentNode.Parent == null)
+                {
+                    return parentNode;
+                }
+                else
+                {
+                    parentNode = parentNode.Parent;
+                }
+            }
+            return node;
+        }
         private string GenerateSampleMdx()
         {
 
@@ -455,138 +471,10 @@ FROM [{2}]
 ", measureExpression, dimensionExpression, cubeNode.Name);
         }
 
-        private void generateSampleMdxTabPageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
-            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, this.ConnStr, GenerateSampleMdx());
-        }
-        private TabPage AddMdxEditorTabPage(string cubeText, string connStr, string mdx)
-        {
-            TabPage page = new TabPage(cubeText);
-            MdxExecuterCtrl mdxEditor = new MdxExecuterCtrl();
-            mdxEditor.ConnStr = connStr;
-            mdxEditor.Mdx = mdx;
-            mdxEditor.Dock = DockStyle.Fill;
-            page.Controls.Add(mdxEditor);
-            tabControlMdxEditorCollection.TabPages.Add(page);
-            return page;
-        }
-        private void saveMdxInCurrentTabPageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            List<MdxCodeSnip> list = new List<MdxCodeSnip>();
-            MdxExecuterCtrl editor = FindCtrl(tabControlMdxEditorCollection.SelectedTab);
-            list.Add(new MdxCodeSnip()
-            {
-                Name = tabControlMdxEditorCollection.SelectedTab.Text,
-                ConnStr = editor.ConnStr,
-                Mdx = editor.Mdx
-            });
-            SaveToFile(list);
+        #endregion
 
-        }
-        private MdxExecuterCtrl FindCtrl(TabPage page)
-        {
-            var ctrl = page.Controls.Cast<Control>().Where(r => r.GetType().Equals(typeof(MdxExecuterCtrl))).FirstOrDefault();
-            return ctrl as MdxExecuterCtrl;
-        }
+        #region CubeInfo Treeview 节点过滤
 
-        private void saveMdxInAllTabPageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            List<MdxCodeSnip> list = new List<MdxCodeSnip>();
-
-            foreach (TabPage currentTabPage in tabControlMdxEditorCollection.TabPages)
-            {
-                MdxExecuterCtrl editor = FindCtrl(currentTabPage);
-                list.Add(new MdxCodeSnip()
-                {
-                    Name = currentTabPage.Text,
-                    ConnStr = editor.ConnStr,
-                    Mdx = editor.Mdx
-                });
-            }
-            SaveToFile(list);
-        }
-
-        private void SaveToFile(List<MdxCodeSnip> list)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            var form = this.FindForm();
-            saveFileDialog1.InitialDirectory = Constants.ConfigFileFolder;
-            saveFileDialog1.RestoreDirectory = true;
-            saveFileDialog1.Filter = "xml Files (.xml)|*.xml|All Files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 1;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string fileName = saveFileDialog1.FileName;
-                SerializeHelper.XmlSerializeToFile<List<MdxCodeSnip>>(list, fileName, true);
-            }
-
-        }
-
-        private void tabControlMdxEditorCollection_MouseDown(object sender, MouseEventArgs e)
-        {
-            Point pt = new Point(e.X, e.Y);
-
-            for (int i = 0; i < tabControlMdxEditorCollection.TabCount; i++)
-            {
-                Rectangle recTab = tabControlMdxEditorCollection.GetTabRect(i);
-                if (recTab.Contains(pt))
-                {
-                    tabControlMdxEditorCollection.SelectedIndex = i;
-                    break;
-                }
-            }
-        }
-
-        private void loadMdxFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            string folder = Constants.ConfigFileFolder;
-            fileDialog.InitialDirectory = folder;
-            fileDialog.RestoreDirectory = true;
-
-            fileDialog.Filter = "XML Files (.txt)|*.xml|All Files (*.*)|*.*";
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                List<MdxCodeSnip> list = SerializeHelper.XmlDeserializeFromFile<List<MdxCodeSnip>>(fileDialog.FileName);
-                if (list == null) return;
-                foreach (var item in list)
-                {
-                    AddMdxEditorTabPage(item.Name, item.ConnStr, item.Mdx);
-                }
-            }
-        }
-
-        private void closeAllTabsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tabControlMdxEditorCollection.TabPages.Clear();
-        }
-
-        private void closeCurrentTabToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tabControlMdxEditorCollection.TabPages.Remove(tabControlMdxEditorCollection.SelectedTab);
-        }
-
-        private void closeCurrentCubeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TreeNode currentCubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
-            tvCubeInfo.Nodes.Remove(currentCubeNode);
-        }
-
-        private void closeAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tvCubeInfo.Nodes.Clear();
-
-        }
-
-        private void collapseAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tvCubeInfo.CollapseAll();
-            //foreach (TreeNode item in tvCubeInfo.Nodes)
-            //{
-            //    item.Expand();
-            //}
-        }
         private List<string> cubeNames = new List<string>();
         private void btnFilter_Click(object sender, EventArgs e)
         {
@@ -648,7 +536,13 @@ FROM [{2}]
                 }
             }
         }
-
+        private void btnCancelFilter_Click(object sender, EventArgs e)
+        {
+            foreach (var item in cubeNames)
+            {
+                BindCubeInfo(item);
+            }
+        }
         public List<TreeNode> GetNodes(FilterType filterType)
         {
             List<TreeNode> list = new List<TreeNode>();
@@ -706,15 +600,122 @@ FROM [{2}]
             return list;
         }
 
-        private void btnCancelFilter_Click(object sender, EventArgs e)
+        #endregion
+
+        #region Tab操作
+
+        private void saveMdxInCurrentTabPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var item in cubeNames)
+            List<MdxCodeSnip> list = new List<MdxCodeSnip>();
+            MdxExecuterCtrl editor = FindMdxEditorCtrl(tabControlMdxEditorCollection.SelectedTab);
+            list.Add(new MdxCodeSnip()
             {
-                BindCubeInfo(item);
+                Name = tabControlMdxEditorCollection.SelectedTab.Text,
+                ConnStr = editor.ConnStr,
+                Mdx = editor.Mdx
+            });
+            SaveToFile(list);
+
+        }
+        private void saveMdxInAllTabPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<MdxCodeSnip> list = new List<MdxCodeSnip>();
+
+            foreach (TabPage currentTabPage in tabControlMdxEditorCollection.TabPages)
+            {
+                MdxExecuterCtrl editor = FindMdxEditorCtrl(currentTabPage);
+                list.Add(new MdxCodeSnip()
+                {
+                    Name = currentTabPage.Text,
+                    ConnStr = editor.ConnStr,
+                    Mdx = editor.Mdx
+                });
+            }
+            SaveToFile(list);
+        }
+
+        private void loadMdxFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            string folder = Constants.ConfigFileFolder;
+            fileDialog.InitialDirectory = folder;
+            fileDialog.RestoreDirectory = true;
+
+            fileDialog.Filter = "XML Files (.txt)|*.xml|All Files (*.*)|*.*";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                List<MdxCodeSnip> list = SerializeHelper.XmlDeserializeFromFile<List<MdxCodeSnip>>(fileDialog.FileName);
+                if (list == null) return;
+                foreach (var item in list)
+                {
+                    AddMdxEditorTabPage(item.Name, item.ConnStr, item.Mdx);
+                }
             }
         }
 
+        private void closeAllTabsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMdxEditorCollection.TabPages.Clear();
+        }
+        private void closeCurrentTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tabControlMdxEditorCollection.TabPages.Remove(tabControlMdxEditorCollection.SelectedTab);
+        }
+
+        private void tabControlMdxEditorCollection_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point pt = new Point(e.X, e.Y);
+
+            for (int i = 0; i < tabControlMdxEditorCollection.TabCount; i++)
+            {
+                Rectangle recTab = tabControlMdxEditorCollection.GetTabRect(i);
+                if (recTab.Contains(pt))
+                {
+                    tabControlMdxEditorCollection.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        private void SaveToFile(List<MdxCodeSnip> list)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            var form = this.FindForm();
+            saveFileDialog1.InitialDirectory = Constants.ConfigFileFolder;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.Filter = "xml Files (.xml)|*.xml|All Files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 1;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveFileDialog1.FileName;
+                SerializeHelper.XmlSerializeToFile<List<MdxCodeSnip>>(list, fileName, true);
+            }
+
+        }
+        private MdxExecuterCtrl FindMdxEditorCtrl(TabPage page)
+        {
+            var ctrl = page.Controls.Cast<Control>().Where(r => r.GetType().Equals(typeof(MdxExecuterCtrl))).FirstOrDefault();
+            return ctrl as MdxExecuterCtrl;
+        }
+        private TabPage AddMdxEditorTabPage(string cubeText, string connStr, string mdx)
+        {
+            TabPage page = new TabPage(cubeText);
+            MdxExecuterCtrl mdxEditor = new MdxExecuterCtrl();
+            mdxEditor.ConnStr = connStr;
+            mdxEditor.Mdx = mdx;
+            mdxEditor.Dock = DockStyle.Fill;
+            page.Controls.Add(mdxEditor);
+            tabControlMdxEditorCollection.TabPages.Add(page);
+            return page;
+        }
+
+
+        #endregion
+
     }
+
+    #region 辅助类
+
     public class MdxCodeSnip
     {
         public string Name { get; set; }
@@ -786,4 +787,6 @@ FROM [{2}]
         Level,
         Member,
     }
+
+    #endregion
 }

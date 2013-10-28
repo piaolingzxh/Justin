@@ -56,44 +56,30 @@ namespace Justin.Controls.Executer
                 return connection;
             }
         }
-
-        private void btnConnectOLAP_Click(object sender, EventArgs e)
+        public override string ConnStr
         {
-            var conn = Connection;
+            get
+            {
+                return txtConnectionString.Text;
+            }
+            set
+            {
+                txtConnectionString.Text = value;
+            }
         }
-
-        private void btnExecute_Click(object sender, EventArgs e)
+        public string Extension
         {
-            Stopwatch watch = Stopwatch.StartNew();
-
-            try
+            get { return ".mdx"; }
+        }
+        public string Mdx
+        {
+            get
             {
-                gvMdxresult.DataSource = null;
-                string mdx = txtMdx.Text;
-                if (txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected)
-                {
-                    mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
-                }
-                CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
-
-
-                bool useFormattedValue = sender == this.btnExecute;
-                DataTable dt = cst.ToDataTable(useFormattedValue);
-                gvMdxresult.DataSource = dt;
-                ShowResult(dt);
+                return txtMdx.Text;
             }
-            catch (AdomdException aex)
+            set
             {
-                this.ShowMessage(string.Format("Mdx查询出错{0},", aex.ToString()));
-            }
-            catch (Exception ex)
-            {
-                this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
-            }
-            finally
-            {
-                watch.Stop();
-                this.ShowMessage(string.Format("查询耗时{0}毫秒,", watch.ElapsedMilliseconds));
+                txtMdx.Text = value;
             }
         }
 
@@ -107,7 +93,9 @@ namespace Justin.Controls.Executer
                 this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
-        void txtMdx_DragDrop(object sender, DragEventArgs e)
+        #region 拖动
+
+        private void txtMdx_DragDrop(object sender, DragEventArgs e)
         {
             TreeNode node = (TreeNode)e.Data.GetData(typeof(TreeNode));
             string dragText = "";
@@ -144,18 +132,54 @@ namespace Justin.Controls.Executer
             return "";
         }
 
-        public override string ConnStr
+        #endregion
+
+        #region 按钮 事件
+
+        private void btnConnectOLAP_Click(object sender, EventArgs e)
         {
-            get
-            {
-                return txtConnectionString.Text;
-            }
-            set
-            {
-                txtConnectionString.Text = value;
-            }
+            var conn = Connection;
         }
 
+        private void btnDefaultConnStr_Click(object sender, EventArgs e)
+        {
+            this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
+        }
+
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+
+            try
+            {
+                gvMdxresult.DataSource = null;
+                string mdx = txtMdx.Text;
+                if (txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected)
+                {
+                    mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
+                }
+                CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
+
+
+                bool useFormattedValue = sender == this.btnExecute;
+                DataTable dt = cst.ToDataTable(useFormattedValue);
+                gvMdxresult.DataSource = dt;
+                ShowResult(dt);
+            }
+            catch (AdomdException aex)
+            {
+                this.ShowMessage(string.Format("Mdx查询出错{0},", aex.ToString()));
+            }
+            catch (Exception ex)
+            {
+                this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
+            }
+            finally
+            {
+                watch.Stop();
+                this.ShowMessage(string.Format("查询耗时{0}毫秒,", watch.ElapsedMilliseconds));
+            }
+        }
         private void btnExecuteDataSet_Click(object sender, EventArgs e)
         {
             Stopwatch watch = Stopwatch.StartNew();
@@ -184,36 +208,10 @@ namespace Justin.Controls.Executer
             }
         }
 
-        public string Extension
-        {
-            get { return ".mdx"; }
-        }
-
-        public string Mdx
-        {
-            get
-            {
-                return txtMdx.Text;
-            }
-            set
-            {
-                txtMdx.Text = value;
-            }
-        }
         private void btnClear_Click(object sender, EventArgs e)
         {
             this.gvMdxresult.DataSource = null;
             this.txtResult.Text = "";
-        }
-
-        private void ShowResult(DataTable dt)
-        {
-            txtResult.Text = string.Format("查询结果:{0}行/{1}列,", dt == null ? 0 : dt.Rows.Count, dt == null ? 0 : dt.Columns.Count);
-        }
-
-        private void btnDefaultConnStr_Click(object sender, EventArgs e)
-        {
-            this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)
@@ -238,8 +236,13 @@ namespace Justin.Controls.Executer
             this.ShowMessage("没有数据可以导出！");
         }
 
-    }
+        #endregion
 
+        private void ShowResult(DataTable dt)
+        {
+            txtResult.Text = string.Format("查询结果:{0}行/{1}列,", dt == null ? 0 : dt.Rows.Count, dt == null ? 0 : dt.Columns.Count);
+        }
+    }
 
     public class MdxExecuterCtrlSetting
     {
