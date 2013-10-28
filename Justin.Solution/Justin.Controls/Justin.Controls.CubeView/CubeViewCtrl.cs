@@ -7,16 +7,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Justin.FrameWork.WinForm.FormUI;
-using Microsoft.AnalysisServices.AdomdClient;
-using Justin.FrameWork.Extensions;
-using Justin.FrameWork.WinForm.Properties;
+using System.Xml.Serialization;
 using ICSharpCode.TextEditor.Document;
 using Justin.Controls.Executer;
-using Justin.FrameWork.Settings;
-using Justin.FrameWork.Helper;
-using System.Xml.Serialization;
 using Justin.FrameWork;
+using Justin.FrameWork.Extensions;
+using Justin.FrameWork.Helper;
+using Justin.FrameWork.Settings;
+using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Properties;
+using Microsoft.AnalysisServices.AdomdClient;
 
 namespace Justin.Controls.CubeView
 {
@@ -207,6 +207,7 @@ namespace Justin.Controls.CubeView
             }
             else
             {
+                rootOfMeasures.Nodes.Add("DefaultGroup", "DefaultGroup", "Group", "Group");
                 foreach (var item in measures.OrderBy(r => r.Caption))
                 {
                     string name = item.Name;//.Replace("$", "");
@@ -220,7 +221,7 @@ namespace Justin.Controls.CubeView
                     string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
                     tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
                     tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                    rootOfMeasures.Nodes.Add(tempNode);
+                    rootOfMeasures.Nodes[0].Nodes.Add(tempNode);
                 }
             }
 
@@ -394,10 +395,10 @@ namespace Justin.Controls.CubeView
             switch (tvCubeInfo.SelectedNode.ImageKey)
             {
                 case "Cube": CubeDef cube = tempNode.Tag as CubeDef; table = cube.Properties.PrepareData(); break;
-                case "Measure":
+                case "Measure": Measure calMeasure = tempNode.Tag as Measure; table = calMeasure.Properties.PrepareData(); break;
                 case "CalMeasure": Measure measure = tempNode.Tag as Measure; table = measure.Properties.PrepareData(); break;
                 case "Dim": Dimension dim = tempNode.Tag as Dimension; table = dim.Properties.PrepareData(); break;
-                case "SingeHie":
+                case "SingeHie": Hierarchy singleHie = tempNode.Tag as Hierarchy; table = singleHie.Properties.PrepareData(); break;
                 case "Hie": Hierarchy hie = tempNode.Tag as Hierarchy; table = hie.Properties.PrepareData(); break;
                 case "Level": Level level = tempNode.Tag as Level; table = level.Properties.PrepareData(); break;
                 case "Member": Member member = tempNode.Tag as Member; table = member.Properties.PrepareData(); break;
@@ -433,7 +434,7 @@ namespace Justin.Controls.CubeView
             if (tvCubeInfo.SelectedNode == null) return "";
 
             TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
-            string measureExpression = (cubeNode.Nodes[0].Nodes[0].Tag as Measure).UniqueName;
+            string measureExpression = (cubeNode.Nodes[0].Nodes[0].Nodes[0].Tag as Measure).UniqueName;
 
             string dimensionExpression = (cubeNode.Nodes[1].Nodes[0].Tag as Hierarchy).UniqueName; ;
 
@@ -456,9 +457,9 @@ FROM [{2}]
         private void generateSampleMdxTabPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
-            AddMdxEditorTabPage(cubeNode.Text, this.ConnStr, GenerateSampleMdx());
+            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, this.ConnStr, GenerateSampleMdx());
         }
-        private void AddMdxEditorTabPage(string cubeText, string connStr, string mdx)
+        private TabPage AddMdxEditorTabPage(string cubeText, string connStr, string mdx)
         {
             TabPage page = new TabPage(cubeText);
             MdxExecuterCtrl mdxEditor = new MdxExecuterCtrl();
@@ -467,6 +468,7 @@ FROM [{2}]
             mdxEditor.Dock = DockStyle.Fill;
             page.Controls.Add(mdxEditor);
             tabControlMdxEditorCollection.TabPages.Add(page);
+            return page;
         }
         private void saveMdxInCurrentTabPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -562,6 +564,27 @@ FROM [{2}]
         private void closeCurrentTabToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tabControlMdxEditorCollection.TabPages.Remove(tabControlMdxEditorCollection.SelectedTab);
+        }
+
+        private void closeCurrentCubeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode currentCubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
+            tvCubeInfo.Nodes.Remove(currentCubeNode);
+        }
+
+        private void closeAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvCubeInfo.Nodes.Clear();
+
+        }
+
+        private void collapseAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvCubeInfo.CollapseAll();
+            //foreach (TreeNode item in tvCubeInfo.Nodes)
+            //{
+            //    item.Expand();
+            //}
         }
 
     }

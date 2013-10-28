@@ -113,9 +113,9 @@ namespace Justin.Controls.Executer
             string dragText = "";
             switch (node.ImageKey)
             {
-                case "Cube": dragText = GetDragText(node, new string[] { "Tag.Name" }); break;
+                case "Cube": dragText = string.Format("[{0}]", GetDragText(node, new string[] { "Tag.Name" })); break;
                 case "Dim": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
-                case "SingeHie":
+                case "SingeHie": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
                 case "Hie": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
                 case "Level": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
                 case "Member": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
@@ -213,7 +213,7 @@ namespace Justin.Controls.Executer
 
         private void btnDefaultConnStr_Click(object sender, EventArgs e)
         {
-            this.txtConnectionString.Text =MdxExecuterCtrlSetting. DefaultConnStr;
+            this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)

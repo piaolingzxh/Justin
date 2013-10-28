@@ -43,16 +43,19 @@
             this.saveMdxInCurrentTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMdxInAllTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMdxFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAllTabsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeCurrentTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tvCubeInfo = new System.Windows.Forms.TreeView();
             this.cubeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.generateSampleMdxTabPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeCurrentCubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainerDataAndMdx = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.dgvObjectInfo = new System.Windows.Forms.DataGridView();
             this.tabControlMdxEditorCollection = new System.Windows.Forms.TabControl();
             this.tabPageDefault = new System.Windows.Forms.TabPage();
             this.mdxExecuterCtrl1 = new Justin.Controls.Executer.MdxExecuterCtrl();
-            this.closeAllTabsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeCurrentTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -209,7 +212,7 @@
             this.closeAllTabsToolStripMenuItem,
             this.closeCurrentTabToolStripMenuItem});
             this.tabControlmenu.Name = "tabControlmenu";
-            this.tabControlmenu.Size = new System.Drawing.Size(230, 136);
+            this.tabControlmenu.Size = new System.Drawing.Size(230, 114);
             // 
             // saveMdxInCurrentTabPageToolStripMenuItem
             // 
@@ -232,6 +235,20 @@
             this.loadMdxFileToolStripMenuItem.Text = "Load Saved Mdx File";
             this.loadMdxFileToolStripMenuItem.Click += new System.EventHandler(this.loadMdxFileToolStripMenuItem_Click);
             // 
+            // closeAllTabsToolStripMenuItem
+            // 
+            this.closeAllTabsToolStripMenuItem.Name = "closeAllTabsToolStripMenuItem";
+            this.closeAllTabsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.closeAllTabsToolStripMenuItem.Text = "Close All Tabs";
+            this.closeAllTabsToolStripMenuItem.Click += new System.EventHandler(this.closeAllTabsToolStripMenuItem_Click);
+            // 
+            // closeCurrentTabToolStripMenuItem
+            // 
+            this.closeCurrentTabToolStripMenuItem.Name = "closeCurrentTabToolStripMenuItem";
+            this.closeCurrentTabToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.closeCurrentTabToolStripMenuItem.Text = "Close Current Tab";
+            this.closeCurrentTabToolStripMenuItem.Click += new System.EventHandler(this.closeCurrentTabToolStripMenuItem_Click);
+            // 
             // tvCubeInfo
             // 
             this.tvCubeInfo.ContextMenuStrip = this.cubeMenu;
@@ -251,9 +268,12 @@
             // cubeMenu
             // 
             this.cubeMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generateSampleMdxTabPageToolStripMenuItem});
+            this.generateSampleMdxTabPageToolStripMenuItem,
+            this.closeCurrentCubeToolStripMenuItem,
+            this.closeAllCubesToolStripMenuItem,
+            this.collapseAllCubesToolStripMenuItem});
             this.cubeMenu.Name = "serverMenu";
-            this.cubeMenu.Size = new System.Drawing.Size(190, 26);
+            this.cubeMenu.Size = new System.Drawing.Size(190, 114);
             // 
             // generateSampleMdxTabPageToolStripMenuItem
             // 
@@ -261,6 +281,20 @@
             this.generateSampleMdxTabPageToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.generateSampleMdxTabPageToolStripMenuItem.Text = "Generate Sample Mdx";
             this.generateSampleMdxTabPageToolStripMenuItem.Click += new System.EventHandler(this.generateSampleMdxTabPageToolStripMenuItem_Click);
+            // 
+            // closeCurrentCubeToolStripMenuItem
+            // 
+            this.closeCurrentCubeToolStripMenuItem.Name = "closeCurrentCubeToolStripMenuItem";
+            this.closeCurrentCubeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.closeCurrentCubeToolStripMenuItem.Text = "Close Current Cube";
+            this.closeCurrentCubeToolStripMenuItem.Click += new System.EventHandler(this.closeCurrentCubeToolStripMenuItem_Click);
+            // 
+            // closeAllCubesToolStripMenuItem
+            // 
+            this.closeAllCubesToolStripMenuItem.Name = "closeAllCubesToolStripMenuItem";
+            this.closeAllCubesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.closeAllCubesToolStripMenuItem.Text = "Close All Cubes";
+            this.closeAllCubesToolStripMenuItem.Click += new System.EventHandler(this.closeAllCubesToolStripMenuItem_Click);
             // 
             // splitContainerDataAndMdx
             // 
@@ -329,19 +363,12 @@
             this.mdxExecuterCtrl1.Size = new System.Drawing.Size(502, 283);
             this.mdxExecuterCtrl1.TabIndex = 0;
             // 
-            // closeAllTabsToolStripMenuItem
+            // collapseAllCubesToolStripMenuItem
             // 
-            this.closeAllTabsToolStripMenuItem.Name = "closeAllTabsToolStripMenuItem";
-            this.closeAllTabsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.closeAllTabsToolStripMenuItem.Text = "Close All Tabs";
-            this.closeAllTabsToolStripMenuItem.Click += new System.EventHandler(this.closeAllTabsToolStripMenuItem_Click);
-            // 
-            // closeCurrentTabToolStripMenuItem
-            // 
-            this.closeCurrentTabToolStripMenuItem.Name = "closeCurrentTabToolStripMenuItem";
-            this.closeCurrentTabToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.closeCurrentTabToolStripMenuItem.Text = "Close Current Tab";
-            this.closeCurrentTabToolStripMenuItem.Click += new System.EventHandler(this.closeCurrentTabToolStripMenuItem_Click);
+            this.collapseAllCubesToolStripMenuItem.Name = "collapseAllCubesToolStripMenuItem";
+            this.collapseAllCubesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.collapseAllCubesToolStripMenuItem.Text = "Collapse All Cubes";
+            this.collapseAllCubesToolStripMenuItem.Click += new System.EventHandler(this.collapseAllCubesToolStripMenuItem_Click);
             // 
             // CubeViewCtrl
             // 
@@ -401,5 +428,8 @@
         private Executer.MdxExecuterCtrl mdxExecuterCtrl1;
         private System.Windows.Forms.ToolStripMenuItem closeAllTabsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeCurrentTabToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeCurrentCubeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeAllCubesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem collapseAllCubesToolStripMenuItem;
     }
 }

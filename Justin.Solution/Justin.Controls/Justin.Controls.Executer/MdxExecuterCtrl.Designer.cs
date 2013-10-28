@@ -177,7 +177,6 @@
             this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConnectionString.Location = new System.Drawing.Point(3, 3);
             this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.ReadOnly = true;
             this.txtConnectionString.Size = new System.Drawing.Size(826, 20);
             this.txtConnectionString.TabIndex = 5;
             // 
