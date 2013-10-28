@@ -399,7 +399,7 @@ namespace Justin.Controls.CubeView
                 case "Measure": Measure calMeasure = tempNode.Tag as Measure; table = calMeasure.Properties.PrepareData(); break;
                 case "CalMeasure": Measure measure = tempNode.Tag as Measure; table = measure.Properties.PrepareData(); break;
                 case "Dim": Dimension dim = tempNode.Tag as Dimension; table = dim.Properties.PrepareData(); break;
-                case "SingeHie": Hierarchy singleHie = tempNode.Tag as Hierarchy; table = singleHie.Properties.PrepareData(); break;
+                case "SingleHie": Hierarchy singleHie = tempNode.Tag as Hierarchy; table = singleHie.Properties.PrepareData(); break;
                 case "Hie": Hierarchy hie = tempNode.Tag as Hierarchy; table = hie.Properties.PrepareData(); break;
                 case "Level": Level level = tempNode.Tag as Level; table = level.Properties.PrepareData(); break;
                 case "Member": Member member = tempNode.Tag as Member; table = member.Properties.PrepareData(); break;

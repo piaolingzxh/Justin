@@ -115,7 +115,7 @@ namespace Justin.Controls.Executer
             {
                 case "Cube": dragText = string.Format("[{0}]", GetDragText(node, new string[] { "Tag.Name" })); break;
                 case "Dim": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
-                case "SingeHie": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
+                case "SingleHie": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
                 case "Hie": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
                 case "Level": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
                 case "Member": dragText = GetDragText(node, new string[] { "Tag.UniqueName" }); break;
