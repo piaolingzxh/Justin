@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.WinForm.Extensions;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
 using Justin.Stock.Controls.Entities;
@@ -352,6 +353,13 @@ namespace Justin.Stock.Controls
             Form form = this.FindForm();
             if (form != null)
                 this.topMostToolStripMenuItem.Checked = form.TopMost;
+
+            var tempAutoHideForm = this.FindForm();
+            if (tempAutoHideForm is AutoAnchorForm)
+            {
+                var autoHideForm = tempAutoHideForm as AutoAnchorForm;
+                autoHideToolStripMenuItem.Checked = autoHideForm.EnableAutoAnchor;
+            }
         }
 
         private void timeSheetMenuItem_Click(object sender, EventArgs e)
@@ -445,6 +453,17 @@ namespace Justin.Stock.Controls
             Form form = this.FindForm();
             if (form != null)
                 form.TopMost = !form.TopMost;
+        }
+
+        private void autoHideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = this.FindForm();
+            if (form is AutoAnchorForm)
+            {
+                var autoHideForm = form as AutoAnchorForm;
+                autoHideToolStripMenuItem.Checked = !autoHideToolStripMenuItem.Checked;
+                autoHideForm.EnableAutoAnchor = autoHideToolStripMenuItem.Checked;
+            }
         }
 
 

@@ -33,12 +33,15 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.noticeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.topMostMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monitorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.personalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inScreenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoHideMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DetailInfoToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.deskStockCtrl1 = new Justin.Stock.Controls.DeskStockCtrl();
-            this.personalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.noticeMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,9 +59,11 @@
             this.monitorMenuItem,
             this.personalMenuItem,
             this.settingMenuItem,
+            this.inScreenMenuItem,
+            this.autoHideMenuItem,
             this.exitMenuItem});
             this.noticeMenu.Name = "contextMenuStrip1";
-            this.noticeMenu.Size = new System.Drawing.Size(153, 136);
+            this.noticeMenu.Size = new System.Drawing.Size(153, 180);
             this.noticeMenu.Opening += new System.ComponentModel.CancelEventHandler(this.noticeMenu_Opening);
             // 
             // topMostMenuItem
@@ -68,6 +73,20 @@
             this.topMostMenuItem.Text = "TopMost";
             this.topMostMenuItem.Click += new System.EventHandler(this.topMostMenuItem_Click);
             // 
+            // monitorMenuItem
+            // 
+            this.monitorMenuItem.Name = "monitorMenuItem";
+            this.monitorMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.monitorMenuItem.Text = "Monitor";
+            this.monitorMenuItem.Click += new System.EventHandler(this.MonitorMenuItem_Click);
+            // 
+            // personalMenuItem
+            // 
+            this.personalMenuItem.Name = "personalMenuItem";
+            this.personalMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.personalMenuItem.Text = "Person";
+            this.personalMenuItem.Click += new System.EventHandler(this.personalMenuItem_Click);
+            // 
             // settingMenuItem
             // 
             this.settingMenuItem.Name = "settingMenuItem";
@@ -75,12 +94,19 @@
             this.settingMenuItem.Text = "Settings";
             this.settingMenuItem.Click += new System.EventHandler(this.settingMenuItem_Click);
             // 
-            // monitorMenuItem
+            // inScreenMenuItem
             // 
-            this.monitorMenuItem.Name = "monitorMenuItem";
-            this.monitorMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.monitorMenuItem.Text = "Monitor";
-            this.monitorMenuItem.Click += new System.EventHandler(this.MonitorMenuItem_Click);
+            this.inScreenMenuItem.Name = "inScreenMenuItem";
+            this.inScreenMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.inScreenMenuItem.Text = "InScreen";
+            this.inScreenMenuItem.Click += new System.EventHandler(this.inScreenMenuItem_Click);
+            // 
+            // autoHideMenuItem
+            // 
+            this.autoHideMenuItem.Name = "autoHideMenuItem";
+            this.autoHideMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.autoHideMenuItem.Text = "AutoHide";
+            this.autoHideMenuItem.Click += new System.EventHandler(this.autoHideMenuItem_Click);
             // 
             // exitMenuItem
             // 
@@ -97,12 +123,10 @@
             this.deskStockCtrl1.Size = new System.Drawing.Size(303, 106);
             this.deskStockCtrl1.TabIndex = 2;
             // 
-            // personalMenuItem
+            // timer1
             // 
-            this.personalMenuItem.Name = "personalMenuItem";
-            this.personalMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.personalMenuItem.Text = "Person";
-            this.personalMenuItem.Click += new System.EventHandler(this.personalMenuItem_Click);
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 50;
             // 
             // DeskStocks
             // 
@@ -110,6 +134,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(303, 106);
             this.Controls.Add(this.deskStockCtrl1);
+            this.EnableAutoAnchor = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DeskStocks";
@@ -138,5 +163,8 @@
         private System.Windows.Forms.ToolStripMenuItem settingMenuItem;
         private Controls.DeskStockCtrl deskStockCtrl1;
         private System.Windows.Forms.ToolStripMenuItem personalMenuItem;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem autoHideMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem inScreenMenuItem;
     }
 }

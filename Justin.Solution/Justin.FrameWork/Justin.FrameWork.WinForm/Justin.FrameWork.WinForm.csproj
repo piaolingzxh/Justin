@@ -60,6 +60,9 @@
     <Compile Include="Extensions\ControlEx.cs" />
     <Compile Include="Extensions\FormEx.cs" />
     <Compile Include="Extensions\TreeViewEx.cs" />
+    <Compile Include="FormUI\AutoAnchorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormUI\SplitContainerEx\CollapsePanel.cs" />
     <Compile Include="FormUI\SplitContainerEx\ControlPaintEx.cs" />
     <Compile Include="FormUI\SplitContainerEx\ControlState.cs" />

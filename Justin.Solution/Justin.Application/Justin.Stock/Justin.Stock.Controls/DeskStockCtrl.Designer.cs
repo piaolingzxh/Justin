@@ -38,6 +38,7 @@
             this.personalStocksMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemSettingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoHideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deskMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,9 +52,10 @@
             this.monitorStockMenuItem,
             this.personalStocksMenuItem,
             this.systemSettingMenuItem,
-            this.topMostToolStripMenuItem});
+            this.topMostToolStripMenuItem,
+            this.autoHideToolStripMenuItem});
             this.deskMenu.Name = "contextMenuStrip1";
-            this.deskMenu.Size = new System.Drawing.Size(153, 202);
+            this.deskMenu.Size = new System.Drawing.Size(153, 224);
             this.deskMenu.Opening += new System.ComponentModel.CancelEventHandler(this.deskMenu_Opening);
             // 
             // timeSheetMenuItem
@@ -112,6 +114,13 @@
             this.topMostToolStripMenuItem.Text = "TopMost";
             this.topMostToolStripMenuItem.Click += new System.EventHandler(this.topMostToolStripMenuItem_Click);
             // 
+            // autoHideToolStripMenuItem
+            // 
+            this.autoHideToolStripMenuItem.Name = "autoHideToolStripMenuItem";
+            this.autoHideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.autoHideToolStripMenuItem.Text = "Auto Hide";
+            this.autoHideToolStripMenuItem.Click += new System.EventHandler(this.autoHideToolStripMenuItem_Click);
+            // 
             // DeskStockCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -136,5 +145,6 @@
         private System.Windows.Forms.ToolStripMenuItem systemSettingMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monitorStockMenuItem;
         private System.Windows.Forms.ToolStripMenuItem topMostToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoHideToolStripMenuItem;
     }
 }

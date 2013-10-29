@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.WinForm.Extensions;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
 using Justin.Stock.Controls;
@@ -21,7 +22,7 @@ using Justin.Stock.Service.Models;
 
 namespace Justin.Stock
 {
-    public partial class DeskStocks : Form
+    public partial class DeskStocks : AutoAnchorForm
     {
         #region 私有变量
 
@@ -57,6 +58,7 @@ namespace Justin.Stock
             //StockService.Start();
             myStock = new MyStock();
             SetVisibleCore(false);
+
         }
         public void ShowTotal(string message)
         {
@@ -116,6 +118,18 @@ namespace Justin.Stock
         private void noticeMenu_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
+        }
+
+        private void autoHideMenuItem_Click(object sender, EventArgs e)
+        {
+            this.autoHideMenuItem.Checked = !this.autoHideMenuItem.Checked;
+            this.EnableAutoAnchor = this.autoHideMenuItem.Checked;
+        }
+
+        private void noticeMenu_Opening(object sender, CancelEventArgs e)
+        {
+            this.topMostMenuItem.Checked = this.TopMost;
+            this.autoHideMenuItem.Checked = this.EnableAutoAnchor;
         }
 
         #endregion
@@ -228,7 +242,6 @@ namespace Justin.Stock
         private new void Show()
         {
             deskStockCtrl1.AddDisplayHandler();
-
             IsShow = true;
             base.Show();
             this.WindowState = FormWindowState.Normal;
@@ -283,12 +296,12 @@ namespace Justin.Stock
             base.SetVisibleCore(value);
         }
 
-        private void noticeMenu_Opening(object sender, CancelEventArgs e)
+        private void inScreenMenuItem_Click(object sender, EventArgs e)
         {
-            this.topMostMenuItem.Checked = this.TopMost;
+            this.Top = 300;
+            this.Left = 400;
+            this.Show();
         }
-
-
 
     }
 }
