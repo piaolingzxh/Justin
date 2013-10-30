@@ -8,17 +8,18 @@ namespace Justin.Controls.CubeView
 {
     public class CubeOperate
     {
-        public CubeOperate(String adomdConnection)
+        public CubeOperate(String adomdConnectionString)
         {
-            Conn = new AdomdConnection(adomdConnection);
+            this.ConnectionString = adomdConnectionString;
+            Conn = new AdomdConnection(adomdConnectionString);
 
             Conn.Open();
             CubeDefs = Conn.Cubes.Cast<CubeDef>().ToList();
             Cubes = GetCubes();
             Dimensions = GetDimensions();
-
         }
-        private static AdomdConnection Conn;
+        public string ConnectionString { get; private set; }
+        public AdomdConnection Conn { private set; get; }
         public List<CubeDef> CubeDefs { get; private set; }
         public IEnumerable<CubeDef> Cubes { get; private set; }
         public IEnumerable<CubeDef> Dimensions { get; private set; }
@@ -46,7 +47,6 @@ namespace Justin.Controls.CubeView
         {
             return GetCube(cubeName).Measures.Cast<Measure>();
         }
-
 
     }
 }

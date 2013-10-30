@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -26,36 +27,14 @@ namespace Justin.Controls.CubeView
         {
             get
             {
-                return txtConnectionString.Text;
+                return cboxConnStrings.Text;
             }
             set
             {
-                txtConnectionString.Text = value;
+                cboxConnStrings.Text = value;
             }
         }
-        CubeOperate co;
-        public AdomdConnection Connection
-        {
-            get
-            {
-                AdomdConnection connection = null;
-                try
-                {
-                    connection = new AdomdConnection(txtConnectionString.Text);
-                    if (connection.State != ConnectionState.Open)
-                    {
-                        connection.Open();
-                    }
-                    this.ShowMessage("连接OLAP成功:" + txtConnectionString.Text);
-                }
-                catch (Exception ex)
-                {
-                    this.ShowMessage("连接OLAP失败", ex.ToString());
-                }
-
-                return connection;
-            }
-        }
+        Dictionary<string, CubeOperate> cos = new Dictionary<string, CubeOperate>();
 
         public CubeViewCtrl()
         {
@@ -64,9 +43,18 @@ namespace Justin.Controls.CubeView
 
         private void CubeViewCtrl_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtConnectionString.Text))
+            this.cboxConnStrings.Items.Clear();
+            foreach (var item in ConfigurationManager.AppSettings.AllKeys)
             {
-                this.txtConnectionString.Text = CubeViewCtrlSetting.DefaultConnStr;
+                if (item.StartsWith("OLAPConnStr", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    this.cboxConnStrings.Items.Add(ConfigurationManager.AppSettings[item]);
+                }
+            }
+
+            if (string.IsNullOrEmpty(cboxConnStrings.Text))
+            {
+                this.cboxConnStrings.Text = CubeViewCtrlSetting.DefaultConnStr;
             }
             MdxExecuterCtrlSetting.DefaultConnStr = CubeViewCtrlSetting.DefaultConnStr;
             cboxFilterType.Items.Clear();
@@ -76,7 +64,25 @@ namespace Justin.Controls.CubeView
         {
             try
             {
-                co = new CubeOperate(this.ConnStr);
+                cos.Clear();
+                if (this.ConnStr.ToLower().Contains("catalog"))
+                {
+                    CubeOperate co = new CubeOperate(this.ConnStr);
+                    cos.Add(co.Conn.Database, co);
+                }
+                else
+                {
+                    AdomdConnection conn = new AdomdConnection(this.ConnStr);
+                    conn.Open();
+                    DataSet dsCatalogs = conn.GetSchemaDataSet("DBSCHEMA_CATALOGS", null);
+                    conn.Close();
+                    foreach (DataRow catalogRow in dsCatalogs.Tables[0].Rows.Cast<DataRow>())
+                    {
+                        string catalog = catalogRow[0].ToString();
+                        string connStr = string.Format("{0};Catalog ={1};", this.ConnStr, catalog);
+                        cos.Add(catalog, new CubeOperate(connStr));
+                    }
+                }
                 BindServerInfo();
             }
             catch (Exception ex)
@@ -90,26 +96,26 @@ namespace Justin.Controls.CubeView
         private void BindServerInfo()
         {
             tvServerInfo.Nodes.Clear();
-            var catalogs = co.Cubes.Select(r => r.Properties["CATALOG_NAME"].Value.ToString()).Distinct();
-            foreach (var catalog in catalogs)
+
+            foreach (var catalogInfo in cos)
             {
-                TreeNode catalogNode = new TreeNode(catalog);
-                catalogNode.Name = "catalog";
+                //var catalogs = cos[catalogInfo.Key].Cubes;.Select(r => r.Properties["CATALOG_NAME"].Value.ToString()).Distinct();
+                TreeNode catalogNode = new TreeNode(catalogInfo.Key);
+                catalogNode.Name = catalogInfo.Key;
                 catalogNode.SelectedImageKey = catalogNode.ImageKey = "Catalog";
-                var tempCubes = co.Cubes.Where(r => r.Properties["CATALOG_NAME"].Value.ToString().Equals(catalog));
-                BindCatalog(catalogNode, catalog, tempCubes);
+                tvServerInfo.Nodes.Add(catalogNode);
+                BindCatalog(catalogNode, catalogInfo);
             }
         }
 
-        private void BindCatalog(TreeNode catalogNode, string catalog, IEnumerable<CubeDef> cubes)
+        private void BindCatalog(TreeNode catalogNode, KeyValuePair<string, CubeOperate> catalogInfo)
         {
             catalogNode.Nodes.Add("Cubes_", "Cubes", "Cubes", "Cubes");
             catalogNode.Nodes.Add("Dimensions_", "Dimensions", "Dims", "Dims");
             catalogNode.Expand();
-            tvServerInfo.Nodes.Add(catalogNode);
-
-            BindServerCubes(catalogNode.Nodes["Cubes_"], cubes);
-            var dimensions = co.Dimensions.Where(r => r.Properties["CATALOG_NAME"].Value.ToString().Equals(catalog));
+            var tempCubes = cos[catalogInfo.Key].Cubes.Where(r => r.Properties["CATALOG_NAME"].Value.ToString().Equals(catalogInfo.Key));
+            BindServerCubes(catalogNode.Nodes["Cubes_"], tempCubes);
+            var dimensions = cos[catalogNode.Name].Dimensions.Where(r => r.Properties["CATALOG_NAME"].Value.ToString().Equals(catalogInfo.Key));
             BindServerDimensions(catalogNode.Nodes["Dimensions_"], dimensions);
         }
         private void BindServerCubes(TreeNode cubeNodeRoot, IEnumerable<CubeDef> cubes)
@@ -124,6 +130,7 @@ namespace Justin.Controls.CubeView
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Cube";
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                tempNode.ContextMenuStrip = serverMenu;
                 cubeNodeRoot.Nodes.Add(tempNode);
             }
             cubeNodeRoot.Expand();
@@ -142,34 +149,52 @@ namespace Justin.Controls.CubeView
                 tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 dimensionNodeRoot.Nodes.Add(tempNode);
             }
-            dimensionNodeRoot.Expand();
         }
         #endregion
 
         #region 加载单个Cube信息
 
-        private void BindCubeInfo(string cubeName)
+
+        private void BindCubeInfo(string catalogName, string cubeName)
         {
-            if (tvCubeInfo.Nodes[cubeName] != null)
+            TreeNode catalogNode = null;
+
+            #region 没有就新建一个CatalogNode
+
+            if (tvCubeInfo.Nodes[catalogName] == null)
             {
-                tvCubeInfo.Nodes.RemoveByKey(cubeName);
+                tvCubeInfo.Nodes.Add(catalogName, catalogName, "Catalog", "Catalog");
             }
-            CubeDef cubeDef = co.GetCube(cubeName);
-            tvCubeInfo.Nodes.Add(cubeDef.Name, cubeDef.Caption, "Cube", "Cube");
-            tvCubeInfo.Nodes[cubeDef.Name].Tag = cubeDef;
-            tvCubeInfo.Nodes[cubeDef.Name].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
-            tvCubeInfo.Nodes[cubeDef.Name].Expand();
+            catalogNode = tvCubeInfo.Nodes[catalogName];
+            catalogNode.Tag = cos[catalogName];
 
-            BindMeasuresForCube(cubeName);
-            BindDimensionsForCube(cubeDef);
+            #endregion
 
+            //重新绑定该Cube
+            #region 重新生成一个Cube节点
+
+            if (catalogNode.Nodes[cubeName] != null) catalogNode.Nodes.RemoveByKey(cubeName);
+
+            CubeDef cubeDef = cos[catalogName].GetCube(cubeName);
+            catalogNode.Nodes.Add(cubeDef.Name, cubeDef.Caption, "Cube", "Cube");
+            catalogNode.Nodes[cubeDef.Name].Tag = cubeDef;
+
+            #endregion
+
+            //在该Cube节点上添加Measures文件夹
+            catalogNode.Nodes[cubeDef.Name].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
+            catalogNode.Nodes[cubeDef.Name].Expand();
+
+            BindMeasuresForCube(catalogNode.Nodes[cubeDef.Name].Nodes["Measures_"], cubeName, cos[catalogName]);
+            BindDimensionsForCube(catalogNode.Nodes[cubeDef.Name], cubeDef);
+            catalogNode.Nodes[cubeDef.Name].ContextMenuStrip = cubeMenu;
+            catalogNode.Expand();
         }
 
-        private void BindMeasuresForCube(string cubeName)
+        private void BindMeasuresForCube(TreeNode measuresNode, string cubeName, CubeOperate co)
         {
             IEnumerable<Measure> measures = co.GetMeasures(cubeName);
-            TreeNode rootOfMeasures = GetMeasuresRoot(cubeName);
-            rootOfMeasures.Nodes.Clear();
+            measuresNode.Nodes.Clear();
 
             if (measures == null) return;
             bool hasGroup = measures.FirstOrDefault().Properties.Find("MEASUREGROUP_NAME") != null;
@@ -179,7 +204,7 @@ namespace Justin.Controls.CubeView
                 foreach (var group in groups.OrderBy(r => r))
                 {
                     var tempMeasures = measures.Where(r => r.Properties["MEASUREGROUP_NAME"].Value.ToString().Equals(group));
-                    rootOfMeasures.Nodes.Add(group, group, "Group", "Group");
+                    measuresNode.Nodes.Add(group, group, "Group", "Group");
                     foreach (var item in tempMeasures.OrderBy(r => r.Caption))
                     {
                         string name = item.Name;//.Replace("$", "");
@@ -193,13 +218,13 @@ namespace Justin.Controls.CubeView
                         string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
                         tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
                         tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                        rootOfMeasures.Nodes[group].Nodes.Add(tempNode);
+                        measuresNode.Nodes[group].Nodes.Add(tempNode);
                     }
                 }
             }
             else
             {
-                rootOfMeasures.Nodes.Add("DefaultGroup", "DefaultGroup", "Group", "Group");
+                measuresNode.Nodes.Add("DefaultGroup", "DefaultGroup", "Group", "Group");
                 foreach (var item in measures.OrderBy(r => r.Caption))
                 {
                     string name = item.Name;//.Replace("$", "");
@@ -213,17 +238,17 @@ namespace Justin.Controls.CubeView
                     string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
                     tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
                     tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
-                    rootOfMeasures.Nodes[0].Nodes.Add(tempNode);
+                    measuresNode.Nodes[0].Nodes.Add(tempNode);
                 }
             }
-
+            measuresNode.Collapse();
         }
 
-        private void BindDimensionsForCube(CubeDef cubeDef)
+        private void BindDimensionsForCube(TreeNode cubeNode, CubeDef cubeDef)
         {
             IEnumerable<Dimension> dimensions = cubeDef.Dimensions.Cast<Dimension>();
             if (dimensions == null) return;
-            TreeNode cubeNode = GetCubeNode(cubeDef.Name);
+            //删除除Measures之外的其他所有节点（即所有维度节点）
             for (int i = cubeNode.Nodes.Count - 1; i >= 0; i--)
             {
                 if (!cubeNode.Nodes[i].Name.Equals("Measures_", StringComparison.CurrentCultureIgnoreCase))
@@ -263,8 +288,9 @@ namespace Justin.Controls.CubeView
                 BindLevels(tempNode, hierarchy.Levels);
                 dimNode.Nodes.Add(tempNode);
             }
+            dimNode.Collapse();
         }
-        private void BindLevels(TreeNode root, LevelCollection levels)
+        private void BindLevels(TreeNode hierarchyNode, LevelCollection levels)
         {
             if (levels == null || levels.Count == 0) return;
 
@@ -277,8 +303,9 @@ namespace Justin.Controls.CubeView
                 bool visible = level.Properties["LEVEL_IS_VISIBLE"].Value.Value<bool>(true);
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Level" : "Level";
                 tempNode.Tag = level;
-                root.Nodes.Add(tempNode);
+                hierarchyNode.Nodes.Add(tempNode);
             }
+            hierarchyNode.Collapse();
         }
 
         private void ExpendMembers(TreeNode root)
@@ -316,14 +343,48 @@ namespace Justin.Controls.CubeView
             root.Expand();
         }
 
-        private TreeNode GetCubeNode(string cubeName)
-        {
-            return tvCubeInfo.Nodes[cubeName];
-        }
-        private TreeNode GetMeasuresRoot(string cubeName)
-        {
-            return tvCubeInfo.Nodes[cubeName].Nodes["Measures_"];
-        }
+        #region 注释
+        //private KeyValuePair<string, CubeOperate> GetCataloginfoOfCubeInfo(TreeNode selectNode)
+        //{
+        //    string catalogName = GetCatalogNodeOfCubInfo(selectNode).Name;
+        //    foreach (var item in cos)
+        //    {
+        //        if (item.Key == catalogName)
+        //            return item;
+        //    }
+        //    throw new Exception(string.Format("Catalog:{0}不存在", catalogName));
+        //}
+        //private TreeNode GetCatalogNodeOfCubInfo(TreeNode selectNode)
+        //{
+        //    TreeNode parentNode = selectNode.Parent;
+
+        //    while (parentNode != null)
+        //    {
+        //        if (parentNode.Parent == null)
+        //        {
+        //            return parentNode;
+        //        }
+        //        else
+        //        {
+        //            parentNode = parentNode.Parent;
+        //        }
+        //    }
+        //    return selectNode;
+        //}
+        //private TreeNode GetCatalogNode(string catalogName)
+        //{
+        //    return new TreeNode();
+        //}
+        //private TreeNode GetCubeNode(string cubeName)
+        //{
+        //    return tvCubeInfo.Nodes[cubeName];
+        //}
+        //private TreeNode GetMeasuresRoot(string cubeName)
+        //{
+        //    return tvCubeInfo.Nodes[cubeName].Nodes["Measures_"];
+        //}
+
+        #endregion
 
         #endregion
 
@@ -348,7 +409,7 @@ namespace Justin.Controls.CubeView
 
                 if (selectNode.Parent != null && selectNode.Parent.Name.Equals("Cubes_") && selectNode.ImageKey.Equals("Cube"))
                 {
-                    BindCubeInfo(selectNode.Name);
+                    BindCubeInfo(selectNode.Parent.Parent.Name, selectNode.Name);
                 }
             }
             catch (Exception ex)
@@ -411,46 +472,46 @@ namespace Justin.Controls.CubeView
         //Treeview 菜单
         private void generateSampleMdxTabPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
-            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, this.ConnStr, GenerateSampleMdx());
+            TreeNode cubeNode = GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode);
+            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, cos[cubeNode.Parent.Name].ConnectionString, GenerateSampleMdx());
         }
         private void closeCurrentCubeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreeNode currentCubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
-            tvCubeInfo.Nodes.Remove(currentCubeNode);
+            TreeNode currentCubeNode = GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode);
+            tvCubeInfo.Nodes[currentCubeNode.Parent.Name].Nodes.Remove(currentCubeNode);
         }
         private void closeAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tvCubeInfo.Nodes.Clear();
+            TreeNode currentCubeNode = GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode);
+            tvCubeInfo.Nodes[currentCubeNode.Parent.Name].Nodes.Clear();
         }
         private void collapseAllCubesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tvCubeInfo.CollapseAll();
+            TreeNode currentCubeNode = GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode);
+            tvCubeInfo.Nodes[currentCubeNode.Parent.Name].Collapse();
         }
 
-        public TreeNode GetCubeNode(TreeNode node)
+        public TreeNode GetCubeNodeOfCubeInfoTree(TreeNode selectedNode)
         {
-            TreeNode parentNode = node.Parent;
-
-            while (parentNode != null)
+            while (selectedNode.Parent != null)
             {
-                if (parentNode.Parent == null)
+                if (selectedNode.Parent.Parent == null)
                 {
-                    return parentNode;
+                    return selectedNode;
                 }
                 else
                 {
-                    parentNode = parentNode.Parent;
+                    selectedNode = selectedNode.Parent;
                 }
             }
-            return node;
+            return selectedNode;
         }
         private string GenerateSampleMdx()
         {
 
             if (tvCubeInfo.SelectedNode == null) return "";
 
-            TreeNode cubeNode = GetCubeNode(tvCubeInfo.SelectedNode);
+            TreeNode cubeNode = GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode);
             string measureExpression = (cubeNode.Nodes[0].Nodes[0].Nodes[0].Tag as Measure).UniqueName;
 
             string dimensionExpression = (cubeNode.Nodes[1].Nodes[0].Tag as Hierarchy).UniqueName; ;
@@ -475,91 +536,104 @@ FROM [{2}]
 
         #region CubeInfo Treeview 节点过滤
 
-        private List<string> cubeNames = new List<string>();
+        private Dictionary<string, List<string>> cubeNames = new Dictionary<string, List<string>>();
         private void btnFilter_Click(object sender, EventArgs e)
         {
             cubeNames.Clear();
-            cubeNames.AddRange(GetNodes(FilterType.Cube).Select(cube => cube.Name));
+
+            foreach (TreeNode catalogNode in tvCubeInfo.Nodes)
+            {
+                cubeNames.Add(catalogNode.Name, GetNodes(catalogNode, FilterType.Cube).Select(cube => cube.Name).ToList());
+            }
 
             FilterType filterType = (FilterType)Enum.Parse(typeof(FilterType), cboxFilterType.Text.Trim());
-            List<TreeNode> nodes = GetNodes(filterType);
-            List<TreeNode> resultNodes = new List<TreeNode>();
-            resultNodes.AddRange(nodes);
-            foreach (TreeNode node in resultNodes)
+            foreach (TreeNode catalogNode in tvCubeInfo.Nodes)
             {
-                if (!FilterType.Cube.Equals(filterType))
+                List<TreeNode> nodes = GetNodes(catalogNode, filterType);
+                List<TreeNode> resultNodes = new List<TreeNode>();
+                resultNodes.AddRange(nodes);
+                foreach (TreeNode node in resultNodes)
                 {
-                    if (!string.IsNullOrEmpty(txtFilterUniqueName.Text.Trim()))
+                    if (!FilterType.Cube.Equals(filterType))
+                    {
+                        if (!string.IsNullOrEmpty(txtFilterUniqueName.Text.Trim()))
+                        {
+                            resultNodes = resultNodes.Where(
+                                row => row.Tag.GetPropertyValue("UniqueName").ToString().Contains(txtFilterUniqueName.Text.Trim())
+                                ).ToList();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(txtFilterName.Text.Trim()))
                     {
                         resultNodes = resultNodes.Where(
-                            row => row.Tag.GetPropertyValue("UniqueName").ToString().Contains(txtFilterUniqueName.Text.Trim())
+                            row => row.Name.Contains(txtFilterName.Text.Trim())
                             ).ToList();
                     }
-                }
-
-                if (!string.IsNullOrEmpty(txtFilterName.Text.Trim()))
-                {
-                    resultNodes = resultNodes.Where(
-                        row => row.Name.Contains(txtFilterName.Text.Trim())
-                        ).ToList();
-                }
-                if (!string.IsNullOrEmpty(txtFilterText.Text.Trim()))
-                {
-                    resultNodes = resultNodes.Where(
-                        row => row.Text.Contains(txtFilterText.Text.Trim())
-                        ).ToList();
-                }
-
-            }
-
-            foreach (TreeNode item in nodes)
-            {
-                if (!resultNodes.Contains(item))
-                {
-                    //Item：非结果值
-                    //在父节点中，把非结果值都删掉
-                    TreeNode parent = item.Parent;
-                    if (parent != null)
+                    if (!string.IsNullOrEmpty(txtFilterText.Text.Trim()))
                     {
-                        parent.Nodes.Remove(item);
-                        //删除其他非结果值
-                        for (int i = parent.Nodes.Count - 1; i >= 0; i--)
-                        {
-                            TreeNode nodeTemp = parent.Nodes[i];
-                            if (!resultNodes.Contains(nodeTemp))
-                            {
-                                parent.Nodes.Remove(nodeTemp);
-                            }
-                        }
+                        resultNodes = resultNodes.Where(
+                            row => row.Text.Contains(txtFilterText.Text.Trim())
+                            ).ToList();
+                    }
 
+                }
+
+                foreach (TreeNode item in nodes)
+                {
+                    if (!resultNodes.Contains(item))
+                    {
+                        //Item：非结果值
+                        //在父节点中，把非结果值都删掉
+                        TreeNode parent = item.Parent;
+                        if (parent != null)
+                        {
+                            parent.Nodes.Remove(item);
+                            //删除其他非结果值
+                            for (int i = parent.Nodes.Count - 1; i >= 0; i--)
+                            {
+                                TreeNode nodeTemp = parent.Nodes[i];
+                                if (!resultNodes.Contains(nodeTemp))
+                                {
+                                    parent.Nodes.Remove(nodeTemp);
+                                }
+                            }
+
+                        }
                     }
                 }
+
+
             }
+
         }
         private void btnCancelFilter_Click(object sender, EventArgs e)
         {
-            foreach (var item in cubeNames)
+            foreach (var catalogInfo in cubeNames)
             {
-                BindCubeInfo(item);
+                foreach (var item in catalogInfo.Value)
+                {
+                    BindCubeInfo(catalogInfo.Key, item);
+                }
             }
         }
-        public List<TreeNode> GetNodes(FilterType filterType)
+        public List<TreeNode> GetNodes(TreeNode catalogNode, FilterType filterType)
         {
             List<TreeNode> list = new List<TreeNode>();
             switch (filterType)
             {
                 case FilterType.Cube:
-                    list.AddRange(tvCubeInfo.Nodes.Cast<TreeNode>());
+                    list.AddRange(catalogNode.Nodes.Cast<TreeNode>());
                     break;
                 case FilterType.Dimension:
-                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                    catalogNode.Nodes.Cast<TreeNode>().ForEach(
                        cube =>
                        {
                            list.AddRange(cube.Nodes.Cast<TreeNode>().Where(dim => dim.ImageKey.Equals("Dim")));
                        });
                     break;
                 case FilterType.Hierarchy:
-                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                    catalogNode.Nodes.Cast<TreeNode>().ForEach(
                           cube =>
                           {
                               cube.Nodes.Cast<TreeNode>().ForEach(dim =>
@@ -569,7 +643,7 @@ FROM [{2}]
                           });
                     break;
                 case FilterType.Level:
-                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                    catalogNode.Nodes.Cast<TreeNode>().ForEach(
                  cube =>
                  {
                      cube.Nodes.Cast<TreeNode>().ForEach(dim =>
@@ -582,7 +656,7 @@ FROM [{2}]
                  });
                     break;
                 case FilterType.Measure:
-                    tvCubeInfo.Nodes.Cast<TreeNode>().ForEach(
+                    catalogNode.Nodes.Cast<TreeNode>().ForEach(
                  cube =>
                  {
                      cube.Nodes.Cast<TreeNode>().ForEach(measures =>
@@ -661,6 +735,16 @@ FROM [{2}]
         {
             tabControlMdxEditorCollection.TabPages.Remove(tabControlMdxEditorCollection.SelectedTab);
         }
+        private void closeAllTabsButThisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (TabPage item in tabControlMdxEditorCollection.TabPages)
+            {
+                if (!item.Equals(tabControlMdxEditorCollection.SelectedTab))
+                {
+                    tabControlMdxEditorCollection.TabPages.Remove(item);
+                }
+            }
+        }
 
         private void tabControlMdxEditorCollection_MouseDown(object sender, MouseEventArgs e)
         {
@@ -712,10 +796,17 @@ FROM [{2}]
 
         #endregion
 
+
+
     }
 
     #region 辅助类
-
+    public class CatalgInfo
+    {
+        public string Name { get; set; }
+        public string Desc { get; set; }
+        public CubeOperate co { get; set; }
+    }
     public class MdxCodeSnip
     {
         public string Name { get; set; }

@@ -14,6 +14,7 @@ using Justin.FrameWork.Helper;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
 using Microsoft.AnalysisServices.AdomdClient;
+using System.Configuration;
 namespace Justin.Controls.Executer
 {
     public partial class MdxExecuterCtrl : JUserControl, IFile
@@ -41,12 +42,12 @@ namespace Justin.Controls.Executer
                 AdomdConnection connection = null;
                 try
                 {
-                    connection = new AdomdConnection(txtConnectionString.Text);
+                    connection = new AdomdConnection(cboxConnStrings.Text);
                     if (connection.State != ConnectionState.Open)
                     {
                         connection.Open();
                     }
-                    this.ShowMessage("连接OLAP成功:" + txtConnectionString.Text);
+                    this.ShowMessage("连接OLAP成功:" + cboxConnStrings.Text);
                 }
                 catch (Exception ex)
                 {
@@ -60,11 +61,11 @@ namespace Justin.Controls.Executer
         {
             get
             {
-                return txtConnectionString.Text;
+                return cboxConnStrings.Text;
             }
             set
             {
-                txtConnectionString.Text = value;
+                cboxConnStrings.Text = value;
             }
         }
         public string Extension
@@ -85,12 +86,20 @@ namespace Justin.Controls.Executer
 
         private void MdxExecuterCtrl_Load(object sender, EventArgs e)
         {
+            this.cboxConnStrings.Items.Clear();
+            foreach (var item in ConfigurationManager.AppSettings.AllKeys)
+            {
+                if (item.StartsWith("OLAPConnStr", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    this.cboxConnStrings.Items.Add(ConfigurationManager.AppSettings[item]);
+                }
+            }
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
 
             this.SetToolTipsForButton(new ToolTip());
-            if (string.IsNullOrEmpty(txtConnectionString.Text))
-                this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
+            if (string.IsNullOrEmpty(cboxConnStrings.Text))
+                this.cboxConnStrings.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
         #region 拖动
@@ -143,7 +152,7 @@ namespace Justin.Controls.Executer
 
         private void btnDefaultConnStr_Click(object sender, EventArgs e)
         {
-            this.txtConnectionString.Text = MdxExecuterCtrlSetting.DefaultConnStr;
+            this.cboxConnStrings.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
         private void btnExecute_Click(object sender, EventArgs e)

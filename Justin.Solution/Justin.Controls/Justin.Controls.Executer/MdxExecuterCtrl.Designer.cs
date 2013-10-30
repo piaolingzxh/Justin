@@ -39,9 +39,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.btnDefaultConnStr = new System.Windows.Forms.Button();
             this.btnExportExcel = new System.Windows.Forms.Button();
-            this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.txtMdx = new ICSharpCode.TextEditor.TextEditorControl();
             this.button1 = new System.Windows.Forms.Button();
+            this.cboxConnStrings = new System.Windows.Forms.ComboBox();
             this.gvMdxresult = new System.Windows.Forms.DataGridView();
             this.txtResult = new System.Windows.Forms.TextBox();
             this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
@@ -62,9 +62,9 @@
             this.tableLayoutPanelMdx.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelMdx.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelMdx.Controls.Add(this.tableLayoutPanelButtons, 1, 1);
-            this.tableLayoutPanelMdx.Controls.Add(this.txtConnectionString, 0, 0);
             this.tableLayoutPanelMdx.Controls.Add(this.txtMdx, 0, 1);
             this.tableLayoutPanelMdx.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanelMdx.Controls.Add(this.cboxConnStrings, 0, 0);
             this.tableLayoutPanelMdx.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMdx.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMdx.Name = "tableLayoutPanelMdx";
@@ -172,14 +172,6 @@
             this.btnExportExcel.UseVisualStyleBackColor = true;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
-            // txtConnectionString
-            // 
-            this.txtConnectionString.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConnectionString.Location = new System.Drawing.Point(3, 3);
-            this.txtConnectionString.Name = "txtConnectionString";
-            this.txtConnectionString.Size = new System.Drawing.Size(826, 20);
-            this.txtConnectionString.TabIndex = 5;
-            // 
             // txtMdx
             // 
             this.txtMdx.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -206,6 +198,15 @@
             this.button1.Tag = "Set Default OLAP Connection String";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnDefaultConnStr_Click);
+            // 
+            // cboxConnStrings
+            // 
+            this.cboxConnStrings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxConnStrings.FormattingEnabled = true;
+            this.cboxConnStrings.Location = new System.Drawing.Point(3, 3);
+            this.cboxConnStrings.Name = "cboxConnStrings";
+            this.cboxConnStrings.Size = new System.Drawing.Size(826, 21);
+            this.cboxConnStrings.TabIndex = 7;
             // 
             // gvMdxresult
             // 
@@ -296,7 +297,6 @@
             this.Size = new System.Drawing.Size(882, 560);
             this.Load += new System.EventHandler(this.MdxExecuterCtrl_Load);
             this.tableLayoutPanelMdx.ResumeLayout(false);
-            this.tableLayoutPanelMdx.PerformLayout();
             this.tableLayoutPanelButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvMdxresult)).EndInit();
             this.splitContainerEx1.Panel1.ResumeLayout(false);
@@ -324,8 +324,8 @@
         private System.Windows.Forms.Button btnExportExcel;
         private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutresult;
-        private System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox cboxConnStrings;
 
     }
 }
