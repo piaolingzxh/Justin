@@ -312,16 +312,33 @@ namespace Justin.Controls.CubeView
         {
             if (!root.ImageKey.Equals("Level") && !root.ImageKey.Equals("Member")) return;
             if (root.Nodes.Count > 0) return;
+
+            CubeOperate co = cos[GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode).Parent.Name];
+            string connString = co.ConnectionString.ToLower();
+            if (connString.Contains("mondrian"))
+            {
+                ExpendMondrianMembers(co, root);
+            }
+            else if (connString.Contains("msolap"))
+            {
+                ExpendSSASMembers(root);
+            }
+
+            root.Expand();
+        }
+        private void ExpendSSASMembers(TreeNode root)
+        {
             MemberCollection members = null;
             if (root.ImageKey.Equals("Level"))
             {
                 Level level = root.Tag as Level;
+
                 members = level.GetMembers();
             }
             else if (root.ImageKey.Equals("Member"))
             {
-                Member member = root.Tag as Member;
-                members = member.GetChildren();
+                MemberInfo member = root.Tag as MemberInfo;
+                members = member.Member.GetChildren();
             }
             else
             {
@@ -335,12 +352,83 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Member";
+                tempNode.Tag = new MemberInfo(member);
+
+                root.Nodes.Add(tempNode);
+            }
+        }
+
+        private void ExpendMondrianMembers(CubeOperate co, TreeNode root)
+        {
+            DataTable membersData = null;
+
+            if (root.ImageKey.Equals("Level"))
+            {
+                Level level = root.Tag as Level;
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("CATALOG_NAME", level.Properties["CATALOG_NAME"].Value.ToString());
+                dic.Add("CUBE_NAME", level.Properties["CUBE_NAME"].Value.ToString());
+                dic.Add("LEVEL_UNIQUE_NAME", level.Properties["LEVEL_UNIQUE_NAME"].Value.ToString());
+                membersData = QueryMondrianMembers(co, dic);
+            }
+            else if (root.ImageKey.Equals("Member"))
+            {
+                MemberInfo rootMember = root.Tag as MemberInfo;
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("CATALOG_NAME", rootMember.Properties["CATALOG_NAME"].ToString());
+                dic.Add("CUBE_NAME", rootMember.Properties["CUBE_NAME"].ToString());
+                dic.Add("MEMBER_UNIQUE_NAME", rootMember.Properties["MEMBER_UNIQUE_NAME"].ToString());
+                dic.Add("TREE_OP", 1);
+                membersData = QueryMondrianMembers(co, dic);
+            }
+            List<MemberInfo> childMembers = GetMemberList(membersData);
+            if (childMembers == null || childMembers.Count <= 0) return;
+            foreach (var member in childMembers)
+            {
+                string name = member.Name.Replace("$", "");
+                string caption = member.Caption.Replace("$", "");
+                TreeNode tempNode = new TreeNode(caption);
+                tempNode.Name = name;
+                tempNode.SelectedImageKey = tempNode.ImageKey = "Member";
                 tempNode.Tag = member;
 
                 root.Nodes.Add(tempNode);
             }
+        }
 
-            root.Expand();
+        private DataTable QueryMondrianMembers(CubeOperate co, Dictionary<string, object> dic)
+        {
+            AdomdRestrictionCollection restrictions = new AdomdRestrictionCollection();
+
+            foreach (var item in dic)
+            {
+                restrictions.Add(item.Key, item.Value);
+            }
+            if (co.Conn.State != ConnectionState.Open)
+            {
+                co.Conn.Open();
+            }
+            return co.Conn.GetSchemaDataSet("MDSCHEMA_MEMBERS", restrictions).Tables[0];
+        }
+        public List<MemberInfo> GetMemberList(DataTable data)
+        {
+            IEnumerable<string> columnNames = data.Columns.Cast<DataColumn>().Select(r => r.ColumnName);
+            List<MemberInfo> members = new List<MemberInfo>();
+            foreach (var item in data.Rows.Cast<DataRow>())
+            {
+                MemberInfo member = new MemberInfo();
+
+                member.Name = item["MEMBER_NAME"].ToString();
+                member.Caption = item["MEMBER_CAPTION"].ToString();
+                member.UniqueName = item["MEMBER_UNIQUE_NAME"].ToString();
+                member.Properties = new Dictionary<string, object>();
+                foreach (var columnName in columnNames)
+                {
+                    member.Properties.Add(columnName, item[columnName]);
+                }
+                members.Add(member);
+            }
+            return members;
         }
 
         #region 注释
@@ -795,12 +883,27 @@ FROM [{2}]
 
 
         #endregion
-
-
-
     }
 
     #region 辅助类
+    public class MemberInfo
+    {
+        public MemberInfo() { }
+        public MemberInfo(Member member)
+        {
+            this.Member = member;
+            this.Name = member.Name;
+            this.Caption = member.Caption;
+            this.UniqueName = member.Caption;
+        }
+        public Member Member { get; set; }
+        public string Name { get; set; }
+        public string UniqueName { get; set; }
+        public Dictionary<string, object> Properties { get; set; }
+        public string Caption { get; set; }
+
+    }
+
     public class CatalgInfo
     {
         public string Name { get; set; }

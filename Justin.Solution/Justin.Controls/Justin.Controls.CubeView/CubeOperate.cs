@@ -12,7 +12,6 @@ namespace Justin.Controls.CubeView
         {
             this.ConnectionString = adomdConnectionString;
             Conn = new AdomdConnection(adomdConnectionString);
-
             Conn.Open();
             CubeDefs = Conn.Cubes.Cast<CubeDef>().ToList();
             Cubes = GetCubes();
