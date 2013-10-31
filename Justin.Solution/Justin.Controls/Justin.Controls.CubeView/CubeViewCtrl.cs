@@ -375,9 +375,9 @@ namespace Justin.Controls.CubeView
             {
                 MemberInfo rootMember = root.Tag as MemberInfo;
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("CATALOG_NAME", rootMember.Properties["CATALOG_NAME"].ToString());
-                dic.Add("CUBE_NAME", rootMember.Properties["CUBE_NAME"].ToString());
-                dic.Add("MEMBER_UNIQUE_NAME", rootMember.Properties["MEMBER_UNIQUE_NAME"].ToString());
+                dic.Add("CATALOG_NAME", rootMember.Properties.FirstOrDefault(p => p.Name.Equals("CATALOG_NAME")).Value.ToString());
+                dic.Add("CUBE_NAME", rootMember.Properties.FirstOrDefault(p => p.Name.Equals("CUBE_NAME")).Value.ToString());
+                dic.Add("MEMBER_UNIQUE_NAME", rootMember.Properties.FirstOrDefault(p => p.Name.Equals("MEMBER_UNIQUE_NAME")).Value.ToString());
                 dic.Add("TREE_OP", 1);
                 membersData = QueryMondrianMembers(co, dic);
             }
@@ -412,7 +412,7 @@ namespace Justin.Controls.CubeView
         }
         public List<MemberInfo> GetMemberList(DataTable data)
         {
-            IEnumerable<string> columnNames = data.Columns.Cast<DataColumn>().Select(r => r.ColumnName);
+            IEnumerable<DataColumn> columns = data.Columns.Cast<DataColumn>();
             List<MemberInfo> members = new List<MemberInfo>();
             foreach (var item in data.Rows.Cast<DataRow>())
             {
@@ -421,10 +421,10 @@ namespace Justin.Controls.CubeView
                 member.Name = item["MEMBER_NAME"].ToString();
                 member.Caption = item["MEMBER_CAPTION"].ToString();
                 member.UniqueName = item["MEMBER_UNIQUE_NAME"].ToString();
-                member.Properties = new Dictionary<string, object>();
-                foreach (var columnName in columnNames)
+                member.Properties = new List<PropertyInfo>();
+                foreach (var column in columns)
                 {
-                    member.Properties.Add(columnName, item[columnName]);
+                    member.Properties.Add(new PropertyInfo() { Name = column.ColumnName, Type = column.DataType, Value = item[column.ColumnName] });
                 }
                 members.Add(member);
             }
@@ -528,7 +528,7 @@ namespace Justin.Controls.CubeView
                 case "SingleHie": Hierarchy singleHie = tempNode.Tag as Hierarchy; table = singleHie.Properties.PrepareData(); break;
                 case "Hie": Hierarchy hie = tempNode.Tag as Hierarchy; table = hie.Properties.PrepareData(); break;
                 case "Level": Level level = tempNode.Tag as Level; table = level.Properties.PrepareData(); break;
-                case "Member": Member member = tempNode.Tag as Member; table = member.Properties.PrepareData(); break;
+                case "Member": MemberInfo member = tempNode.Tag as MemberInfo; table = member.PrepareData(); break;
 
             }
 
@@ -894,14 +894,42 @@ FROM [{2}]
             this.Member = member;
             this.Name = member.Name;
             this.Caption = member.Caption;
-            this.UniqueName = member.Caption;
+            this.UniqueName = member.UniqueName;
         }
         public Member Member { get; set; }
         public string Name { get; set; }
         public string UniqueName { get; set; }
-        public Dictionary<string, object> Properties { get; set; }
+        public List<PropertyInfo> Properties { get; set; }
         public string Caption { get; set; }
 
+        public DataTable PrepareData()
+        {
+            if (Member != null)
+                return Member.Properties.PrepareData();
+            else
+            {
+                DataTable table = new DataTable();
+
+
+                foreach (var item in Properties)
+                {
+                    table.Columns.Add(item.Name.ToLower(), item.Type);
+                }
+                DataRow row = table.NewRow();
+                foreach (var item in Properties)
+                {
+                    row[item.Name.ToLower()] = item.Value == null ? DBNull.Value : item.Value;
+                }
+                table.Rows.Add(row);
+                return table;
+            }
+        }
+    }
+    public class PropertyInfo
+    {
+        public Type Type { get; set; }
+        public string Name { get; set; }
+        public Object Value { get; set; }
     }
 
     public class CatalgInfo

@@ -81,6 +81,12 @@ namespace Justin.Stock
 
         #region 通知区域  菜单
 
+        private void noticeMenu_Opening(object sender, CancelEventArgs e)
+        {
+            this.topMostMenuItem.Checked = this.TopMost;
+            this.autoHideMenuItem.Checked = this.EnableAutoAnchor;
+        }
+
         private void topMostMenuItem_Click(object sender, EventArgs e)
         {
             TopMost = !TopMost;
@@ -97,6 +103,18 @@ namespace Justin.Stock
         {
             myStock.Show(3);
         }
+        private void inScreenMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Top = 300;
+            this.Left = 400;
+            this.WindowState = FormWindowState.Normal;
+            this.Show();
+        }
+        private void autoHideMenuItem_Click(object sender, EventArgs e)
+        {
+            this.autoHideMenuItem.Checked = !this.autoHideMenuItem.Checked;
+            this.EnableAutoAnchor = this.autoHideMenuItem.Checked;
+        }
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
             forceClose = true;
@@ -111,26 +129,16 @@ namespace Justin.Stock
             }
             else
             {
+                this.EnableAutoAnchor = false;
                 this.Show();
             }
         }
 
-        private void noticeMenu_MouseClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
-        }
-
-        private void autoHideMenuItem_Click(object sender, EventArgs e)
-        {
-            this.autoHideMenuItem.Checked = !this.autoHideMenuItem.Checked;
-            this.EnableAutoAnchor = this.autoHideMenuItem.Checked;
-        }
-
-        private void noticeMenu_Opening(object sender, CancelEventArgs e)
-        {
-            this.topMostMenuItem.Checked = this.TopMost;
-            this.autoHideMenuItem.Checked = this.EnableAutoAnchor;
-        }
+        //private void noticeMenu_MouseClick(object sender, MouseEventArgs e)
+        //{
+        //    this.EnableAutoAnchor = false;
+        //    this.Show();
+        //}
 
         #endregion
 
@@ -244,7 +252,6 @@ namespace Justin.Stock
             deskStockCtrl1.AddDisplayHandler();
             IsShow = true;
             base.Show();
-            this.WindowState = FormWindowState.Normal;
             this.Activate();
             if (!StockService.IsRunning)
             {
@@ -294,13 +301,6 @@ namespace Justin.Stock
         protected override void SetVisibleCore(bool value)
         {
             base.SetVisibleCore(value);
-        }
-
-        private void inScreenMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Top = 300;
-            this.Left = 400;
-            this.Show();
         }
 
     }
