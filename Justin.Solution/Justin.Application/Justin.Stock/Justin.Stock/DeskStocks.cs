@@ -252,6 +252,10 @@ namespace Justin.Stock
             deskStockCtrl1.AddDisplayHandler();
             IsShow = true;
             base.Show();
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
             this.Activate();
             if (!StockService.IsRunning)
             {
