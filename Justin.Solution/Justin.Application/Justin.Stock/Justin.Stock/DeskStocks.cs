@@ -198,10 +198,12 @@ namespace Justin.Stock
             {
                 if (IsShow)
                 {
+                    this.EnableAutoAnchor = true;
                     this.Hide();
                 }
                 else
                 {
+                    this.EnableAutoAnchor = false;
                     this.Show();
                 }
             }
@@ -214,11 +216,13 @@ namespace Justin.Stock
                 if (StockService.IsRunning)
                 {
                     StockService.Stop();
+                    this.EnableAutoAnchor = true;
                     this.Hide();
                 }
                 else
                 {
                     StockService.ReStart();
+                    this.EnableAutoAnchor = false;
                     this.Show();
                 }
             }

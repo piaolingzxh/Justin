@@ -27,20 +27,23 @@ namespace Justin.FrameWork.WinForm.Extensions
             }
             set
             {
-                this.StopRectTimer.Enabled = value;
-
-                if (value)
+                if (this.StopRectTimer.Enabled != value)
                 {
-                    this.LocationChanged -= new EventHandler(hide_LocationChanged);
-                    this.LocationChanged += new EventHandler(hide_LocationChanged);
-                    StopRectTimer.Start();
-                }
-                else
-                {
-                    this.LocationChanged -= new EventHandler(hide_LocationChanged);
-                    StopRectTimer.Stop();
-                    StopAnchor();
+                    this.StopRectTimer.Enabled = value;
 
+                    if (value)
+                    {
+                        this.LocationChanged -= new EventHandler(hide_LocationChanged);
+                        this.LocationChanged += new EventHandler(hide_LocationChanged);
+                        StopRectTimer.Start();
+                    }
+                    else
+                    {
+                        this.LocationChanged -= new EventHandler(hide_LocationChanged);
+                        StopRectTimer.Stop();
+                        StopAnchor();
+
+                    }
                 }
             }
         }
