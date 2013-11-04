@@ -74,7 +74,9 @@ namespace Justin.Stock.Controls
                 #region 桌面控件初始化
 
                 TableLayoutPanel tableLayoutPanel1 = new TableLayoutPanel();
+                tableLayoutPanel1.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(tableLayoutPanel1, true, null);
 
+                tableLayoutPanel1.SuspendLayout();
                 var rowStyle = new RowStyle(SizeType.Absolute, 9);
 
                 for (int j = 0; j < 50; j++)
@@ -197,6 +199,7 @@ namespace Justin.Stock.Controls
                 tip.SetToolTip(columnNamesLabel, Constants.DefaultDeskDisplayFormatTips);
                 tableLayoutPanel1.Controls.Add(columnNamesLabel, 0, rowIndex);
 
+                tableLayoutPanel1.ResumeLayout();
 
                 #region 总盈亏信息
 
@@ -240,7 +243,8 @@ namespace Justin.Stock.Controls
         }
         private void ShowStockInDesk(FormInvokArgument argument)
         {
-
+            this.DoubleBuffered = true;
+            this.SuspendLayout();
             TableLayoutPanel tableLayoutPanel1 = argument.tableLayoutPanel1;
 
             #region 重绘控件
@@ -259,6 +263,7 @@ namespace Justin.Stock.Controls
             this.Controls.Add(tableLayoutPanel1);
 
             #endregion
+            this.ResumeLayout();
 
             #region 抛出股票总盈亏汇总和警告信息给容器，以便显示到标题上
 
