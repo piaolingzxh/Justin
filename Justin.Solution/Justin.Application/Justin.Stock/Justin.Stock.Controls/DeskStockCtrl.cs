@@ -109,6 +109,10 @@ namespace Justin.Stock.Controls
                 {
                     Label stockLabel = this.GetNewlabel(rtStock.Order == -1);
 
+                    if (rtStock.Order == 0 || rtStock.Order == -1)
+                    {
+                        stockLabel.Click += new EventHandler(stockLabel_Click);
+                    }
                     #region 股票桌面信息
 
                     stockLabel.Tag = rtStock.Code;
@@ -240,6 +244,17 @@ namespace Justin.Stock.Controls
                 JLog.Write(LogMode.Error, ex);
             }
 
+        }
+
+        void stockLabel_Click(object sender, EventArgs e)
+        {
+            var form = this.FindForm();
+            if (form is AutoAnchorForm)
+            {
+                var autoHideForm = form as AutoAnchorForm;
+                autoHideToolStripMenuItem.Checked = !autoHideToolStripMenuItem.Checked;
+                autoHideForm.EnableAutoAnchor = autoHideToolStripMenuItem.Checked;
+            };
         }
         private void ShowStockInDesk(FormInvokArgument argument)
         {
