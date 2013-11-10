@@ -146,7 +146,7 @@ namespace Justin.Stock.Controls
             string shortName = row.Cells["InShort"].Value.ToString();
 
 
-            stockDAL.InsertStock(code, no, name, shortName, StockService.MyStock.Min(r => r.Order) -(decimal) 0.01);
+            stockDAL.InsertStock(code, no, name, shortName, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
             RefreshPersonalStockSetting();
 
         }
@@ -232,7 +232,8 @@ namespace Justin.Stock.Controls
                 object objProfitOrLossHistory = row.Cells["ProfitOrLossHistory"].Value;
                 if (objProfitOrLossHistory != null)
                 {
-                    row.Cells["HasProfitOrLoss"].Value = StockInfo.GetProfitOrLossHistoryData(objProfitOrLossHistory.ToString()).Sum();
+                    decimal value = row.Cells["HasProfitBefore"].Value.Value<decimal>() + StockInfo.GetProfitHistoryData(objProfitOrLossHistory.ToString()).Sum();
+                    row.Cells["HasProfitOrLoss"].Value = Math.Round(value, 2);
                 }
             }
             //List<StockInfo> stockList = stockDAL.getAllMyStock();
@@ -244,7 +245,6 @@ namespace Justin.Stock.Controls
                         dataRow.Selected = true;
                 }
             }
-            Constants.ResetMyStock();
         }
 
         private void btnUpdateStockInfo_Click(object sender, EventArgs e)
@@ -329,13 +329,14 @@ namespace Justin.Stock.Controls
             {
                 if (stocks == null)
                     stocks = StockService.MyStock;
+                stocks = stocks.OrderByDescending(row => row.Order);
                 //List<StockInfo> list = new List<StockInfo>();
                 //var groups = stocks.GroupBy(row => row.BuyCount > 0);
                 //foreach (var item in groups)
                 //{
                 //    list.AddRange(item.OrderBy(row => row.SurgedRange).ToList());
                 //}
-                dgvMonitorStocks.DataSource = new BindingCollection<StockInfo>(stocks.OrderByDescending(row => row.Order).ThenByDescending(row => row.BuyCount).ThenBy(row => row.SurgedRange).ToList());
+                dgvMonitorStocks.DataSource = new BindingCollection<StockInfo>(stocks.ToList());
                 if (!string.IsNullOrEmpty(CurrentStockCode))
                 {
                     foreach (DataGridViewRow dataRow in dgvMonitorStocks.Rows)
@@ -477,7 +478,7 @@ namespace Justin.Stock.Controls
 
         #endregion
 
-        
+
 
     }
 }

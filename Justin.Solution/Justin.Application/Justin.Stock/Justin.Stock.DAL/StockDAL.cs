@@ -54,8 +54,9 @@ namespace Justin.Stock.DAL
                 BuyCount = reader["BuyCount"].Value<int>(),
                 BuyPrice = reader["BuyPrice"].Value<decimal>(),
                 ShowInFolatWindow = reader["ShowInFolatWindow"].Value<bool>(),
+                HasProfitBefore = reader["HasProfit"].Value<decimal>(),
                 Order = reader["Order"].Value<decimal>(),
-                ProfitOrLossHistory = reader["ProfitOrLossHistory"].Value<string>(),
+                ProfitHistory = reader["ProfitHistory"].Value<string>(),
                 Warn = reader["Warn"].Value<bool>(),
             };
             return stock;
@@ -77,7 +78,7 @@ CREATE TABLE [MyStocks] (
   [BuyCount] INTEGER, 
   [ShowInFolatWindow] BOOLEAN, 
   [Order] INTEGER, 
-  [ProfitOrLossHistory] TEXT, 
+  [ProfitHistory] TEXT, 
   [Warn] BOOLEAN DEFAULT 1);";
 
         public static void InitDB()
@@ -149,7 +150,7 @@ CREATE TABLE [MyStocks] (
             ,BuyCount                =@BuyCount
             ,ShowInFolatWindow       =@ShowInFolatWindow
             ,[Order]                 =@Order
-            ,ProfitOrLossHistory     =@ProfitOrLossHistory
+            ,ProfitHistory           =@ProfitHistory
             ,Warn                    =@Warn
             where Code               =@Code";
 
@@ -172,7 +173,7 @@ CREATE TABLE [MyStocks] (
             updateCmd.Parameters.Add(new SQLiteParameter("@BuyCount", DbType.String, "BuyCount", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@ShowInFolatWindow", DbType.Boolean, "ShowInFolatWindow", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@Order", DbType.String, "Order", DataRowVersion.Current));
-            updateCmd.Parameters.Add(new SQLiteParameter("@ProfitOrLossHistory", DbType.String, "ProfitOrLossHistory", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@ProfitHistory", DbType.String, "ProfitHistory", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@Warn", DbType.Boolean, "Warn", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@Code", DbType.String, "Code", DataRowVersion.Original));
 

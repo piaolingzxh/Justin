@@ -122,9 +122,9 @@ namespace Justin.Stock.Controls
                                               , rtStock.SpellingInShort.PadLeft(4, ' ')                                             //简称
                                               , priceNow.ToString().PadLeft(6, ' ')                                                 //当前价格
                                               , (rtStock.SurgedRange.ToString() + "%").PadLeft(7, ' ')                              //当日涨幅
-                                              , (rtStock.CurrentProfitOrLoss.ToString()).PadLeft(6, ' ')                               //当前盈亏
-                                             , Math.Round(rtStock.SumProfitOrLoss, 0).ToString().PadLeft(6, ' ')                                              //总盈亏
-                                              , (Math.Round(rtStock.SumProfitOrLossPercent * 100, 2).ToString() + "%").PadLeft(8, ' ')      //总盈亏比例
+                                              , (rtStock.CurrentProfit.ToString()).PadLeft(6, ' ')                               //当前盈亏
+                                             , Math.Round(rtStock.SumProfit, 0).ToString().PadLeft(6, ' ')                                              //总盈亏
+                                              , (Math.Round(rtStock.SumProfitPercent * 100, 2).ToString() + "%").PadLeft(8, ' ')      //总盈亏比例
                                              , Math.Round(rtStock.BuyPrice, 2).ToString().PadLeft(6, ' ')                           //成本价
                                              , rtStock.BuyCount.ToString().PadLeft(5, ' ')                                          //股数
                                              , (rtStock.TurnOver.ToString() + "%").PadLeft(7, ' ')                                  //换手率
@@ -165,7 +165,7 @@ namespace Justin.Stock.Controls
                          , rtStock.DateTime
                          , rtStock.SurgedRange
                          , rtStock.Now
-                         , rtStock.CurrentProfitOrLoss
+                         , rtStock.CurrentProfit
                          , rtStock.BuyCount
                          , rtStock.BuyPrice
                          , rtStock.TurnOver
@@ -185,16 +185,28 @@ namespace Justin.Stock.Controls
                                                , "Name".PadLeft(4, ' ')                                                     //简称
                                                , "Now¥".PadLeft(6, ' ')                                                 //当前价格
                                                , "↓↑%".PadLeft(6, ' ')                                                 //当日涨幅
-                                               , "PF".PadLeft(6, ' ')                                                   //总盈亏        
+                                               , "PF".PadLeft(6, ' ')                                                   //当前盈亏        
                                               , "∑PF".PadLeft(6, ' ')                                                   //总盈亏
                                                , "∑PF%".PadLeft(8, ' ')                                               //总盈亏比例
                                               , "Cost¥".PadLeft(6, ' ')                                                   //成本价
                                               , "*".PadLeft(5, ' ')                                                     //股数
                                               , "Turn%".PadLeft(7, ' ')                                                   //换手率
                                               , "Mkt¥".PadLeft(6, ' ')                                                  //当前市值
-                                              , "∑Cost¥".PadLeft(6, ' ')                                                  //当前市值
+                                              , "∑Cost¥".PadLeft(6, ' ')                                                  //总成本
                                                );
-                tip.SetToolTip(columnNamesLabel, Constants.DefaultDeskDisplayFormatTips);
+                tip.SetToolTip(columnNamesLabel, string.Format(Constants.Setting.DeskDisplayFormat
+                                               , "Name:简称" + Environment.NewLine                                               //简称
+                                               , "Now¥:当前价格" + Environment.NewLine                                         //当前价格
+                                               , "↓↑%:当日涨幅" + Environment.NewLine                                         //当日涨幅
+                                               , "PF:当前盈亏" + Environment.NewLine                                         //当前盈亏        
+                                              , "∑PF:总盈亏" + Environment.NewLine                                          //总盈亏
+                                               , "∑PF%:总盈亏比例" + Environment.NewLine                                         //总盈亏比例
+                                              , "Cost¥:成本价" + Environment.NewLine                                          //成本价
+                                              , "*:股数" + Environment.NewLine                                          //股数
+                                              , "Turn%:换手率" + Environment.NewLine                                            //换手率
+                                              , "Mkt¥:当前市值" + Environment.NewLine                                              //当前市值
+                                              , "∑Cost¥:总成本" + Environment.NewLine                                               //总成本
+                                              ));
                 tableLayoutPanel1.Controls.Add(columnNamesLabel, 0, rowIndex);
 
 
@@ -205,9 +217,9 @@ namespace Justin.Stock.Controls
                 //总市值=所有股票当前市值+当前余额
                 decimal sumCurrentPrice = stockList.Sum(row => row.MarketValue) + Constants.Setting.Balance;//市值
 
-                decimal sumProfitOrLoss = stockList.Sum(row => row.SumProfitOrLoss);
+                decimal sumProfitOrLoss = stockList.Sum(row => row.SumProfit);
 
-                tableLayoutPanel1.Tag = string.Format("{0}/{1}:{2}/{3}", (int)sumCost, (int)sumCurrentPrice, (int)(stocks.Sum(row => row.CurrentProfitOrLoss)), (int)sumProfitOrLoss);
+                tableLayoutPanel1.Tag = string.Format("M:{0}/C:{1} P:{2}/∑P:{3}", (int)sumCurrentPrice, (int)sumCost, (int)(stocks.Sum(row => row.CurrentProfit)), (int)sumProfitOrLoss);
 
                 #endregion
 

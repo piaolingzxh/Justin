@@ -9,10 +9,6 @@ namespace Justin.Stock.Service.Entities
     {
         #region 非实时数据
 
-        //public string Code { get; set; }
-        //public string No { get; set; }
-        //public string Name { get; set; }
-        //public string SpellingInShort { get; set; }
         public decimal WarnPrice_Min { get; set; }
         public decimal WarnPrice_Max { get; set; }
         public decimal WarnPercent_Max { get; set; }
@@ -31,26 +27,42 @@ namespace Justin.Stock.Service.Entities
         /// <summary>
         /// 历史盈亏
         /// </summary>
-        public decimal HasProfitOrLoss
+        public decimal HasProfit
         {
             get
             {
-                return this.ProfitOrLossHistoryData.Sum();
+                if (this.HasStock && this.PriceNow > 0)
+                {
+                    return this.CurrentProfit + this.ProfitHistoryData.Sum();
+                }
+                else
+                {
+                    return this.HasProfitBefore + this.ProfitHistoryData.Sum();
+                }
             }
         }
 
-        public string ProfitOrLossHistory { get; set; }
+        public string ProfitHistory { get; set; }
 
-        public List<decimal> ProfitOrLossHistoryData
+        public List<decimal> ProfitHistoryData
         {
             get
             {
-                return GetProfitOrLossHistoryData(this.ProfitOrLossHistory);
+                return GetProfitHistoryData(this.ProfitHistory);
             }
         }
+
+
+
+        public decimal HasProfitBefore { get; set; }
 
         #endregion
 
+        public bool HasStock
+        {
+            get { return this.BuyCount > 0; }
+            set { }
+        }
         #region 实时数据
         /// <summary>
         /// 总成本价=当前成本+历史盈亏
@@ -59,33 +71,47 @@ namespace Justin.Stock.Service.Entities
         {
             get
             {
-                return this.BuyCount * this.BuyPrice - this.HasProfitOrLoss;
+                if (this.HasStock )
+                {
+                    return Math.Round(this.BuyPrice * this.BuyCount - this.ProfitHistoryData.Sum(), 2);
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
-        public decimal SumProfitOrLossPercent
+        public decimal SumProfitPercent
         {
             get
             {
                 if (this.SumCost != 0)
                 {
-                    return this.SumProfitOrLoss / this.SumCost;
+                    return this.SumProfit / this.SumCost;
                 }
                 return 0;
             }
         }
-        public decimal SumProfitOrLoss
+        public decimal SumProfit
         {
             get
             {
-                return this.CurrentProfitOrLoss + this.HasProfitOrLoss;
+                if (this.HasStock &&this.PriceNow>0)
+                {
+                    return Math.Round(this.CurrentProfit + this.ProfitHistoryData.Sum());
+                }
+                else
+                {
+                    return Math.Round(this.HasProfitBefore + this.ProfitHistoryData.Sum());
+                }
             }
         }
 
         /// <summary>
         /// 当前盈亏
         /// </summary>
-        public decimal CurrentProfitOrLoss
+        public decimal CurrentProfit
         {
             get
             {
@@ -220,7 +246,7 @@ namespace Justin.Stock.Service.Entities
         #endregion
 
 
-        public static List<decimal> GetProfitOrLossHistoryData(string profitOrLossHistory)
+        public static List<decimal> GetProfitHistoryData(string profitOrLossHistory)
         {
             List<decimal> datas = new List<decimal>();
             if (string.IsNullOrEmpty(profitOrLossHistory) || string.IsNullOrEmpty(profitOrLossHistory.Trim()))
