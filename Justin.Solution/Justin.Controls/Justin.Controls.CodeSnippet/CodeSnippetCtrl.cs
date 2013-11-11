@@ -214,13 +214,6 @@ namespace Justin.Controls.CodeSnippet
             proc.Start();
         }
 
-
-        private void btnCloseOpen_Click(object sender, EventArgs e)
-        {
-
-            this.splitContainer1.Panel1Collapsed = !this.splitContainer1.Panel1Collapsed;
-        }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)

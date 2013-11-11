@@ -40,21 +40,19 @@
             this.insertVBTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertJavaTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtMSILCode = new ICSharpCode.TextEditor.TextEditorControl();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.splitContainerEx2 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.tableLayoutPanel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.tableLayoutPanelMain.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
+            this.splitContainerEx1.Panel1.SuspendLayout();
+            this.splitContainerEx1.Panel2.SuspendLayout();
+            this.splitContainerEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx2)).BeginInit();
+            this.splitContainerEx2.Panel1.SuspendLayout();
+            this.splitContainerEx2.Panel2.SuspendLayout();
+            this.splitContainerEx2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCompiler
@@ -62,7 +60,7 @@
             this.btnCompiler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCompiler.Location = new System.Drawing.Point(3, 38);
             this.btnCompiler.Name = "btnCompiler";
-            this.btnCompiler.Size = new System.Drawing.Size(75, 29);
+            this.btnCompiler.Size = new System.Drawing.Size(79, 29);
             this.btnCompiler.TabIndex = 2;
             this.btnCompiler.Text = "Compiler";
             this.btnCompiler.UseVisualStyleBackColor = true;
@@ -73,7 +71,7 @@
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRun.Location = new System.Drawing.Point(3, 73);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 29);
+            this.btnRun.Size = new System.Drawing.Size(79, 29);
             this.btnRun.TabIndex = 3;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
@@ -84,7 +82,7 @@
             this.btnDisassembly.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDisassembly.Location = new System.Drawing.Point(3, 3);
             this.btnDisassembly.Name = "btnDisassembly";
-            this.btnDisassembly.Size = new System.Drawing.Size(75, 29);
+            this.btnDisassembly.Size = new System.Drawing.Size(79, 29);
             this.btnDisassembly.TabIndex = 1;
             this.btnDisassembly.Text = "Disassembly";
             this.btnDisassembly.UseVisualStyleBackColor = true;
@@ -100,7 +98,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnCompiler, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnRun, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(603, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
@@ -124,20 +122,20 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(81, 335);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(85, 390);
             this.tableLayoutPanel1.TabIndex = 22;
             // 
             // txtCode
             // 
             this.txtCode.ContextMenuStrip = this.contextMenuStrip1;
             this.txtCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCode.IsReadOnly = false;
             this.txtCode.Location = new System.Drawing.Point(0, 0);
             this.txtCode.Name = "txtCode";
             this.txtCode.ShowEOLMarkers = true;
             this.txtCode.ShowSpaces = true;
             this.txtCode.ShowTabs = true;
-            this.txtCode.Size = new System.Drawing.Size(312, 335);
+            this.txtCode.ShowVRuler = true;
+            this.txtCode.Size = new System.Drawing.Size(320, 390);
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = resources.GetString("txtCode.Text");
             // 
@@ -174,100 +172,73 @@
             // txtMSILCode
             // 
             this.txtMSILCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMSILCode.IsReadOnly = false;
             this.txtMSILCode.Location = new System.Drawing.Point(0, 0);
             this.txtMSILCode.Name = "txtMSILCode";
             this.txtMSILCode.ShowEOLMarkers = true;
             this.txtMSILCode.ShowSpaces = true;
             this.txtMSILCode.ShowTabs = true;
-            this.txtMSILCode.Size = new System.Drawing.Size(278, 335);
+            this.txtMSILCode.ShowVRuler = true;
+            this.txtMSILCode.Size = new System.Drawing.Size(335, 390);
             this.txtMSILCode.TabIndex = 4;
             this.txtMSILCode.Text = resources.GetString("txtMSILCode.Text");
             // 
-            // splitContainer1
+            // splitContainerEx1
             // 
-            this.tableLayoutPanelMain.SetColumnSpan(this.splitContainer1, 2);
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainerEx1.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
+            this.splitContainerEx1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEx1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEx1.Name = "splitContainerEx1";
             // 
-            // splitContainer1.Panel1
+            // splitContainerEx1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.txtCode);
-            this.splitContainer1.Panel1MinSize = 150;
+            this.splitContainerEx1.Panel1.Controls.Add(this.txtCode);
             // 
-            // splitContainer1.Panel2
+            // splitContainerEx1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.txtMSILCode);
-            this.splitContainer1.Size = new System.Drawing.Size(594, 335);
-            this.splitContainer1.SplitterDistance = 312;
-            this.splitContainer1.TabIndex = 23;
+            this.splitContainerEx1.Panel2.Controls.Add(this.splitContainerEx2);
+            this.splitContainerEx1.Size = new System.Drawing.Size(748, 390);
+            this.splitContainerEx1.SplitterDistance = 320;
+            this.splitContainerEx1.TabIndex = 4;
             // 
-            // tableLayoutPanelMain
+            // splitContainerEx2
             // 
-            this.tableLayoutPanelMain.ColumnCount = 3;
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel1, 2, 0);
-            this.tableLayoutPanelMain.Controls.Add(this.splitContainer1, 0, 0);
-            this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelMain.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            this.tableLayoutPanelMain.RowCount = 1;
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(687, 341);
-            this.tableLayoutPanelMain.TabIndex = 2;
+            this.splitContainerEx2.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.None;
+            this.splitContainerEx2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerEx2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEx2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainerEx2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEx2.Name = "splitContainerEx2";
             // 
-            // tabControl1
+            // splitContainerEx2.Panel1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(701, 373);
-            this.tabControl1.TabIndex = 3;
+            this.splitContainerEx2.Panel1.Controls.Add(this.txtMSILCode);
             // 
-            // tabPage1
+            // splitContainerEx2.Panel2
             // 
-            this.tabPage1.Controls.Add(this.tableLayoutPanelMain);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(693, 347);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(693, 347);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.splitContainerEx2.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainerEx2.Size = new System.Drawing.Size(424, 390);
+            this.splitContainerEx2.SplitterDistance = 335;
+            this.splitContainerEx2.TabIndex = 0;
             // 
             // CodeComplierCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.splitContainerEx1);
             this.Name = "CodeComplierCtrl";
-            this.Size = new System.Drawing.Size(701, 373);
+            this.Size = new System.Drawing.Size(748, 390);
             this.Load += new System.EventHandler(this.CodeComplierCtrl_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.tableLayoutPanelMain.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.splitContainerEx1.Panel1.ResumeLayout(false);
+            this.splitContainerEx1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
+            this.splitContainerEx1.ResumeLayout(false);
+            this.splitContainerEx2.Panel1.ResumeLayout(false);
+            this.splitContainerEx2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx2)).EndInit();
+            this.splitContainerEx2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -280,16 +251,13 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ICSharpCode.TextEditor.TextEditorControl txtCode;
         private ICSharpCode.TextEditor.TextEditorControl txtMSILCode;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem insertCSharpTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertVBTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertJavaTemplateToolStripMenuItem;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx2;
 
 
 

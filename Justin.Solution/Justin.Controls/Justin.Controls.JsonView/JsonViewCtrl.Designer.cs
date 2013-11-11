@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonViewCtrl));
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtJson = new ICSharpCode.TextEditor.TextEditorControl();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tvJson = new System.Windows.Forms.TreeView();
@@ -53,22 +52,23 @@
             this.removeSpecialCharsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.tableLayoutPanelMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.mnuTree.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
+            this.splitContainerEx1.Panel1.SuspendLayout();
+            this.splitContainerEx1.Panel2.SuspendLayout();
+            this.splitContainerEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMain
             // 
             this.tableLayoutPanelMain.ColumnCount = 1;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.Controls.Add(this.splitContainer1, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.splitContainerEx1, 0, 1);
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
@@ -79,31 +79,15 @@
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(726, 452);
             this.tableLayoutPanelMain.TabIndex = 3;
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 38);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.txtJson);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(720, 411);
-            this.splitContainer1.SplitterDistance = 289;
-            this.splitContainer1.TabIndex = 1;
-            // 
             // txtJson
             // 
             this.txtJson.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtJson.IsReadOnly = false;
             this.txtJson.Location = new System.Drawing.Point(0, 0);
             this.txtJson.Name = "txtJson";
-            this.txtJson.ShowVRuler = false;
-            this.txtJson.Size = new System.Drawing.Size(289, 411);
+            this.txtJson.ShowEOLMarkers = true;
+            this.txtJson.ShowSpaces = true;
+            this.txtJson.ShowTabs = true;
+            this.txtJson.Size = new System.Drawing.Size(240, 411);
             this.txtJson.TabIndex = 1;
             this.txtJson.Text = resources.GetString("txtJson.Text");
             // 
@@ -119,7 +103,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(427, 411);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(476, 411);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tvJson
@@ -131,7 +115,7 @@
             this.tvJson.Location = new System.Drawing.Point(23, 3);
             this.tvJson.Name = "tvJson";
             this.tvJson.SelectedImageIndex = 0;
-            this.tvJson.Size = new System.Drawing.Size(401, 405);
+            this.tvJson.Size = new System.Drawing.Size(450, 405);
             this.tvJson.TabIndex = 0;
             this.tvJson.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvJson_NodeMouseClick);
             // 
@@ -304,6 +288,24 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
+            // splitContainerEx1
+            // 
+            this.splitContainerEx1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEx1.Location = new System.Drawing.Point(3, 38);
+            this.splitContainerEx1.Name = "splitContainerEx1";
+            // 
+            // splitContainerEx1.Panel1
+            // 
+            this.splitContainerEx1.Panel1.Controls.Add(this.txtJson);
+            // 
+            // splitContainerEx1.Panel2
+            // 
+            this.splitContainerEx1.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainerEx1.Size = new System.Drawing.Size(720, 411);
+            this.splitContainerEx1.SplitterDistance = 240;
+            this.splitContainerEx1.TabIndex = 4;
+            // 
             // JsonViewCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,16 +315,16 @@
             this.Size = new System.Drawing.Size(726, 452);
             this.Load += new System.EventHandler(this.JsonViewCtrl_Load);
             this.tableLayoutPanelMain.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.mnuTree.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.splitContainerEx1.Panel1.ResumeLayout(false);
+            this.splitContainerEx1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
+            this.splitContainerEx1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -330,7 +332,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private ICSharpCode.TextEditor.TextEditorControl txtJson;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TreeView tvJson;
@@ -352,6 +353,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuCopy;
         private System.Windows.Forms.ToolStripMenuItem mnuCopyValue;
         private System.Windows.Forms.ImageList imgList;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
 
     }
 }

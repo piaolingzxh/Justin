@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeSnippetCtrl));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tvDirectory = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -41,37 +40,20 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.editorContainer = new System.Windows.Forms.Panel();
-            this.btnCloseOpen = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.txtFileName = new System.Windows.Forms.RichTextBox();
             this.comboBoxHighlightingStrategy = new System.Windows.Forms.ComboBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.tableLayoutPanel2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
+            this.splitContainerEx1.Panel1.SuspendLayout();
+            this.splitContainerEx1.Panel2.SuspendLayout();
+            this.splitContainerEx1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(801, 431);
-            this.splitContainer1.SplitterDistance = 176;
-            this.splitContainer1.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
@@ -87,7 +69,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(176, 431);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(169, 317);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tvDirectory
@@ -100,7 +82,7 @@
             this.tvDirectory.Location = new System.Drawing.Point(3, 28);
             this.tvDirectory.Name = "tvDirectory";
             this.tvDirectory.SelectedImageIndex = 0;
-            this.tvDirectory.Size = new System.Drawing.Size(170, 400);
+            this.tvDirectory.Size = new System.Drawing.Size(163, 286);
             this.tvDirectory.TabIndex = 2;
             this.tvDirectory.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tvDirectory_AfterExpand);
             this.tvDirectory.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvDirectory_NodeMouseClick);
@@ -139,13 +121,14 @@
             this.txtFolder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtFolder.Location = new System.Drawing.Point(3, 3);
             this.txtFolder.Name = "txtFolder";
-            this.txtFolder.Size = new System.Drawing.Size(145, 20);
+            this.txtFolder.Size = new System.Drawing.Size(138, 20);
             this.txtFolder.TabIndex = 0;
+            this.txtFolder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnSearch
             // 
             this.btnSearch.Image = global::Justin.Controls.CodeSnippet.Properties.Resources.search;
-            this.btnSearch.Location = new System.Drawing.Point(154, 3);
+            this.btnSearch.Location = new System.Drawing.Point(147, 3);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(19, 19);
             this.btnSearch.TabIndex = 1;
@@ -154,39 +137,27 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 601F));
-            this.tableLayoutPanel1.Controls.Add(this.editorContainer, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnCloseOpen, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.editorContainer, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(621, 431);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(636, 317);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // editorContainer
             // 
             this.editorContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editorContainer.Location = new System.Drawing.Point(23, 33);
+            this.editorContainer.Location = new System.Drawing.Point(3, 33);
             this.editorContainer.Name = "editorContainer";
-            this.editorContainer.Size = new System.Drawing.Size(595, 395);
+            this.editorContainer.Size = new System.Drawing.Size(630, 281);
             this.editorContainer.TabIndex = 3;
-            // 
-            // btnCloseOpen
-            // 
-            this.btnCloseOpen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCloseOpen.Location = new System.Drawing.Point(3, 3);
-            this.btnCloseOpen.Name = "btnCloseOpen";
-            this.tableLayoutPanel1.SetRowSpan(this.btnCloseOpen, 2);
-            this.btnCloseOpen.Size = new System.Drawing.Size(14, 425);
-            this.btnCloseOpen.TabIndex = 4;
-            this.btnCloseOpen.UseVisualStyleBackColor = true;
-            this.btnCloseOpen.Click += new System.EventHandler(this.btnCloseOpen_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -196,11 +167,11 @@
             this.tableLayoutPanel3.Controls.Add(this.txtFileName, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.comboBoxHighlightingStrategy, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(595, 24);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(630, 24);
             this.tableLayoutPanel3.TabIndex = 5;
             // 
             // txtFileName
@@ -209,7 +180,7 @@
             this.txtFileName.Location = new System.Drawing.Point(3, 3);
             this.txtFileName.Name = "txtFileName";
             this.txtFileName.ReadOnly = true;
-            this.txtFileName.Size = new System.Drawing.Size(509, 18);
+            this.txtFileName.Size = new System.Drawing.Size(544, 18);
             this.txtFileName.TabIndex = 2;
             this.txtFileName.Text = "";
             // 
@@ -224,36 +195,53 @@
             "BAT",
             "HTML",
             "TeX"});
-            this.comboBoxHighlightingStrategy.Location = new System.Drawing.Point(518, 3);
+            this.comboBoxHighlightingStrategy.Location = new System.Drawing.Point(553, 3);
             this.comboBoxHighlightingStrategy.Name = "comboBoxHighlightingStrategy";
             this.comboBoxHighlightingStrategy.Size = new System.Drawing.Size(74, 21);
             this.comboBoxHighlightingStrategy.TabIndex = 3;
             this.comboBoxHighlightingStrategy.SelectedIndexChanged += new System.EventHandler(this.comboBoxHighlightingStrategy_SelectedIndexChanged);
             // 
+            // splitContainerEx1
+            // 
+            this.splitContainerEx1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerEx1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEx1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEx1.Name = "splitContainerEx1";
+            // 
+            // splitContainerEx1.Panel1
+            // 
+            this.splitContainerEx1.Panel1.Controls.Add(this.tableLayoutPanel2);
+            // 
+            // splitContainerEx1.Panel2
+            // 
+            this.splitContainerEx1.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainerEx1.Size = new System.Drawing.Size(809, 317);
+            this.splitContainerEx1.SplitterDistance = 169;
+            this.splitContainerEx1.TabIndex = 1;
+            // 
             // CodeSnippetCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.splitContainerEx1);
             this.Name = "CodeSnippetCtrl";
-            this.Size = new System.Drawing.Size(801, 431);
+            this.Size = new System.Drawing.Size(809, 317);
             this.Load += new System.EventHandler(this.CodeViewCtrl_Load);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.splitContainerEx1.Panel1.ResumeLayout(false);
+            this.splitContainerEx1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
+            this.splitContainerEx1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView tvDirectory;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel editorContainer;
@@ -262,12 +250,12 @@
         private System.Windows.Forms.ToolStripMenuItem openWithToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TextBox txtFolder;
-        private System.Windows.Forms.Button btnCloseOpen;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ImageList imageListOfDirectory;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.ComboBox comboBoxHighlightingStrategy;
         private System.Windows.Forms.ToolStripMenuItem openAsTextToolStripMenuItem;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
     }
 }
