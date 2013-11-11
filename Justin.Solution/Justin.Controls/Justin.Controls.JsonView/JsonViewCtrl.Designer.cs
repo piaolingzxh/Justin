@@ -31,45 +31,45 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonViewCtrl));
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            this.splitContainerMain = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.txtJson = new ICSharpCode.TextEditor.TextEditorControl();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelRight = new System.Windows.Forms.TableLayoutPanel();
             this.tvJson = new System.Windows.Forms.TreeView();
-            this.mnuTree = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mnuExpandAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuCopyValue = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOfTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuExpandAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemSplitor = new System.Windows.Forms.ToolStripSeparator();
+            this.menuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopyValue = new System.Windows.Forms.ToolStripMenuItem();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.btnShow = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.layTopRight = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripInTop = new System.Windows.Forms.ToolStrip();
             this.btnFormat = new System.Windows.Forms.ToolStripButton();
             this.btnStrip = new System.Windows.Forms.ToolStripSplitButton();
             this.btnStripToCurly = new System.Windows.Forms.ToolStripMenuItem();
             this.btnStripToSqr = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonRemoveCharacters = new System.Windows.Forms.ToolStripSplitButton();
             this.removenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSpecialCharsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.tableLayoutPanelMain.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.mnuTree.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
-            this.splitContainerEx1.Panel1.SuspendLayout();
-            this.splitContainerEx1.Panel2.SuspendLayout();
-            this.splitContainerEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
+            this.splitContainerMain.Panel1.SuspendLayout();
+            this.splitContainerMain.Panel2.SuspendLayout();
+            this.splitContainerMain.SuspendLayout();
+            this.tableLayoutPanelRight.SuspendLayout();
+            this.menuOfTree.SuspendLayout();
+            this.layTopRight.SuspendLayout();
+            this.toolStripInTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMain
             // 
             this.tableLayoutPanelMain.ColumnCount = 1;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.Controls.Add(this.splitContainerEx1, 0, 1);
-            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanelMain.Controls.Add(this.splitContainerMain, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.layTopRight, 0, 0);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
@@ -79,6 +79,24 @@
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(726, 452);
             this.tableLayoutPanelMain.TabIndex = 3;
             // 
+            // splitContainerMain
+            // 
+            this.splitContainerMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerMain.Location = new System.Drawing.Point(3, 38);
+            this.splitContainerMain.Name = "splitContainerMain";
+            // 
+            // splitContainerMain.Panel1
+            // 
+            this.splitContainerMain.Panel1.Controls.Add(this.txtJson);
+            // 
+            // splitContainerMain.Panel2
+            // 
+            this.splitContainerMain.Panel2.Controls.Add(this.tableLayoutPanelRight);
+            this.splitContainerMain.Size = new System.Drawing.Size(720, 411);
+            this.splitContainerMain.SplitterDistance = 240;
+            this.splitContainerMain.TabIndex = 4;
+            // 
             // txtJson
             // 
             this.txtJson.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -87,28 +105,29 @@
             this.txtJson.ShowEOLMarkers = true;
             this.txtJson.ShowSpaces = true;
             this.txtJson.ShowTabs = true;
+            this.txtJson.ShowVRuler = true;
             this.txtJson.Size = new System.Drawing.Size(240, 411);
             this.txtJson.TabIndex = 1;
             this.txtJson.Text = resources.GetString("txtJson.Text");
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanelRight
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.tvJson, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnShow, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(476, 411);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tableLayoutPanelRight.ColumnCount = 2;
+            this.tableLayoutPanelRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelRight.Controls.Add(this.tvJson, 1, 0);
+            this.tableLayoutPanelRight.Controls.Add(this.btnShow, 0, 0);
+            this.tableLayoutPanelRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelRight.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelRight.Name = "tableLayoutPanelRight";
+            this.tableLayoutPanelRight.RowCount = 1;
+            this.tableLayoutPanelRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelRight.Size = new System.Drawing.Size(476, 411);
+            this.tableLayoutPanelRight.TabIndex = 1;
             // 
             // tvJson
             // 
-            this.tvJson.ContextMenuStrip = this.mnuTree;
+            this.tvJson.ContextMenuStrip = this.menuOfTree;
             this.tvJson.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvJson.ImageIndex = 0;
             this.tvJson.ImageList = this.imgList;
@@ -119,41 +138,41 @@
             this.tvJson.TabIndex = 0;
             this.tvJson.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvJson_NodeMouseClick);
             // 
-            // mnuTree
+            // menuOfTree
             // 
-            this.mnuTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuExpandAll,
-            this.toolStripMenuItem1,
-            this.mnuCopy,
-            this.mnuCopyValue});
-            this.mnuTree.Name = "mnuTree";
-            this.mnuTree.Size = new System.Drawing.Size(135, 76);
+            this.menuOfTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuExpandAll,
+            this.toolStripMenuItemSplitor,
+            this.menuCopy,
+            this.menuCopyValue});
+            this.menuOfTree.Name = "mnuTree";
+            this.menuOfTree.Size = new System.Drawing.Size(153, 98);
             // 
-            // mnuExpandAll
+            // menuExpandAll
             // 
-            this.mnuExpandAll.Name = "mnuExpandAll";
-            this.mnuExpandAll.Size = new System.Drawing.Size(134, 22);
-            this.mnuExpandAll.Text = "Expand &All";
-            this.mnuExpandAll.Click += new System.EventHandler(this.mnuExpandAll_Click);
+            this.menuExpandAll.Name = "menuExpandAll";
+            this.menuExpandAll.Size = new System.Drawing.Size(152, 22);
+            this.menuExpandAll.Text = "Expand &All";
+            this.menuExpandAll.Click += new System.EventHandler(this.mnuExpandAll_Click);
             // 
-            // toolStripMenuItem1
+            // toolStripMenuItemSplitor
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(131, 6);
+            this.toolStripMenuItemSplitor.Name = "toolStripMenuItemSplitor";
+            this.toolStripMenuItemSplitor.Size = new System.Drawing.Size(149, 6);
             // 
-            // mnuCopy
+            // menuCopy
             // 
-            this.mnuCopy.Name = "mnuCopy";
-            this.mnuCopy.Size = new System.Drawing.Size(134, 22);
-            this.mnuCopy.Text = "&Copy";
-            this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
+            this.menuCopy.Name = "menuCopy";
+            this.menuCopy.Size = new System.Drawing.Size(152, 22);
+            this.menuCopy.Text = "&Copy";
+            this.menuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
             // 
-            // mnuCopyValue
+            // menuCopyValue
             // 
-            this.mnuCopyValue.Name = "mnuCopyValue";
-            this.mnuCopyValue.Size = new System.Drawing.Size(134, 22);
-            this.mnuCopyValue.Text = "Copy &Value";
-            this.mnuCopyValue.Click += new System.EventHandler(this.mnuCopyValue_Click);
+            this.menuCopyValue.Name = "menuCopyValue";
+            this.menuCopyValue.Size = new System.Drawing.Size(152, 22);
+            this.menuCopyValue.Text = "Copy &Value";
+            this.menuCopyValue.Click += new System.EventHandler(this.mnuCopyValue_Click);
             // 
             // imgList
             // 
@@ -175,35 +194,35 @@
             this.btnShow.UseVisualStyleBackColor = true;
             this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
             // 
-            // tableLayoutPanel2
+            // layTopRight
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel2.Controls.Add(this.toolStrip1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.txtSearch, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnSearch, 2, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(720, 29);
-            this.tableLayoutPanel2.TabIndex = 2;
+            this.layTopRight.ColumnCount = 3;
+            this.layTopRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.layTopRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.layTopRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.layTopRight.Controls.Add(this.toolStripInTop, 0, 0);
+            this.layTopRight.Controls.Add(this.txtSearch, 1, 0);
+            this.layTopRight.Controls.Add(this.btnSearch, 2, 0);
+            this.layTopRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layTopRight.Location = new System.Drawing.Point(3, 3);
+            this.layTopRight.Name = "layTopRight";
+            this.layTopRight.RowCount = 1;
+            this.layTopRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layTopRight.Size = new System.Drawing.Size(720, 29);
+            this.layTopRight.TabIndex = 2;
             // 
-            // toolStrip1
+            // toolStripInTop
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripInTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripInTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnFormat,
             this.btnStrip,
-            this.toolStripSplitButton1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(339, 29);
-            this.toolStrip1.TabIndex = 7;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStripSplitButtonRemoveCharacters});
+            this.toolStripInTop.Location = new System.Drawing.Point(0, 0);
+            this.toolStripInTop.Name = "toolStripInTop";
+            this.toolStripInTop.Size = new System.Drawing.Size(339, 29);
+            this.toolStripInTop.TabIndex = 7;
+            this.toolStripInTop.Text = "toolStrip1";
             // 
             // btnFormat
             // 
@@ -242,18 +261,18 @@
             this.btnStripToSqr.Text = "Strip to []";
             this.btnStripToSqr.Click += new System.EventHandler(this.btnStripToSqr_Click);
             // 
-            // toolStripSplitButton1
+            // toolStripSplitButtonRemoveCharacters
             // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonRemoveCharacters.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSplitButtonRemoveCharacters.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removenToolStripMenuItem,
             this.removeSpecialCharsToolStripMenuItem});
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(141, 26);
-            this.toolStripSplitButton1.Text = "Remove new lines (\\n)";
-            this.toolStripSplitButton1.Click += new System.EventHandler(this.removeNewLineMenuItem_Click);
+            this.toolStripSplitButtonRemoveCharacters.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonRemoveCharacters.Image")));
+            this.toolStripSplitButtonRemoveCharacters.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonRemoveCharacters.Name = "toolStripSplitButtonRemoveCharacters";
+            this.toolStripSplitButtonRemoveCharacters.Size = new System.Drawing.Size(141, 26);
+            this.toolStripSplitButtonRemoveCharacters.Text = "Remove new lines (\\n)";
+            this.toolStripSplitButtonRemoveCharacters.Click += new System.EventHandler(this.removeNewLineMenuItem_Click);
             // 
             // removenToolStripMenuItem
             // 
@@ -288,24 +307,6 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // splitContainerEx1
-            // 
-            this.splitContainerEx1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.splitContainerEx1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEx1.Location = new System.Drawing.Point(3, 38);
-            this.splitContainerEx1.Name = "splitContainerEx1";
-            // 
-            // splitContainerEx1.Panel1
-            // 
-            this.splitContainerEx1.Panel1.Controls.Add(this.txtJson);
-            // 
-            // splitContainerEx1.Panel2
-            // 
-            this.splitContainerEx1.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainerEx1.Size = new System.Drawing.Size(720, 411);
-            this.splitContainerEx1.SplitterDistance = 240;
-            this.splitContainerEx1.TabIndex = 4;
-            // 
             // JsonViewCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,16 +316,16 @@
             this.Size = new System.Drawing.Size(726, 452);
             this.Load += new System.EventHandler(this.JsonViewCtrl_Load);
             this.tableLayoutPanelMain.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.mnuTree.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.splitContainerEx1.Panel1.ResumeLayout(false);
-            this.splitContainerEx1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
-            this.splitContainerEx1.ResumeLayout(false);
+            this.splitContainerMain.Panel1.ResumeLayout(false);
+            this.splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
+            this.splitContainerMain.ResumeLayout(false);
+            this.tableLayoutPanelRight.ResumeLayout(false);
+            this.menuOfTree.ResumeLayout(false);
+            this.layTopRight.ResumeLayout(false);
+            this.layTopRight.PerformLayout();
+            this.toolStripInTop.ResumeLayout(false);
+            this.toolStripInTop.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -333,27 +334,27 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
         private ICSharpCode.TextEditor.TextEditorControl txtJson;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelRight;
         private System.Windows.Forms.TreeView tvJson;
         private System.Windows.Forms.Button btnShow;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.TableLayoutPanel layTopRight;
+        private System.Windows.Forms.ToolStrip toolStripInTop;
         private System.Windows.Forms.ToolStripButton btnFormat;
         private System.Windows.Forms.ToolStripSplitButton btnStrip;
         private System.Windows.Forms.ToolStripMenuItem btnStripToCurly;
         private System.Windows.Forms.ToolStripMenuItem btnStripToSqr;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonRemoveCharacters;
         private System.Windows.Forms.ToolStripMenuItem removenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeSpecialCharsToolStripMenuItem;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.ContextMenuStrip mnuTree;
-        private System.Windows.Forms.ToolStripMenuItem mnuExpandAll;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem mnuCopy;
-        private System.Windows.Forms.ToolStripMenuItem mnuCopyValue;
+        private System.Windows.Forms.ContextMenuStrip menuOfTree;
+        private System.Windows.Forms.ToolStripMenuItem menuExpandAll;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItemSplitor;
+        private System.Windows.Forms.ToolStripMenuItem menuCopy;
+        private System.Windows.Forms.ToolStripMenuItem menuCopyValue;
         private System.Windows.Forms.ImageList imgList;
-        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx1;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerMain;
 
     }
 }

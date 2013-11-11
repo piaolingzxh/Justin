@@ -33,9 +33,9 @@
             this.btnCompiler = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnDisassembly = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.layoutOfButtons = new System.Windows.Forms.TableLayoutPanel();
             this.txtCode = new ICSharpCode.TextEditor.TextEditorControl();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStripOfEditor = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.insertCSharpTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertVBTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertJavaTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,8 +43,8 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.splitContainerEx2 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
+            this.layoutOfButtons.SuspendLayout();
+            this.contextMenuStripOfEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).BeginInit();
             this.splitContainerEx1.Panel1.SuspendLayout();
             this.splitContainerEx1.Panel2.SuspendLayout();
@@ -88,46 +88,46 @@
             this.btnDisassembly.UseVisualStyleBackColor = true;
             this.btnDisassembly.Click += new System.EventHandler(this.btnShowILCode_Click);
             // 
-            // tableLayoutPanel1
+            // layoutOfButtons
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.btnDisassembly, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnCompiler, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnRun, 0, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(85, 390);
-            this.tableLayoutPanel1.TabIndex = 22;
+            this.layoutOfButtons.ColumnCount = 1;
+            this.layoutOfButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutOfButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutOfButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutOfButtons.Controls.Add(this.btnDisassembly, 0, 0);
+            this.layoutOfButtons.Controls.Add(this.btnCompiler, 0, 1);
+            this.layoutOfButtons.Controls.Add(this.btnRun, 0, 2);
+            this.layoutOfButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutOfButtons.Location = new System.Drawing.Point(0, 0);
+            this.layoutOfButtons.Name = "layoutOfButtons";
+            this.layoutOfButtons.RowCount = 7;
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.layoutOfButtons.Size = new System.Drawing.Size(85, 390);
+            this.layoutOfButtons.TabIndex = 22;
             // 
             // txtCode
             // 
-            this.txtCode.ContextMenuStrip = this.contextMenuStrip1;
+            this.txtCode.ContextMenuStrip = this.contextMenuStripOfEditor;
             this.txtCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtCode.Location = new System.Drawing.Point(0, 0);
             this.txtCode.Name = "txtCode";
@@ -139,14 +139,14 @@
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = resources.GetString("txtCode.Text");
             // 
-            // contextMenuStrip1
+            // contextMenuStripOfEditor
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuStripOfEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.insertCSharpTemplateToolStripMenuItem,
             this.insertVBTemplateToolStripMenuItem,
             this.insertJavaTemplateToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(198, 70);
+            this.contextMenuStripOfEditor.Name = "contextMenuStrip1";
+            this.contextMenuStripOfEditor.Size = new System.Drawing.Size(198, 92);
             // 
             // insertCSharpTemplateToolStripMenuItem
             // 
@@ -216,7 +216,7 @@
             // 
             // splitContainerEx2.Panel2
             // 
-            this.splitContainerEx2.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainerEx2.Panel2.Controls.Add(this.layoutOfButtons);
             this.splitContainerEx2.Size = new System.Drawing.Size(424, 390);
             this.splitContainerEx2.SplitterDistance = 335;
             this.splitContainerEx2.TabIndex = 0;
@@ -229,8 +229,8 @@
             this.Name = "CodeComplierCtrl";
             this.Size = new System.Drawing.Size(748, 390);
             this.Load += new System.EventHandler(this.CodeComplierCtrl_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.layoutOfButtons.ResumeLayout(false);
+            this.contextMenuStripOfEditor.ResumeLayout(false);
             this.splitContainerEx1.Panel1.ResumeLayout(false);
             this.splitContainerEx1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
@@ -248,11 +248,11 @@
         private System.Windows.Forms.Button btnCompiler;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnDisassembly;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel layoutOfButtons;
         private ICSharpCode.TextEditor.TextEditorControl txtCode;
         private ICSharpCode.TextEditor.TextEditorControl txtMSILCode;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripOfEditor;
         private System.Windows.Forms.ToolStripMenuItem insertCSharpTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertVBTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertJavaTemplateToolStripMenuItem;

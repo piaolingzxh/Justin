@@ -163,7 +163,7 @@ namespace Justin.Controls.Executer
 
             try
             {
-                gvMdxresult.DataSource = null;
+                ClearQueryresult();
                 string mdx = txtMdx.Text;
                 if (txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected)
                 {
@@ -171,7 +171,7 @@ namespace Justin.Controls.Executer
                 }
                 CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
                 gvMdxresult.Tag = cst;
-                bool lastUseFormattedValue = sender == this.btnExecute;
+                bool lastUseFormattedValue = sender == this.btnExecuteWithFormatted;
                 //DataTable dt = cst.ToDataTable2(lastUseFormattedValue);
 
                 BindCellSet(gvMdxresult, cst, lastUseFormattedValue);
@@ -198,7 +198,7 @@ namespace Justin.Controls.Executer
 
             try
             {
-                gvMdxresult.DataSource = null;
+                ClearQueryresult();
                 string mdx = txtMdx.Text;
                 if (txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected)
                 {
@@ -222,7 +222,20 @@ namespace Justin.Controls.Executer
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            ClearQueryresult();
+        }
+
+        private void ClearQueryresult()
+        {
             this.gvMdxresult.DataSource = null;
+            if (this.gvMdxresult.Rows.Count > 0)
+            {
+                this.gvMdxresult.Rows.Clear();
+            }
+            if (this.gvMdxresult.Columns.Count > 0)
+            {
+                this.gvMdxresult.Columns.Clear();
+            }
             this.txtResult.Text = "";
         }
 

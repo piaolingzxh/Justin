@@ -35,11 +35,11 @@
             this.serverMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.browerCubeInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConnect = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.layoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainerMain = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.splitContainerServerAndCubeInfo = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.splitContainerCubeInfo = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.layoutFilter = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.cboxFilterType = new System.Windows.Forms.ComboBox();
             this.txtFilterName = new System.Windows.Forms.TextBox();
@@ -70,7 +70,7 @@
             this.closeAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.layoutMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -83,7 +83,7 @@
             this.splitContainerCubeInfo.Panel1.SuspendLayout();
             this.splitContainerCubeInfo.Panel2.SuspendLayout();
             this.splitContainerCubeInfo.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.layoutFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataAndMdx)).BeginInit();
             this.splitContainerDataAndMdx.Panel1.SuspendLayout();
             this.splitContainerDataAndMdx.Panel2.SuspendLayout();
@@ -153,28 +153,28 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
-            // tableLayoutPanel1
+            // layoutMain
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.btnConnect, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.splitContainerMain, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.cboxConnStrings, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(896, 431);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.layoutMain.ColumnCount = 2;
+            this.layoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.layoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layoutMain.Controls.Add(this.btnConnect, 1, 0);
+            this.layoutMain.Controls.Add(this.splitContainerMain, 0, 1);
+            this.layoutMain.Controls.Add(this.cboxConnStrings, 0, 0);
+            this.layoutMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutMain.Location = new System.Drawing.Point(0, 0);
+            this.layoutMain.Name = "layoutMain";
+            this.layoutMain.RowCount = 2;
+            this.layoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutMain.Size = new System.Drawing.Size(896, 431);
+            this.layoutMain.TabIndex = 1;
             // 
             // splitContainerMain
             // 
             this.splitContainerMain.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
-            this.tableLayoutPanel1.SetColumnSpan(this.splitContainerMain, 2);
+            this.layoutMain.SetColumnSpan(this.splitContainerMain, 2);
             this.splitContainerMain.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
@@ -224,7 +224,7 @@
             // 
             // splitContainerCubeInfo.Panel1
             // 
-            this.splitContainerCubeInfo.Panel1.Controls.Add(this.tableLayoutPanel2);
+            this.splitContainerCubeInfo.Panel1.Controls.Add(this.layoutFilter);
             this.splitContainerCubeInfo.Panel1MinSize = 130;
             // 
             // splitContainerCubeInfo.Panel2
@@ -234,33 +234,33 @@
             this.splitContainerCubeInfo.SplitterDistance = 130;
             this.splitContainerCubeInfo.TabIndex = 1;
             // 
-            // tableLayoutPanel2
+            // layoutFilter
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.cboxFilterType, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.txtFilterName, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.txtFilterText, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.txtFilterUniqueName, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.btnCancelFilter, 1, 5);
-            this.tableLayoutPanel2.Controls.Add(this.btnFilter, 0, 5);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 6;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(199, 130);
-            this.tableLayoutPanel2.TabIndex = 6;
+            this.layoutFilter.ColumnCount = 2;
+            this.layoutFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.layoutFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutFilter.Controls.Add(this.label1, 0, 0);
+            this.layoutFilter.Controls.Add(this.cboxFilterType, 1, 0);
+            this.layoutFilter.Controls.Add(this.txtFilterName, 1, 1);
+            this.layoutFilter.Controls.Add(this.txtFilterText, 1, 2);
+            this.layoutFilter.Controls.Add(this.label2, 0, 1);
+            this.layoutFilter.Controls.Add(this.label3, 0, 2);
+            this.layoutFilter.Controls.Add(this.label4, 0, 3);
+            this.layoutFilter.Controls.Add(this.txtFilterUniqueName, 1, 3);
+            this.layoutFilter.Controls.Add(this.btnCancelFilter, 1, 5);
+            this.layoutFilter.Controls.Add(this.btnFilter, 0, 5);
+            this.layoutFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutFilter.Location = new System.Drawing.Point(0, 0);
+            this.layoutFilter.Name = "layoutFilter";
+            this.layoutFilter.RowCount = 6;
+            this.layoutFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.layoutFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.layoutFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.layoutFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.layoutFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutFilter.Size = new System.Drawing.Size(199, 130);
+            this.layoutFilter.TabIndex = 6;
             // 
             // label1
             // 
@@ -558,12 +558,12 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.layoutMain);
             this.Name = "CubeViewCtrl";
             this.Size = new System.Drawing.Size(896, 431);
             this.Load += new System.EventHandler(this.CubeViewCtrl_Load);
             this.serverMenu.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
+            this.layoutMain.ResumeLayout(false);
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
@@ -576,8 +576,8 @@
             this.splitContainerCubeInfo.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerCubeInfo)).EndInit();
             this.splitContainerCubeInfo.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
+            this.layoutFilter.ResumeLayout(false);
+            this.layoutFilter.PerformLayout();
             this.splitContainerDataAndMdx.Panel1.ResumeLayout(false);
             this.splitContainerDataAndMdx.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerDataAndMdx)).EndInit();
@@ -594,7 +594,7 @@
         #endregion
 
         private System.Windows.Forms.TreeView tvServerInfo;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel layoutMain;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TreeView tvCubeInfo;
         private System.Windows.Forms.ContextMenuStrip serverMenu;
@@ -624,7 +624,7 @@
         private System.Windows.Forms.ComboBox cboxFilterType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtFilterName;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel layoutFilter;
         private System.Windows.Forms.TextBox txtFilterText;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtFilterUniqueName;
