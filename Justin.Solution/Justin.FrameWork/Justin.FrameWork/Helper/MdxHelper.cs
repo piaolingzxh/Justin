@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using Microsoft.AnalysisServices.AdomdClient;
 
 namespace Justin.FrameWork.Helper
@@ -94,8 +96,6 @@ namespace Justin.FrameWork.Helper
 
                 //Prepare the command
                 SetCommand(conn, command, CommandText);
-
-                //Execute the command
                 AdomdDataReader rd = command.ExecuteReader();
                 //var aa = cst.Axes[0].Set.Tuples[0].Members[0].GetChildren();
                 command.Parameters.Clear();
@@ -108,10 +108,26 @@ namespace Justin.FrameWork.Helper
                 throw;
             }
         }
+        public static string ExecuteXml(AdomdConnection conn, string CommandText)
+        {
+            try
+            {
+                AdomdCommand command = new AdomdCommand();
+                SetCommand(conn, command, CommandText);
+                var rdr = command.ExecuteXmlReader();
+                string xml = rdr.ReadOuterXml();
+                command.Parameters.Clear();
+                return xml;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
         public static DataTable ExecuteDataTable(AdomdConnection conn, string CommandText)
         {
-            DataTable dt=null;
+            DataTable dt = null;
             try
             {
                 AdomdDataAdapter da = new AdomdDataAdapter(CommandText, conn);

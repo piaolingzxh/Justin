@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,7 +15,6 @@ using Justin.FrameWork.Helper;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
 using Microsoft.AnalysisServices.AdomdClient;
-using System.Configuration;
 namespace Justin.Controls.Executer
 {
     public partial class MdxExecuterCtrl : JUserControl, IFile
@@ -100,6 +100,7 @@ namespace Justin.Controls.Executer
             this.SetToolTipsForButton(new ToolTip());
             if (string.IsNullOrEmpty(cboxConnStrings.Text))
                 this.cboxConnStrings.Text = MdxExecuterCtrlSetting.DefaultConnStr;
+
         }
 
         #region 拖动
@@ -155,6 +156,7 @@ namespace Justin.Controls.Executer
             this.cboxConnStrings.Text = MdxExecuterCtrlSetting.DefaultConnStr;
         }
 
+        bool lastUseFormattedValue = false;
         private void btnExecute_Click(object sender, EventArgs e)
         {
             Stopwatch watch = Stopwatch.StartNew();
@@ -168,12 +170,13 @@ namespace Justin.Controls.Executer
                     mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
                 }
                 CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
+                gvMdxresult.Tag = cst;
+                bool lastUseFormattedValue = sender == this.btnExecute;
+                //DataTable dt = cst.ToDataTable2(lastUseFormattedValue);
 
-
-                bool useFormattedValue = sender == this.btnExecute;
-                DataTable dt = cst.ToDataTable(useFormattedValue);
-                gvMdxresult.DataSource = dt;
-                ShowResult(dt);
+                BindCellSet(gvMdxresult, cst, lastUseFormattedValue);
+                //gvMdxresult.DataSource = dt;
+                //ShowResult(dt);
             }
             catch (AdomdException aex)
             {
@@ -251,6 +254,125 @@ namespace Justin.Controls.Executer
         {
             txtResult.Text = string.Format("查询结果:{0}行/{1}列,", dt == null ? 0 : dt.Rows.Count, dt == null ? 0 : dt.Columns.Count);
         }
+
+        public void BindCellSet(DataGridView grid, CellSet cs, bool useFormattedValue = false)
+        {
+            grid.Rows.Clear();
+            grid.Columns.Clear();
+
+            if (cs == null)
+                return;
+            try
+            {
+
+                //DataTable dt = new DataTable();
+
+                int columnCountOfRowHeader = 0;
+
+                #region 构造表头
+
+                //当有行头时，添加行头占的列
+                if (cs.Axes.Count > 1 && cs.Axes[1].Set.Tuples.Count > 0)
+                {
+                    columnCountOfRowHeader = cs.Axes[1].Set.Tuples[0].Members.Count;
+                    for (int i = 0; i < columnCountOfRowHeader; i++)
+                    {
+                        Member member = cs.Axes[1].Set.Tuples[0].Members[i];
+                        DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                        column.Name = member.UniqueName;
+                        column.Tag = member;
+                        grid.Columns.Add(column);
+                    }
+                }
+
+                //继续添加列头
+                foreach (Microsoft.AnalysisServices.AdomdClient.Tuple tp in cs.Axes[0].Set.Tuples)
+                {
+
+                    string columnName = "";
+                    foreach (Member member in tp.Members)
+                    {
+                        columnName = columnName + member.Caption + " ";
+                    }
+                    DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                    column.Name = columnName.Trim();
+                    column.Tag = null;
+
+                    grid.Columns.Add(column);
+                }
+
+                #endregion
+
+                #region 构造数据
+
+                int rowCount = cs.Axes.Count <= 1 ? 0 : cs.Axes[1].Set.Tuples.Count;
+                int cellIndex = 0;
+                for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                {
+
+                    DataGridViewRow dr = new DataGridViewRow();
+                    dr.CreateCells(grid);
+                    if (cs.Axes.Count > 1)
+                    {
+                        for (int columnIndexOfRowHeader = 0; columnIndexOfRowHeader < columnCountOfRowHeader; columnIndexOfRowHeader++)
+                        {
+                            var member = cs.Axes[1].Set.Tuples[rowIndex].Members[columnIndexOfRowHeader];
+                            dr.Cells[columnIndexOfRowHeader].Value = member.Caption;
+                            dr.Cells[columnIndexOfRowHeader].Tag = member;
+                        }
+                    }
+
+                    //数据列
+                    for (int columnIndexOfData = columnCountOfRowHeader; columnIndexOfData < cs.Axes[0].Positions.Count + columnCountOfRowHeader; columnIndexOfData++)
+                    {
+                        try
+                        {
+                            Cell cell = cs[cellIndex++];
+                            dr.Cells[columnIndexOfData].Tag = cell;
+
+                            if (useFormattedValue)
+                            {
+                                dr.Cells[columnIndexOfData].Value = cell.FormattedValue;
+                            }
+                            else
+                            {
+                                dr.Cells[columnIndexOfData].Value = cell.Value;
+                            }
+
+                            if (dr.Cells[columnIndexOfData].ToString() == "null")
+                            {
+                                dr.Cells[columnIndexOfData].Value = "";
+                            }
+                        }
+                        catch
+                        {
+                            dr.Cells[columnIndexOfData].Value = "";
+                        }
+                    }
+                    grid.Rows.Add(dr);
+
+                }
+
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public void ShowCellInfo(int rowIndex, int columnIndex)
+        {
+            propertyGrid.SelectedObject = gvMdxresult.Rows[rowIndex].Cells[columnIndex].Tag;
+        }
+
+        private void gvMdxresult_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ShowCellInfo(e.RowIndex, e.ColumnIndex);
+        }
+
+
     }
 
     public class MdxExecuterCtrlSetting

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Justin.FrameWork.Settings;
-using Justin.FrameWork.Extensions;
 using Justin.Controls.TestDataGenerator.DAL;
 using Justin.Controls.TestDataGenerator.Utility;
-using System.IO;
+using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
-using System.Data.OleDb;
+using Justin.FrameWork.Settings;
 namespace Justin.Controls.TestDataGenerator.Entities
 {
     public delegate void SQLProcess(StringBuilder sqlBuilder, JTable table);
@@ -84,6 +84,29 @@ namespace Justin.Controls.TestDataGenerator.Entities
                     builder.Append(table.BeforeSQL).AppendLine();
                     builder.Append(Constants.SQLParagraphEndFlag).AppendLine();
                 }
+                List<ColumnDataCache> caches = new List<ColumnDataCache>();
+
+                table.Fields.ForEach(op =>
+                {
+                    string tableName = op.FirstOperand.ReferenceTableName;
+                    string columnName = op.FirstOperand.ReferenceColumnName;
+                    if (op.FirstOperand.ValueCategroy == JValueCategroy.FromTable && string.IsNullOrEmpty(op.FirstOperand.RefFilter) && caches.Count(row => row.Table == TableName && row.Column == columnName) < 1)
+                    {
+                        List<object> datas = CommonDAL.GetValues(conn, tableName, columnName);
+                        caches.Add(new ColumnDataCache() { Table = tableName, Column = columnName, Datas = datas });
+                    }
+                    if (op.SecondOperand != null)
+                    {
+                        string tableName1 = op.FirstOperand.ReferenceTableName;
+                        string columnName1 = op.FirstOperand.ReferenceColumnName;
+                        if (op.SecondOperand.ValueCategroy == JValueCategroy.FromTable && string.IsNullOrEmpty(op.SecondOperand.RefFilter) && caches.Count(row => row.Table == tableName1 && row.Column == columnName1) < 1)
+                        {
+                            List<object> datas = CommonDAL.GetValues(conn, tableName1, columnName1);
+                            caches.Add(new ColumnDataCache() { Table = tableName1, Column = columnName1, Datas = datas });
+                        }
+                    }
+                });
+
                 for (int i = 0; i < table.DataCount; i++)
                 {
                     #region 生成每一条数据
@@ -98,11 +121,10 @@ namespace Justin.Controls.TestDataGenerator.Entities
                         JField field = fields[f];
                         try
                         {
-
                             fieldNameBuilder.AppendFormat("{0},", field.FieldName);
 
-                            object value1 = field.FirstOperand.GetValue(conn, fieldValuesOfCurrentRow);
-                            object value2 = field.SecondOperand == null ? null : field.SecondOperand.GetValue(conn, fieldValuesOfCurrentRow);
+                            object value1 = field.FirstOperand.GetValue(conn, fieldValuesOfCurrentRow, caches);
+                            object value2 = field.SecondOperand == null ? null : field.SecondOperand.GetValue(conn, fieldValuesOfCurrentRow, caches);
                             object value = value1;
 
                             if (field.Operator != null && field.SecondOperand != null && field.SecondOperand.ValueType == JFieldType.Numeric)
@@ -353,14 +375,14 @@ namespace Justin.Controls.TestDataGenerator.Entities
         //引用本表其他字段
         public string OtherFiledName { get; set; }
 
+        static Random rd = new Random();
 
-        public object GetValue(OleDbConnection conn, Dictionary<string, object> fieldValuesOfCurrentRow)
+        public object GetValue(OleDbConnection conn, Dictionary<string, object> fieldValuesOfCurrentRow, List<ColumnDataCache> caches)
         {
             if (this == null)
             {
                 return null;
             }
-            Random rd = new Random();
             object value = "";
             switch (this.ValueCategroy)
             {
@@ -475,13 +497,16 @@ namespace Justin.Controls.TestDataGenerator.Entities
                         parameterValues.Add(fieldValuesOfCurrentRow[item]);
                     }
                     string refFilter = string.Format(filterFormat, parameterValues.ToArray());
+                    var tableCache = caches.Where(row => row.Table.Equals(refTableName) && row.Column.Equals(refColumnName)).FirstOrDefault();
+                    List<object> cacheData = tableCache == null ? new List<object>() : tableCache.Datas;
+                    object tempValue = String.IsNullOrEmpty(refFilter) ? cacheData[rd.Next(0, cacheData.Count - 1)] : CommonDAL.GetValue(conn, refTableName, refColumnName, refFilter);
 
                     SourceFieldData tempData = new SourceFieldData()
-                        {
-                            fieldName = refColumnName,
-                            TableName = refTableName,
-                            Value = CommonDAL.GetValue(conn, refTableName, refColumnName, refFilter)
-                        };
+                    {
+                        fieldName = refColumnName,
+                        TableName = refTableName,
+                        Value = tempValue
+                    };
 
                     value = tempData.Value;
                     break;
@@ -508,7 +533,13 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
         #endregion
     }
+    public class ColumnDataCache
+    {
+        public string Table { get; set; }
+        public string Column { get; set; }
+        public List<object> Datas { get; set; }
 
+    }
 
     #region Enum
 

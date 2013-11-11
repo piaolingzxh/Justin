@@ -28,7 +28,7 @@ namespace Justin.Toolbox
                 this.sqlExecuterCtrl1.LoadFile(fileName);
                 this.ShowInStatus(this.ConnStr);
             };
-            this.SaveAction = (fileName) => { this.sqlExecuterCtrl1.SaveFile(fileName,this.Extension); };
+            this.SaveAction = (fileName) => { this.sqlExecuterCtrl1.SaveFile(fileName, this.Extension); };
         }
         /// <summary>
         ///     
@@ -51,7 +51,7 @@ namespace Justin.Toolbox
 
         private void SqlExecuteor_Load(object sender, EventArgs e)
         {
-            this.LoadFile(this.FileName);
+            //this.LoadFile(this.FileName);
             this.ShowInStatus(this.ConnStr);
         }
 

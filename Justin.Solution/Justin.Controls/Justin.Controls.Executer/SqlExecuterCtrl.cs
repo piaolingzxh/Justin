@@ -26,15 +26,17 @@ namespace Justin.Controls.Executer
                 using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
                 {
                     string sql = sr.ReadToEnd();
-                    using (new JStopWatch("ms").Start(LogMode.Warn, "自定义开始", "自定义结束"))
+                    if (string.IsNullOrEmpty(sql))
                     {
+                        using (new JStopWatch("ms").Start(LogMode.Warn, "自定义开始", "自定义结束"))
+                        {
 
-                        txtSQLPreview.Text = sql;
-                        //设定光标所在位置 
-                        txtSQLPreview.BoxPart.SelectionStart = txtSQLPreview.BoxPart.TextLength - 1;
-                        //滚动到当前光标处    
-
-                        txtSQLPreview.BoxPart.ScrollToCaret();
+                            txtSQLPreview.Text = sql;
+                            //设定光标所在位置 
+                            txtSQLPreview.BoxPart.SelectionStart = txtSQLPreview.BoxPart.TextLength - 1;
+                            //滚动到当前光标处    
+                            txtSQLPreview.BoxPart.ScrollToCaret();
+                        }
                     }
                     this.ShowMessage(string.Format("文件{0}加载完，共{1}行", txtSQLFileName.Text, txtSQLPreview.BoxPart.Lines.Count()));
                 }
@@ -68,13 +70,30 @@ namespace Justin.Controls.Executer
 
         #region 按钮事件
 
+        private void btnPreviewSQLFile_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSQLFileName.Text))
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.FileName = txtSQLFileName.Text = openFileDialog.FileName;
+                    this.LoadFile(this.FileName);
+                }
+            }
+            else
+            {
+                this.FileName = txtSQLFileName.Text;
+                this.LoadFile(this.FileName);
+            }
+
+        }
         private void btnBrowerSQLFile_Click(object sender, EventArgs e)
         {
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.FileName = txtSQLFileName.Text = openFileDialog.FileName;
-                this.LoadFile(this.FileName);
+                txtSQLPreview.Text = "";
             }
         }
 
@@ -214,6 +233,7 @@ namespace Justin.Controls.Executer
         private void txtSQLPreview_Load(object sender, EventArgs e)
         {
 
+            txtSQLPreview.BoxPart.ReadOnly = false;
             #region tips
 
             btnIntelligentExecuteSQL.Tag = string.Format(@"{0}
@@ -247,6 +267,8 @@ namespace Justin.Controls.Executer
             #endregion
             txtSQLPreview.AllowDrop = true;
         }
+
+
 
 
     }

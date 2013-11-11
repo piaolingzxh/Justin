@@ -10,11 +10,11 @@ namespace Justin.FrameWork.Settings
     {
         public static string ConfigFileFolder = ConfigurationManager.AppSettings["ConfigFileFolder"];
         public static string OuputSQLFileFolder = ConfigurationManager.AppSettings["OuputSQLFileFolder"];
-       
+
         public static string NotImplemented = "尚在开发中！";
         public const string SQLParagraphStartFlag = "--[->";
         public const string SQLParagraphEndFlag = "--<-]";
-        public static int SqlBufferSize = 100;
+        public static int SqlBufferSize = 50000;
         public const string OpenFileDialogFilterFormart = "{1}文件(*.{0})|*.{0}|";
         public const string Splitor = "↑";
 

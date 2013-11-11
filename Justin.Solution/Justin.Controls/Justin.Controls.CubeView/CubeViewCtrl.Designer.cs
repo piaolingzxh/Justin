@@ -60,6 +60,7 @@
             this.loadMdxFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllTabsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeCurrentTabToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAllTabsButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageDefault = new System.Windows.Forms.TabPage();
             this.mdxExecuterCtrl1 = new Justin.Controls.Executer.MdxExecuterCtrl();
             this.cboxConnStrings = new System.Windows.Forms.ComboBox();
@@ -68,7 +69,6 @@
             this.closeCurrentCubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllCubesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeAllTabsButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -146,9 +146,9 @@
             // 
             this.btnConnect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnConnect.Image = global::Justin.Controls.CubeView.Properties.Resources.conn;
-            this.btnConnect.Location = new System.Drawing.Point(799, 3);
+            this.btnConnect.Location = new System.Drawing.Point(849, 3);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(94, 24);
+            this.btnConnect.Size = new System.Drawing.Size(44, 24);
             this.btnConnect.TabIndex = 1;
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
@@ -157,7 +157,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.btnConnect, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.splitContainerMain, 0, 1);
@@ -184,7 +184,7 @@
             // splitContainerMain.Panel1
             // 
             this.splitContainerMain.Panel1.Controls.Add(this.splitContainerServerAndCubeInfo);
-            this.splitContainerMain.Panel1MinSize = 200;
+            this.splitContainerMain.Panel1MinSize = 20;
             // 
             // splitContainerMain.Panel2
             // 
@@ -204,6 +204,7 @@
             // splitContainerServerAndCubeInfo.Panel1
             // 
             this.splitContainerServerAndCubeInfo.Panel1.Controls.Add(this.tvServerInfo);
+            this.splitContainerServerAndCubeInfo.Panel1MinSize = 10;
             // 
             // splitContainerServerAndCubeInfo.Panel2
             // 
@@ -475,6 +476,13 @@
             this.closeCurrentTabToolStripMenuItem.Text = "Close Current Tab";
             this.closeCurrentTabToolStripMenuItem.Click += new System.EventHandler(this.closeCurrentTabToolStripMenuItem_Click);
             // 
+            // closeAllTabsButThisToolStripMenuItem
+            // 
+            this.closeAllTabsButThisToolStripMenuItem.Name = "closeAllTabsButThisToolStripMenuItem";
+            this.closeAllTabsButThisToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.closeAllTabsButThisToolStripMenuItem.Text = "Close All Tabs But This";
+            this.closeAllTabsButThisToolStripMenuItem.Click += new System.EventHandler(this.closeAllTabsButThisToolStripMenuItem_Click);
+            // 
             // tabPageDefault
             // 
             this.tabPageDefault.Controls.Add(this.mdxExecuterCtrl1);
@@ -504,7 +512,7 @@
             this.cboxConnStrings.FormattingEnabled = true;
             this.cboxConnStrings.Location = new System.Drawing.Point(3, 3);
             this.cboxConnStrings.Name = "cboxConnStrings";
-            this.cboxConnStrings.Size = new System.Drawing.Size(790, 21);
+            this.cboxConnStrings.Size = new System.Drawing.Size(840, 21);
             this.cboxConnStrings.TabIndex = 5;
             // 
             // cubeMenu
@@ -544,13 +552,6 @@
             this.collapseAllCubesToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.collapseAllCubesToolStripMenuItem.Text = "Collapse All Cubes";
             this.collapseAllCubesToolStripMenuItem.Click += new System.EventHandler(this.collapseAllCubesToolStripMenuItem_Click);
-            // 
-            // closeAllTabsButThisToolStripMenuItem
-            // 
-            this.closeAllTabsButThisToolStripMenuItem.Name = "closeAllTabsButThisToolStripMenuItem";
-            this.closeAllTabsButThisToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.closeAllTabsButThisToolStripMenuItem.Text = "Close All Tabs But This";
-            this.closeAllTabsButThisToolStripMenuItem.Click += new System.EventHandler(this.closeAllTabsButThisToolStripMenuItem_Click);
             // 
             // CubeViewCtrl
             // 

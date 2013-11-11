@@ -45,7 +45,9 @@
             this.gvMdxresult = new System.Windows.Forms.DataGridView();
             this.txtResult = new System.Windows.Forms.TextBox();
             this.splitContainerEx1 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.splitContainerEx2 = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.tableLayoutresult = new System.Windows.Forms.TableLayoutPanel();
+            this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.tableLayoutPanelMdx.SuspendLayout();
             this.tableLayoutPanelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvMdxresult)).BeginInit();
@@ -53,11 +55,17 @@
             this.splitContainerEx1.Panel1.SuspendLayout();
             this.splitContainerEx1.Panel2.SuspendLayout();
             this.splitContainerEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx2)).BeginInit();
+            this.splitContainerEx2.Panel1.SuspendLayout();
+            this.splitContainerEx2.Panel2.SuspendLayout();
+            this.splitContainerEx2.SuspendLayout();
             this.tableLayoutresult.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMdx
             // 
+            this.tableLayoutPanelMdx.AutoSize = true;
+            this.tableLayoutPanelMdx.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanelMdx.ColumnCount = 2;
             this.tableLayoutPanelMdx.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelMdx.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
@@ -174,6 +182,7 @@
             // 
             // txtMdx
             // 
+            this.txtMdx.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.txtMdx.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtMdx.Location = new System.Drawing.Point(3, 33);
             this.txtMdx.Name = "txtMdx";
@@ -241,8 +250,9 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.gvMdxresult.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.gvMdxresult.Size = new System.Drawing.Size(876, 245);
+            this.gvMdxresult.Size = new System.Drawing.Size(529, 245);
             this.gvMdxresult.TabIndex = 4;
+            this.gvMdxresult.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvMdxresult_CellClick);
             // 
             // txtResult
             // 
@@ -250,7 +260,7 @@
             this.txtResult.Location = new System.Drawing.Point(3, 3);
             this.txtResult.Name = "txtResult";
             this.txtResult.ReadOnly = true;
-            this.txtResult.Size = new System.Drawing.Size(876, 20);
+            this.txtResult.Size = new System.Drawing.Size(529, 20);
             this.txtResult.TabIndex = 5;
             // 
             // splitContainerEx1
@@ -268,10 +278,29 @@
             // 
             // splitContainerEx1.Panel2
             // 
-            this.splitContainerEx1.Panel2.Controls.Add(this.tableLayoutresult);
+            this.splitContainerEx1.Panel2.Controls.Add(this.splitContainerEx2);
             this.splitContainerEx1.Size = new System.Drawing.Size(882, 560);
             this.splitContainerEx1.SplitterDistance = 280;
             this.splitContainerEx1.TabIndex = 6;
+            // 
+            // splitContainerEx2
+            // 
+            this.splitContainerEx2.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
+            this.splitContainerEx2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerEx2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEx2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEx2.Name = "splitContainerEx2";
+            // 
+            // splitContainerEx2.Panel1
+            // 
+            this.splitContainerEx2.Panel1.Controls.Add(this.tableLayoutresult);
+            // 
+            // splitContainerEx2.Panel2
+            // 
+            this.splitContainerEx2.Panel2.Controls.Add(this.propertyGrid);
+            this.splitContainerEx2.Size = new System.Drawing.Size(882, 276);
+            this.splitContainerEx2.SplitterDistance = 535;
+            this.splitContainerEx2.TabIndex = 1;
             // 
             // tableLayoutresult
             // 
@@ -285,8 +314,17 @@
             this.tableLayoutresult.RowCount = 2;
             this.tableLayoutresult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutresult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutresult.Size = new System.Drawing.Size(882, 276);
+            this.tableLayoutresult.Size = new System.Drawing.Size(535, 276);
             this.tableLayoutresult.TabIndex = 0;
+            // 
+            // propertyGrid
+            // 
+            this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid.LineColor = System.Drawing.SystemColors.ScrollBar;
+            this.propertyGrid.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid.Name = "propertyGrid";
+            this.propertyGrid.Size = new System.Drawing.Size(343, 276);
+            this.propertyGrid.TabIndex = 6;
             // 
             // MdxExecuterCtrl
             // 
@@ -300,9 +338,14 @@
             this.tableLayoutPanelButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvMdxresult)).EndInit();
             this.splitContainerEx1.Panel1.ResumeLayout(false);
+            this.splitContainerEx1.Panel1.PerformLayout();
             this.splitContainerEx1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx1)).EndInit();
             this.splitContainerEx1.ResumeLayout(false);
+            this.splitContainerEx2.Panel1.ResumeLayout(false);
+            this.splitContainerEx2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEx2)).EndInit();
+            this.splitContainerEx2.ResumeLayout(false);
             this.tableLayoutresult.ResumeLayout(false);
             this.tableLayoutresult.PerformLayout();
             this.ResumeLayout(false);
@@ -326,6 +369,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutresult;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox cboxConnStrings;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerEx2;
+        private System.Windows.Forms.PropertyGrid propertyGrid;
 
     }
 }

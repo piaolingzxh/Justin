@@ -28,140 +28,84 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
-            this.btnBrowerSQLFile = new System.Windows.Forms.Button();
             this.txtSQLFileName = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnExecuteSQLByLine = new System.Windows.Forms.Button();
-            this.btnExecuteAllSQL = new System.Windows.Forms.Button();
-            this.btnIntelligentExecuteSQL = new System.Windows.Forms.Button();
+            this.txtSQLPreview = new Justin.FrameWork.WinForm.FormUI.NumberedTextBox();
+            this.layoutRight = new System.Windows.Forms.TableLayoutPanel();
             this.btnEnableEditSQL = new System.Windows.Forms.Button();
             this.btnModifySQLFileContent = new System.Windows.Forms.Button();
             this.btnShowLineNum = new System.Windows.Forms.Button();
-            this.txtSQLPreview = new Justin.FrameWork.WinForm.FormUI.NumberedTextBox();
+            this.btnExecuteSQLByLine = new System.Windows.Forms.Button();
+            this.btnExecuteAllSQL = new System.Windows.Forms.Button();
+            this.btnIntelligentExecuteSQL = new System.Windows.Forms.Button();
+            this.btnPreviewSQLFile = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tableLayoutPanel8.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.splitContainerMain = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnBrowerSQLFile = new System.Windows.Forms.Button();
+            this.layOutButton = new System.Windows.Forms.TableLayoutPanel();
+            this.splitContainerSQL = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
+            this.layoutRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
+            this.splitContainerMain.Panel1.SuspendLayout();
+            this.splitContainerMain.Panel2.SuspendLayout();
+            this.splitContainerMain.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.layOutButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerSQL)).BeginInit();
+            this.splitContainerSQL.Panel1.SuspendLayout();
+            this.splitContainerSQL.Panel2.SuspendLayout();
+            this.splitContainerSQL.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel8
-            // 
-            this.tableLayoutPanel8.ColumnCount = 3;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.Controls.Add(this.label8, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.btnBrowerSQLFile, 2, 0);
-            this.tableLayoutPanel8.Controls.Add(this.txtSQLFileName, 1, 0);
-            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel2, 2, 1);
-            this.tableLayoutPanel8.Controls.Add(this.txtSQLPreview, 0, 1);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 2;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 169F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(732, 368);
-            this.tableLayoutPanel8.TabIndex = 5;
             // 
             // label8
             // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(3, 0);
+            this.label8.Location = new System.Drawing.Point(5, 13);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(75, 30);
+            this.label8.Size = new System.Drawing.Size(55, 13);
             this.label8.TabIndex = 0;
             this.label8.Text = "SQl File：";
-            // 
-            // btnBrowerSQLFile
-            // 
-            this.btnBrowerSQLFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnBrowerSQLFile.Image = global::Justin.Controls.Executer.Properties.Resources.open;
-            this.btnBrowerSQLFile.Location = new System.Drawing.Point(630, 3);
-            this.btnBrowerSQLFile.Name = "btnBrowerSQLFile";
-            this.btnBrowerSQLFile.Size = new System.Drawing.Size(99, 24);
-            this.btnBrowerSQLFile.TabIndex = 0;
-            this.btnBrowerSQLFile.Text = "浏览文件";
-            this.btnBrowerSQLFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnBrowerSQLFile.UseVisualStyleBackColor = true;
-            this.btnBrowerSQLFile.Click += new System.EventHandler(this.btnBrowerSQLFile_Click);
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtSQLFileName
             // 
             this.txtSQLFileName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSQLFileName.Location = new System.Drawing.Point(84, 3);
+            this.txtSQLFileName.Location = new System.Drawing.Point(68, 3);
             this.txtSQLFileName.Name = "txtSQLFileName";
             this.txtSQLFileName.ReadOnly = true;
-            this.txtSQLFileName.Size = new System.Drawing.Size(540, 20);
+            this.txtSQLFileName.Size = new System.Drawing.Size(610, 20);
             this.txtSQLFileName.TabIndex = 15;
             // 
-            // tableLayoutPanel2
+            // txtSQLPreview
             // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.btnExecuteSQLByLine, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.btnExecuteAllSQL, 0, 5);
-            this.tableLayoutPanel2.Controls.Add(this.btnIntelligentExecuteSQL, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.btnEnableEditSQL, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.btnModifySQLFileContent, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.btnShowLineNum, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(630, 33);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 7;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(99, 332);
-            this.tableLayoutPanel2.TabIndex = 7;
+            this.txtSQLPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSQLPreview.Location = new System.Drawing.Point(0, 0);
+            this.txtSQLPreview.Name = "txtSQLPreview";
+            this.txtSQLPreview.ShowLineNumber = true;
+            this.txtSQLPreview.Size = new System.Drawing.Size(677, 475);
+            this.txtSQLPreview.TabIndex = 1;
+            this.txtSQLPreview.Load += new System.EventHandler(this.txtSQLPreview_Load);
             // 
-            // btnExecuteSQLByLine
+            // layoutRight
             // 
-            this.btnExecuteSQLByLine.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnExecuteSQLByLine.Image = global::Justin.Controls.Executer.Properties.Resources.ExecuteByLine;
-            this.btnExecuteSQLByLine.Location = new System.Drawing.Point(3, 215);
-            this.btnExecuteSQLByLine.Name = "btnExecuteSQLByLine";
-            this.btnExecuteSQLByLine.Size = new System.Drawing.Size(93, 34);
-            this.btnExecuteSQLByLine.TabIndex = 5;
-            this.btnExecuteSQLByLine.Text = "逐行执行";
-            this.btnExecuteSQLByLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnExecuteSQLByLine.UseVisualStyleBackColor = true;
-            this.btnExecuteSQLByLine.Click += new System.EventHandler(this.btnExecuteSQLByLine_Click);
-            // 
-            // btnExecuteAllSQL
-            // 
-            this.btnExecuteAllSQL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnExecuteAllSQL.Image = global::Justin.Controls.Executer.Properties.Resources.ExecuteAll;
-            this.btnExecuteAllSQL.Location = new System.Drawing.Point(3, 255);
-            this.btnExecuteAllSQL.Name = "btnExecuteAllSQL";
-            this.btnExecuteAllSQL.Size = new System.Drawing.Size(93, 34);
-            this.btnExecuteAllSQL.TabIndex = 6;
-            this.btnExecuteAllSQL.Text = "全部执行";
-            this.btnExecuteAllSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnExecuteAllSQL.UseVisualStyleBackColor = true;
-            this.btnExecuteAllSQL.Click += new System.EventHandler(this.btnExecuteAllSQL_Click);
-            // 
-            // btnIntelligentExecuteSQL
-            // 
-            this.btnIntelligentExecuteSQL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnIntelligentExecuteSQL.Image = global::Justin.Controls.Executer.Properties.Resources.zhineng;
-            this.btnIntelligentExecuteSQL.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnIntelligentExecuteSQL.Location = new System.Drawing.Point(3, 295);
-            this.btnIntelligentExecuteSQL.Name = "btnIntelligentExecuteSQL";
-            this.btnIntelligentExecuteSQL.Size = new System.Drawing.Size(93, 34);
-            this.btnIntelligentExecuteSQL.TabIndex = 7;
-            this.btnIntelligentExecuteSQL.Tag = "//->";
-            this.btnIntelligentExecuteSQL.Text = "智能执行";
-            this.btnIntelligentExecuteSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnIntelligentExecuteSQL.UseVisualStyleBackColor = true;
-            this.btnIntelligentExecuteSQL.Click += new System.EventHandler(this.btnIntelligentExecuteSQL_Click);
+            this.layoutRight.ColumnCount = 1;
+            this.layoutRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutRight.Controls.Add(this.btnEnableEditSQL, 0, 1);
+            this.layoutRight.Controls.Add(this.btnModifySQLFileContent, 0, 2);
+            this.layoutRight.Controls.Add(this.btnShowLineNum, 0, 0);
+            this.layoutRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutRight.Location = new System.Drawing.Point(0, 0);
+            this.layoutRight.Name = "layoutRight";
+            this.layoutRight.RowCount = 5;
+            this.layoutRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.layoutRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.layoutRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.layoutRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layoutRight.Size = new System.Drawing.Size(100, 475);
+            this.layoutRight.TabIndex = 7;
             // 
             // btnEnableEditSQL
             // 
@@ -169,7 +113,7 @@
             this.btnEnableEditSQL.Image = global::Justin.Controls.Executer.Properties.Resources.edit1;
             this.btnEnableEditSQL.Location = new System.Drawing.Point(3, 43);
             this.btnEnableEditSQL.Name = "btnEnableEditSQL";
-            this.btnEnableEditSQL.Size = new System.Drawing.Size(93, 34);
+            this.btnEnableEditSQL.Size = new System.Drawing.Size(94, 34);
             this.btnEnableEditSQL.TabIndex = 3;
             this.btnEnableEditSQL.Text = "启用编辑";
             this.btnEnableEditSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -182,7 +126,7 @@
             this.btnModifySQLFileContent.Image = global::Justin.Controls.Executer.Properties.Resources.save;
             this.btnModifySQLFileContent.Location = new System.Drawing.Point(3, 83);
             this.btnModifySQLFileContent.Name = "btnModifySQLFileContent";
-            this.btnModifySQLFileContent.Size = new System.Drawing.Size(93, 34);
+            this.btnModifySQLFileContent.Size = new System.Drawing.Size(94, 34);
             this.btnModifySQLFileContent.TabIndex = 4;
             this.btnModifySQLFileContent.Text = "保存";
             this.btnModifySQLFileContent.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -195,49 +139,195 @@
             this.btnShowLineNum.Image = global::Justin.Controls.Executer.Properties.Resources.LineNum;
             this.btnShowLineNum.Location = new System.Drawing.Point(3, 3);
             this.btnShowLineNum.Name = "btnShowLineNum";
-            this.btnShowLineNum.Size = new System.Drawing.Size(93, 34);
+            this.btnShowLineNum.Size = new System.Drawing.Size(94, 34);
             this.btnShowLineNum.TabIndex = 2;
             this.btnShowLineNum.Text = "显示行号";
             this.btnShowLineNum.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnShowLineNum.UseVisualStyleBackColor = true;
             this.btnShowLineNum.Click += new System.EventHandler(this.btnShowLineNum_Click);
             // 
-            // txtSQLPreview
+            // btnExecuteSQLByLine
             // 
-            this.tableLayoutPanel8.SetColumnSpan(this.txtSQLPreview, 2);
-            this.txtSQLPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSQLPreview.Location = new System.Drawing.Point(3, 33);
-            this.txtSQLPreview.Name = "txtSQLPreview";
-            this.txtSQLPreview.ShowLineNumber = true;
-            this.txtSQLPreview.Size = new System.Drawing.Size(621, 332);
-            this.txtSQLPreview.TabIndex = 1;
-            this.txtSQLPreview.Load += new System.EventHandler(this.txtSQLPreview_Load);
+            this.btnExecuteSQLByLine.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExecuteSQLByLine.Image = global::Justin.Controls.Executer.Properties.Resources.ExecuteByLine;
+            this.btnExecuteSQLByLine.Location = new System.Drawing.Point(413, 3);
+            this.btnExecuteSQLByLine.Name = "btnExecuteSQLByLine";
+            this.btnExecuteSQLByLine.Size = new System.Drawing.Size(94, 28);
+            this.btnExecuteSQLByLine.TabIndex = 5;
+            this.btnExecuteSQLByLine.Text = "逐行执行";
+            this.btnExecuteSQLByLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnExecuteSQLByLine.UseVisualStyleBackColor = true;
+            this.btnExecuteSQLByLine.Click += new System.EventHandler(this.btnExecuteSQLByLine_Click);
+            // 
+            // btnExecuteAllSQL
+            // 
+            this.btnExecuteAllSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExecuteAllSQL.Image = global::Justin.Controls.Executer.Properties.Resources.ExecuteAll;
+            this.btnExecuteAllSQL.Location = new System.Drawing.Point(513, 3);
+            this.btnExecuteAllSQL.Name = "btnExecuteAllSQL";
+            this.btnExecuteAllSQL.Size = new System.Drawing.Size(94, 28);
+            this.btnExecuteAllSQL.TabIndex = 6;
+            this.btnExecuteAllSQL.Text = "全部执行";
+            this.btnExecuteAllSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnExecuteAllSQL.UseVisualStyleBackColor = true;
+            this.btnExecuteAllSQL.Click += new System.EventHandler(this.btnExecuteAllSQL_Click);
+            // 
+            // btnIntelligentExecuteSQL
+            // 
+            this.btnIntelligentExecuteSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnIntelligentExecuteSQL.Image = global::Justin.Controls.Executer.Properties.Resources.zhineng;
+            this.btnIntelligentExecuteSQL.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnIntelligentExecuteSQL.Location = new System.Drawing.Point(613, 3);
+            this.btnIntelligentExecuteSQL.Name = "btnIntelligentExecuteSQL";
+            this.btnIntelligentExecuteSQL.Size = new System.Drawing.Size(94, 28);
+            this.btnIntelligentExecuteSQL.TabIndex = 7;
+            this.btnIntelligentExecuteSQL.Tag = "//->";
+            this.btnIntelligentExecuteSQL.Text = "智能执行";
+            this.btnIntelligentExecuteSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnIntelligentExecuteSQL.UseVisualStyleBackColor = true;
+            this.btnIntelligentExecuteSQL.Click += new System.EventHandler(this.btnIntelligentExecuteSQL_Click);
+            // 
+            // btnPreviewSQLFile
+            // 
+            this.btnPreviewSQLFile.Image = global::Justin.Controls.Executer.Properties.Resources.open;
+            this.btnPreviewSQLFile.Location = new System.Drawing.Point(3, 3);
+            this.btnPreviewSQLFile.Name = "btnPreviewSQLFile";
+            this.btnPreviewSQLFile.Size = new System.Drawing.Size(94, 28);
+            this.btnPreviewSQLFile.TabIndex = 0;
+            this.btnPreviewSQLFile.Text = "预览脚本";
+            this.btnPreviewSQLFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnPreviewSQLFile.UseVisualStyleBackColor = true;
+            this.btnPreviewSQLFile.Click += new System.EventHandler(this.btnPreviewSQLFile_Click);
             // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // splitContainerMain
+            // 
+            this.splitContainerMain.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
+            this.splitContainerMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainerMain.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerMain.Name = "splitContainerMain";
+            this.splitContainerMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerMain.Panel1
+            // 
+            this.splitContainerMain.Panel1.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainerMain.Panel1MinSize = 80;
+            // 
+            // splitContainerMain.Panel2
+            // 
+            this.splitContainerMain.Panel2.Controls.Add(this.splitContainerSQL);
+            this.splitContainerMain.Size = new System.Drawing.Size(781, 559);
+            this.splitContainerMain.SplitterDistance = 80;
+            this.splitContainerMain.TabIndex = 6;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.txtSQLFileName, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnBrowerSQLFile, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.layOutButton, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(781, 80);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // btnBrowerSQLFile
+            // 
+            this.btnBrowerSQLFile.Image = global::Justin.Controls.Executer.Properties.Resources.open;
+            this.btnBrowerSQLFile.Location = new System.Drawing.Point(684, 3);
+            this.btnBrowerSQLFile.Name = "btnBrowerSQLFile";
+            this.btnBrowerSQLFile.Size = new System.Drawing.Size(94, 34);
+            this.btnBrowerSQLFile.TabIndex = 0;
+            this.btnBrowerSQLFile.Text = "浏览文件";
+            this.btnBrowerSQLFile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnBrowerSQLFile.UseVisualStyleBackColor = true;
+            this.btnBrowerSQLFile.Click += new System.EventHandler(this.btnBrowerSQLFile_Click);
+            // 
+            // layOutButton
+            // 
+            this.layOutButton.ColumnCount = 5;
+            this.tableLayoutPanel1.SetColumnSpan(this.layOutButton, 2);
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layOutButton.Controls.Add(this.btnIntelligentExecuteSQL, 4, 0);
+            this.layOutButton.Controls.Add(this.btnExecuteAllSQL, 3, 0);
+            this.layOutButton.Controls.Add(this.btnExecuteSQLByLine, 2, 0);
+            this.layOutButton.Controls.Add(this.btnPreviewSQLFile, 0, 0);
+            this.layOutButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layOutButton.Location = new System.Drawing.Point(68, 43);
+            this.layOutButton.Name = "layOutButton";
+            this.layOutButton.RowCount = 1;
+            this.layOutButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layOutButton.Size = new System.Drawing.Size(710, 34);
+            this.layOutButton.TabIndex = 16;
+            // 
+            // splitContainerSQL
+            // 
+            this.splitContainerSQL.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
+            this.splitContainerSQL.Cursor = System.Windows.Forms.Cursors.Default;
+            this.splitContainerSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerSQL.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainerSQL.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerSQL.Name = "splitContainerSQL";
+            // 
+            // splitContainerSQL.Panel1
+            // 
+            this.splitContainerSQL.Panel1.Controls.Add(this.txtSQLPreview);
+            // 
+            // splitContainerSQL.Panel2
+            // 
+            this.splitContainerSQL.Panel2.Controls.Add(this.layoutRight);
+            this.splitContainerSQL.Panel2MinSize = 100;
+            this.splitContainerSQL.Size = new System.Drawing.Size(781, 475);
+            this.splitContainerSQL.SplitterDistance = 677;
+            this.splitContainerSQL.TabIndex = 1;
+            // 
             // SqlExecuterCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel8);
+            this.Controls.Add(this.splitContainerMain);
             this.Name = "SqlExecuterCtrl";
-            this.Size = new System.Drawing.Size(732, 368);
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(781, 559);
+            this.layoutRight.ResumeLayout(false);
+            this.splitContainerMain.Panel1.ResumeLayout(false);
+            this.splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
+            this.splitContainerMain.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.layOutButton.ResumeLayout(false);
+            this.splitContainerSQL.Panel1.ResumeLayout(false);
+            this.splitContainerSQL.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerSQL)).EndInit();
+            this.splitContainerSQL.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btnBrowerSQLFile;
         private System.Windows.Forms.TextBox txtSQLFileName;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel layoutRight;
         private System.Windows.Forms.Button btnExecuteSQLByLine;
         private System.Windows.Forms.Button btnExecuteAllSQL;
         private System.Windows.Forms.Button btnIntelligentExecuteSQL;
@@ -246,5 +336,11 @@
         private System.Windows.Forms.Button btnShowLineNum;
         private FrameWork.WinForm.FormUI.NumberedTextBox txtSQLPreview;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button btnPreviewSQLFile;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerMain;
+        private System.Windows.Forms.TableLayoutPanel layOutButton;
+        private System.Windows.Forms.Button btnBrowerSQLFile;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerSQL;
     }
 }

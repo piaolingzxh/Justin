@@ -20,16 +20,15 @@ namespace Justin.FrameWork.Extensions
                 int col = 0;
                 if (cs.Axes.Count > 1)
                 {
-                    string str = " ";
-                    dt.Columns.Add(new DataColumn(str));
-                    col = 1;
+                    //string str = " ";
+                    //dt.Columns.Add(new DataColumn(str));
+                    //col = 1;
                     if (cs.Axes[1].Positions.Count > 0 && cs.Axes[1].Positions[0] != null)
                     {
                         col = cs.Axes[1].Positions[0].Members.Count;
-                        for (int i = 1; i < col; i++)
+                        for (int i = 0; i < col; i++)
                         {
-                            str += " ";
-                            dt.Columns.Add(new DataColumn(str));
+                            dt.Columns.Add(new DataColumn(cs.Axes[1].Positions[0].Members[i].UniqueName));
                         }
                     }
                 }
@@ -113,6 +112,99 @@ namespace Justin.FrameWork.Extensions
                         dt.Rows.Add(dr);
                     }
                 }
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public static DataTable ToDataTable2(this CellSet cs, bool useFormattedValue = false)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                int columnCountOfRowHeader = 0;
+
+                #region 构造表头
+
+                //当有行头时，添加行头占的列
+                if (cs.Axes.Count > 1 && cs.Axes[1].Set.Tuples.Count > 0)
+                {
+                    columnCountOfRowHeader = cs.Axes[1].Set.Tuples[0].Members.Count;
+                    for (int i = 0; i < columnCountOfRowHeader; i++)
+                    {
+                        Member member = cs.Axes[1].Set.Tuples[0].Members[i];
+                        DataColumn column = new DataColumn(member.UniqueName);
+                        column.ExtendedProperties["Data"] = member;
+
+                        dt.Columns.Add(column);
+                    }
+                }
+
+                //继续添加列头
+                foreach (Microsoft.AnalysisServices.AdomdClient.Tuple tp in cs.Axes[0].Set.Tuples)
+                {
+
+                    string columnName = "";
+                    foreach (Member member in tp.Members)
+                    {
+                        columnName = columnName + member.Caption + " ";
+                    }
+                    DataColumn dc = new DataColumn(columnName.Trim());
+
+                    dt.Columns.Add(dc);
+                }
+
+                #endregion
+
+                #region 构造数据
+
+                int rowCount = cs.Axes.Count <= 1 ? 0 : cs.Axes[1].Set.Tuples.Count;
+                int cellIndex = 0;
+                for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                {
+                    DataRow dr = dt.NewRow();
+                    if (cs.Axes.Count > 1)
+                    {
+                        for (int columnIndexOfRowHeader = 0; columnIndexOfRowHeader < columnCountOfRowHeader; columnIndexOfRowHeader++)
+                        {
+                            dr[columnIndexOfRowHeader] = cs.Axes[1].Set.Tuples[rowIndex].Members[columnIndexOfRowHeader];
+                        }
+                    }
+
+                    //数据列
+                    for (int columnIndexOfData = columnCountOfRowHeader; columnIndexOfData < cs.Axes[0].Positions.Count + columnCountOfRowHeader; columnIndexOfData++)
+                    {
+                        try
+                        {
+                            if (useFormattedValue)
+                            {
+                                dr[columnIndexOfData] = cs[cellIndex++].FormattedValue;
+                            }
+                            else
+                            {
+                                dr[columnIndexOfData] = cs[cellIndex++].Value;
+                            }
+
+                            if (dr[columnIndexOfData].ToString() == "null")
+                            {
+                                dr[columnIndexOfData] = "";
+                            }
+                        }
+                        catch
+                        {
+                            dr[columnIndexOfData] = "";
+                        }
+                    }
+                    dt.Rows.Add(dr);
+
+                }
+
+                #endregion
+
                 return dt;
             }
             catch (Exception ex)
