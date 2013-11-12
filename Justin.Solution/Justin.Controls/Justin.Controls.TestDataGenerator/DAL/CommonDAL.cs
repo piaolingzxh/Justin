@@ -27,10 +27,10 @@ namespace Justin.Controls.TestDataGenerator.DAL
             return fieldValue;
         }
 
-        public static List<object> GetValues(OleDbConnection conn, string tableName, string fieldName)
+        public static List<object> GetValues(OleDbConnection conn, string tableName, string fieldName, string filter)
         {
             string sql = string.Format(conn.GetDataBaseType() == DataBaseType.MSSQL ? format_MSSQL_GetValuesByTableNameAndColumnName : format_Oracle_GetValuesByTableNameAndColumnName
-                , tableName, fieldName, "1=1");
+                , tableName, fieldName, filter);
             DataTable table = DBHelper.ExecuteDataTable(conn, sql);
             List<object> results = new List<object>();
             for (int i = 0; i < table.Rows.Count; i++)

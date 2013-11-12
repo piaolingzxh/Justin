@@ -67,6 +67,13 @@ namespace Justin.Controls.TestDataGenerator.Entities
 
         public static SQLProcess SqlProcess { get; set; }
 
+
+        public static bool HaveParameter(string filterFormat)
+        {
+            if (string.IsNullOrEmpty(filterFormat))
+                return false;
+            return filterFormat.Contains(":");
+        }
         public void Process(string connStr = "")
         {
             if (string.IsNullOrEmpty(connStr))
@@ -90,18 +97,18 @@ namespace Justin.Controls.TestDataGenerator.Entities
                 {
                     string tableName = op.FirstOperand.ReferenceTableName;
                     string columnName = op.FirstOperand.ReferenceColumnName;
-                    if (op.FirstOperand.ValueCategroy == JValueCategroy.FromTable && string.IsNullOrEmpty(op.FirstOperand.RefFilter) && caches.Count(row => row.Table == TableName && row.Column == columnName) < 1)
+                    if (op.FirstOperand.ValueCategroy == JValueCategroy.FromTable && !HaveParameter(op.FirstOperand.RefFilter) && caches.Count(row => row.Table == TableName && row.Column == columnName) < 1)
                     {
-                        List<object> datas = CommonDAL.GetValues(conn, tableName, columnName);
+                        List<object> datas = CommonDAL.GetValues(conn, tableName, columnName, op.FirstOperand.RefFilter);
                         caches.Add(new ColumnDataCache() { Table = tableName, Column = columnName, Datas = datas });
                     }
                     if (op.SecondOperand != null)
                     {
                         string tableName1 = op.FirstOperand.ReferenceTableName;
                         string columnName1 = op.FirstOperand.ReferenceColumnName;
-                        if (op.SecondOperand.ValueCategroy == JValueCategroy.FromTable && string.IsNullOrEmpty(op.SecondOperand.RefFilter) && caches.Count(row => row.Table == tableName1 && row.Column == columnName1) < 1)
+                        if (op.SecondOperand.ValueCategroy == JValueCategroy.FromTable && !HaveParameter(op.SecondOperand.RefFilter) && caches.Count(row => row.Table == tableName1 && row.Column == columnName1) < 1)
                         {
-                            List<object> datas = CommonDAL.GetValues(conn, tableName1, columnName1);
+                            List<object> datas = CommonDAL.GetValues(conn, tableName1, columnName1, op.FirstOperand.RefFilter);
                             caches.Add(new ColumnDataCache() { Table = tableName1, Column = columnName1, Datas = datas });
                         }
                     }
@@ -499,7 +506,7 @@ namespace Justin.Controls.TestDataGenerator.Entities
                     string refFilter = string.Format(filterFormat, parameterValues.ToArray());
                     var tableCache = caches.Where(row => row.Table.Equals(refTableName) && row.Column.Equals(refColumnName)).FirstOrDefault();
                     List<object> cacheData = tableCache == null ? new List<object>() : tableCache.Datas;
-                    object tempValue = String.IsNullOrEmpty(refFilter) ? cacheData[rd.Next(0, cacheData.Count - 1)] : CommonDAL.GetValue(conn, refTableName, refColumnName, refFilter);
+                    object tempValue = !JTable.HaveParameter(this.RefFilter) ? cacheData[rd.Next(0, cacheData.Count - 1)] : CommonDAL.GetValue(conn, refTableName, refColumnName, refFilter);
 
                     SourceFieldData tempData = new SourceFieldData()
                     {

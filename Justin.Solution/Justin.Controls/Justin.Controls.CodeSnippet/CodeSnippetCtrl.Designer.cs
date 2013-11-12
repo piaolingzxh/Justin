@@ -94,7 +94,7 @@
             this.openWithToolStripMenuItem,
             this.openAsTextToolStripMenuItem});
             this.contextMenuStripOfTree.Name = "contextMenuStrip1";
-            this.contextMenuStripOfTree.Size = new System.Drawing.Size(159, 70);
+            this.contextMenuStripOfTree.Size = new System.Drawing.Size(159, 48);
             // 
             // openWithToolStripMenuItem
             // 

@@ -146,31 +146,31 @@
             this.menuCopy,
             this.menuCopyValue});
             this.menuOfTree.Name = "mnuTree";
-            this.menuOfTree.Size = new System.Drawing.Size(153, 98);
+            this.menuOfTree.Size = new System.Drawing.Size(135, 76);
             // 
             // menuExpandAll
             // 
             this.menuExpandAll.Name = "menuExpandAll";
-            this.menuExpandAll.Size = new System.Drawing.Size(152, 22);
+            this.menuExpandAll.Size = new System.Drawing.Size(134, 22);
             this.menuExpandAll.Text = "Expand &All";
             this.menuExpandAll.Click += new System.EventHandler(this.mnuExpandAll_Click);
             // 
             // toolStripMenuItemSplitor
             // 
             this.toolStripMenuItemSplitor.Name = "toolStripMenuItemSplitor";
-            this.toolStripMenuItemSplitor.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItemSplitor.Size = new System.Drawing.Size(131, 6);
             // 
             // menuCopy
             // 
             this.menuCopy.Name = "menuCopy";
-            this.menuCopy.Size = new System.Drawing.Size(152, 22);
+            this.menuCopy.Size = new System.Drawing.Size(134, 22);
             this.menuCopy.Text = "&Copy";
             this.menuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
             // 
             // menuCopyValue
             // 
             this.menuCopyValue.Name = "menuCopyValue";
-            this.menuCopyValue.Size = new System.Drawing.Size(152, 22);
+            this.menuCopyValue.Size = new System.Drawing.Size(134, 22);
             this.menuCopyValue.Text = "Copy &Value";
             this.menuCopyValue.Click += new System.EventHandler(this.mnuCopyValue_Click);
             // 
