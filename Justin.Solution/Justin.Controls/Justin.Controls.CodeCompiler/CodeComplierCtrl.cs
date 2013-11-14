@@ -1,21 +1,21 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Justin.FrameWork.Utility;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
-using System.IO;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Reflection;
-using ICSharpCode.TextEditor.Document;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
+using ICSharpCode.TextEditor.Document;
+using Justin.FrameWork.Utility;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
+using Microsoft.CSharp;
 
 namespace Justin.Controls.CodeCompiler
 {
@@ -35,7 +35,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnCompiler_Click(object sender, EventArgs e)
         {
-            this.SaveFile(FileName,this.Extension);
+            this.SaveFile(FileName, this.Extension);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -45,7 +45,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            this.SaveFile(FileName,this.Extension);
+            this.SaveFile(FileName, this.Extension);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -55,7 +55,7 @@ namespace Justin.Controls.CodeCompiler
 
         private void btnShowILCode_Click(object sender, EventArgs e)
         {
-            this.SaveFile(FileName,this.Extension);
+            this.SaveFile(FileName, this.Extension);
             if (!string.IsNullOrEmpty(FileName))
             {
                 complier.SourceFileName = FileName;
@@ -129,17 +129,7 @@ namespace Justin.Controls.CodeCompiler
 
         }
 
-        public static String JDKPath
-        {
-            get
-            {
-                return JavaCodeComplier.JDKPath;
-            }
-            set
-            {
-                JavaCodeComplier.JDKPath = value;
-            }
-        }
+
         #region 示例代码
 
         private void insertJavaTemplateToolStripMenuItem_Click(object sender, EventArgs e)

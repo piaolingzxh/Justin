@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Justin.Controls.CodeSnippet;
 using Justin.Core;
+using Justin.FrameWork.Settings;
 
 namespace Justin.Toolbox
 {
@@ -17,7 +18,8 @@ namespace Justin.Toolbox
     {
         public CodeSnippetMgr()
         {
-            CodeSnippetCtrl.CodeSnippetFileDirectory = ConfigurationManager.AppSettings["CodeSnippet"];
+            JSetting.SetUseAppSetting("CodeSnippet", "CodeSnippet");
+            //CodeSnippetCtrl.CodeSnippetFileDirectory = ConfigurationManager.AppSettings["CodeSnippet"];
             InitializeComponent();
         }
 

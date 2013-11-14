@@ -55,6 +55,7 @@ namespace Justin.FrameWork.WinForm.Utility
             DataSource.AddStandardDataSources(dialog);
 
             dialog.SelectedDataSource = ConvertToDaSource(dataSourceType);
+
             if (ConvertToDaProvider(dataSourceType) != null)
             {
                 dialog.SelectedDataProvider = ConvertToDaProvider(dataSourceType);

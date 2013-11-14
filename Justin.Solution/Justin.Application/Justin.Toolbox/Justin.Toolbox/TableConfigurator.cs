@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.IO;
 using System.Xml;
-using Justin.FrameWork.Helper;
-using System.Configuration;
-using WeifenLuo.WinFormsUI.Docking;
+using System.Xml.Serialization;
 using ICSharpCode.TextEditor.Document;
-using Justin.FrameWork.Settings;
-using Justin.FrameWork.Extensions;
-using Justin.Core;
-using Justin.FrameWork.WinForm.Models;
-using Justin.Controls.TestDataGenerator.Entities;
 using Justin.Controls.TestDataGenerator;
+using Justin.Controls.TestDataGenerator.Entities;
+using Justin.Core;
+using Justin.FrameWork.Extensions;
+using Justin.FrameWork.Helper;
+using Justin.FrameWork.Settings;
+using Justin.FrameWork.WinForm.Models;
+using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace Justin.Toolbox
@@ -30,7 +30,7 @@ namespace Justin.Toolbox
         {
 
             InitializeComponent();
-            string fieldValueFormat = ConfigurationManager.AppSettings["FieldValueFormat"];
+            string fieldValueFormat = JSetting.ReadAppSetting("FieldValueFormat");
             if (!string.IsNullOrEmpty(fieldValueFormat))
             {
                 string[] formats = fieldValueFormat.Trim().Split(',');
@@ -55,7 +55,7 @@ namespace Justin.Toolbox
             };
             this.SaveAction = (fileName) =>
             {
-                this.tableConfigCtrl1.SaveFile(fileName,this.Extension);
+                this.tableConfigCtrl1.SaveFile(fileName, this.Extension);
             };
         }
         public TableConfigurator(string[] args)

@@ -162,7 +162,7 @@
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.Size = new System.Drawing.Size(38, 24);
             this.btnExportExcel.TabIndex = 5;
-            this.btnExportExcel.Tag = "Clear Query Result";
+            this.btnExportExcel.Tag = "Export Query Result";
             this.btnExportExcel.UseVisualStyleBackColor = true;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
@@ -274,6 +274,7 @@
             this.splitContainerQueryResult.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
             this.splitContainerQueryResult.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitContainerQueryResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerQueryResult.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainerQueryResult.Location = new System.Drawing.Point(0, 0);
             this.splitContainerQueryResult.Name = "splitContainerQueryResult";
             // 

@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Justin.Core;
-using Justin.Workspace;
 using Justin.FrameWork.Helper;
-using WeifenLuo.WinFormsUI.Docking;
-using System.Configuration;
-using System.Globalization;
-using Justin.FrameWork.Utility;
 using Justin.FrameWork.Settings;
+using Justin.FrameWork.Utility;
+using Justin.Workspace;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Justin.Workspace
 {
@@ -263,7 +263,7 @@ namespace Justin.Workspace
         {
             ToolStripMenuItem tsItem = sender as ToolStripMenuItem;
             Justin.Core.MenuItem data = tsItem.Tag as Justin.Core.MenuItem;
-            openFileDialog1.InitialDirectory = Constants.ConfigFileFolder;//注意这里写路径时要用c:\\而不是c:\
+            openFileDialog1.InitialDirectory = JSetting.ReadAppSetting("ConfigFileFolder");//注意这里写路径时要用c:\\而不是c:\
             openFileDialog1.Filter = Tools.GetFileDialogFilter(data.Extensions);
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FilterIndex = 1;
@@ -657,7 +657,7 @@ namespace Justin.Workspace
 
         private void Workbench_Load(object sender, EventArgs e)
         {
-           
+
             string addinFileFullName = Path.Combine(Application.StartupPath, fileNameOfAddin);
             this.ShowMessage(string.Format("addin【{0}】", addinFileFullName));
 
@@ -704,7 +704,7 @@ namespace Justin.Workspace
             }
             OutPutWin = OutPutWindow.Instance;
             OutPutWin.Show(dockPanel, DockState.DockBottom);
-            string showInNotifyAreaString = ConfigurationManager.AppSettings["ShowInNotifyArea"];
+            string showInNotifyAreaString = JSetting.ReadAppSetting("ShowInNotifyArea");
             bool showNotify = false;
             if (showInNotifyAreaString != null && bool.TryParse(showInNotifyAreaString, out showNotify))
             {

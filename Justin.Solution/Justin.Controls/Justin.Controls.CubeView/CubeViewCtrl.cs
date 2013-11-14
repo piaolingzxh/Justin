@@ -54,9 +54,9 @@ namespace Justin.Controls.CubeView
 
             if (string.IsNullOrEmpty(cboxConnStrings.Text))
             {
-                this.cboxConnStrings.Text = CubeViewCtrlSetting.DefaultConnStr;
+                this.cboxConnStrings.Text = JSetting.Get("OLAPConnStr");
             }
-            MdxExecuterCtrlSetting.DefaultConnStr = CubeViewCtrlSetting.DefaultConnStr;
+            JSetting.SetUseAppSetting("OLAPConnStr", "OLAPConnStr");
             cboxFilterType.Items.Clear();
             cboxFilterType.Items.AddRange(Enum.GetNames(typeof(FilterType)));
         }
@@ -799,7 +799,7 @@ FROM [{2}]
         private void loadMdxFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            string folder = Constants.ConfigFileFolder;
+            string folder = JSetting.ReadAppSetting("ConfigFileFolder"); ;
             fileDialog.InitialDirectory = folder;
             fileDialog.RestoreDirectory = true;
 
@@ -853,7 +853,7 @@ FROM [{2}]
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             var form = this.FindForm();
-            saveFileDialog1.InitialDirectory = Constants.ConfigFileFolder;
+            saveFileDialog1.InitialDirectory = JSetting.ReadAppSetting("ConfigFileFolder"); ;
             saveFileDialog1.RestoreDirectory = true;
             saveFileDialog1.Filter = "xml Files (.xml)|*.xml|All Files (*.*)|*.*";
             saveFileDialog1.FilterIndex = 1;
@@ -996,10 +996,10 @@ FROM [{2}]
             }
         }
     }
-    public class CubeViewCtrlSetting
-    {
-        public static string DefaultConnStr { get; set; }
-    }
+    //public class CubeViewCtrlSetting
+    //{
+    //    public static string DefaultConnStr { get; set; }
+    //}
 
     public enum FilterType
     {

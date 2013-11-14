@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Models;
 using Microsoft.AnalysisServices.AdomdClient;
@@ -99,7 +100,7 @@ namespace Justin.Controls.Executer
 
             this.SetToolTipsForButton(new ToolTip());
             if (string.IsNullOrEmpty(cboxConnStrings.Text))
-                this.cboxConnStrings.Text = MdxExecuterCtrlSetting.DefaultConnStr;
+                this.cboxConnStrings.Text = JSetting.Get("OLAPConnStr");
 
         }
 
@@ -153,7 +154,7 @@ namespace Justin.Controls.Executer
 
         private void btnDefaultConnStr_Click(object sender, EventArgs e)
         {
-            this.cboxConnStrings.Text = MdxExecuterCtrlSetting.DefaultConnStr;
+            this.cboxConnStrings.Text = JSetting.Get("OLAPConnStr");
         }
 
         bool lastUseFormattedValue = false;
@@ -171,7 +172,7 @@ namespace Justin.Controls.Executer
                 }
                 CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
                 gvMdxresult.Tag = cst;
-                bool lastUseFormattedValue = sender == this.btnExecuteWithFormatted;
+                lastUseFormattedValue = sender == this.btnExecuteWithFormatted;
                 //DataTable dt = cst.ToDataTable2(lastUseFormattedValue);
 
                 BindCellSet(gvMdxresult, cst, lastUseFormattedValue);
@@ -241,9 +242,13 @@ namespace Justin.Controls.Executer
 
         private void btnExportExcel_Click(object sender, EventArgs e)
         {
-            if (gvMdxresult.DataSource != null && gvMdxresult.DataSource is DataTable)
+            if (gvMdxresult.DataSource != null && (gvMdxresult.DataSource is DataTable || gvMdxresult.Tag is CellSet))
             {
-                DataTable dt = gvMdxresult.DataSource as DataTable;
+                DataTable dt;
+                if (gvMdxresult.DataSource is DataTable)
+                    dt = gvMdxresult.DataSource as DataTable;
+                else
+                    dt = (gvMdxresult.Tag as CellSet).ToDataTable();
 
                 SaveFileDialog sfd = new SaveFileDialog();
                 //设置文件类型 
@@ -388,8 +393,8 @@ namespace Justin.Controls.Executer
 
     }
 
-    public class MdxExecuterCtrlSetting
-    {
-        public static string DefaultConnStr { get; set; }
-    }
+    //public class MdxExecuterCtrlSetting
+    //{
+    //    public static string DefaultConnStr { get; set; }
+    //}
 }

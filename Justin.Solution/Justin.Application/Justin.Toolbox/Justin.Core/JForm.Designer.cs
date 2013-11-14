@@ -65,7 +65,7 @@
             // 
             this.toolStripStatusMessage.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
             this.toolStripStatusMessage.Name = "toolStripStatusMessage";
-            this.toolStripStatusMessage.Size = new System.Drawing.Size(530, 17);
+            this.toolStripStatusMessage.Size = new System.Drawing.Size(499, 17);
             this.toolStripStatusMessage.Spring = true;
             // 
             // toolStripStatusDataSource
@@ -74,6 +74,7 @@
             this.toolStripStatusDataSource.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.toolStripStatusDataSource.Size = new System.Drawing.Size(0, 17);
             this.toolStripStatusDataSource.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripStatusDataSource.Click += new System.EventHandler(this.toolStripStatusDataSource_Click);
             // 
             // JForm
             // 

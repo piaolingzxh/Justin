@@ -74,6 +74,7 @@
     <Compile Include="Helper\OracleHelper2.cs" />
     <Compile Include="Helper\MdxHelper.cs" />
     <Compile Include="IBulkCopyWrapper.cs" />
+    <Compile Include="Settings\JSetting.cs" />
     <Compile Include="Utility\Tools.cs" />
     <Compile Include="Settings\Constants.cs" />
     <Compile Include="Entities\DisplayAttribute.cs" />

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -168,6 +170,7 @@ namespace Justin.Controls.Executer
                         bool canEnd = true;
                         bool hasStart = false;
                         StringBuilder builder = new StringBuilder();
+                        int sqlLineCount = 0;
                         string line;
                         while ((line = sr.ReadLine()) != null)
                         {
@@ -187,12 +190,15 @@ namespace Justin.Controls.Executer
                             builder.Append(line).AppendLine();
                             if (canEnd)
                             {
-                                if (builder.Length > Constants.SqlBufferSize)
+                                sqlLineCount++;
+                                if (sqlLineCount > Constants.SqlLineSize)
                                 {
                                     SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
                                     JLog.Write(LogMode.Info, builder.ToString());
                                     builder.Clear();
+                                    sqlLineCount = 0;
                                 }
+
                             }
                         }
                         if (builder.Length > 0)
@@ -248,7 +254,7 @@ namespace Justin.Controls.Executer
 
             #region openFileDialog
 
-            openFileDialog.InitialDirectory = Constants.OuputSQLFileFolder;
+            openFileDialog.InitialDirectory = JSetting.ReadAppSetting("OuputSQLFileFolder");
 
             StringBuilder filterBuilder = new StringBuilder();
             //FileInfoAttribute fia = FileType.SQL.GetFileInfoAttribute();
@@ -268,8 +274,67 @@ namespace Justin.Controls.Executer
             txtSQLPreview.AllowDrop = true;
         }
 
+        DateTime start;
+        private void btnUseSqlCmd_Click(object sender, EventArgs e)
+        {
 
+            string argument = "";
+            OleDbConnectionStringBuilder osb = new OleDbConnectionStringBuilder(this.ConnStr);
+            string server = osb["Data Source"].ToString();
+            string catalog = osb["Initial Catalog"].ToString();
+            if (osb.ContainsKey("integrated security"))
+            {
+                string argumentFormat = "sqlcmd -S \"{0}\" -d \"{1}\" -E -i  \"{2}\"";
+                argument = string.Format(argumentFormat, server, catalog, txtSQLFileName.Text);
+            }
+            else
+            {
+                string argumentFormat = "sqlcmd -S \"{0}\" -U \"{2}\" -P \"{3}\" -d \"{1}\" -i  \"{4}\"";
 
+                string user = osb["User ID"].ToString();
+                string password = osb["Password"].ToString();
+
+                argument = string.Format(argumentFormat, server, catalog, user, password, txtSQLFileName.Text);
+            }
+
+            this.ShowMessage(string.Format("[{0}]", argument));
+            this.ShowMessage("命令执行中。。。。（请等待完成提示。。。。）");
+
+            Process p = new Process();
+            p.EnableRaisingEvents = true;
+
+            p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+            p.ErrorDataReceived += new DataReceivedEventHandler(p_ErrorDataReceived);
+
+            p.Exited += new EventHandler(p_Exited);
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.Arguments = "/c " + argument;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardInput = true;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.CreateNoWindow = true;
+            start = DateTime.Now;
+            p.Start();
+            p.BeginOutputReadLine();
+            p.BeginErrorReadLine();
+        }
+
+        void p_Exited(object sender, EventArgs e)
+        {
+            TimeSpan ts = DateTime.Now - start;
+            this.ShowMessage(String.Format("命令执行完毕。。。。,耗时{0}秒", ts.TotalSeconds));
+        }
+
+        void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            this.ShowMessage(e.Data);
+        }
+
+        void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            this.ShowMessage(e.Data);
+        }
 
     }
 }

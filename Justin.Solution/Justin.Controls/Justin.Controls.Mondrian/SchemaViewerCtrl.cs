@@ -101,7 +101,7 @@ namespace Justin.Controls.Mondrian
         private void btnBrowerFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            string folder = Constants.ConfigFileFolder;
+            string folder = JSetting.ReadAppSetting("ConfigFileFolder");
             if (!string.IsNullOrEmpty(txtFileName.Text))
             {
                 var dic = new DirectoryInfo(Path.GetDirectoryName(txtFileName.Text));
@@ -125,7 +125,6 @@ namespace Justin.Controls.Mondrian
         {
             try
             {
-                //GenerateSchema(); 
                 GenerateSchemaFromFile();
                 BindTreeview(schema);
                 propertyGrid.SelectedObject = schema;

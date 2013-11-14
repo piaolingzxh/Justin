@@ -7,17 +7,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.Utility;
+using Justin.FrameWork.WinForm.Models;
 using Justin.FrameWork.WinForm.Utility;
 using WeifenLuo.WinFormsUI.Docking;
-using Justin.FrameWork.WinForm.Models;
-using Justin.FrameWork.Utility;
 
 namespace Justin.Core
 {
     public delegate void ConnStrChangDelegate(string oldConnStr, string newConnStr);
     public partial class JForm : DockContent
     {
-
+        protected DBConnectionInfo ConnectionInfo { get; set; }
         public WorkbenchBase WorkspaceBase
         {
             get
@@ -60,6 +60,10 @@ namespace Justin.Core
                 IFile file = this as IFile;
                 this.saveFileDialog1.Filter = Tools.GetFileDialogFilter(file.Extension);
             }
+            if (this is IDB)
+            {
+                ConnectionInfo = new DBConnectionInfo();
+            }
         }
 
         #region 菜单
@@ -67,7 +71,7 @@ namespace Justin.Core
         private ToolStripMenuItem chooseDataBaseToolStripMenuItem;
         private void chooseDataBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string tempConnStr = DBConnectDialog.GetConnectionString(DBConnectDialog.DataSourceType.SqlDataSource);
+            string tempConnStr = this.ConnectionInfo.Change(this.ConnStr);
             if (!string.IsNullOrEmpty(tempConnStr) && string.Compare(this.ConnStr, tempConnStr, true) != 0)
             {
                 this.ConnStr = tempConnStr;
@@ -80,14 +84,14 @@ namespace Justin.Core
         private ToolStripMenuItem FormatFileToolStripMenuItem;
         private void FormatFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.SaveFile(this.FileName,this.GetExtension());
+            this.SaveFile(this.FileName, this.GetExtension());
             JFormat.FormatFile(this.FileName);
             this.LoadFile(this.FileName);
         }
         private ToolStripMenuItem SaveFileToolStripMenuItem;
         private void SaveFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.SaveFile(this.FileName,this.GetExtension());
+            this.SaveFile(this.FileName, this.GetExtension());
         }
         private ToolStripMenuItem SaveFileAsToolStripMenuItem;
         private void SaveFileAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -95,7 +99,7 @@ namespace Justin.Core
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 this.FileName = saveFileDialog1.FileName;
-                this.SaveFile(saveFileDialog1.FileName,this.GetExtension());
+                this.SaveFile(saveFileDialog1.FileName, this.GetExtension());
             }
 
         }
@@ -245,7 +249,7 @@ namespace Justin.Core
         {
             this.Text = Path.GetFileName(this.FileName);
         }
-        public virtual void SaveFile(string fileName,string extensions)
+        public virtual void SaveFile(string fileName, string extensions)
         {
             saveFileDialog1.Filter = Tools.GetFileDialogFilter(extensions);
             saveFileDialog1.FilterIndex = 1;
@@ -287,8 +291,8 @@ namespace Justin.Core
         public string GetExtension()
         {
             if (this is IFile)
-            { 
-                IFile file= this as IFile;
+            {
+                IFile file = this as IFile;
                 return file.Extension;
             }
             return "";
@@ -320,7 +324,7 @@ namespace Justin.Core
         #endregion
 
         public void ShowInStatus(string msg)
-        { 
+        {
             this.toolStripStatusDataSource.Text = msg;
         }
 
@@ -334,6 +338,12 @@ namespace Justin.Core
             {
                 this.statusStrip1.Visible = value;
             }
+        }
+
+        private void toolStripStatusDataSource_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(this.ConnStr);
+            this.ShowMessage("连接字符串已复制到粘贴板");
         }
 
 

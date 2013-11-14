@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using AxDSOFramer;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.Helper;
 using Microsoft.Win32;
 namespace Justin.Controls.CodeSnippet
@@ -29,20 +30,20 @@ namespace Justin.Controls.CodeSnippet
 
         ComponentResourceManager resources = new ComponentResourceManager(typeof(CodeSnippetCtrl));
 
-        public static string CodeSnippetFileDirectory = @"d:\";
+        //public static string CodeSnippetFileDirectory = @"d:\";
 
         private string folderKeyOfImageList = "folder";
 
         private void CodeViewCtrl_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(CodeSnippetFileDirectory))
+            if (string.IsNullOrEmpty(JSetting.Get<String>("CodeSnippet")))
                 return;
-            txtFolder.Text = CodeSnippetFileDirectory;
+            txtFolder.Text = JSetting.Get<String>("CodeSnippet");
             InitTree();
         }
         private void InitTree()
         {
-            DirectoryInfo dir = new DirectoryInfo(CodeSnippetFileDirectory);
+            DirectoryInfo dir = new DirectoryInfo(JSetting.Get<String>("CodeSnippet"));
             if (!dir.Exists) return;
 
             if (!imageListOfDirectory.Images.ContainsKey(folderKeyOfImageList))
@@ -50,7 +51,7 @@ namespace Justin.Controls.CodeSnippet
                 imageListOfDirectory.Images.Add(folderKeyOfImageList, FileHelper.GetDirectoryIcon());
             }
 
-            TreeNode rootNode = new TreeNode("我的代码段") { Name = CodeSnippetFileDirectory, Tag = CodeSnippetFileDirectory, ImageKey = folderKeyOfImageList, SelectedImageKey = folderKeyOfImageList };
+            TreeNode rootNode = new TreeNode("我的代码段") { Name = JSetting.Get<String>("CodeSnippet"), Tag = JSetting.Get<String>("CodeSnippet"), ImageKey = folderKeyOfImageList, SelectedImageKey = folderKeyOfImageList };
             tvDirectory.Nodes.Clear();
             tvDirectory.Nodes.Add(rootNode);
             BindTreeNode(rootNode, dir, false);
@@ -218,8 +219,8 @@ namespace Justin.Controls.CodeSnippet
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-
-                txtFolder.Text = CodeSnippetFileDirectory = folderBrowserDialog1.SelectedPath;
+                txtFolder.Text = folderBrowserDialog1.SelectedPath;
+                JSetting.Set("CodeSnippet", folderBrowserDialog1.SelectedPath);
                 InitTree();
             }
         }

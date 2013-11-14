@@ -569,12 +569,12 @@ namespace Justin.Controls.TestDataGenerator
             this.txtBeforeSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBeforeSQL.IsReadOnly = false;
             this.txtBeforeSQL.Location = new System.Drawing.Point(83, 3);
             this.txtBeforeSQL.Name = "txtBeforeSQL";
             this.txtBeforeSQL.ShowEOLMarkers = true;
             this.txtBeforeSQL.ShowSpaces = true;
             this.txtBeforeSQL.ShowTabs = true;
+            this.txtBeforeSQL.ShowVRuler = true;
             this.txtBeforeSQL.Size = new System.Drawing.Size(451, 176);
             this.txtBeforeSQL.TabIndex = 10;
             // 
@@ -607,12 +607,12 @@ namespace Justin.Controls.TestDataGenerator
             this.txtAfterSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAfterSQL.IsReadOnly = false;
             this.txtAfterSQL.Location = new System.Drawing.Point(83, 3);
             this.txtAfterSQL.Name = "txtAfterSQL";
             this.txtAfterSQL.ShowEOLMarkers = true;
             this.txtAfterSQL.ShowSpaces = true;
             this.txtAfterSQL.ShowTabs = true;
+            this.txtAfterSQL.ShowVRuler = true;
             this.txtAfterSQL.Size = new System.Drawing.Size(451, 232);
             this.txtAfterSQL.TabIndex = 11;
             // 

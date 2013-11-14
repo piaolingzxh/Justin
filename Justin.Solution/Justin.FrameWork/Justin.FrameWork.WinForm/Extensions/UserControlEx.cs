@@ -22,7 +22,7 @@ namespace System.Windows.Forms
 
         public static void ShowMessage(this UserControl instance, string msg, string detailMsg = "", bool native = false)
         {
-            if (LogService.Instance.MessageReceived != null)
+            if (LogService.Instance.MessageReceived != null && !string.IsNullOrEmpty(msg))
             {
                 foreach (MessageReceivedEventHandler tempEvent in LogService.Instance.MessageReceived.GetInvocationList())
                 {

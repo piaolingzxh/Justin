@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor.Document;
 using Justin.Controls.TestDataGenerator.Entities;
 using Justin.Controls.TestDataGenerator.Utility;
-using System.IO;
-using Justin.FrameWork.Helper;
 using Justin.FrameWork.Extensions;
-using ICSharpCode.TextEditor.Document;
-using Justin.FrameWork.WinForm.FormUI;
-using Justin.FrameWork.WinForm.Models;
-using Justin.FrameWork.WinForm.Helper;
+using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
+using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Helper;
+using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Controls.TestDataGenerator
 {
@@ -24,7 +24,6 @@ namespace Justin.Controls.TestDataGenerator
     {
         #region 变量
 
-        public static string tableConfigFolder = "";
         public static string configFileExtensions = ".config";
         public static string sqlFileExtensions = ".Sql";
 
@@ -54,6 +53,7 @@ namespace Justin.Controls.TestDataGenerator
 
         private void TableConfigCtrl_Load(object sender, EventArgs e)
         {
+            JSetting.SetUseAppSetting("TableConfigFolder", "TableConfigFolder");
             if (this.TableSetting != null)
             {
                 BindTableToTree();
@@ -134,7 +134,7 @@ namespace Justin.Controls.TestDataGenerator
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
-            base.SaveFile(this.FileName,this.Extension);
+            base.SaveFile(this.FileName, this.Extension);
         }
         private void btnGenerateData_Click(object sender, EventArgs e)
         {
@@ -151,12 +151,12 @@ namespace Justin.Controls.TestDataGenerator
                 }
                 try
                 {
-                    TableSetting.Process(this.ConnStr);       
+                    TableSetting.Process(this.ConnStr);
                     this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
                 }
                 catch (Exception ex)
                 {
-                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成失败:{2}!", TableSetting.TableName, fileName,ex.ToString()));
+                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成失败:{2}!", TableSetting.TableName, fileName, ex.ToString()));
                 }
             });
         }
@@ -345,7 +345,7 @@ namespace Justin.Controls.TestDataGenerator
 
         public static string GetFullFileName(string tableName, string fileExtension)
         {
-            string fullFileName = Path.Combine(tableConfigFolder, string.Format("{0}{1}", tableName, fileExtension));
+            string fullFileName = Path.Combine(JSetting.Get<String>("TableConfigFolder"), string.Format("{0}{1}", tableName, fileExtension));
             return fullFileName;
         }
         public string Extension
@@ -354,6 +354,10 @@ namespace Justin.Controls.TestDataGenerator
         }
         #endregion
 
+    }
+
+    public class TableConfigSetting
+    {
 
     }
 }

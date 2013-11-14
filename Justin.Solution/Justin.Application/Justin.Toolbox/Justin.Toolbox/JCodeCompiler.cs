@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -12,13 +13,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
-using Justin.FrameWork.Utility;
-using Microsoft.CSharp;
-using Justin.FrameWork.Settings;
-using Justin.Core;
-using Justin.FrameWork.WinForm.Models;
 using Justin.Controls.CodeCompiler;
-using System.Configuration;
+using Justin.Core;
+using Justin.FrameWork.Settings;
+using Justin.FrameWork.Utility;
+using Justin.FrameWork.WinForm.Models;
+using Microsoft.CSharp;
 
 namespace Justin.Toolbox
 {
@@ -27,10 +27,11 @@ namespace Justin.Toolbox
         public JCodeCompiler()
         {
             InitializeComponent();
-            CodeComplierCtrl.JDKPath = ConfigurationManager.AppSettings["JDKPath"];
+            JSetting.SetUseAppSetting("JDKPath", "JDKPath");
+            //CodeComplierCtrl.JDKPath = ConfigurationManager.AppSettings["JDKPath"];
             this.codeComplierCtrl1.FileChanged = (fileName) => { this.FileName = fileName; };
             this.LoadAction = (fileName) => { this.codeComplierCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.codeComplierCtrl1.SaveFile(fileName,this.Extension); };
+            this.SaveAction = (fileName) => { this.codeComplierCtrl1.SaveFile(fileName, this.Extension); };
         }
         /// <summary>
         ///     

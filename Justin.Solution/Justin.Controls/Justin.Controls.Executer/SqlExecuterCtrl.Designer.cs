@@ -44,6 +44,7 @@
             this.layoutTop = new System.Windows.Forms.TableLayoutPanel();
             this.btnBrowerSQLFile = new System.Windows.Forms.Button();
             this.layOutButton = new System.Windows.Forms.TableLayoutPanel();
+            this.btnUseSqlCmd = new System.Windows.Forms.Button();
             this.splitContainerSQL = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.layoutRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -208,7 +209,7 @@
             this.splitContainerMain.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
             this.splitContainerMain.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainerMain.Location = new System.Drawing.Point(0, 0);
             this.splitContainerMain.Name = "splitContainerMain";
             this.splitContainerMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -238,9 +239,10 @@
             this.layoutTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutTop.Location = new System.Drawing.Point(0, 0);
             this.layoutTop.Name = "layoutTop";
-            this.layoutTop.RowCount = 2;
+            this.layoutTop.RowCount = 3;
             this.layoutTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.layoutTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.layoutTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutTop.Size = new System.Drawing.Size(797, 80);
             this.layoutTop.TabIndex = 1;
             // 
@@ -258,18 +260,19 @@
             // 
             // layOutButton
             // 
-            this.layOutButton.ColumnCount = 5;
+            this.layOutButton.ColumnCount = 6;
             this.layoutTop.SetColumnSpan(this.layOutButton, 2);
             this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layOutButton.Controls.Add(this.btnIntelligentExecuteSQL, 4, 0);
-            this.layOutButton.Controls.Add(this.btnExecuteAllSQL, 3, 0);
-            this.layOutButton.Controls.Add(this.btnExecuteSQLByLine, 2, 0);
+            this.layOutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layOutButton.Controls.Add(this.btnIntelligentExecuteSQL, 5, 0);
+            this.layOutButton.Controls.Add(this.btnExecuteAllSQL, 4, 0);
+            this.layOutButton.Controls.Add(this.btnExecuteSQLByLine, 3, 0);
             this.layOutButton.Controls.Add(this.btnPreviewSQLFile, 0, 0);
+            this.layOutButton.Controls.Add(this.btnUseSqlCmd, 2, 0);
             this.layOutButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layOutButton.Location = new System.Drawing.Point(68, 43);
             this.layOutButton.Name = "layOutButton";
@@ -278,12 +281,25 @@
             this.layOutButton.Size = new System.Drawing.Size(726, 34);
             this.layOutButton.TabIndex = 16;
             // 
+            // btnUseSqlCmd
+            // 
+            this.btnUseSqlCmd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUseSqlCmd.Image = global::Justin.Controls.Executer.Properties.Resources.ExecuteByLine;
+            this.btnUseSqlCmd.Location = new System.Drawing.Point(329, 3);
+            this.btnUseSqlCmd.Name = "btnUseSqlCmd";
+            this.btnUseSqlCmd.Size = new System.Drawing.Size(94, 28);
+            this.btnUseSqlCmd.TabIndex = 5;
+            this.btnUseSqlCmd.Text = "SqlCmd";
+            this.btnUseSqlCmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUseSqlCmd.UseVisualStyleBackColor = true;
+            this.btnUseSqlCmd.Click += new System.EventHandler(this.btnUseSqlCmd_Click);
+            // 
             // splitContainerSQL
             // 
             this.splitContainerSQL.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
             this.splitContainerSQL.Cursor = System.Windows.Forms.Cursors.Default;
             this.splitContainerSQL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerSQL.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainerSQL.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainerSQL.Location = new System.Drawing.Point(0, 0);
             this.splitContainerSQL.Name = "splitContainerSQL";
             // 
@@ -341,5 +357,6 @@
         private System.Windows.Forms.Button btnBrowerSQLFile;
         private System.Windows.Forms.TableLayoutPanel layoutTop;
         private FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx splitContainerSQL;
+        private System.Windows.Forms.Button btnUseSqlCmd;
     }
 }

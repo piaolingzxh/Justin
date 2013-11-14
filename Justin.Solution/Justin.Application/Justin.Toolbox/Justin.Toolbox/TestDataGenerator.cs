@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.IO;
 using System.Xml;
-using Justin.FrameWork.Helper;
-using System.Configuration;
-using WeifenLuo.WinFormsUI.Docking;
-using Justin.Log;
-using System.Security.AccessControl;
-using Justin.Toolbox;
-using Justin.FrameWork.Settings;
-using Justin.Core;
-using Justin.Controls.TestDataGenerator.Entities;
-using Justin.Controls.TestDataGenerator.DAL;
-using Justin.Controls.TestDataGenerator.Utility;
+using System.Xml.Serialization;
 using Justin.Controls.TestDataGenerator;
+using Justin.Controls.TestDataGenerator.DAL;
+using Justin.Controls.TestDataGenerator.Entities;
+using Justin.Controls.TestDataGenerator.Utility;
+using Justin.Core;
+using Justin.FrameWork.Helper;
+using Justin.FrameWork.Settings;
+using Justin.Log;
+using Justin.Toolbox;
+using WeifenLuo.WinFormsUI.Docking;
 
 
 namespace Justin.Toolbox
@@ -31,8 +31,7 @@ namespace Justin.Toolbox
         public TestDataGenerator()
         {
             InitializeComponent();
-            TableConfigCtrl.tableConfigFolder = ConfigurationManager.AppSettings["TableConfigFolder"];
-
+            JSetting.SetUseAppSetting("TableConfigFolder", "TableConfigFolder");
         }
 
         public TestDataGenerator(string connStr)

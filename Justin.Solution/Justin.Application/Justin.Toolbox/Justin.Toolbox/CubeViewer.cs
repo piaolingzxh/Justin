@@ -18,7 +18,7 @@ namespace Justin.Toolbox
         public CubeViewer()
         {
             InitializeComponent();
-            
+
         }
         public CubeViewer(string[] args)
             : this()
@@ -32,7 +32,8 @@ namespace Justin.Toolbox
         {
             try
             {
-                CubeViewCtrlSetting.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
+                JSetting.SetUseAppSetting("OLAPConnStr", "OLAPConnStr");
+                //CubeViewCtrlSetting.DefaultConnStr = ConfigurationManager.AppSettings["OLAPConnStr"];
             }
             catch { }
         }

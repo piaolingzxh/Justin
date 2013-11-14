@@ -41,8 +41,6 @@
             this.layoutProperty = new System.Windows.Forms.TableLayoutPanel();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.lbPropertyGridSource = new System.Windows.Forms.TextBox();
-            this.btnSerch = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.txtLookFor = new System.Windows.Forms.RichTextBox();
             this.txtDstFileName = new System.Windows.Forms.RichTextBox();
             this.txtSchemaXML = new ICSharpCode.TextEditor.TextEditorControl();
@@ -51,6 +49,8 @@
             this.splitContainerTreeAndProperty = new Justin.FrameWork.WinForm.FormUI.SplitContainerEx.SplitContainerEx();
             this.layoutXML = new System.Windows.Forms.TableLayoutPanel();
             this.layoutTopOfXML = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSerch = new System.Windows.Forms.Button();
             this.layoutLeftTop.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.layoutProperty.SuspendLayout();
@@ -71,8 +71,8 @@
             // 
             this.layoutLeftTop.ColumnCount = 3;
             this.layoutLeftTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutLeftTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.layoutLeftTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.layoutLeftTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.layoutLeftTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.layoutLeftTop.Controls.Add(this.btnConnect, 2, 0);
             this.layoutLeftTop.Controls.Add(this.btnBrowerFile, 1, 0);
             this.layoutLeftTop.Controls.Add(this.txtFileName, 0, 0);
@@ -86,21 +86,25 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(248, 3);
+            this.btnConnect.Image = global::Justin.Controls.Mondrian.Properties.Resources.conn;
+            this.btnConnect.Location = new System.Drawing.Point(278, 3);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(74, 23);
+            this.btnConnect.Size = new System.Drawing.Size(44, 23);
             this.btnConnect.TabIndex = 3;
-            this.btnConnect.Text = "Connect";
+            this.btnConnect.Tag = "重新加载文件内容";
+            this.btnConnect.Text = " ";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
             // btnBrowerFile
             // 
-            this.btnBrowerFile.Location = new System.Drawing.Point(168, 3);
+            this.btnBrowerFile.Image = global::Justin.Controls.Mondrian.Properties.Resources.Group;
+            this.btnBrowerFile.Location = new System.Drawing.Point(228, 3);
             this.btnBrowerFile.Name = "btnBrowerFile";
-            this.btnBrowerFile.Size = new System.Drawing.Size(74, 23);
+            this.btnBrowerFile.Size = new System.Drawing.Size(44, 23);
             this.btnBrowerFile.TabIndex = 2;
-            this.btnBrowerFile.Text = "Brower";
+            this.btnBrowerFile.Tag = "打开文件，预览内容";
+            this.btnBrowerFile.Text = " ";
             this.btnBrowerFile.UseVisualStyleBackColor = true;
             this.btnBrowerFile.Click += new System.EventHandler(this.btnBrowerFile_Click);
             // 
@@ -109,7 +113,7 @@
             this.txtFileName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtFileName.Location = new System.Drawing.Point(3, 3);
             this.txtFileName.Name = "txtFileName";
-            this.txtFileName.Size = new System.Drawing.Size(159, 23);
+            this.txtFileName.Size = new System.Drawing.Size(219, 23);
             this.txtFileName.TabIndex = 1;
             this.txtFileName.Text = "";
             // 
@@ -189,34 +193,12 @@
             this.lbPropertyGridSource.Size = new System.Drawing.Size(153, 20);
             this.lbPropertyGridSource.TabIndex = 3;
             // 
-            // btnSerch
-            // 
-            this.btnSerch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSerch.Location = new System.Drawing.Point(143, 3);
-            this.btnSerch.Name = "btnSerch";
-            this.btnSerch.Size = new System.Drawing.Size(74, 23);
-            this.btnSerch.TabIndex = 7;
-            this.btnSerch.Text = "Search";
-            this.btnSerch.UseVisualStyleBackColor = true;
-            this.btnSerch.Click += new System.EventHandler(this.btnSerch_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSave.Location = new System.Drawing.Point(363, 3);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(74, 23);
-            this.btnSave.TabIndex = 9;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // txtLookFor
             // 
             this.txtLookFor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLookFor.Location = new System.Drawing.Point(3, 3);
             this.txtLookFor.Name = "txtLookFor";
-            this.txtLookFor.Size = new System.Drawing.Size(134, 23);
+            this.txtLookFor.Size = new System.Drawing.Size(164, 23);
             this.txtLookFor.TabIndex = 6;
             this.txtLookFor.Text = "";
             // 
@@ -225,7 +207,7 @@
             this.txtDstFileName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtDstFileName.Location = new System.Drawing.Point(223, 3);
             this.txtDstFileName.Name = "txtDstFileName";
-            this.txtDstFileName.Size = new System.Drawing.Size(134, 23);
+            this.txtDstFileName.Size = new System.Drawing.Size(164, 23);
             this.txtDstFileName.TabIndex = 8;
             this.txtDstFileName.Text = "";
             // 
@@ -311,9 +293,9 @@
             // 
             this.layoutTopOfXML.ColumnCount = 4;
             this.layoutTopOfXML.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutTopOfXML.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.layoutTopOfXML.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.layoutTopOfXML.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutTopOfXML.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.layoutTopOfXML.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.layoutTopOfXML.Controls.Add(this.btnSave, 3, 0);
             this.layoutTopOfXML.Controls.Add(this.btnSerch, 1, 0);
             this.layoutTopOfXML.Controls.Add(this.txtDstFileName, 2, 0);
@@ -325,6 +307,30 @@
             this.layoutTopOfXML.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutTopOfXML.Size = new System.Drawing.Size(440, 29);
             this.layoutTopOfXML.TabIndex = 1;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSave.Image = global::Justin.Controls.Mondrian.Properties.Resources.save;
+            this.btnSave.Location = new System.Drawing.Point(393, 3);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(44, 23);
+            this.btnSave.TabIndex = 9;
+            this.btnSave.Tag = "保存XML";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnSerch
+            // 
+            this.btnSerch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSerch.Image = global::Justin.Controls.Mondrian.Properties.Resources.search;
+            this.btnSerch.Location = new System.Drawing.Point(173, 3);
+            this.btnSerch.Name = "btnSerch";
+            this.btnSerch.Size = new System.Drawing.Size(44, 23);
+            this.btnSerch.TabIndex = 7;
+            this.btnSerch.Tag = "从xml查找";
+            this.btnSerch.UseVisualStyleBackColor = true;
+            this.btnSerch.Click += new System.EventHandler(this.btnSerch_Click);
             // 
             // SchemaViewerCtrl
             // 

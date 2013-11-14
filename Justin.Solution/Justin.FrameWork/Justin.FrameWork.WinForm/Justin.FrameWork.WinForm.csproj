@@ -111,8 +111,8 @@
     <Compile Include="Utility\AutoStart.cs" />
     <Compile Include="Helper\HotkeyHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\DBConnectionInfo.cs" />
     <Compile Include="Utility\ProcessBackground.cs" />
-    <Compile Include="Utility\DBConnectDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormUI\NumberedTextBox.resx">
