@@ -11,6 +11,22 @@ namespace System.Windows.Forms
 {
     public static class FormEx
     {
+
+        //[DllImport("user32")]
+        //public static extern bool AnimateWindow(IntPtr hwnd, int dwTime, int dwFlags);
+        //const int AW_HOR_POSITIVE = 0x0001;//从左到右打开窗口  
+        //const int AW_HOR_NEGATIVE = 0x0002;//从右到左打开窗口 
+        //const int AW_VER_POSITIVE = 0x0004;//从上到下打开窗口
+        //const int AW_VER_NEGATIVE = 0x0008;//从下到上打开窗口
+        //const int AW_CENTER = 0x0010;//看不出任何效果
+        //const int AW_HIDE = 0x10000;//在窗体卸载时若想使用本函数就得加上此常量
+        //const int AW_ACTIVATE = 0x20000;//在窗体通过本函数打开后，默认情况下会失去焦点，除非加上本常量    
+        //const int AW_SLIDE = 0x40000;//看不出任何效果
+        //const int AW_BLEND = 0x80000;//淡入淡出效果
+
+        //[DllImport("user32.dll")]
+        //static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         /// <summary>

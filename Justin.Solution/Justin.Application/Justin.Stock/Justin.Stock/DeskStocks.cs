@@ -13,6 +13,7 @@ using Justin.FrameWork.Helper;
 using Justin.FrameWork.WinForm.Extensions;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
+using Justin.Message;
 using Justin.Stock.Controls;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
@@ -46,6 +47,8 @@ namespace Justin.Stock
 
         private void DeskStocks_Load(object sender, EventArgs e)
         {
+            NotifyHelper.notify = new QQStyleMessage();
+
             #region 股票无关
 
             LoadLastFormPosition();

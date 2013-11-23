@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
@@ -25,6 +26,7 @@ namespace Justin.Stock
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Constants.SettingFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format(@"JStock\{0}", Constants.SettingFileName));
             try
             {
@@ -49,6 +51,7 @@ namespace Justin.Stock
                     RequestFactory.ServiceProvider = settings.MonitorSite;
                     var form = new DeskStocks(Constants.SettingFilePath);
                     JLog.Write(LogMode.Info, "Start");
+
                     Application.Run(form);
                 }
                 else

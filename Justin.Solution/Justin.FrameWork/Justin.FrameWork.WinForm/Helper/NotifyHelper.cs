@@ -3,34 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.FrameWork.WinForm.Helper
 {
     public class NotifyHelper
     {
-        public static NotifyForm CurrentForm = new NotifyForm();
+        public static INotify notify = new NotifyForm();
 
-        public static void Set(int width = 0, int height = 0, double opacity = 0.6)
+        public static void Set(double opacity = 0.6)
         {
-            if (width > 0)
-                CurrentForm.Width = width;
-            if (height > 0)
-                CurrentForm.Height = height;
-            CurrentForm.Opacity = opacity;
+            notify.Opacity = opacity;
         }
-        public static void Show(string message)
+
+        public static void Show(string msg, string title = "")
         {
-            CurrentForm.Show(message);
+            notify.Show(msg, title);
         }
-        public static void Show(string format, params object[] args)
+        public static void Show(string msgFormat, params object[] args)
         {
-            CurrentForm.Show(string.Format(format, args));
+            notify.Show(msgFormat, args);
         }
-        public static void Show(int width, int height, string format, params object[] args)
+        public static void Show(string msgFormat, string detailMsg = "", params object[] msgArgs)
         {
-            CurrentForm.Width = width;
-            CurrentForm.Height = height;
-            CurrentForm.Show(string.Format(format, args));
+            notify.Show(msgFormat, detailMsg, msgArgs);
         }
     }
 }

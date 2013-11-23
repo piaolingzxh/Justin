@@ -118,3 +118,11 @@ v_sh600568="
 48	~15.29 跌停价
 49	~";
 
+添加自选：
+http://stockapp.finance.qq.com/panel/qq_stk.php?printtype=js&check=2&action=add&code=sh600568&uin=1740365002&0.6730163795873523
+删除自选
+http://stockapp.finance.qq.com/panel/qq_stk.php?printtype=js&check=2&action=del&code=sh600568&uin=1740365002&0.11965787736698985
+登陆
+http://ptlogin4.t.qq.com/check_sig?uin=1740365002&ptsig=i2KESgAg*aCjNOVEdiksZTuTiDnyaPdfEwLSkUp*s20_&daid=6&regmaster=&aid=46000101&s_url=http%3A%2F%2Fmini.t.qq.com%2Finvite%2Fquick.php
+http://ptlogin4.t.qq.com/check_sig?uin=1740365002&ptsig=i2KESgAg*aCjNOVEdiksZTuTiDnyaPdfEwLSkUp*s20_&daid=6&regmaster=&aid=46000101&s_url=http%3A%2F%2Ffinance.qq.com%2Fstock%2F
+http://finance.qq.com/stock/
