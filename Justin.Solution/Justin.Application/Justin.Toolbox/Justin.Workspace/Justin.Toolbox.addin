@@ -25,7 +25,7 @@
       <MenuItem Type="Menu" Name="CubeViewer" Text="CubeViewer" IsFile="false" Class="Justin.Toolbox.CubeViewer,,Justin.Toolbox" />
     </Open>
     <Tools>
-      <MenuItem Type="Menu" Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.FileAssociation,," />
+      <MenuItem Type="Menu" Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.FileAssociation,,Justin.Toolbox" />
       <MenuItem Type="Splitor" IsFile="false" />
     </Tools>
   </Menu>
