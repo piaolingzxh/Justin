@@ -79,7 +79,7 @@ namespace Justin.Controls.CubeView
                     foreach (DataRow catalogRow in dsCatalogs.Tables[0].Rows.Cast<DataRow>())
                     {
                         string catalog = catalogRow[0].ToString();
-                        string connStr = string.Format("{0};Catalog ={1};", this.ConnStr, catalog);
+                        string connStr = string.Format("{0};Catalog ={1};", this.ConnStr.EndsWith(";") ? this.ConnStr.Remove(this.ConnStr.Length - 1) : this.ConnStr, catalog);
                         cos.Add(catalog, new CubeOperate(connStr));
                     }
                 }

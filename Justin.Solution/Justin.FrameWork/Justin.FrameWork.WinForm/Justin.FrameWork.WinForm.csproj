@@ -101,6 +101,7 @@
     <Compile Include="FormUI\SplitContainerEx\ThumbArrowDirection.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\NotifyHelper.cs" />
+    <Compile Include="Models\INotify.cs" />
     <Compile Include="Models\IFile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

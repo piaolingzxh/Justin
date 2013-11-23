@@ -109,10 +109,6 @@ namespace Justin.Stock.Controls
                 {
                     Label stockLabel = this.GetNewlabel(rtStock.Order == -1);
 
-                    if (rtStock.Order == 0 || rtStock.Order == -1)
-                    {
-                        stockLabel.Click += new EventHandler(stockLabel_Click);
-                    }
                     #region 股票桌面信息
 
                     stockLabel.Tag = rtStock.Code;
@@ -187,6 +183,8 @@ namespace Justin.Stock.Controls
                     rowIndex++;
                 }
                 Label columnNamesLabel = GetNewlabel();
+
+                columnNamesLabel.Click += new EventHandler(stockLabel_Click);
                 columnNamesLabel.Text = string.Format(Constants.Setting.DeskDisplayFormat
                                                , "Name".PadLeft(4, ' ')                                                     //简称
                                                , "Now¥".PadLeft(6, ' ')                                                 //当前价格

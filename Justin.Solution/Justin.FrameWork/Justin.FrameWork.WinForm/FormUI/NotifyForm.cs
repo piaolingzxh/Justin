@@ -7,17 +7,26 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.WinForm.Models;
 namespace Justin.FrameWork.WinForm.FormUI
 {
-    public partial class NotifyForm : Form
+    public partial class NotifyForm : Form, INotify
     {
         public NotifyForm()
         {
             InitializeComponent();
-            int x = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Size.Width - this.Width;
-            int y = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Size.Height - this.Height;
-            this.Opacity = 0.6;
-            this.SetDesktopLocation(x, y);
+            //int x = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Size.Width - this.Width;
+            //int y = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Size.Height - this.Height;
+            //this.SetDesktopLocation(x, y); 
+            //this.Opacity = 0.6;
+            LocationPosition();
+            this.FormClosing += new FormClosingEventHandler(Form_FormClosing);
+
+        }
+        void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
         }
 
         //[DllImport("user32")]
@@ -35,33 +44,75 @@ namespace Justin.FrameWork.WinForm.FormUI
         //[DllImport("user32.dll")]
         //static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        public void Show(string message)
+        public string Title
         {
-            richTextBox1.Text = message;
-            this.ShowNotify();
-            //AnimateWindow(this.Handle, 3, AW_VER_NEGATIVE | AW_ACTIVATE | AW_BLEND);//从下到上且不占其它程序焦点 
-            this.Show();
-            this.timer1.Enabled = true;
+            get { return this.Text; }
+            set { this.Text = value; }
+        }
+        public string Message
+        {
+            get { return this.labelMessage.Text; }
+            set { this.labelMessage.Text = value; }
         }
 
+        #region Show
+
+        #region 覆盖系统
+
+        public new void Show()
+        {
+            //AnimateWindow(this.Handle, 3, AW_VER_NEGATIVE | AW_ACTIVATE | AW_BLEND);//从下到上且不占其它程序焦点 
+            this.ShowNotify();
+            this.timShow.Enabled = true;
+        }
+        public new void Show(IWin32Window owner)
+        {
+            this.Show();
+        }
         public new void Close()
         {
             //AnimateWindow(this.Handle, 1500, AW_VER_POSITIVE | AW_HIDE | AW_BLEND);
-            //base.Close();
-            //this.Close();
-            base.Hide();
-            richTextBox1.Clear();
-            this.timer1.Enabled = false;
+            this.Hide();
         }
         public new void Hide()
         {
             //ShowWindow(this.Handle, 4);
             //AnimateWindow(this.Handle, 3, AW_VER_POSITIVE | AW_HIDE | AW_BLEND);
-            //this.ShowNotify();
             base.Hide();
-            richTextBox1.Clear();
-            this.timer1.Enabled = false;
+            this.labelMessage.ResetText();
+            this.timShow.Enabled = false;
         }
+
+        #endregion
+
+
+        public void Show(string msg, string title = "", string tips = "")
+        {
+            if (!string.IsNullOrEmpty(title))
+                this.Title = title;
+            this.Message = msg;
+            tips = string.IsNullOrEmpty(tips) ? this.Message : tips;
+
+            toolTip1.SetToolTip(this.labelMessage, tips);
+            this.Show();
+        }
+
+
+
+        public void Show(string msgFormat, string detailMsg = "", params object[] msgArgs)
+        {
+            string message = msgArgs == null || msgArgs.Count() < 1 ? msgFormat : string.Format(msgFormat, msgArgs);
+
+            this.Show(message, "", detailMsg);
+
+        }
+
+        public void Show(string msgFormat, params object[] args)
+        {
+            this.Show(msgFormat, "", args);
+        }
+        #endregion
+
 
         public new int Width
         {
@@ -92,10 +143,12 @@ namespace Justin.FrameWork.WinForm.FormUI
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timShow_Tick(object sender, EventArgs e)
         {
-            //this.Close();
-            this.Hide();
+            if (!this.Bounds.Contains(Cursor.Position))
+            {
+                this.Hide();
+            }
         }
 
         private void TopMostMenuItem_Click(object sender, EventArgs e)
@@ -108,5 +161,12 @@ namespace Justin.FrameWork.WinForm.FormUI
             this.TopMostMenuItem.Checked = this.TopMost;
         }
 
+
+        private void LocationPosition()
+        {
+            Point p = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width, Screen.PrimaryScreen.WorkingArea.Height - this.Height);
+            this.PointToScreen(p);
+            this.Location = p;
+        }
     }
 }

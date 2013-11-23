@@ -70,6 +70,9 @@
     <Reference Include="Justin.Log">
       <HintPath>..\..\..\Release\Justin.Log.dll</HintPath>
     </Reference>
+    <Reference Include="SkinForm">
+      <HintPath>..\..\..\Common\Library\SkinForm.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -146,6 +149,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.Message\Justin.Message.csproj">
+      <Project>{D49F0387-7450-46BA-AE69-43E61ED580AA}</Project>
+      <Name>Justin.Message</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Justin.Stock.Controls\Justin.Stock.Controls.csproj">
       <Project>{20B52A06-C423-4CA4-8B92-FC57D0F6F98F}</Project>
       <Name>Justin.Stock.Controls</Name>

@@ -49,7 +49,8 @@ namespace Justin.Stock
                     picMonthTrans.Refresh();
                     break;
                 case ChartType.Comprehensive:
-
+                    if (this.webBrowser1.Url == null)
+                        this.webBrowser1.Url = new Uri(string.Format("http://i2.sinaimg.cn/cj/hsuan/flash/SinaKLine207a.swf?symbol={0}", stockCode));
                     break;
 
                 default: MessageBox.Show("不支持该分析图");
