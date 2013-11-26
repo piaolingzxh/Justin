@@ -42,6 +42,10 @@
             this.DetailInfoToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.deskStockCtrl1 = new Justin.Stock.Controls.DeskStockCtrl();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.noticeMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,63 +59,67 @@
             // noticeMenu
             // 
             this.noticeMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.topMostMenuItem,
             this.monitorMenuItem,
             this.personalMenuItem,
+            this.toolStripSeparator1,
             this.settingMenuItem,
             this.inScreenMenuItem,
+            this.toolStripSeparator2,
+            this.topMostMenuItem,
             this.autoHideMenuItem,
-            this.exitMenuItem});
+            this.toolStripSeparator3,
+            this.exitMenuItem,
+            this.toolStripSeparator4});
             this.noticeMenu.Name = "contextMenuStrip1";
-            this.noticeMenu.Size = new System.Drawing.Size(153, 180);
+            this.noticeMenu.Size = new System.Drawing.Size(126, 182);
             this.noticeMenu.Opening += new System.ComponentModel.CancelEventHandler(this.noticeMenu_Opening);
             // 
             // topMostMenuItem
             // 
             this.topMostMenuItem.Name = "topMostMenuItem";
-            this.topMostMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.topMostMenuItem.Size = new System.Drawing.Size(125, 22);
             this.topMostMenuItem.Text = "TopMost";
             this.topMostMenuItem.Click += new System.EventHandler(this.topMostMenuItem_Click);
             // 
             // monitorMenuItem
             // 
             this.monitorMenuItem.Name = "monitorMenuItem";
-            this.monitorMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.monitorMenuItem.Size = new System.Drawing.Size(125, 22);
             this.monitorMenuItem.Text = "Monitor";
             this.monitorMenuItem.Click += new System.EventHandler(this.MonitorMenuItem_Click);
             // 
             // personalMenuItem
             // 
             this.personalMenuItem.Name = "personalMenuItem";
-            this.personalMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.personalMenuItem.Size = new System.Drawing.Size(125, 22);
             this.personalMenuItem.Text = "Person";
             this.personalMenuItem.Click += new System.EventHandler(this.personalMenuItem_Click);
             // 
             // settingMenuItem
             // 
             this.settingMenuItem.Name = "settingMenuItem";
-            this.settingMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingMenuItem.Size = new System.Drawing.Size(125, 22);
             this.settingMenuItem.Text = "Settings";
             this.settingMenuItem.Click += new System.EventHandler(this.settingMenuItem_Click);
             // 
             // inScreenMenuItem
             // 
             this.inScreenMenuItem.Name = "inScreenMenuItem";
-            this.inScreenMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.inScreenMenuItem.Size = new System.Drawing.Size(125, 22);
             this.inScreenMenuItem.Text = "InScreen";
             this.inScreenMenuItem.Click += new System.EventHandler(this.inScreenMenuItem_Click);
             // 
             // autoHideMenuItem
             // 
             this.autoHideMenuItem.Name = "autoHideMenuItem";
-            this.autoHideMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.autoHideMenuItem.Size = new System.Drawing.Size(125, 22);
             this.autoHideMenuItem.Text = "AutoHide";
             this.autoHideMenuItem.Click += new System.EventHandler(this.autoHideMenuItem_Click);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitMenuItem.Size = new System.Drawing.Size(125, 22);
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
@@ -127,6 +135,26 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 50;
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(122, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(122, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(122, 6);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(122, 6);
             // 
             // DeskStocks
             // 
@@ -166,5 +194,9 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem autoHideMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inScreenMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
