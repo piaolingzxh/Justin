@@ -1,4 +1,0 @@
-http://ptlogin2.qq.com/login?u=1740365002&p=3F5BC493ED7FBDFE20BFD42E2BAF736A&verifycode=!CIU&aid=46000101&u1=http%3A%2F%2Fmini.t.qq.com%2Finvite%2Fquick.php&h=1&ptredirect=2&ptlang=2052&daid=6&from_ui=1&dumy=&low_login_enable=1&low_login_hour=720&regmaster=&fp=loginerroralert&action=8-10-1384571738920&mibao_css=&t=1&g=1&js_ver=10052&js_type=1&login_sig=Ds8gVJwiiwSrg3TmtGyAdfmNDyDbN*xkB4TB-t06JBcEU*lB-mhBFi9vxOwaUbNE&pt_rsa=0
-
-
-http://check.ptlogin2.qq.com/check?regmaster=&uin=1740365002&appid=46000101&js_ver=10052&js_type=1&login_sig=Ds8gVJwiiwSrg3TmtGyAdfmNDyDbN*xkB4TB-t06JBcEU*lB-mhBFi9vxOwaUbNE&u1=http%3A%2F%2Fmini.t.qq.com%2Finvite%2Fquick.php&r=0.8239153677131981
