@@ -39,6 +39,9 @@
             this.systemSettingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoHideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.deskMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,13 +52,16 @@
             this.DayKMenuItem,
             this.WeekKMenuItem,
             this.MonthKMenuItem,
+            this.toolStripSeparator1,
             this.monitorStockMenuItem,
             this.personalStocksMenuItem,
+            this.toolStripSeparator2,
             this.systemSettingMenuItem,
+            this.toolStripSeparator3,
             this.topMostToolStripMenuItem,
             this.autoHideToolStripMenuItem});
             this.deskMenu.Name = "contextMenuStrip1";
-            this.deskMenu.Size = new System.Drawing.Size(153, 224);
+            this.deskMenu.Size = new System.Drawing.Size(153, 242);
             this.deskMenu.Opening += new System.ComponentModel.CancelEventHandler(this.deskMenu_Opening);
             // 
             // timeSheetMenuItem
@@ -121,6 +127,21 @@
             this.autoHideToolStripMenuItem.Text = "Auto Hide";
             this.autoHideToolStripMenuItem.Click += new System.EventHandler(this.autoHideToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            // 
             // DeskStockCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,5 +167,8 @@
         private System.Windows.Forms.ToolStripMenuItem monitorStockMenuItem;
         private System.Windows.Forms.ToolStripMenuItem topMostToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoHideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

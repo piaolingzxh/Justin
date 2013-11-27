@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SystemSettingCtrl));
             this.label1 = new System.Windows.Forms.Label();
             this.txtBalance = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -279,15 +278,13 @@
             this.btnAutoStart.UseVisualStyleBackColor = true;
             this.btnAutoStart.Click += new System.EventHandler(this.btnAutoStart_Click);
             // 
-            // SystemSetting
+            // SystemSettingCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 301);
             this.Controls.Add(this.tableLayoutPanel1);
-
-            this.Name = "SystemSetting";
-            this.Text = "SystemSetting";
+            this.Name = "SystemSettingCtrl";
+            this.Size = new System.Drawing.Size(354, 301);
             this.Load += new System.EventHandler(this.SystemSetting_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

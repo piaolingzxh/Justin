@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D49F0387-7450-46BA-AE69-43E61ED580AA}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Justin.Message</RootNamespace>
     <AssemblyName>Justin.Message</AssemblyName>
@@ -30,7 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Justin.Message.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SkinForm, Version=10.11.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -89,7 +90,7 @@
     <None Include="Resources\menu_btn_highlight.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="logo.ico" />
+    <Content Include="Resources\logo.ico" />
     <Content Include="Resources\msgback.png" />
   </ItemGroup>
   <ItemGroup>
