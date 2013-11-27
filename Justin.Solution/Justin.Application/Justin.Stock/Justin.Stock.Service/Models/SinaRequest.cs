@@ -54,26 +54,26 @@ namespace Justin.Stock.Service.Models
 
                         #region 五盘档口
 
-                        stockInfo.Buy1Count = data[10].Value<int>();
+                        stockInfo.Buy1Count = data[10].Value<int>() / 100;
                         stockInfo.Buy1Price = data[11].Value<decimal>();
-                        stockInfo.Buy2Count = data[12].Value<int>();
+                        stockInfo.Buy2Count = data[12].Value<int>() / 100;
                         stockInfo.Buy2Price = data[13].Value<decimal>();
-                        stockInfo.Buy3Count = data[14].Value<int>();
+                        stockInfo.Buy3Count = data[14].Value<int>() / 100;
                         stockInfo.Buy3Price = data[15].Value<decimal>();
-                        stockInfo.Buy4Count = data[16].Value<int>();
+                        stockInfo.Buy4Count = data[16].Value<int>() / 100;
                         stockInfo.Buy4Price = data[17].Value<decimal>();
-                        stockInfo.Buy5Count = data[18].Value<int>();
+                        stockInfo.Buy5Count = data[18].Value<int>() / 100;
                         stockInfo.Buy5Price = data[19].Value<decimal>();
 
-                        stockInfo.Sell1Count = data[20].Value<int>();
+                        stockInfo.Sell1Count = data[20].Value<int>() / 100;
                         stockInfo.Sell1Price = data[21].Value<decimal>();
-                        stockInfo.Sell2Count = data[22].Value<int>();
+                        stockInfo.Sell2Count = data[22].Value<int>() / 100;
                         stockInfo.Sell2Price = data[23].Value<decimal>();
-                        stockInfo.Sell3Count = data[24].Value<int>();
+                        stockInfo.Sell3Count = data[24].Value<int>() / 100;
                         stockInfo.Sell3Price = data[25].Value<decimal>();
-                        stockInfo.Sell4Count = data[26].Value<int>();
+                        stockInfo.Sell4Count = data[26].Value<int>() / 100;
                         stockInfo.Sell4Price = data[27].Value<decimal>();
-                        stockInfo.Sell5Count = data[28].Value<int>();
+                        stockInfo.Sell5Count = data[28].Value<int>() / 100;
                         stockInfo.Sell5Price = data[29].Value<decimal>();
                         #endregion
                     }
