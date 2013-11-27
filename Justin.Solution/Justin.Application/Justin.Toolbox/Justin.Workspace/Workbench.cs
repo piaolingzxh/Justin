@@ -564,6 +564,8 @@ namespace Justin.Workspace
                 return;
             }
             JForm form = CreateJDockForm(classInfo[0], classInfo[2], string.IsNullOrEmpty(fileName) ? null : new object[] { new string[] { fileName } });
+            if (form == null)
+                return;
             if (form is IDB)
             {
                 form.ShowStatus = true;
