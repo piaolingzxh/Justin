@@ -86,9 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeskStocks.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="DeskStocks.cs" />
     <Compile Include="DeskStocks.designer.cs">
       <DependentUpon>DeskStocks.cs</DependentUpon>
     </Compile>
