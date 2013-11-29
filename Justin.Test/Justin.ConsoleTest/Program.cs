@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using GTP.BI.ETL.Utility;
 using Justin.FrameWork.Helper;
 
 namespace Justin.ConsoleTest
@@ -20,79 +19,56 @@ namespace Justin.ConsoleTest
     {
         static void Main(string[] args)
         {
-            //    Process p = new Process();
-            //    string cmd = "sqlcmd -S \"192.168.130.111\" -U \"sa\" -P \"bisa\" -d \"gcps_DW\" -i  \"D:\\temp\\JDataGenerate\\F_GCZJ_JMYH_1W.Sql\"";
-            //    //Process類有一個StartInfo屬性，這個是ProcessStartInfo類，包括了一些屬性和方法，下面我們用到了他的幾個屬性：
 
-            //    p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
-            //    p.ErrorDataReceived += new DataReceivedEventHandler(p_ErrorDataReceived);
-            //    p.StartInfo.FileName = "cmd.exe";           //設定程序名
-            //    p.StartInfo.Arguments = "/c " + cmd;    //設定程式執行參數
-            //    p.StartInfo.UseShellExecute = false;        //關閉Shell的使用
-            //    p.StartInfo.RedirectStandardInput = true;   //重定向標準輸入
-            //    p.StartInfo.RedirectStandardOutput = true;  //重定向標準輸出
-            //    p.StartInfo.RedirectStandardError = true;   //重定向錯誤輸出
-            //    p.StartInfo.CreateNoWindow = false;          //設置不顯示窗口
+            DataTable table = PrepareDataTable();
 
-            //    p.Start();   //啟動
-            //    p.BeginOutputReadLine();
-            //    p.BeginErrorReadLine();
-            //    //p.WaitForExit();
-
-            //    //p.StandardInput.WriteLine(command);       //也可以用這種方式輸入要執行的命令
-            //    //p.StandardInput.WriteLine("exit");        //不過要記得加上Exit要不然下一行程式執行的時候會當機
-
-            //    //string outString = p.StandardOutput.ReadToEnd();        //從輸出流取得命令執行結果
-            //    //Console.WriteLine("[{0}]", outString);
-            //    Console.WriteLine("OK");
-
-            //DbConnectionStringBuilder dcb = new OleDbConnectionStringBuilder("Data Source=.;Initial Catalog=AdventureWorks;Integrated Security=True");
-            //DbConnectionStringBuilder ecb = new OleDbConnectionStringBuilder("Data Source=.;Initial Catalog=AdventureWorks;Persist Security Info=True;User ID=sa;Password=sa");
-
-
-            double d = 6380099472108200.0000;
-            string s = d.ToString("F4");
-            Console.WriteLine(s);
-
-
-
+            Console.WriteLine(table.Columns.Count + "OK");
             Console.Read();
         }
 
-        static void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+
+        public static DataTable PrepareDataTable()
         {
-            Console.WriteLine(e.Data);
-        }
+            DataTable tempData = new DataTable();
+            string[] columnNames = new string[] { "DimColumnName", "UniqueKey", "Drilled", "ca854c76ca47ce4e&维修↑维修", "d24282b7b2e72fc3&改扩建↑改扩建", "eec893efc10f1db9&新建↑新建" };
+            Type[] columnTypes = new Type[] { typeof(string), typeof(string), typeof(bool), typeof(double), typeof(double), typeof(double) };
 
-        static void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            Console.WriteLine(e.Data);
-        }
+            #region 创建结构
 
-        static void p_Exited(object sender, EventArgs e)
-        {
-            Console.WriteLine("over");
-        }
-
-        public void test()
-        {
-            string connStr = "Data Source = 192.168.130.111;Initial Catalog = gcps_dw;User Id = sa;Password = bisa;";
-
-            string selectSQL = string.Format("select * from {0} where {1}", "D_INSTALL_METER_MODE", "LEN(SYS_KEY)<4"); ;
-            DataTable table = SqlHelper.ExecuteDataTable(connStr, CommandType.Text, selectSQL, null);
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var item in table.Rows.Cast<DataRow>())
+            for (int i = 0; i < columnNames.Length; i++)
             {
-                sb.AppendFormat("update {0} set {1} ='{2}' where {1}='{3}'",
-                  "D_INSTALL_METER_MODE",
-                  "SYS_KEY",
-                  MD5Encrypt.EncryptAlgorithm(item["INSTALL_METER_MODE_KEY"]),
-                  item["SYS_KEY"].ToString()).AppendLine();
+                tempData.Columns.Add(columnNames[i], columnTypes[i]);
             }
 
-            SqlHelper.ExecuteNonQuery(connStr, CommandType.Text, sb.ToString(), null);
+            #endregion
+
+            #region 填充数据
+
+
+
+            AddRow(tempData, "侧挂", "[GCPS.BI.BI.InstallMeterModeDim.hieInfo].[3463d06de0ca9a15]", false, 176916, 223911, 187853);
+            AddRow(tempData, "后挂", "[GCPS.BI.BI.InstallMeterModeDim.hieInfo].[7a37563370ded05f]", false, 171252, 187321, 189338);
+            AddRow(tempData, "混合", "[GCPS.BI.BI.InstallMeterModeDim.hieInfo].[aa0efb9e19094440]", false, 203935, 183251, 185596);
+            AddRow(tempData, "前挂", "[GCPS.BI.BI.InstallMeterModeDim.hieInfo].[4005f8da13f42943]", false, 185959, 190658, 173093);
+            AddRow(tempData, "左侧挂", "[GCPS.BI.BI.InstallMeterModeDim.hieInfo].[e0327ad868d138f2]", false, 172331, 203227, 209642);
+
+
+
+
+            #endregion
+            return tempData;
+        }
+
+        public static void AddRow(DataTable table, string dimValueText, string dimValueUniqueKey, bool drilled, double weixiuValue, double gaikuojianValue, double newValue)
+        {
+            DataRow row = table.NewRow();
+            row[0] = dimValueText;
+            row[1] = dimValueUniqueKey;
+            row[2] = drilled;
+            row[3] = weixiuValue;
+            row[4] = gaikuojianValue;
+            row[5] = newValue;
+            table.Rows.Add(row);
         }
     }
 
