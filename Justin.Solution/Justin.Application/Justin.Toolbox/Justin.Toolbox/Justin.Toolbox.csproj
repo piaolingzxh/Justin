@@ -162,6 +162,12 @@
     <Compile Include="MondrianSchemaWorkbench.Designer.cs">
       <DependentUpon>MondrianSchemaWorkbench.cs</DependentUpon>
     </Compile>
+    <Compile Include="MondrianServiceStarter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MondrianServiceStarter.Designer.cs">
+      <DependentUpon>MondrianServiceStarter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -320,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MondrianSchemaWorkbench.resx">
       <DependentUpon>MondrianSchemaWorkbench.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MondrianServiceStarter.resx">
+      <DependentUpon>MondrianServiceStarter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

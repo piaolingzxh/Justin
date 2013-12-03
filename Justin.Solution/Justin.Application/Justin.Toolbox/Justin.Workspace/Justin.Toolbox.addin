@@ -12,6 +12,7 @@
       <MenuItem Type="Menu" Name="CodeSnippetMgr" Text="CodeSnippetMgr" IsFile="false" Class="Justin.Toolbox.CodeSnippetMgr,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="Explorer" Text="Explorer" IsFile="false" Class="Justin.Toolbox.Explorer,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="CubeViewer" Text="CubeViewer" IsFile="false" Class="Justin.Toolbox.CubeViewer,,Justin.Toolbox" />
+      <MenuItem Type="Menu" Name="MondrianService" Text="MondrianService" IsFile="false" Class="Justin.Toolbox.MondrianServiceStarter,,Justin.Toolbox" />
     </New>
     <Open>
       <MenuItem Type="Menu" Name="TableConfigurator" Text="TableConfigurator" IsFile="false" Class="Justin.Toolbox.TableConfigurator,,Justin.Toolbox" Extensions=".config,.*" />
@@ -23,6 +24,7 @@
       <MenuItem Type="Menu" Name="Compiler" Text="Compiler" IsFile="false" Extensions=".cs,.vb,.java,.*" Class="Justin.Toolbox.JCodeCompiler,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="JEditor" Text="JEditor" IsFile="false" Extensions=".*" Class="Justin.Toolbox.JEditor,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="CubeViewer" Text="CubeViewer" IsFile="false" Class="Justin.Toolbox.CubeViewer,,Justin.Toolbox" />
+      <MenuItem Type="Menu" Name="MondrianService" Text="MondrianService" IsFile="false" Class="Justin.Toolbox.MondrianServiceStarter,,Justin.Toolbox" />
     </Open>
     <Tools>
       <MenuItem Type="Menu" Name="FileAssociation" Text="FileAssociation" IsFile="false" Class="Justin.Toolbox.FileAssociation,,Justin.Toolbox" />

@@ -17,17 +17,12 @@ namespace Justin.Server.MondrianService
         private static string _appName = "Justin_Mondrian";
         private static int _port = 8894;
 
-        private static string dataSourceName = "JMondrian";
-        private static string defaultCatalogName = "Justin";
-        private static string schemaFileName = "Justin_Mondrian.xml";
-
-        private static string catelogDataSourceInfoFormat = "Provider=mondrian;Jdbc=jdbc:{0};UseSchemaPool=false;JdbcDrivers={1};Catalog=/WEB-INF/queries/{2}";
-        private static string catelogDefinitionFormat = "/WEB-INF/queries/{0}";      
-
+        private static string defaultDataSourceInfoFormat = "Provider=mondrian;JdbcDrivers={0};Jdbc=jdbc:{1};Catalog={2};";
+ 
         private static string OracleJdbcDrivers = "oracle.jdbc.driver.OracleDriver";
-        private static string OracleJdbcFormat = "oracle:thin:@//{0}:{4}/{1};JdbcUser={2};JdbcPassword={3}";
+        private static string OracleJdbcConnStringValueFormat = "oracle:thin:@//{0}:{4}/{1};JdbcUser={2};JdbcPassword={3}";
         private static string MSSQLJdbcDrivers = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        private static string MSSQLJdbcFormat = "sqlserver://{0};jdbc.databaseName={1};jdbc.username={2};jdbc.password={3}";
+        private static string MSSQLJdbcConnStringValueFormat = "sqlserver://{0};jdbc.databaseName={1};jdbc.username={2};jdbc.password={3}";
 
 
         public void Start(string tomcatRootPath, string jreExecuteFileName, string mondrianRootPath, int port)
@@ -43,33 +38,40 @@ namespace Justin.Server.MondrianService
 
         private void SetMondrianDataSourceConfig(string mondrianRootPath)
         {
+            bool needSave = false;
             string datasourceXMLPath = Path.Combine(mondrianRootPath, @"WEB-INF\datasources.xml");
             XmlDocument datasourceXMLdoc = LoadXML(datasourceXMLPath);
             string jdbcValue = "";
             string jdbcDrivers = "";
-            datasourceXMLdoc.GetElementsByTagName("DataSourceName")[0].InnerText = dataSourceName;
-            datasourceXMLdoc.GetElementsByTagName("DataSourceDescription")[0].InnerText = dataSourceName;
+       
             string oledbConnString = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
             ReadDataSource(oledbConnString, out jdbcValue, out jdbcDrivers);
 
             var categologs = datasourceXMLdoc.GetElementsByTagName("Catalog").Cast<XmlElement>().ToList();
-            XmlElement defaultCatelog = null;
-            foreach (XmlElement item in categologs)
+            foreach (XmlElement catalogElement in categologs)
             {
-                if (string.Compare(item.Attributes["name"].Value, defaultCatalogName) == 0)
+                string dataSourceInfoFormat = defaultDataSourceInfoFormat;
+                if (catalogElement.ChildNodes.Count > 2)
                 {
-                    defaultCatelog = item;
-                    break;
+                    if (string.IsNullOrEmpty(catalogElement.ChildNodes[2].InnerText))
+                    {
+                        catalogElement.ChildNodes[2].InnerText = defaultDataSourceInfoFormat;
+                        needSave = true;
+                    }
+                    else
+                    {
+                        dataSourceInfoFormat = catalogElement.ChildNodes[2].InnerText;
+                    }
+                }
+                string javaMondrianConnStr = string.Format(dataSourceInfoFormat, jdbcDrivers, jdbcValue, catalogElement.ChildNodes[1].InnerText);
+                if (!catalogElement.ChildNodes[0].InnerText.Equals(javaMondrianConnStr))
+                {
+                    catalogElement.ChildNodes[0].InnerText = javaMondrianConnStr;
+                    needSave = true;
                 }
             }
-            if (defaultCatelog == null)
-            {
-                defaultCatelog = categologs[0];
-                defaultCatelog.Attributes["name"].Value = defaultCatalogName;
-            }
-            defaultCatelog.ChildNodes[0].InnerText = string.Format(catelogDataSourceInfoFormat, jdbcValue, jdbcDrivers, schemaFileName); ;
-            defaultCatelog.ChildNodes[1].InnerText = string.Format(catelogDefinitionFormat, schemaFileName);
-            datasourceXMLdoc.Save(datasourceXMLPath);
+            if (needSave)
+                datasourceXMLdoc.Save(datasourceXMLPath);
         }
 
         private void ReadDataSource(string oledbConnectionString, out string jdbcValue, out string jdbcDrivers)
@@ -107,7 +109,7 @@ namespace Justin.Server.MondrianService
                 serverName = dataSourceValue;
                 database = initialCatalog;
                 port = 1433;
-                jdbcValue = string.Format(MSSQLJdbcFormat
+                jdbcValue = string.Format(MSSQLJdbcConnStringValueFormat
               , serverName
               , database
               , userName
@@ -124,7 +126,7 @@ namespace Justin.Server.MondrianService
                 serverName = serverInfo2[0];
                 database = serverInfo1[1];
                 port = serverInfo2.Length < 2 || string.IsNullOrEmpty(serverInfo2[1]) ? 1521 : int.Parse(serverInfo2[1]);
-                jdbcValue = string.Format(OracleJdbcFormat
+                jdbcValue = string.Format(OracleJdbcConnStringValueFormat
                  , serverName
                  , database
                  , userName

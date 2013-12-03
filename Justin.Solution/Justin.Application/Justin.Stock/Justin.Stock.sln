@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Message", "..\..\Justin.FrameWork\Justin.Message\Justin.Message.csproj", "{D49F0387-7450-46BA-AE69-43E61ED580AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Log", "..\..\Justin.FrameWork\Justin.Log\Justin.Log.csproj", "{FB90C580-4E99-4921-B352-7704032AE2F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,16 @@ Global
 		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FB90C580-4E99-4921-B352-7704032AE2F7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

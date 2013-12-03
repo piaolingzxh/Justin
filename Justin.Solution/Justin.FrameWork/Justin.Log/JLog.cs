@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NLog;
 
@@ -56,12 +57,13 @@ namespace Justin.Log
         public static void Write(LogMode logMode, Exception ex, string messageFormat, params object[] args)
         {
             string exMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
-            Write(logMode, string.Format(messageFormat, args) + string.Format("\r\n异常信息：{0}", exMessage));
+            string msg = args == null || args.Count() < 1 ? messageFormat : string.Format(messageFormat, args);
+            Write(logMode, msg + string.Format("\r\n异常信息：{0}", exMessage));
         }
 
         public static void Write(LogMode logMode, string messageFormat, params object[] args)
         {
-            string message = string.Format(messageFormat, args);
+            string message = args == null || args.Count() < 1 ? messageFormat : string.Format(messageFormat, args);
             lock (writeObject)
             {
                 if ((LogMode.Fatal & logMode) == LogMode.Fatal && Log.IsFatalEnabled)
@@ -86,7 +88,7 @@ namespace Justin.Log
         }
         public static void Write(LogMode logMode, long elapsedMilliseconds, bool showSecondFormat, string messageFormat, params object[] args)
         {
-            string message = string.Format(messageFormat, args);
+            string message = args == null || args.Count() < 1 ? messageFormat : string.Format(messageFormat, args);
             if (showSecondFormat)
             {
                 message += string.Format(" 耗时:{0}毫秒", elapsedMilliseconds);
@@ -143,160 +145,160 @@ namespace Justin.Log
     }
 
     #region 注释
-     //public class JustinLog
+    //public class JustinLog
     //{
-        //private static volatile NLog.Logger nLogInstance;
-        //private static volatile log4net.ILog log4Instance;
-        //private static object syncObject = new Object();
-        //public static int logType = 0;
-        //private static object writeObject = new object();
-        //private JustinLog() { }
-        //private static NLog.Logger NLog
-        //{
-        //    get
-        //    {
-        //        if (nLogInstance == null)
-        //        {
-        //            lock (syncObject)
-        //            {
-        //                if (nLogInstance == null)
-        //                {
-        //                    nLogInstance = LogManager.GetCurrentClassLogger();
-        //                }
-        //            }
-        //        }
-        //        return nLogInstance;
-        //    }
-        //}
-        //private static log4net.ILog Log4
-        //{
-        //    get
-        //    {
-        //        if (log4Instance == null)
-        //        {
-        //            lock (syncObject)
-        //            {
-        //                if (log4Instance == null)
-        //                {
-        //                    log4Instance = log4net.LogManager.GetLogger("BenzLog");
-        //                }
-        //            }
-        //        }
-        //        return log4Instance;
-        //    }
-        //}
+    //private static volatile NLog.Logger nLogInstance;
+    //private static volatile log4net.ILog log4Instance;
+    //private static object syncObject = new Object();
+    //public static int logType = 0;
+    //private static object writeObject = new object();
+    //private JustinLog() { }
+    //private static NLog.Logger NLog
+    //{
+    //    get
+    //    {
+    //        if (nLogInstance == null)
+    //        {
+    //            lock (syncObject)
+    //            {
+    //                if (nLogInstance == null)
+    //                {
+    //                    nLogInstance = LogManager.GetCurrentClassLogger();
+    //                }
+    //            }
+    //        }
+    //        return nLogInstance;
+    //    }
+    //}
+    //private static log4net.ILog Log4
+    //{
+    //    get
+    //    {
+    //        if (log4Instance == null)
+    //        {
+    //            lock (syncObject)
+    //            {
+    //                if (log4Instance == null)
+    //                {
+    //                    log4Instance = log4net.LogManager.GetLogger("BenzLog");
+    //                }
+    //            }
+    //        }
+    //        return log4Instance;
+    //    }
+    //}
 
-        //public static void Write(Exception ex, LogMode logMode)
-        //{
-        //    lock (writeObject)
-        //    {
-        //        if (logType == 0)
-        //        {
-        //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.NLog.IsFatalEnabled)
-        //                JustinLog.NLog.Fatal(ex.ToString());
+    //public static void Write(Exception ex, LogMode logMode)
+    //{
+    //    lock (writeObject)
+    //    {
+    //        if (logType == 0)
+    //        {
+    //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.NLog.IsFatalEnabled)
+    //                JustinLog.NLog.Fatal(ex.ToString());
 
-        //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.NLog.IsErrorEnabled)
-        //                JustinLog.NLog.Error(ex);
+    //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.NLog.IsErrorEnabled)
+    //                JustinLog.NLog.Error(ex);
 
-        //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.NLog.IsWarnEnabled)
-        //                JustinLog.NLog.Warn(ex.ToString());
+    //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.NLog.IsWarnEnabled)
+    //                JustinLog.NLog.Warn(ex.ToString());
 
-        //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.NLog.IsInfoEnabled)
-        //                JustinLog.NLog.Info(ex.ToString());
+    //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.NLog.IsInfoEnabled)
+    //                JustinLog.NLog.Info(ex.ToString());
 
-        //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.NLog.IsDebugEnabled)
-        //                JustinLog.NLog.Debug(ex.ToString());
-        //            if ((LogMode.ScenarioData & logMode) == LogMode.ScenarioData && JustinLog.IsDataEnabled)
-        //                JustinLog.NLog.Debug(ex.ToString());
-        //        }
-        //        else
-        //        {
-        //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.Log4.IsFatalEnabled)
-        //                JustinLog.Log4.FatalFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
+    //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.NLog.IsDebugEnabled)
+    //                JustinLog.NLog.Debug(ex.ToString());
+    //            if ((LogMode.ScenarioData & logMode) == LogMode.ScenarioData && JustinLog.IsDataEnabled)
+    //                JustinLog.NLog.Debug(ex.ToString());
+    //        }
+    //        else
+    //        {
+    //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.Log4.IsFatalEnabled)
+    //                JustinLog.Log4.FatalFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
 
-        //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.Log4.IsErrorEnabled)
-        //                JustinLog.Log4.ErrorFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
+    //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.Log4.IsErrorEnabled)
+    //                JustinLog.Log4.ErrorFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
 
-        //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.Log4.IsWarnEnabled)
-        //                JustinLog.Log4.WarnFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
+    //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.Log4.IsWarnEnabled)
+    //                JustinLog.Log4.WarnFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
 
-        //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.Log4.IsInfoEnabled)
-        //                JustinLog.Log4.InfoFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
+    //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.Log4.IsInfoEnabled)
+    //                JustinLog.Log4.InfoFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
 
-        //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.Log4.IsDebugEnabled)
-        //                JustinLog.Log4.DebugFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
-        //        }
-        //    }
-        //}
-        //public static void Write(string methrodName, Exception ex, LogMode logMode)
-        //{
-        //    string exMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
-        //    Write(string.Format("{0} Exception,Details:{1}", methrodName, exMessage), logMode); ;
-        //}
-        //public static void Write(string methrodName, long elapsedMilliseconds, LogMode logMode)
-        //{
-        //    Write(string.Format("{0},Elapsed:{1}ms", methrodName, elapsedMilliseconds), logMode);
-        //}
-        //public static void Write(string message, LogMode logMode)
-        //{
-        //    lock (writeObject)
-        //    {
-        //        if (logType == 0)
-        //        {
-        //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.NLog.IsFatalEnabled)
-        //                JustinLog.NLog.Fatal(message);
+    //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.Log4.IsDebugEnabled)
+    //                JustinLog.Log4.DebugFormat("{0}\r\n StackTrace:{1}", ex.Message, ex.StackTrace);
+    //        }
+    //    }
+    //}
+    //public static void Write(string methrodName, Exception ex, LogMode logMode)
+    //{
+    //    string exMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
+    //    Write(string.Format("{0} Exception,Details:{1}", methrodName, exMessage), logMode); ;
+    //}
+    //public static void Write(string methrodName, long elapsedMilliseconds, LogMode logMode)
+    //{
+    //    Write(string.Format("{0},Elapsed:{1}ms", methrodName, elapsedMilliseconds), logMode);
+    //}
+    //public static void Write(string message, LogMode logMode)
+    //{
+    //    lock (writeObject)
+    //    {
+    //        if (logType == 0)
+    //        {
+    //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.NLog.IsFatalEnabled)
+    //                JustinLog.NLog.Fatal(message);
 
-        //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.NLog.IsErrorEnabled)
-        //                JustinLog.NLog.Error(message);
+    //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.NLog.IsErrorEnabled)
+    //                JustinLog.NLog.Error(message);
 
-        //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.NLog.IsWarnEnabled)
-        //                JustinLog.NLog.Warn(message);
+    //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.NLog.IsWarnEnabled)
+    //                JustinLog.NLog.Warn(message);
 
-        //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.NLog.IsInfoEnabled)
-        //                JustinLog.NLog.Info(message);
+    //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.NLog.IsInfoEnabled)
+    //                JustinLog.NLog.Info(message);
 
-        //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.NLog.IsDebugEnabled)
-        //                JustinLog.NLog.Debug(message);
+    //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.NLog.IsDebugEnabled)
+    //                JustinLog.NLog.Debug(message);
 
-        //            if ((LogMode.ScenarioData & logMode) == LogMode.ScenarioData && JustinLog.IsDataEnabled)
-        //                JustinLog.NLog.Debug(message);
-        //        }
-        //        else
-        //        {
-        //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.Log4.IsFatalEnabled)
-        //                JustinLog.Log4.FatalFormat("{0}\r\n ", message);
+    //            if ((LogMode.ScenarioData & logMode) == LogMode.ScenarioData && JustinLog.IsDataEnabled)
+    //                JustinLog.NLog.Debug(message);
+    //        }
+    //        else
+    //        {
+    //            if ((LogMode.Fatal & logMode) == LogMode.Fatal && JustinLog.Log4.IsFatalEnabled)
+    //                JustinLog.Log4.FatalFormat("{0}\r\n ", message);
 
-        //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.Log4.IsErrorEnabled)
-        //                JustinLog.Log4.ErrorFormat("{0}\r\n ", message);
+    //            if ((LogMode.Error & logMode) == LogMode.Error && JustinLog.Log4.IsErrorEnabled)
+    //                JustinLog.Log4.ErrorFormat("{0}\r\n ", message);
 
-        //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.Log4.IsWarnEnabled)
-        //                JustinLog.Log4.WarnFormat("{0}\r\n ", message);
+    //            if ((LogMode.Warn & logMode) == LogMode.Warn && JustinLog.Log4.IsWarnEnabled)
+    //                JustinLog.Log4.WarnFormat("{0}\r\n ", message);
 
-        //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.Log4.IsInfoEnabled)
-        //                JustinLog.Log4.InfoFormat("{0}\r\n ", message);
+    //            if ((LogMode.Info & logMode) == LogMode.Info && JustinLog.Log4.IsInfoEnabled)
+    //                JustinLog.Log4.InfoFormat("{0}\r\n ", message);
 
-        //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.Log4.IsDebugEnabled)
-        //                JustinLog.Log4.DebugFormat("{0}\r\n ", message);
-        //        }
-        //    }
-        //}
-        //private static bool? isDataEnabled;
-        //public static bool IsDataEnabled
-        //{
-        //    get
-        //    {
-        //        if (!isDataEnabled.HasValue)
-        //        {
-        //            return isDataEnabled.Value;
-        //        }
-        //        else
-        //            return false;
-        //    }
-        //    set
-        //    {
-        //        isDataEnabled = value;
-        //    }
-        //}
+    //            if ((LogMode.Debug & logMode) == LogMode.Debug && JustinLog.Log4.IsDebugEnabled)
+    //                JustinLog.Log4.DebugFormat("{0}\r\n ", message);
+    //        }
+    //    }
+    //}
+    //private static bool? isDataEnabled;
+    //public static bool IsDataEnabled
+    //{
+    //    get
+    //    {
+    //        if (!isDataEnabled.HasValue)
+    //        {
+    //            return isDataEnabled.Value;
+    //        }
+    //        else
+    //            return false;
+    //    }
+    //    set
+    //    {
+    //        isDataEnabled = value;
+    //    }
+    //}
 
     //}
     #endregion

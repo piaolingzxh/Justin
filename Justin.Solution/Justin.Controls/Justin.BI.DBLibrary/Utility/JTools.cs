@@ -7,10 +7,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using Justin.BI.DBLibrary.TestDataGenerate;
+using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
-using Justin.FrameWork.Extensions;
-using Justin.BI.DBLibrary.TestDataGenerate;
 
 namespace Justin.BI.DBLibrary.Utility
 {
@@ -18,10 +18,12 @@ namespace Justin.BI.DBLibrary.Utility
     {
         public static string GetFileName(string tableName, FileType fileType)
         {
-            string ConfigFileNameFormat = Constants.ConfigFileFolder + "{0}." + FileType.TableConfig.GetDefaultFileExtension();
-            string OuputSQLFileNameFormat = Constants.OuputSQLFileFolder + "{0}." + FileType.SQL.GetDefaultFileExtension();
-            string fileName = string.Format(fileType == FileType.TableConfig ? ConfigFileNameFormat : OuputSQLFileNameFormat, tableName);
-            return fileName;
+            //todo:
+            //string ConfigFileNameFormat = Constants.ConfigFileFolder + "{0}." + FileType.TableConfig.GetDefaultFileExtension();
+            //string OuputSQLFileNameFormat = Constants.OuputSQLFileFolder + "{0}." + FileType.SQL.GetDefaultFileExtension();
+            //string fileName = string.Format(fileType == FileType.TableConfig ? ConfigFileNameFormat : OuputSQLFileNameFormat, tableName);
+            //return fileName;
+            return "";
         }
         public static void SetToolTips(Control ctrl, ToolTip tips)
         {

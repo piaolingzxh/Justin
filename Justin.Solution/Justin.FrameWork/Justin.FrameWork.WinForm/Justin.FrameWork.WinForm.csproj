@@ -63,6 +63,21 @@
     <Compile Include="FormUI\AutoAnchorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormUI\CheckGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormUI\CheckGroupBox.designer.cs">
+      <DependentUpon>CheckGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUI\RadioButtonPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormUI\RadioGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormUI\RadioGroupBox.designer.cs">
+      <DependentUpon>RadioGroupBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormUI\SplitContainerEx\CollapsePanel.cs" />
     <Compile Include="FormUI\SplitContainerEx\ControlPaintEx.cs" />
     <Compile Include="FormUI\SplitContainerEx\ControlState.cs" />
@@ -116,11 +131,17 @@
     <Compile Include="Utility\ProcessBackground.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FormUI\CheckGroupBox.resx">
+      <DependentUpon>CheckGroupBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormUI\NumberedTextBox.resx">
       <DependentUpon>NumberedTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormUI\NotifyForm.resx">
       <DependentUpon>NotifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUI\RadioGroupBox.resx">
+      <DependentUpon>RadioGroupBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -131,6 +152,8 @@
     <None Include="Justin.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FormUI\CheckGroupBox.bmp" />
+    <Content Include="FormUI\RadioGroupBox.bmp" />
     <Content Include="Images\closed.gif" />
     <Content Include="Images\opened.gif" />
   </ItemGroup>

@@ -78,6 +78,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.TextEditor"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Controls.CubeView", "..\..\Justin.Controls\Justin.Controls.CubeView\Justin.Controls.CubeView.csproj", "{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI", "..\..\Justin.Controls\Justin.BI\Justin.BI.csproj", "{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.BI.DBLibrary", "..\..\Justin.Controls\Justin.BI.DBLibrary\Justin.BI.DBLibrary.csproj", "{B58020EB-6EC4-42F1-A81D-3004481B9B8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,6 +148,14 @@ Global
 		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D71CE68-55E3-4E0D-AA92-9DD85140BDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B58020EB-6EC4-42F1-A81D-3004481B9B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B58020EB-6EC4-42F1-A81D-3004481B9B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B58020EB-6EC4-42F1-A81D-3004481B9B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B58020EB-6EC4-42F1-A81D-3004481B9B8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
