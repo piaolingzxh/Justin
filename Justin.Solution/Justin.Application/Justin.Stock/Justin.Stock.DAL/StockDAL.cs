@@ -94,7 +94,7 @@ CREATE TABLE [MyStocks] (
 
         #region 添加自选
 
-        public void InsertStock(string code, string no, string name, string shortName,decimal order)
+        public void InsertStock(string code, string no, string name, string shortName, decimal order)
         {
             string CHECK_SQL_FORMAT = "select count(*) from MyStocks where Code='{0}'";
             string INSERT_SQL_FORMAT = @"insert into MyStocks(Code,No,Name,SpellingInShort,ShowInFolatWindow,[Order])values('{0}','{1}','{2}','{3}',1,{4})";
@@ -102,7 +102,7 @@ CREATE TABLE [MyStocks] (
             int count = int.Parse(SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, String.Format(CHECK_SQL_FORMAT, code), null).ToString());
             if (count < 1)
             {
-                string insertSQL = string.Format(INSERT_SQL_FORMAT, code, no, name, shortName,order);
+                string insertSQL = string.Format(INSERT_SQL_FORMAT, code, no, name, shortName, order);
                 SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, insertSQL, null);
             }
 
@@ -177,7 +177,7 @@ CREATE TABLE [MyStocks] (
             updateCmd.Parameters.Add(new SQLiteParameter("@Warn", DbType.Boolean, "Warn", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@Code", DbType.String, "Code", DataRowVersion.Original));
 
-            myAdapter.UpdateCommand = updateCmd;
+            myAdapter.InsertCommand = updateCmd;
             //SQLiteCommandBuilder myCommandBuilder = new SQLiteCommandBuilder(myAdapter);
             IEnumerable<DataRow> rows = table.Rows.Cast<DataRow>().Where(row => row.RowState == DataRowState.Modified);
 
@@ -195,8 +195,6 @@ CREATE TABLE [MyStocks] (
         {
             return SqliteHelper.ExecuteDataTable(SqliteHelper.ConnStr, CommandType.Text, sql, null);
         }
-
-
 
         #region AllStock
 
@@ -254,6 +252,41 @@ CREATE TABLE [MyStocks] (
         }
 
         #endregion
+
+        public DataTable GetCheckHistory()
+        {
+            return Query("select * from CheckHistory order by checktime");
+        }
+
+        public void UpdateCheckHistory(DataTable table)
+        {
+            SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr);
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter();
+            SQLiteCommand myCommand = new SQLiteCommand(("select * from CheckHistory"), conn);
+            adapter.SelectCommand = myCommand;
+            SQLiteCommand command = new SQLiteCommand(
+@"INSERT INTO CheckHistory (CheckType, Bank,Amt,CheckTime)  
+VALUES (@CheckType, @Bank, @Amt,datetime('now','localtime'));  "
+, conn);
+
+            // Add the parameters for the InsertCommand.
+            command.Parameters.Add("@CheckType", DbType.String, 255, "CheckType");
+            command.Parameters.Add("@Bank", DbType.String, 255, "Bank");
+            command.Parameters.Add("@Amt", DbType.Decimal, 16, "Amt");
+
+            adapter.InsertCommand = command;
+
+            IEnumerable<DataRow> rows = table.Rows.Cast<DataRow>().Where(row => row.RowState == DataRowState.Added);
+
+            if (rows == null || rows.Count() == 0) return;
+            if (rows.Count() != 1)
+                throw new Exception("每次只能添加一个");
+            var tempRows = rows.ToArray();
+            int x = adapter.Update(tempRows);
+
+            SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, "update CheckHistory set Balance =Amt +(select ch.Balance from CheckHistory ch where ch.Balance is not null order by ch.checktime desc LIMIT 1) where  CheckHistory.Balance is null", null);
+
+        }
 
     }
 }

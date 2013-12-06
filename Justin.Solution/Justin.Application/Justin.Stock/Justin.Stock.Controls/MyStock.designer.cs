@@ -120,8 +120,12 @@
             this.btnSaveMonitorSetting = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStockChart = new System.Windows.Forms.TabPage();
-            this.stockChartCtrl = new Justin.Stock.StockChartCtrl();
             this.tabPageSetting = new System.Windows.Forms.TabPage();
+            this.tabPageCheckInOut = new System.Windows.Forms.TabPage();
+            this.checkHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvCheckHistory = new System.Windows.Forms.DataGridView();
+            this.stockChartCtrl = new Justin.Stock.StockChartCtrl();
             this.systemSettingCtrl1 = new Justin.Stock.Controls.SystemSettingCtrl();
             this.stockSettingsContextMenu.SuspendLayout();
             this.queryResultStocksContextMenu.SuspendLayout();
@@ -145,6 +149,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPageStockChart.SuspendLayout();
             this.tabPageSetting.SuspendLayout();
+            this.tabPageCheckInOut.SuspendLayout();
+            this.checkHistoryContextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCheckHistory)).BeginInit();
             this.SuspendLayout();
             // 
             // stockSettingsContextMenu
@@ -336,7 +343,7 @@
             this.tabPageMyStockSetting.Location = new System.Drawing.Point(4, 22);
             this.tabPageMyStockSetting.Name = "tabPageMyStockSetting";
             this.tabPageMyStockSetting.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMyStockSetting.Size = new System.Drawing.Size(863, 429);
+            this.tabPageMyStockSetting.Size = new System.Drawing.Size(716, 452);
             this.tabPageMyStockSetting.TabIndex = 0;
             this.tabPageMyStockSetting.Text = "Setting";
             this.tabPageMyStockSetting.UseVisualStyleBackColor = true;
@@ -375,7 +382,7 @@
             this.dgvStocksetting.Name = "dgvStocksetting";
             this.dgvStocksetting.RowTemplate.Height = 23;
             this.dgvStocksetting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStocksetting.Size = new System.Drawing.Size(857, 423);
+            this.dgvStocksetting.Size = new System.Drawing.Size(710, 446);
             this.dgvStocksetting.TabIndex = 22;
             this.dgvStocksetting.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvStocksetting_CellMouseDown);
             // 
@@ -530,7 +537,7 @@
             this.tabPageAllStockList.Location = new System.Drawing.Point(4, 22);
             this.tabPageAllStockList.Name = "tabPageAllStockList";
             this.tabPageAllStockList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAllStockList.Size = new System.Drawing.Size(863, 429);
+            this.tabPageAllStockList.Size = new System.Drawing.Size(716, 452);
             this.tabPageAllStockList.TabIndex = 1;
             this.tabPageAllStockList.Text = "AllStockList";
             this.tabPageAllStockList.UseVisualStyleBackColor = true;
@@ -548,7 +555,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(857, 423);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(710, 446);
             this.tableLayoutPanel2.TabIndex = 7;
             // 
             // dgvQueryResultStocks
@@ -570,7 +577,7 @@
             this.dgvQueryResultStocks.Name = "dgvQueryResultStocks";
             this.dgvQueryResultStocks.RowTemplate.Height = 23;
             this.dgvQueryResultStocks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvQueryResultStocks.Size = new System.Drawing.Size(851, 382);
+            this.dgvQueryResultStocks.Size = new System.Drawing.Size(704, 405);
             this.dgvQueryResultStocks.TabIndex = 10;
             this.dgvQueryResultStocks.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvQueryResultStocks_CellMouseDown);
             // 
@@ -630,7 +637,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(851, 29);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(704, 29);
             this.tableLayoutPanel3.TabIndex = 16;
             // 
             // txtSrockName
@@ -638,13 +645,13 @@
             this.txtSrockName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSrockName.Location = new System.Drawing.Point(3, 3);
             this.txtSrockName.Name = "txtSrockName";
-            this.txtSrockName.Size = new System.Drawing.Size(605, 20);
+            this.txtSrockName.Size = new System.Drawing.Size(458, 20);
             this.txtSrockName.TabIndex = 10;
             // 
             // btnQueryStock
             // 
             this.btnQueryStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnQueryStock.Location = new System.Drawing.Point(614, 3);
+            this.btnQueryStock.Location = new System.Drawing.Point(467, 3);
             this.btnQueryStock.Name = "btnQueryStock";
             this.btnQueryStock.Size = new System.Drawing.Size(74, 23);
             this.btnQueryStock.TabIndex = 11;
@@ -655,7 +662,7 @@
             // btnRefreshPersonalStockSetting
             // 
             this.btnRefreshPersonalStockSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRefreshPersonalStockSetting.Location = new System.Drawing.Point(694, 3);
+            this.btnRefreshPersonalStockSetting.Location = new System.Drawing.Point(547, 3);
             this.btnRefreshPersonalStockSetting.Name = "btnRefreshPersonalStockSetting";
             this.btnRefreshPersonalStockSetting.Size = new System.Drawing.Size(74, 23);
             this.btnRefreshPersonalStockSetting.TabIndex = 12;
@@ -666,7 +673,7 @@
             // btnUpdateStockInfo
             // 
             this.btnUpdateStockInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnUpdateStockInfo.Location = new System.Drawing.Point(774, 3);
+            this.btnUpdateStockInfo.Location = new System.Drawing.Point(627, 3);
             this.btnUpdateStockInfo.Name = "btnUpdateStockInfo";
             this.btnUpdateStockInfo.Size = new System.Drawing.Size(74, 23);
             this.btnUpdateStockInfo.TabIndex = 13;
@@ -951,7 +958,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(863, 429);
+            this.tabPage2.Size = new System.Drawing.Size(716, 452);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Setting";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -968,7 +975,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(857, 423);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(710, 446);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // cboxListMonitorSetting
@@ -978,15 +985,15 @@
             this.cboxListMonitorSetting.FormattingEnabled = true;
             this.cboxListMonitorSetting.Location = new System.Drawing.Point(3, 3);
             this.cboxListMonitorSetting.Name = "cboxListMonitorSetting";
-            this.cboxListMonitorSetting.Size = new System.Drawing.Size(851, 389);
+            this.cboxListMonitorSetting.Size = new System.Drawing.Size(704, 412);
             this.cboxListMonitorSetting.TabIndex = 0;
             // 
             // btnSaveMonitorSetting
             // 
             this.btnSaveMonitorSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveMonitorSetting.Location = new System.Drawing.Point(3, 398);
+            this.btnSaveMonitorSetting.Location = new System.Drawing.Point(3, 421);
             this.btnSaveMonitorSetting.Name = "btnSaveMonitorSetting";
-            this.btnSaveMonitorSetting.Size = new System.Drawing.Size(851, 22);
+            this.btnSaveMonitorSetting.Size = new System.Drawing.Size(704, 22);
             this.btnSaveMonitorSetting.TabIndex = 1;
             this.btnSaveMonitorSetting.Text = "√";
             this.btnSaveMonitorSetting.UseVisualStyleBackColor = true;
@@ -998,6 +1005,7 @@
             this.tabControl1.Controls.Add(this.tabPagePersonalOption);
             this.tabControl1.Controls.Add(this.tabPageStockChart);
             this.tabControl1.Controls.Add(this.tabPageSetting);
+            this.tabControl1.Controls.Add(this.tabPageCheckInOut);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -1016,14 +1024,6 @@
             this.tabPageStockChart.Text = "Chart";
             this.tabPageStockChart.UseVisualStyleBackColor = true;
             // 
-            // stockChartCtrl
-            // 
-            this.stockChartCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stockChartCtrl.Location = new System.Drawing.Point(0, 0);
-            this.stockChartCtrl.Name = "stockChartCtrl";
-            this.stockChartCtrl.Size = new System.Drawing.Size(730, 484);
-            this.stockChartCtrl.TabIndex = 0;
-            // 
             // tabPageSetting
             // 
             this.tabPageSetting.Controls.Add(this.systemSettingCtrl1);
@@ -1033,6 +1033,53 @@
             this.tabPageSetting.TabIndex = 4;
             this.tabPageSetting.Text = "Settings";
             this.tabPageSetting.UseVisualStyleBackColor = true;
+            // 
+            // tabPageCheckInOut
+            // 
+            this.tabPageCheckInOut.Controls.Add(this.dgvCheckHistory);
+            this.tabPageCheckInOut.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCheckInOut.Name = "tabPageCheckInOut";
+            this.tabPageCheckInOut.Size = new System.Drawing.Size(730, 484);
+            this.tabPageCheckInOut.TabIndex = 5;
+            this.tabPageCheckInOut.Text = "CheckInOut";
+            this.tabPageCheckInOut.UseVisualStyleBackColor = true;
+            // 
+            // checkHistoryContextMenuStrip
+            // 
+            this.checkHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SaveToolStripMenuItem});
+            this.checkHistoryContextMenuStrip.Name = "checkHistoryContextMenuStrip";
+            this.checkHistoryContextMenuStrip.Size = new System.Drawing.Size(99, 26);
+            // 
+            // SaveToolStripMenuItem
+            // 
+            this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.SaveToolStripMenuItem.Text = "保存";
+            this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // dgvCheckHistory
+            // 
+            this.dgvCheckHistory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvCheckHistory.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvCheckHistory.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvCheckHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCheckHistory.ContextMenuStrip = this.checkHistoryContextMenuStrip;
+            this.dgvCheckHistory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCheckHistory.Location = new System.Drawing.Point(0, 0);
+            this.dgvCheckHistory.MultiSelect = false;
+            this.dgvCheckHistory.Name = "dgvCheckHistory";
+            this.dgvCheckHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCheckHistory.Size = new System.Drawing.Size(730, 484);
+            this.dgvCheckHistory.TabIndex = 0;
+            // 
+            // stockChartCtrl
+            // 
+            this.stockChartCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stockChartCtrl.Location = new System.Drawing.Point(0, 0);
+            this.stockChartCtrl.Name = "stockChartCtrl";
+            this.stockChartCtrl.Size = new System.Drawing.Size(730, 484);
+            this.stockChartCtrl.TabIndex = 0;
             // 
             // systemSettingCtrl1
             // 
@@ -1076,6 +1123,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageStockChart.ResumeLayout(false);
             this.tabPageSetting.ResumeLayout(false);
+            this.tabPageCheckInOut.ResumeLayout(false);
+            this.checkHistoryContextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCheckHistory)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1175,6 +1225,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn M_Order;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategroyDescMonitor;
         private SystemSettingCtrl systemSettingCtrl1;
+        private System.Windows.Forms.TabPage tabPageCheckInOut;
+        private System.Windows.Forms.ContextMenuStrip checkHistoryContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dgvCheckHistory;
 
     }
 }

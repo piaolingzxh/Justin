@@ -84,6 +84,9 @@ namespace Justin.Stock.Controls
                 case 3:
                     this.systemSettingCtrl1.RefreshSetting();
                     break;
+                case 4:
+                    RefreshCheckHistory();
+                    break;
             }
         }
 
@@ -498,9 +501,27 @@ namespace Justin.Stock.Controls
         #endregion
 
 
+        public void RefreshCheckHistory()
+        {
+            dgvCheckHistory.DataSource = stockDAL.Query("select * from CheckHistory order by checktime");
+        }
 
-
-
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable table = dgvCheckHistory.DataSource as DataTable;
+                if (table != null)
+                {
+                    stockDAL.UpdateCheckHistory(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageSvc.Default.Write(MessageLevel.Error, ex);
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
 
 
