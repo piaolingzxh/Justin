@@ -95,6 +95,9 @@
     <Compile Include="Utility\JMail.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Clean.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Helper\App.config" />
     <None Include="Justin.snk" />
   </ItemGroup>
