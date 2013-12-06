@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Justin.FrameWork.Extensions;
+using Justin.FrameWork.Services;
 using Justin.Log;
 using Justin.Stock.Service.Entities;
 namespace Justin.Stock.Service.Models
@@ -13,6 +14,7 @@ namespace Justin.Stock.Service.Models
     {
         public void RefreshStockData(List<StockInfo> stocks)
         {
+            string url = "";
             try
             {
                 List<StockInfo> StockDatas = stocks;
@@ -22,7 +24,8 @@ namespace Justin.Stock.Service.Models
                     stockCodes += item.Code + ",";
                 }
                 stockCodes = stockCodes.Remove(stockCodes.Length - 1);
-                WebRequest request = WebRequest.Create("http://hq.sinajs.cn/list=" + stockCodes);
+                url = "http://hq.sinajs.cn/list=" + stockCodes;
+                WebRequest request = WebRequest.Create(url);
                 WebResponse rs = request.GetResponse();
                 StreamReader reader = new StreamReader(rs.GetResponseStream(), Encoding.GetEncoding("gb2312"));
                 string stockMsg = reader.ReadToEnd();
@@ -81,7 +84,7 @@ namespace Justin.Stock.Service.Models
             }
             catch (Exception ex)
             {
-                JLog.Write(LogMode.Error, ex);
+                MessageSvc.Write(MessageLevel.Error, ex, "刷新个股信息失败，网址：{0}", url);
             }
         }
 

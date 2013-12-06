@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using Justin.FrameWork.Services;
 using Justin.Stock.Service.Entities;
 
 namespace Justin.Stock.Service.Models
@@ -19,7 +20,8 @@ namespace Justin.Stock.Service.Models
         {
             string regexOfEastmoney = "<a target=\"_blank\" href=\"http://quote.eastmoney.com/(\\S+).html\">(\\S+)\\((\\S+)\\)</a>";
 
-            WebRequest request = WebRequest.Create("http://quote.eastmoney.com/stocklist.html");
+            string url = "http://quote.eastmoney.com/stocklist.html";
+            WebRequest request = WebRequest.Create(url);
             WebResponse response = request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("gb2312"));
             string htmlString = reader.ReadToEnd();
@@ -30,7 +32,9 @@ namespace Justin.Stock.Service.Models
             MatchCollection mc = Regex.Matches(htmlString, regexOfEastmoney);
             if (mc.Count < 1)
             {
-                throw new Exception("请检查目标网站数据接口是否已经发生改变");
+                string errormsg = string.Format("请检查目标网站{0}数据接口是否已经发生改变", url);
+                MessageSvc.Write(MessageLevel.Error, errormsg);
+                throw new Exception(errormsg);
             }
             for (int i = 0; i < mc.Count; i++)
             {

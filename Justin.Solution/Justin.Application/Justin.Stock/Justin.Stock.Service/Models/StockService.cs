@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Justin.FrameWork.Extensions;
+using Justin.FrameWork.Services;
 using Justin.Log;
 using Justin.Stock.Service.Entities;
 
@@ -94,7 +95,7 @@ namespace Justin.Stock.Service.Models
             }
             catch (Exception ex)
             {
-                JLog.Write(LogMode.Error, ex);
+                MessageSvc.Write(MessageLevel.Error, ex);
             }
 
         }

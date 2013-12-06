@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.Services;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
 using Justin.Stock.Controls.Entities;
@@ -26,6 +27,7 @@ namespace Justin.Stock
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            MessageSvc.Instance.MessageReceived += RegisterLogService;
 
             Constants.SettingFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format(@"JStock\{0}", Constants.SettingFileName));
             try
@@ -50,7 +52,7 @@ namespace Justin.Stock
                     Constants.Setting = settings;
                     RequestFactory.ServiceProvider = settings.MonitorSite;
                     var form = new DeskStocks(Constants.SettingFilePath);
-                    JLog.Write(LogMode.Info, "Start");
+                    MessageSvc.Write(MessageLevel.Debug, "Start");
 
                     Application.Run(form);
                 }
@@ -63,12 +65,12 @@ namespace Justin.Stock
                     string xmlData = SerializeHelper.XmlSerialize<JSettings>(settings);
                     xmlDoc.LoadXml(xmlData);
                     xmlDoc.Save(Constants.SettingFilePath);
-                    MessageBox.Show(string.Format("配置信息{0}不存在,已新建默认配置", Constants.SettingFilePath));
+                    MessageSvc.Write(MessageLevel.Warn, "配置信息{0}不存在,已新建默认配置,请重新打开程序！", Constants.SettingFilePath);
                 }
             }
             catch (Exception ex)
             {
-                JLog.Write(LogMode.Error, ex);
+                MessageSvc.Write(MessageLevel.Error, ex);
             }
 
 
@@ -85,20 +87,25 @@ namespace Justin.Stock
             {
                 setting.DeskDisplayFormat = Constants.DefaultDeskDisplayFormat;
             }
-            //setting.Balance = 0;
-            //setting.CheckTime = false;
-            //setting.ShowWarn = true;
             StockService.CheckTime = setting.CheckTime;
-            if (setting.StartPosition == null)
+            if (setting.StartPosition == null || (setting.StartPosition.Top == 0 && setting.StartPosition.Left == 0 && setting.StartPosition.Width == 0 && setting.StartPosition.Height == 0))
             {
                 setting.StartPosition = new StartPosition()
                 {
-                    Top = 311,
-                    Left = 1005,
+                    Top = 662,
+                    Left = 1146,
                     Width = 334,
                     Height = 121
                 };
             }
+        }
+
+
+
+        private static void RegisterLogService(object sender, MessageEventArgs e)
+        {
+            LogMode logMode = (LogMode)Enum.Parse(typeof(LogMode), Enum.GetName(typeof(MessageLevel), e.Level), true);
+            JLog.Default.Write(logMode, e.Message);
         }
 
     }

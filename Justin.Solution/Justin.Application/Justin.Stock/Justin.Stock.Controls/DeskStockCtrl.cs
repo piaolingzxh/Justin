@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.Services;
 using Justin.FrameWork.WinForm.Extensions;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
@@ -251,7 +252,7 @@ namespace Justin.Stock.Controls
             }
             catch (Exception ex)
             {
-                JLog.Write(LogMode.Error, ex);
+                MessageSvc.Write(MessageLevel.Error, ex);
             }
 
         }

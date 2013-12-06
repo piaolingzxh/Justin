@@ -7,12 +7,13 @@ using System.Windows.Forms;
 using Justin.FrameWork.Entities;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.Services;
 using Justin.FrameWork.WinForm.Extensions;
 using Justin.Log;
 using Justin.Stock.Controls;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
-using Justin.Stock.Service;                                       
+using Justin.Stock.Service;
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
 namespace Justin.Stock.Controls
@@ -25,7 +26,7 @@ namespace Justin.Stock.Controls
         //DataGridView contextMenuSourceGridView = null;
         string CurrentStockCode { get; set; }
         StockDAL stockDAL = new StockDAL();
-        SystemSettingCtrl settingCtrl = new SystemSettingCtrl();
+
 
         public MyStock()
         {
@@ -52,8 +53,7 @@ namespace Justin.Stock.Controls
             #endregion
             dgvStocksetting.AutoGenerateColumns = false;
 
-            this.tabPageSetting.Controls.Clear();
-            this.tabPageSetting.Controls.Add(settingCtrl);
+
 
         }
 
@@ -82,7 +82,7 @@ namespace Justin.Stock.Controls
                     ShowChart(ChartType.TimeSheet, true);
                     break;
                 case 3:
-                    settingCtrl.RefreshSetting();
+                    this.systemSettingCtrl1.RefreshSetting();
                     break;
             }
         }
@@ -171,7 +171,7 @@ namespace Justin.Stock.Controls
         //自选个股设置部分dgvStocksetting
         private void stockSettingsContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            currentGridView = dgvStocksetting ;
+            currentGridView = dgvStocksetting;
         }
         private void dgvStocksetting_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -225,7 +225,7 @@ namespace Justin.Stock.Controls
             }
             catch (Exception ex)
             {
-                JLog.Write(LogMode.Error, ex);
+                MessageSvc.Write(MessageLevel.Error, ex);
             }
         }
         private void excelToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -423,8 +423,8 @@ namespace Justin.Stock.Controls
                 this.WindowState = FormWindowState.Normal;
             }
             StockService.AddEvent(ShowMyStockInfoChanged);
-            base.Show();
             tabControl1.SelectedIndex = tabIndex;
+            base.Show();
         }
 
         public new void Hide()

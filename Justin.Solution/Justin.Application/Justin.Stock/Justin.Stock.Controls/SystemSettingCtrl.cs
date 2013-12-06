@@ -30,6 +30,7 @@ namespace Justin.Stock.Controls
         }
         public void RefreshSetting()
         {
+            if (Constants.Setting == null) return;
             txtBalance.Text = Constants.Setting.Balance.ToString();
             txtDesktopDisplayFormat.Text = Constants.Setting.DeskDisplayFormat;
             toolTip1.SetToolTip(btnDeskDisplayFormat, Constants.DefaultDeskDisplayFormatTips);
