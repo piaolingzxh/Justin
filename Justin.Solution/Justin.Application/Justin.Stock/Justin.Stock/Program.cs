@@ -27,7 +27,7 @@ namespace Justin.Stock
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MessageSvc.Instance.MessageReceived += RegisterLogService;
+            MessageSvc.Default.MessageReceived += RegisterLogService;
 
             Constants.SettingFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format(@"JStock\{0}", Constants.SettingFileName));
             try
@@ -52,7 +52,7 @@ namespace Justin.Stock
                     Constants.Setting = settings;
                     RequestFactory.ServiceProvider = settings.MonitorSite;
                     var form = new DeskStocks(Constants.SettingFilePath);
-                    MessageSvc.Write(MessageLevel.Debug, "Start");
+                    MessageSvc.Default.Write(MessageLevel.Debug, "Start");
 
                     Application.Run(form);
                 }
@@ -65,12 +65,12 @@ namespace Justin.Stock
                     string xmlData = SerializeHelper.XmlSerialize<JSettings>(settings);
                     xmlDoc.LoadXml(xmlData);
                     xmlDoc.Save(Constants.SettingFilePath);
-                    MessageSvc.Write(MessageLevel.Warn, "配置信息{0}不存在,已新建默认配置,请重新打开程序！", Constants.SettingFilePath);
+                    MessageSvc.Default.Write(MessageLevel.Warn, "配置信息{0}不存在,已新建默认配置,请重新打开程序！", Constants.SettingFilePath);
                 }
             }
             catch (Exception ex)
             {
-                MessageSvc.Write(MessageLevel.Error, ex);
+                MessageSvc.Default.Write(MessageLevel.Error, ex);
             }
 
 

@@ -33,7 +33,7 @@ namespace Justin.Stock.Service.Models
             if (mc.Count < 1)
             {
                 string errormsg = string.Format("请检查目标网站{0}数据接口是否已经发生改变", url);
-                MessageSvc.Write(MessageLevel.Error, errormsg);
+                MessageSvc.Default.Write(MessageLevel.Error, errormsg);
                 throw new Exception(errormsg);
             }
             for (int i = 0; i < mc.Count; i++)

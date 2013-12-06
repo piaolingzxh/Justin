@@ -95,7 +95,7 @@ namespace Justin.Stock.Service.Models
             }
             catch (Exception ex)
             {
-                MessageSvc.Write(MessageLevel.Error, ex);
+                MessageSvc.Default.Write(MessageLevel.Error, ex);
             }
 
         }

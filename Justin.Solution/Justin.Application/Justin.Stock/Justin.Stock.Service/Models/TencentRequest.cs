@@ -89,7 +89,7 @@ namespace Justin.Stock.Service.Models
             }
             catch (Exception ex)
             {
-                MessageSvc.Write(MessageLevel.Error, ex, "刷新个股信息失败，网址：{0}", url);
+                MessageSvc.Default.Write(MessageLevel.Error, ex, "刷新个股信息失败，网址：{0}", url);
             }
         }
 

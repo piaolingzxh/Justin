@@ -9,8 +9,7 @@ namespace Justin.FrameWork.Services
     public class MessageSvc
     {
         private static MessageSvc service;
-
-        public static MessageSvc Instance
+        public static MessageSvc Default
         {
             get
             {
@@ -25,32 +24,31 @@ namespace Justin.FrameWork.Services
 
         public MessageEventHandler MessageReceived;
 
-
-        public static void Write(MessageLevel level, Exception ex)
+        public void Write(MessageLevel level, Exception ex)
         {
-            if (Instance.MessageReceived == null) return;
+            if (this.MessageReceived == null) return;
 
             MessageEventArgs msgArgs = new MessageEventArgs(level, ex.ToString());
-            Instance.MessageReceived(null, msgArgs);
+            this.MessageReceived(null, msgArgs);
         }
-        public static void Write(MessageLevel level, Exception ex, string messageFormat, params object[] args)
+        public void Write(MessageLevel level, Exception ex, string messageFormat, params object[] args)
         {
-            if (Instance.MessageReceived == null) return;
+            if (this.MessageReceived == null) return;
 
             string exMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
             string msg = args == null || args.Count() < 1 ? messageFormat : string.Format(messageFormat, args);
 
             MessageEventArgs msgArgs = new MessageEventArgs(level, msg + string.Format("\r\n异常信息：{0}", exMessage));
-            Instance.MessageReceived(null, msgArgs);
+            this.MessageReceived(null, msgArgs);
 
         }
-        public static void Write(MessageLevel level, string messageFormat, params object[] args)
+        public void Write(MessageLevel level, string messageFormat, params object[] args)
         {
-            if (Instance.MessageReceived == null) return;
+            if (this.MessageReceived == null) return;
 
             string message = args == null || args.Count() < 1 ? messageFormat : string.Format(messageFormat, args);
             MessageEventArgs msgArgs = new MessageEventArgs(level, message);
-            Instance.MessageReceived(null, msgArgs);
+            this.MessageReceived(null, msgArgs);
 
         }
     }
