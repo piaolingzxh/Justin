@@ -19,10 +19,12 @@ namespace Justin.ConsoleTest
     {
         static void Main(string[] args)
         {
+            string path1 = @"C:\Program Files (x86)\Glodon\GTP\Services\BIServer";
 
-            DataTable table = PrepareDataTable();
+            string path2 = Path.Combine(path1, @"tools\jre\bin\java.exe");
 
-            Console.WriteLine(table.Columns.Count + "OK");
+
+            Console.WriteLine(path2);
             Console.Read();
         }
 

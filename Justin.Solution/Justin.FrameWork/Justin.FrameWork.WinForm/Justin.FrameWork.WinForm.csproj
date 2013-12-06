@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\DataGridViewEx.cs" />
     <Compile Include="Extensions\ControlEx.cs" />
     <Compile Include="Extensions\FormEx.cs" />
     <Compile Include="Extensions\TreeViewEx.cs" />

@@ -7,14 +7,14 @@ using System.Windows.Forms;
 using Justin.FrameWork.Entities;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.WinForm.Extensions;
 using Justin.Log;
 using Justin.Stock.Controls;
 using Justin.Stock.Controls.Entities;
 using Justin.Stock.DAL;
-using Justin.Stock.Service;
+using Justin.Stock.Service;                                       
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
-
 namespace Justin.Stock.Controls
 {
     delegate void MyStockScreenMessage(IEnumerable<StockInfo> stocks);
@@ -90,9 +90,10 @@ namespace Justin.Stock.Controls
         #endregion
 
         #region 实时读盘
-
+        private DataGridView currentGridView;
         private void monitorContextMenu_Opening(object sender, CancelEventArgs e)
         {
+            currentGridView = dgvMonitorStocks;
         }
         private void dgvMonitorStocks_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -105,6 +106,13 @@ namespace Justin.Stock.Controls
                     dgvMonitorStocks.CurrentCell = dgvMonitorStocks.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 }
                 CurrentStockCode = dgvMonitorStocks.SelectedRows[0].Cells["S_Code"].Value.Value<String>();
+            }
+        }
+        private void excelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (currentGridView != null)
+            {
+                currentGridView.ExportToExcel();
             }
         }
         #endregion
@@ -161,6 +169,10 @@ namespace Justin.Stock.Controls
         }
 
         //自选个股设置部分dgvStocksetting
+        private void stockSettingsContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            currentGridView = dgvStocksetting ;
+        }
         private void dgvStocksetting_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -214,6 +226,13 @@ namespace Justin.Stock.Controls
             catch (Exception ex)
             {
                 JLog.Write(LogMode.Error, ex);
+            }
+        }
+        private void excelToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentGridView != null)
+            {
+                currentGridView.ExportToExcel();
             }
         }
         //刷新自选列表
@@ -477,6 +496,12 @@ namespace Justin.Stock.Controls
         }
 
         #endregion
+
+
+
+
+
+
 
 
 
