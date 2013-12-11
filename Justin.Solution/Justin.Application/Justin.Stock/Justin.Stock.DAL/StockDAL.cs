@@ -43,10 +43,10 @@ namespace Justin.Stock.DAL
         {
             StockInfo stock = new StockInfo()
             {
-                Code = reader["Code"].Value<string>(),
-                No = reader["No"].Value<string>(),
-                SpellingInShort = reader["SpellingInShort"].Value<string>(),
-                Name = reader["Name"].Value<string>(),
+                Code = reader["Code"].ToJString(),
+                No = reader["No"].ToJString(),
+                SpellingInShort = reader["SpellingInShort"].ToJString(),
+                Name = reader["Name"].ToJString(),
                 WarnPercent_Max = reader["WarnPercent_Max"].Value<decimal>(),
                 WarnPercent_Min = reader["WarnPercent_Min"].Value<decimal>(),
                 WarnPrice_Max = reader["WarnPrice_Max"].Value<decimal>(),
@@ -56,8 +56,9 @@ namespace Justin.Stock.DAL
                 ShowInFolatWindow = reader["ShowInFolatWindow"].Value<bool>(),
                 HasProfitBefore = reader["HasProfit"].Value<decimal>(),
                 Order = reader["Order"].Value<decimal>(),
-                ProfitHistory = reader["ProfitHistory"].Value<string>(),
+                ProfitHistory = reader["ProfitHistory"].ToJString(),
                 Warn = reader["Warn"].Value<bool>(),
+                Description = reader["Description"].ToJString(),
             };
             return stock;
         }
@@ -152,6 +153,7 @@ CREATE TABLE [MyStocks] (
             ,[Order]                 =@Order
             ,ProfitHistory           =@ProfitHistory
             ,Warn                    =@Warn
+            ,Description             =@Description
             where Code               =@Code";
 
             SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr);
@@ -175,18 +177,19 @@ CREATE TABLE [MyStocks] (
             updateCmd.Parameters.Add(new SQLiteParameter("@Order", DbType.String, "Order", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@ProfitHistory", DbType.String, "ProfitHistory", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@Warn", DbType.Boolean, "Warn", DataRowVersion.Current));
+            updateCmd.Parameters.Add(new SQLiteParameter("@Description", DbType.String, "Description", DataRowVersion.Current));
             updateCmd.Parameters.Add(new SQLiteParameter("@Code", DbType.String, "Code", DataRowVersion.Original));
 
-            myAdapter.InsertCommand = updateCmd;
+            myAdapter.UpdateCommand = updateCmd;
             //SQLiteCommandBuilder myCommandBuilder = new SQLiteCommandBuilder(myAdapter);
             IEnumerable<DataRow> rows = table.Rows.Cast<DataRow>().Where(row => row.RowState == DataRowState.Modified);
-
+            int x = 0;
             if (rows != null && rows.Count() > 0)
             {
                 var tempRows = rows.ToArray();
-                myAdapter.Update(tempRows);
+                x = myAdapter.Update(tempRows);
             }
-            return 0;
+            return x;
 
         }
         #endregion

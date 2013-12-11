@@ -55,6 +55,8 @@ namespace Justin.Stock.Service
             }
         }
 
+        public string Description { get; set; }
+
 
     }
 }
