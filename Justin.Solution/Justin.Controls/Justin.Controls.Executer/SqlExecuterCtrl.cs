@@ -130,7 +130,7 @@ namespace Justin.Controls.Executer
                 }
                 catch (Exception ex)
                 {
-                    JLog.Write(LogMode.Error, ex);
+                    JLog.Default.Write(LogMode.Error, ex);
                     this.ShowMessage(ex.Message.ToString(), ex.ToString());
                 }
             });
@@ -151,7 +151,7 @@ namespace Justin.Controls.Executer
                     }
                     catch (Exception ex)
                     {
-                        JLog.Write(LogMode.Error, ex);
+                        JLog.Default.Write(LogMode.Error, ex);
                         this.ShowMessage(ex.Message.ToString(), sql.ToString() + Environment.NewLine + ex.ToString());
                     }
 
@@ -194,7 +194,7 @@ namespace Justin.Controls.Executer
                                 if (sqlLineCount > Constants.SqlLineSize)
                                 {
                                     SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
-                                    JLog.Write(LogMode.Info, builder.ToString());
+                                    JLog.Default.Write(LogMode.Info, builder.ToString());
                                     builder.Clear();
                                     sqlLineCount = 0;
                                 }
@@ -212,7 +212,7 @@ namespace Justin.Controls.Executer
                 }
                 catch (Exception ex)
                 {
-                    JLog.Write(LogMode.Error, ex);
+                    JLog.Default.Write(LogMode.Error, ex);
                     this.ShowMessage(ex.Message.ToString(), ex.ToString());
                 }
             });

@@ -94,6 +94,7 @@
   <ItemGroup>
     <Content Include="Images\conn.png" />
     <Content Include="Images\Group.png" />
+    <None Include="Images\stop.jpg" />
     <Content Include="Images\sync.jpg" />
     <None Include="Images\save.png" />
     <Content Include="Images\search.png" />

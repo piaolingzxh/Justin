@@ -43,13 +43,13 @@ namespace Justin.Core
                 if (e.Exception != null)
                 {
                     ShowMessage(e.Exception, e.Native);
-                    JLog.Write(LogMode.Error, e.Exception);
+                    JLog.Default.Write(LogMode.Error, e.Exception);
                 }
                 else
                 {
                     ShowMessage(e.ShortMsg, e.DetailMsg, e.Native);
                     string msg = !string.IsNullOrEmpty(e.DetailMsg) ? e.DetailMsg : e.ShortMsg;
-                    JLog.Write(LogMode.Info,msg);
+                    JLog.Default.Write(LogMode.Info, msg);
                 }
             }
 

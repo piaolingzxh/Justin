@@ -44,6 +44,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBoxShowCmd = new System.Windows.Forms.CheckBox();
+            this.btnStopService = new System.Windows.Forms.Button();
             this.checkGroupBoxTomcat.SuspendLayout();
             this.checkGroupBoxMondrian.SuspendLayout();
             this.SuspendLayout();
@@ -51,7 +52,7 @@
             // linkLabelDeafultLocation
             // 
             this.linkLabelDeafultLocation.AutoSize = true;
-            this.linkLabelDeafultLocation.Location = new System.Drawing.Point(637, 50);
+            this.linkLabelDeafultLocation.Location = new System.Drawing.Point(74, 1);
             this.linkLabelDeafultLocation.Name = "linkLabelDeafultLocation";
             this.linkLabelDeafultLocation.Size = new System.Drawing.Size(82, 13);
             this.linkLabelDeafultLocation.TabIndex = 15;
@@ -128,7 +129,7 @@
             // 
             this.btnStart.BackgroundImage = global::Justin.Controls.Mondrian.Properties.Resources.conn;
             this.btnStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnStart.Location = new System.Drawing.Point(637, 74);
+            this.btnStart.Location = new System.Drawing.Point(637, 49);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(82, 26);
             this.btnStart.TabIndex = 6;
@@ -140,6 +141,7 @@
             // 
             this.checkGroupBoxTomcat.Controls.Add(this.txtPort);
             this.checkGroupBoxTomcat.Controls.Add(this.label1);
+            this.checkGroupBoxTomcat.Controls.Add(this.linkLabelDeafultLocation);
             this.checkGroupBoxTomcat.Controls.Add(this.txtTomcatRootPath);
             this.checkGroupBoxTomcat.Controls.Add(this.label2);
             this.checkGroupBoxTomcat.Controls.Add(this.txtJREExecuteFileName);
@@ -153,6 +155,8 @@
             // 
             // checkGroupBoxMondrian
             // 
+            this.checkGroupBoxMondrian.Checked = false;
+            this.checkGroupBoxMondrian.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.checkGroupBoxMondrian.Controls.Add(this.txtMondrianRootPath);
             this.checkGroupBoxMondrian.Controls.Add(this.txtConnStr);
             this.checkGroupBoxMondrian.Controls.Add(this.button1);
@@ -205,6 +209,18 @@
             this.checkBoxShowCmd.Text = "显示cmd窗口";
             this.checkBoxShowCmd.UseVisualStyleBackColor = true;
             // 
+            // btnStopService
+            // 
+            this.btnStopService.BackgroundImage = global::Justin.Controls.Mondrian.Properties.Resources.stop;
+            this.btnStopService.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnStopService.Location = new System.Drawing.Point(637, 83);
+            this.btnStopService.Name = "btnStopService";
+            this.btnStopService.Size = new System.Drawing.Size(82, 26);
+            this.btnStopService.TabIndex = 6;
+            this.btnStopService.Text = "Start";
+            this.btnStopService.UseVisualStyleBackColor = true;
+            this.btnStopService.Click += new System.EventHandler(this.btnStopService_Click);
+            // 
             // MondrianServiceCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,10 +228,11 @@
             this.Controls.Add(this.checkBoxShowCmd);
             this.Controls.Add(this.checkGroupBoxMondrian);
             this.Controls.Add(this.checkGroupBoxTomcat);
-            this.Controls.Add(this.linkLabelDeafultLocation);
+            this.Controls.Add(this.btnStopService);
             this.Controls.Add(this.btnStart);
             this.Name = "MondrianServiceCtrl";
             this.Size = new System.Drawing.Size(734, 232);
+            this.Load += new System.EventHandler(this.MondrianServiceCtrl_Load);
             this.checkGroupBoxTomcat.ResumeLayout(false);
             this.checkGroupBoxTomcat.PerformLayout();
             this.checkGroupBoxMondrian.ResumeLayout(false);
@@ -243,5 +260,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox checkBoxShowCmd;
+        private System.Windows.Forms.Button btnStopService;
     }
 }

@@ -54,22 +54,15 @@ namespace Justin.Controls.Mondrian
                 this.ShowMessage("请配置连接字符串。");
                 return;
             }
+            this.ShowMessage("服务启动中。。。");
             if (checkGroupBoxMondrian.Checked)
+            {
                 mondrian.Sync(this.ConnStr, this.txtMondrianRootPath.Text);
-
+                this.ShowMessage("同步mondrian数据源。。。");
+            }
             string args = "";
             string javaExecutePath = Path.Combine(Path.GetDirectoryName(txtJREExecuteFileName.Text), "java_mondrian.exe");
-            if (!File.Exists(javaExecutePath))
-                File.Copy(txtJREExecuteFileName.Text, javaExecutePath);
-            Process[] javaProcess = Process.GetProcessesByName("java_mondrian");
-            if (javaProcess != null && javaProcess.Count() > 0)
-            {
-                foreach (Process item in javaProcess)
-                {
-                    item.CloseMainWindow();
-                    item.Kill();
-                }
-            }
+            StopService();
             tomcat.Start(txtTomcatRootPath.Text, javaExecutePath, int.Parse(txtPort.Text), out args);
 
             if (!checkBoxShowCmd.Checked)
@@ -104,7 +97,7 @@ namespace Justin.Controls.Mondrian
         }
         void p_Exited(object sender, EventArgs e)
         {
-            this.ShowMessage("程序已结束");
+            this.ShowMessage("mondrian服务已停止。。。");
         }
 
         void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
@@ -140,6 +133,36 @@ namespace Justin.Controls.Mondrian
                 txtConnStr.Text = value;
                 base.ConnStr = value;
             }
+        }
+
+        public void StopService()
+        {
+            this.ShowMessage("检查服务进程。");
+            if (string.IsNullOrEmpty(txtJREExecuteFileName.Text)) return;
+            string javaExecutePath = Path.Combine(Path.GetDirectoryName(txtJREExecuteFileName.Text), "java_mondrian.exe");
+
+            if (!File.Exists(javaExecutePath))
+                File.Copy(txtJREExecuteFileName.Text, javaExecutePath);
+            Process[] javaProcess = Process.GetProcessesByName("java_mondrian");
+            if (javaProcess != null && javaProcess.Count() > 0)
+            {
+                foreach (Process item in javaProcess)
+                {
+                    item.CloseMainWindow();
+                    item.Kill();
+                }
+            }
+            this.ShowMessage("停止服务进程。。。");
+        }
+
+        private void MondrianServiceCtrl_Load(object sender, EventArgs e)
+        {
+            linkLabelDeafultLocation_LinkClicked(null, null);
+        }
+
+        private void btnStopService_Click(object sender, EventArgs e)
+        {
+            StopService();
         }
     }
 }

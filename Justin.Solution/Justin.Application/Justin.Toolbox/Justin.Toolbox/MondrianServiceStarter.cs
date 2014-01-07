@@ -16,6 +16,7 @@ namespace Justin.Toolbox
         public MondrianServiceStarter()
         {
             InitializeComponent();
+            this.FormClosing += new FormClosingEventHandler(MondrianServiceStarter_FormClosing);
         }
 
         public MondrianServiceStarter(string[] args)
@@ -54,6 +55,11 @@ namespace Justin.Toolbox
         private void MondrianServiceStarter_Load(object sender, EventArgs e)
         {
             this.ShowInStatus(this.ConnStr);
+        }
+
+        public void MondrianServiceStarter_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.mondrianServiceCtrl1.StopService();
         }
     }
 }
