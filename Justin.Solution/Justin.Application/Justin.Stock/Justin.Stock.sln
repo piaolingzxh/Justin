@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Stock", "Justin.Stock\Justin.Stock.csproj", "{34CF1CBC-80D6-48C4-8297-92085325BA7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
+		{F1BA0A66-6D68-4142-83D8-C96A81A6862E} = {F1BA0A66-6D68-4142-83D8-C96A81A6862E}
+		{FB90C580-4E99-4921-B352-7704032AE2F7} = {FB90C580-4E99-4921-B352-7704032AE2F7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Stock.Service", "Justin.Stock.Service\Justin.Stock.Service.csproj", "{7D5C9522-B8C7-421C-9C08-59472C5561B6}"
 EndProject
@@ -14,8 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork", "..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj", "{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", "..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj", "{F1BA0A66-6D68-4142-83D8-C96A81A6862E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Message", "..\..\Justin.FrameWork\Justin.Message\Justin.Message.csproj", "{D49F0387-7450-46BA-AE69-43E61ED580AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.Log", "..\..\Justin.FrameWork\Justin.Log\Justin.Log.csproj", "{FB90C580-4E99-4921-B352-7704032AE2F7}"
 EndProject
@@ -99,16 +102,6 @@ Global
 		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F1BA0A66-6D68-4142-83D8-C96A81A6862E}.Release|x86.ActiveCfg = Release|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{D49F0387-7450-46BA-AE69-43E61ED580AA}.Release|x86.ActiveCfg = Release|Any CPU
 		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB90C580-4E99-4921-B352-7704032AE2F7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
