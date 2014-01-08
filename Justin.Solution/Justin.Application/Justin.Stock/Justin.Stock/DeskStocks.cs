@@ -47,17 +47,15 @@ namespace Justin.Stock
 
         private void DeskStocks_Load(object sender, EventArgs e)
         {
-            NotifyHelper.notify = new QQStyleMessage();
-
             #region 股票无关
 
             LoadLastFormPosition();
             RegisterHotKey();
             notifyIcon1.Text = DateTime.Now.ToString();
+
             #endregion
-            DeskStockCtrl.DisplaySumProfitAndWarnMsgInContainerEvent += ShowTotal;
-            deskStockCtrl1.AddDisplayHandler();
-            deskStockCtrl1.AddWarnHandler();
+
+            DeskStockCtrl.DisplaySummaryMessageAction += ShowTotal;
             //StockService.Start();
             myStock = new MyStock();
             SetVisibleCore(false);
@@ -115,8 +113,7 @@ namespace Justin.Stock
         }
         private void autoHideMenuItem_Click(object sender, EventArgs e)
         {
-            this.autoHideMenuItem.Checked = !this.autoHideMenuItem.Checked;
-            this.EnableAutoAnchor = this.autoHideMenuItem.Checked;
+            this.EnableAutoAnchor = this.autoHideMenuItem.Checked = !this.autoHideMenuItem.Checked;
         }
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
@@ -136,12 +133,6 @@ namespace Justin.Stock
                 this.Show();
             }
         }
-
-        //private void noticeMenu_MouseClick(object sender, MouseEventArgs e)
-        //{
-        //    this.EnableAutoAnchor = false;
-        //    this.Show();
-        //}
 
         #endregion
 
@@ -249,6 +240,14 @@ namespace Justin.Stock
         }
 
         #endregion
+        #region 启动最小化
+
+        protected override void SetVisibleCore(bool value)
+        {
+            base.SetVisibleCore(value);
+        }
+
+        #endregion
 
         #endregion
 
@@ -256,7 +255,6 @@ namespace Justin.Stock
 
         private new void Show()
         {
-            deskStockCtrl1.AddDisplayHandler();
             IsShow = true;
             base.Show();
             if (this.WindowState == FormWindowState.Minimized)
@@ -272,8 +270,6 @@ namespace Justin.Stock
 
         private new void Hide()
         {
-            deskStockCtrl1.RemoveDisplayHandler();
-
             base.Hide();
             IsShow = false;
         }
@@ -282,37 +278,16 @@ namespace Justin.Stock
 
         private void CloseMe()
         {
-            using (new JStopWatch().Start(LogMode.Info, "", "StockService.Stop"))
-            {
-                StockService.Stop();
-            }
-            using (new JStopWatch().Start(LogMode.Info, "", "StockService.ProcessEvent"))
-            {
-                deskStockCtrl1.RemoveDisplayHandler();
-                deskStockCtrl1.RemoveWarnHandler();
-                deskStockCtrl1.CloseChildrenForm();
-            }
-            using (new JStopWatch().Start(LogMode.Info, "", "UnregisterHotkeys"))
-            {
-                hotkeyHelper.UnregisterHotkeys();
-            }
-            using (new JStopWatch().Start(LogMode.Info, "", "myStock.Close"))
-            {
-                myStock.Close(true);
-            }
-            using (new JStopWatch().Start(LogMode.Info, "", "this.Dispose"))
-            {
-                this.Dispose();
-            }
-            {
-                Application.Exit();
-            }
+            StockService.Stop();
+            deskStockCtrl1.RemoveDisplayHandler();
+            deskStockCtrl1.CloseChildrenForm();
+            hotkeyHelper.UnregisterHotkeys();
+            myStock.Close(true);
+            this.Dispose();
+            Application.Exit();
         }
 
-        protected override void SetVisibleCore(bool value)
-        {
-            base.SetVisibleCore(value);
-        }
+
 
     }
 }

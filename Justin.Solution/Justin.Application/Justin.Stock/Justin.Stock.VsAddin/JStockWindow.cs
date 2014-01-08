@@ -54,11 +54,9 @@ namespace Justin.Justin_Stock_VsAddin
         private void Init()
         {
             deskStock = new DeskStockCtrl();
-            DeskStockCtrl.DisplaySumProfitAndWarnMsgInContainerEvent += ShowTotal;
+            DeskStockCtrl.DisplaySummaryMessageAction += ShowTotal;
             RegisterHotKey();
             deskStock.AddDisplayHandler();
-            deskStock.AddWarnHandler();
-            //StockService.Start();
         }
         public override System.Windows.Forms.IWin32Window Window
         {

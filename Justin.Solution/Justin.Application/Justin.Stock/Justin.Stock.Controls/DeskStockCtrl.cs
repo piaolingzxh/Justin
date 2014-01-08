@@ -11,18 +11,13 @@ using Justin.FrameWork.WinForm.Extensions;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.Log;
 using Justin.Stock.Controls.Entities;
+using Justin.Stock.DAL;
 using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
 
 namespace Justin.Stock.Controls
 {
     delegate void FormInvoke(FormInvokArgument argument);
-
-    /// <summary>
-    /// 总汇总显示代理
-    /// </summary>
-    /// <param name="message"></param>
-    public delegate void DisplaySumProfitAndWarnMsgInContainerDelegate(string message);
 
     public partial class DeskStockCtrl : UserControl
     {
@@ -39,9 +34,12 @@ namespace Justin.Stock.Controls
 
         private void DeskStockCtrl_Load(object sender, EventArgs e)
         {
+            var dal = new StockDAL();
+            StockService.QuerySumInvestFunc = dal.GetSumInvest;
+            StockService.GetAllMyStockFunc = dal.getAllMyStock;
             StockService.AddEvent(Display);
-            StockService.AddEvent(ShowWarn);
-            //StockService.Start();
+
+            StockService.AddEvent(Display);
         }
 
         #region 桌面显示和通知功能
@@ -102,28 +100,26 @@ namespace Justin.Stock.Controls
                 #endregion
 
                 int rowIndex = 0;
-                //StringBuilder stocksNotifyMessageBuilder = new StringBuilder();
                 ToolTip tip = new ToolTip();
+
+                #region 显示每一只股票
+
                 //只显示指定的股票    并且先按Order+BuyCount排序
                 var stocks = stockList.Where(row => row.ShowInFolatWindow).OrderByDescending(row => row.Order).ThenByDescending(row => row.BuyCount);
+
                 foreach (var rtStock in stocks)
                 {
                     Label stockLabel = this.GetNewlabel(rtStock.Order == -1);
+                    stockLabel.ForeColor = GetWarnColor(rtStock);
 
                     #region 股票桌面信息
 
                     stockLabel.Tag = rtStock.Code;
+                    string nameInShort = GetUpOrDownArrowCompareToLastDay(rtStock) + " " + rtStock.SpellingInShort.PadLeft(4, ' ');
 
-                    //当前价格
-                    decimal priceNow = Math.Round(rtStock.PriceNow, 2);
-                    if (priceNow > 1000)
-                    {
-                        priceNow = Math.Round(priceNow, 1);
-                    }
-                    //总盈亏
                     stockLabel.Text = string.Format(Constants.Setting.DeskDisplayFormat
-                                              , rtStock.SpellingInShort.PadLeft(4, ' ')                                             //简称
-                                              , priceNow.ToString().PadLeft(6, ' ')                                                 //当前价格
+                                              , nameInShort                                                                          //简称
+                                              , Math.Round(rtStock.PriceNow, rtStock.PriceNow >= 1000 ? 1 : 2).ToString().PadLeft(6, ' ')                                                 //当前价格
                                               , (rtStock.SurgedRange.ToString() + "%").PadLeft(7, ' ')                              //当日涨幅
                                               , (rtStock.CurrentProfit.ToString()).PadLeft(6, ' ')                               //当前盈亏
                                              , Math.Round(rtStock.SumProfit, 0).ToString().PadLeft(6, ' ')                                              //总盈亏
@@ -135,16 +131,6 @@ namespace Justin.Stock.Controls
                                              , Math.Round(rtStock.SumCost, 0).ToString().PadLeft(6, ' ')
 
                                               );
-                    //string stockNotifyMessage = string.Format(notifyFormat
-                    //                         , rtStock.SpellingInShort
-                    //                         , Math.Round(rtStock.PriceNow, 2).ToString().PadLeft(7, ' ')
-                    //                         , rtStock.SurgedRange.ToString().PadLeft(6, ' ')
-                    //                        , rtStock.ProfitOrLoss.ToString().PadLeft(5, ' ')
-                    //                        , rtStock.BuyPrice.ToString().PadLeft(7, ' ')
-                    //                        , rtStock.BuyCount.ToString().PadLeft(5, ' ')
-                    //                        , rtStock.TurnOver.ToString().PadLeft(6, ' ')
-                    //                         );
-                    //stocksNotifyMessageBuilder.Append(stockNotifyMessage).AppendLine();
                     #endregion
 
                     #region 股票提示信息
@@ -183,13 +169,18 @@ namespace Justin.Stock.Controls
                     tableLayoutPanel1.Controls.Add(stockLabel, 0, rowIndex);
                     rowIndex++;
                 }
-                Label columnNamesLabel = GetNewlabel();
+
+                #endregion
+
+                #region 表格标题信息
+
+                Label columnNamesLabel = GetNewlabel(true);
 
                 columnNamesLabel.Click += new EventHandler(stockLabel_Click);
                 columnNamesLabel.Text = string.Format(Constants.Setting.DeskDisplayFormat
-                                               , "Name".PadLeft(4, ' ')                                                     //简称
+                                               , "Name".PadLeft(6, ' ')                                                     //简称
                                                , "Now¥".PadLeft(6, ' ')                                                 //当前价格
-                                               , "↓↑%".PadLeft(6, ' ')                                                 //当日涨幅
+                                               , "↓↑%".PadLeft(7, ' ')                                                 //当日涨幅
                                                , "PF".PadLeft(6, ' ')                                                   //当前盈亏        
                                               , "∑PF".PadLeft(6, ' ')                                                   //总盈亏
                                                , "∑PF%".PadLeft(8, ' ')                                               //总盈亏比例
@@ -212,30 +203,46 @@ namespace Justin.Stock.Controls
                                               , "Mkt¥:当前市值" + Environment.NewLine                                              //当前市值
                                               , "∑Cost¥:总成本" + Environment.NewLine                                               //总成本
                                               ));
-                tableLayoutPanel1.Controls.Add(columnNamesLabel, 0, rowIndex);
-
-                tableLayoutPanel1.ResumeLayout();
-
-                #region 总盈亏信息
-
-                //总成本=所有股票总成本+当前余额
-                decimal sumCost = stockList.Sum(row => row.SumCost) + Constants.Setting.Balance;//成本
-                //总市值=所有股票当前市值+当前余额
-                decimal sumCurrentPrice = stockList.Sum(row => row.MarketValue) + Constants.Setting.Balance;//市值
-
-                decimal sumProfitOrLoss = stockList.Sum(row => row.SumProfit);
-
-                tableLayoutPanel1.Tag = string.Format("M:{0}/C:{1} P:{2}/∑P:{3}", (int)sumCurrentPrice, (int)sumCost, (int)(stocks.Sum(row => row.CurrentProfit)), (int)sumProfitOrLoss);
+                tableLayoutPanel1.Controls.Add(columnNamesLabel, 0, rowIndex++);
 
                 #endregion
 
+                #region 总盈亏信息
+                int sumInvest = (int)StockService.SumInvest;
+                int sumMarketValue = (int)stockList.Sum(row => row.MarketValue);
+                int accountMoney = (int)(sumMarketValue + Constants.Setting.Balance);
+                int currentProfit = (int)stockList.Sum(row => row.CurrentProfit);
+                int sumProfit = (int)(sumMarketValue + Constants.Setting.Balance - sumInvest);
+                string summaryMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5}", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
+
+                string summaryMsgTips = string.Format(@"{0}/{1}/{2} {3}/{4}/{5}", "当前盈亏", "总盈亏", "可用余额", "股票资产", "账户总资产", "总投入资产");
+
+                Label summaryLabel = GetNewlabel();
+
+                summaryLabel.Click += new EventHandler(stockLabel_Click);
+                summaryLabel.Text = summaryMsg;
+                tip.SetToolTip(summaryLabel, summaryMsgTips);
+                tableLayoutPanel1.Controls.Add(summaryLabel, 0, rowIndex++);
+
+                //总成本=所有股票总成本+当前余额
+                //decimal sumCost = stockList.Sum(row => row.SumCost) + Constants.Setting.Balance;//成本
+                //总市值=所有股票当前市值+当前余额
+                //decimal sumCurrentPrice = stockList.Sum(row => row.MarketValue) + Constants.Setting.Balance;//市值
+                //decimal sumProfitOrLoss = stockList.Sum(row => row.SumProfit);
+
+                tableLayoutPanel1.Tag = summaryMsg;
+
+                #endregion
+
+                tableLayoutPanel1.ResumeLayout();
+
+
+
                 #region 实时显示股票警告信息到桌面标题
 
-                string warnMsg = PrepareWarnMessage(stockList);
                 FormInvokArgument argument = new FormInvokArgument()
                 {
                     tableLayoutPanel1 = tableLayoutPanel1,
-                    Message = warnMsg,
                 };
 
                 if (this.InvokeRequired == true)
@@ -255,9 +262,9 @@ namespace Justin.Stock.Controls
                 MessageSvc.Default.Write(MessageLevel.Error, ex);
             }
 
-        }
 
-        void stockLabel_Click(object sender, EventArgs e)
+        }
+        private void stockLabel_Click(object sender, EventArgs ee)
         {
             var form = this.FindForm();
             if (form is AutoAnchorForm)
@@ -295,78 +302,37 @@ namespace Justin.Stock.Controls
 
             string message = string.Format("{0}  {1}", tableLayoutPanel1.Tag.ToString(), argument.Message);
             this.Text = message;
-            if (DisplaySumProfitAndWarnMsgInContainerEvent != null)
+            if (DisplaySummaryMessageAction != null)
             {
-                DisplaySumProfitAndWarnMsgInContainerEvent(message);
+                DisplaySummaryMessageAction(message);
             }
 
             #endregion
         }
-
-        private string PrepareWarnMessage(IEnumerable<StockInfo> StockList)
+        //超过警戒线用红色，低于警戒线用绿色
+        private Color GetWarnColor(StockInfo stock)
         {
-            if (StockList == null)
+            Color color = Color.Black, up = Color.Red, down = Color.Green;
+
+            if (!Constants.Setting.ShowWarn || stock.PriceNow == 0) return color;
+
+            if ((stock.WarnPrice_Max != 0 && stock.PriceNow > stock.WarnPrice_Max)
+                || ((stock.WarnPercent_Max != 0 && stock.SurgedRange > stock.WarnPercent_Max)))
             {
-                return "";
-            }
-            string strMsg = "";
-            string strUpOrDown = "";
-            foreach (var stock in StockList)
-            {
-                bool showWarnFlag = false;
-                if (stock.PriceNow != 0 & stock.Warn)
-                {
-                    if (stock.WarnPrice_Max != 0 && stock.PriceNow > stock.WarnPrice_Max)
-                    {
-                        showWarnFlag = true;
-                        strUpOrDown = "↑";
-                    }
-                    if (stock.WarnPrice_Min != 0 && stock.PriceNow < stock.WarnPrice_Min)
-                    {
-                        strUpOrDown = "↓";
-                        showWarnFlag = true;
-                    }
-                    if (stock.WarnPercent_Max != 0 && stock.SurgedRange > stock.WarnPercent_Max)
-                    {
-                        strUpOrDown = "↑";
-                        showWarnFlag = true;
-                    }
-                    if (stock.WarnPercent_Min != 0 && stock.SurgedRange < stock.WarnPercent_Min)
-                    {
-                        strUpOrDown = "↓";
-                        showWarnFlag = true;
-                    }
-                    if (showWarnFlag)
-                        strMsg += string.Format("{0}{1}", stock.SpellingInShort, strUpOrDown);
-                }
+                color = up;
             }
 
-            return strMsg;
+            if ((stock.WarnPrice_Min != 0 && stock.PriceNow < stock.WarnPrice_Min) || ((stock.WarnPercent_Min != 0 && stock.SurgedRange < stock.WarnPercent_Min)))
+            {
+                color = down;
+            }
+            return color;
         }
-        private void ShowWarn(object sender, StockEventArgs e)
+        //用箭头表示相对上一个交易日的涨跌
+        private string GetUpOrDownArrowCompareToLastDay(StockInfo stock)
         {
-            IEnumerable<StockInfo> stockList = e.Stocks;
-            if (Constants.Setting.ShowWarn)
-            {
-                FormInvokArgument argument = new FormInvokArgument() { Message = PrepareWarnMessage(stockList) };
-                if (this.InvokeRequired == true)
-                {
-                    this.Invoke(new FormInvoke(DisplayWarn), argument);
-                }
-                else
-                {
-                    DisplayWarn(argument);
-                }
-            }
-
-        }
-        private void DisplayWarn(FormInvokArgument arg)
-        {
-            if (arg.Message.Length > 0)
-            {
-                NotifyHelper.Show(arg.Message);
-                //this.notifyIcon1.ShowBalloonTip(1, "", msg, ToolTipIcon.Info);
-            }
+            if (stock.PriceNow == 0 || stock.PriceNow == stock.PriceYesterdayEnd) return " ";
+            return stock.PriceNow > stock.PriceYesterdayEnd ? "↑" : "↓";
         }
 
         #endregion
@@ -442,24 +408,16 @@ namespace Justin.Stock.Controls
         /// <summary>
         /// 注册显示盈亏总汇总和破线预警信息到容器标题
         /// </summary>
-        public static DisplaySumProfitAndWarnMsgInContainerDelegate DisplaySumProfitAndWarnMsgInContainerEvent { get; set; }
+        public static Action<string> DisplaySummaryMessageAction { get; set; }
 
 
         public void AddDisplayHandler()
         {
-            StockService.AddEvent(Display);
+
         }
         public void RemoveDisplayHandler()
         {
             StockService.RemoveEvent(Display);
-        }
-        public void AddWarnHandler()
-        {
-            StockService.AddEvent(ShowWarn);
-        }
-        public void RemoveWarnHandler()
-        {
-            StockService.RemoveEvent(ShowWarn);
         }
 
         public void CloseChildrenForm()

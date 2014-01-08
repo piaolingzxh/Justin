@@ -34,6 +34,25 @@ namespace Justin.Stock.Service.Models
         static System.Timers.Timer timer;
         public static bool IsRunning { get; private set; }
 
+        public static decimal SumInvest { get; private set; }
+        public static Func<decimal> QuerySumInvestFunc { get; set; }
+        public static void ResetSumInvest()
+        {
+            if (QuerySumInvestFunc != null)
+            {
+                SumInvest = QuerySumInvestFunc();
+            }
+        }
+
+        public static Func<List<StockInfo>> GetAllMyStockFunc { get; set; }
+        public static void ResetMyStock()
+        {
+            if (GetAllMyStockFunc != null)
+            {
+                MyStock = GetAllMyStockFunc();
+            }
+        }
+
         #region 自选股
         private static object syncMyStockData = new Object();
 
@@ -171,6 +190,8 @@ namespace Justin.Stock.Service.Models
 
         public static void Start(int second = 0)
         {
+            ResetSumInvest();
+            ResetMyStock();
             if (second != 0)
             {
                 timer.Interval = second * 1000;

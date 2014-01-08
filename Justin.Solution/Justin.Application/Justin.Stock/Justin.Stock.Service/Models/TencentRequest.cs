@@ -12,7 +12,22 @@ namespace Justin.Stock.Service.Models
 {
     public class TencentRequest : IRequest
     {
+        private Random rd = new Random(10);
+        private int BufferSize = 64;
         public void RefreshStockData(List<StockInfo> stocks)
+        {
+            int requestTimes = stocks.Count % BufferSize == 0 ? stocks.Count / BufferSize : stocks.Count / BufferSize + 1;
+
+            for (int i = 0; i < requestTimes; i++)
+            {
+                List<StockInfo> stocksOfCurrentRequest = stocks.Skip(i * BufferSize).Take(BufferSize).ToList();
+
+                RefreshStockDataInner(stocksOfCurrentRequest);
+            }
+
+
+        }
+        public void RefreshStockDataInner(List<StockInfo> stocks)
         {
             string url = "";
             try
@@ -24,7 +39,7 @@ namespace Justin.Stock.Service.Models
                     stockCodes += item.Code + ",";
                 }
                 stockCodes = stockCodes.Remove(stockCodes.Length - 1);
-                url = "http://qt.gtimg.cn/r=0.594412105390802q=" + stockCodes;
+                url = "http://qt.gtimg.cn/r=" + rd.NextDouble() + "q=" + stockCodes;
                 WebRequest request = WebRequest.Create(url);
                 WebResponse rs = request.GetResponse();
                 StreamReader reader = new StreamReader(rs.GetResponseStream(), Encoding.GetEncoding("gb2312"));

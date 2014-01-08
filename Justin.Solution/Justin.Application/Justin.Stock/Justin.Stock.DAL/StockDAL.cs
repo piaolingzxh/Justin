@@ -261,7 +261,7 @@ CREATE TABLE [MyStocks] (
             return Query("select * from CheckHistory order by checktime");
         }
 
-        public void UpdateCheckHistory(DataTable table)
+        public bool UpdateCheckHistory(DataTable table)
         {
             SQLiteConnection conn = new SQLiteConnection(SqliteHelper.ConnStr);
             SQLiteDataAdapter adapter = new SQLiteDataAdapter();
@@ -281,14 +281,21 @@ VALUES (@CheckType, @Bank, @Amt,datetime('now','localtime'));  "
 
             IEnumerable<DataRow> rows = table.Rows.Cast<DataRow>().Where(row => row.RowState == DataRowState.Added);
 
-            if (rows == null || rows.Count() == 0) return;
+            if (rows == null || rows.Count() == 0) return false;
             if (rows.Count() != 1)
                 throw new Exception("每次只能添加一个");
             var tempRows = rows.ToArray();
             int x = adapter.Update(tempRows);
 
             SqliteHelper.ExecuteNonQuery(SqliteHelper.ConnStr, CommandType.Text, "update CheckHistory set Balance =Amt +(select ch.Balance from CheckHistory ch where ch.Balance is not null order by ch.checktime desc LIMIT 1) where  CheckHistory.Balance is null", null);
+            return true;
 
+        }
+
+        public decimal GetSumInvest()
+        {
+            object sumInvest = SqliteHelper.ExecuteScalar(SqliteHelper.ConnStr, CommandType.Text, "select Balance from CheckHistory order by CheckTime desc limit 0,1; ", null);
+            return sumInvest.Value<decimal>();
         }
 
     }

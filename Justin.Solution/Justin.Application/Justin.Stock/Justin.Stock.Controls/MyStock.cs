@@ -18,15 +18,12 @@ using Justin.Stock.Service.Entities;
 using Justin.Stock.Service.Models;
 namespace Justin.Stock.Controls
 {
-    delegate void MyStockScreenMessage(IEnumerable<StockInfo> stocks);
 
     public partial class MyStock : Form
     {
         private bool forceClose = false;
-        //DataGridView contextMenuSourceGridView = null;
         string CurrentStockCode { get; set; }
         StockDAL stockDAL = new StockDAL();
-
 
         public MyStock()
         {
@@ -47,22 +44,20 @@ namespace Justin.Stock.Controls
                 item.MouseWheel += new MouseEventHandler(MyStock_MouseWheel);
             }
             this.Opacity = 0.1;
-            dgvMonitorStocks.AutoGenerateColumns = false;
-            BindMyStocks(StockService.MyStock);
 
             #endregion
+
+            dgvMonitorStocks.AutoGenerateColumns = false;
             dgvStocksetting.AutoGenerateColumns = false;
-
-
-
+            BindMyStocks(StockService.MyStock);
         }
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
         {
             StockService.RemoveEvent(ShowMyStockInfoChanged);
-            e.Cancel = !forceClose;
             if (!forceClose)
             {
+                e.Cancel = true;
                 this.Hide();
             }
         }
@@ -223,7 +218,7 @@ namespace Justin.Stock.Controls
                 if (table != null)
                 {
                     stockDAL.UpdateByDataSet(table);
-                    Constants.ResetMyStock();
+                    StockService.ResetMyStock();
                 }
             }
             catch (Exception ex)
@@ -335,7 +330,7 @@ namespace Justin.Stock.Controls
                 IEnumerable<StockInfo> stocks = e.Stocks;
                 if (this.InvokeRequired == true)
                 {
-                    this.Invoke(new MyStockScreenMessage(BindMyStocks), stocks);
+                    this.Invoke(new Action<IEnumerable<StockInfo>>(BindMyStocks), stocks);
                 }
                 else
                 {
@@ -344,7 +339,6 @@ namespace Justin.Stock.Controls
             }
             i++;
         }
-
         private void BindMyStocks(IEnumerable<StockInfo> stocks = null)
         {
             lock (syncdgvMonitorStocks)
@@ -369,7 +363,6 @@ namespace Justin.Stock.Controls
                 }
             }
         }
-
         private void ShowChart(ChartType chartType, bool inner = false)
         {
             //DataGridView dgv = contextMenuSourceGridView;
@@ -419,6 +412,7 @@ namespace Justin.Stock.Controls
             StockChart chart = new StockChart();
             chart.Show(stockNo, chartType);
         }
+
         public void Show(int tabIndex = 0)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -429,21 +423,18 @@ namespace Justin.Stock.Controls
             tabControl1.SelectedIndex = tabIndex;
             base.Show();
         }
-
         public new void Hide()
         {
             StockService.RemoveEvent(ShowMyStockInfoChanged);
             base.Hide();
         }
-
-
-        #endregion
-
         public void Close(bool force = false)
         {
             forceClose = force;
             base.Close();
         }
+
+        #endregion
 
         #region 表格列显示设置
 
@@ -500,6 +491,7 @@ namespace Justin.Stock.Controls
 
         #endregion
 
+        #region CheckHistory
 
         public void RefreshCheckHistory()
         {
@@ -513,7 +505,10 @@ namespace Justin.Stock.Controls
                 DataTable table = dgvCheckHistory.DataSource as DataTable;
                 if (table != null)
                 {
-                    stockDAL.UpdateCheckHistory(table);
+                    bool success = stockDAL.UpdateCheckHistory(table);
+                    if (success)
+                        StockService.ResetSumInvest();
+
                 }
             }
             catch (Exception ex)
@@ -523,8 +518,6 @@ namespace Justin.Stock.Controls
             }
         }
 
-
-
-
+        #endregion
     }
 }

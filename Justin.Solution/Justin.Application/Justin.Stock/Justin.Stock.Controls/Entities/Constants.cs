@@ -32,13 +32,10 @@ namespace Justin.Stock.Controls.Entities
         public static void ResetDBConnString(string dbPath)
         {
             SqliteHelper.ConnStr = String.Format("Data Source={0};Version=3;Pooling=true;Max Pool Size=100;", dbPath);
-            ResetMyStock();
+            StockService.ResetMyStock();
         }
 
-        public static void ResetMyStock()
-        {
-            StockService.MyStock = new StockDAL().getAllMyStock();
-        }
+
 
     }
 }
