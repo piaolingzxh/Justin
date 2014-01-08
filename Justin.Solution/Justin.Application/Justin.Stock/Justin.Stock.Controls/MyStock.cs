@@ -150,10 +150,11 @@ namespace Justin.Stock.Controls
             string no = row.Cells["No"].Value.ToString();
             string name = row.Cells["_Name"].Value.ToString();
             string shortName = row.Cells["InShort"].Value.ToString();
+            string description = row.Cells["Description"].Value.ToString();
 
-
-            stockDAL.InsertStock(code, no, name, shortName, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
+            stockDAL.InsertStock(code, no, name, shortName,description, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
             RefreshPersonalStockSetting();
+            StockService.ResetMyStock();
 
         }
         private void 删除自选ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,6 +165,7 @@ namespace Justin.Stock.Controls
 
             stockDAL.DeleteStock(code);
             RefreshPersonalStockSetting();
+            StockService.ResetMyStock();
         }
 
         //自选个股设置部分dgvStocksetting
