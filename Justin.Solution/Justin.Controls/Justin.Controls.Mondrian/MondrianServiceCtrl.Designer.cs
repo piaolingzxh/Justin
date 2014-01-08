@@ -217,7 +217,7 @@
             this.btnStopService.Name = "btnStopService";
             this.btnStopService.Size = new System.Drawing.Size(82, 26);
             this.btnStopService.TabIndex = 6;
-            this.btnStopService.Text = "Start";
+            this.btnStopService.Text = "Stop";
             this.btnStopService.UseVisualStyleBackColor = true;
             this.btnStopService.Click += new System.EventHandler(this.btnStopService_Click);
             // 

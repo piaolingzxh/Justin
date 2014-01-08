@@ -184,10 +184,10 @@ namespace Justin.Controls.CubeView
             //在该Cube节点上添加Measures文件夹
             catalogNode.Nodes[cubeDef.Name].Nodes.Add("Measures_", "Measures", "Measure", "Measure");
             catalogNode.Nodes[cubeDef.Name].Expand();
+            catalogNode.Nodes[cubeDef.Name].ContextMenuStrip = cubeMenu;
 
             BindMeasuresForCube(catalogNode.Nodes[cubeDef.Name].Nodes["Measures_"], cubeName, cos[catalogName]);
             BindDimensionsForCube(catalogNode.Nodes[cubeDef.Name], cubeDef);
-            catalogNode.Nodes[cubeDef.Name].ContextMenuStrip = cubeMenu;
             catalogNode.Expand();
         }
 

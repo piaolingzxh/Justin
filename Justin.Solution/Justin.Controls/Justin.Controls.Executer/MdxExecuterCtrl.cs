@@ -177,7 +177,7 @@ namespace Justin.Controls.Executer
 
                 BindCellSet(gvMdxresult, cst, lastUseFormattedValue);
                 //gvMdxresult.DataSource = dt;
-                //ShowResult(dt);
+                ShowResult(gvMdxresult);
             }
             catch (AdomdException aex)
             {
@@ -208,7 +208,7 @@ namespace Justin.Controls.Executer
 
                 DataTable dt = MdxHelper.ExecuteDataTable(Connection, mdx);
                 gvMdxresult.DataSource = dt;
-                ShowResult(dt);
+                ShowResult(gvMdxresult);
             }
             catch (Exception ex)
             {
@@ -268,9 +268,9 @@ namespace Justin.Controls.Executer
 
         #endregion
 
-        private void ShowResult(DataTable dt)
+        private void ShowResult(DataGridView dgv)
         {
-            txtResult.Text = string.Format("查询结果:{0}行/{1}列,", dt == null ? 0 : dt.Rows.Count, dt == null ? 0 : dt.Columns.Count);
+            txtResult.Text = string.Format("查询结果:{0}行/{1}列,", dgv.Rows.Count, dgv.Columns.Count);
         }
 
         public void BindCellSet(DataGridView grid, CellSet cs, bool useFormattedValue = false)
