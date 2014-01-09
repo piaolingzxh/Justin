@@ -98,6 +98,7 @@
   <ItemGroup>
     <None Include="..\..\Common\Library\Clean.cmd">
       <Link>Clean.cmd</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Helper\App.config" />
     <None Include="Justin.snk" />
