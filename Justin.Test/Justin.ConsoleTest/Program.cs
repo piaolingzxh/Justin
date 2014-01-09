@@ -19,16 +19,45 @@ namespace Justin.ConsoleTest
     {
         static void Main(string[] args)
         {
-            List<int> list = new List<int>();
+            Process p = GetProcessByPort(8894);
+            Console.WriteLine("");
+        }
 
-            for (int i = 0; i < 50; i++)
+        public static Process GetProcessByPort(int port)
+        {
+            Process result = null;
+
+            Process proTool = new Process();
+            proTool.StartInfo.FileName = "cmd.exe";
+            proTool.StartInfo.UseShellExecute = false;
+            proTool.StartInfo.RedirectStandardInput = true;
+            proTool.StartInfo.RedirectStandardOutput = true;
+            proTool.StartInfo.RedirectStandardError = true;
+            proTool.StartInfo.CreateNoWindow = true;
+            proTool.Start();
+            proTool.StandardInput.WriteLine("netstat -ano");
+            proTool.StandardInput.WriteLine("exit");
+
+            Regex reg = new Regex("\\s+", RegexOptions.Compiled);
+            string line = null;
+            while ((line = proTool.StandardOutput.ReadLine()) != null)
             {
-                list.Add(i);
+                line = line.Trim();
+                if (line.StartsWith("TCP", StringComparison.OrdinalIgnoreCase))
+                {
+                    line = reg.Replace(line, ",");
+
+                    string[] arr = line.Split(',');
+                    if (arr[1].EndsWith(":" + port))
+                    {
+                        result = Process.GetProcessById(int.Parse(arr[4]));
+                        break;
+                    }
+                }
             }
 
-            var mList = list.Skip(0).Take(10).ToList();
+            proTool.Close();
+            return result;
         }
     }
-
-
 }

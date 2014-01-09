@@ -59,7 +59,8 @@ namespace Justin.Toolbox
 
         public void MondrianServiceStarter_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.mondrianServiceCtrl1.StopService();
+            if (this.mondrianServiceCtrl1.StopServiceWhenExitForm)
+                this.mondrianServiceCtrl1.StopService();
         }
     }
 }

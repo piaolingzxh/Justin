@@ -43,5 +43,7 @@
     <Tool Class="Justin.Toolbox.JEditor" DLL="Justin.Toolbox" Extensions=".*"/>
     <Tool Class="Justin.Toolbox.Explorer" DLL="Justin.Toolbox" />
     <Tool Class="Justin.Toolbox.CubeViewer" DLL="Justin.Toolbox" />
+    <Tool Class="Justin.Toolbox.MondrianServiceStarter" DLL="Justin.Toolbox" />
+
   </Tools>
 </AddinConfig>

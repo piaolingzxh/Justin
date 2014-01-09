@@ -45,6 +45,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.checkBoxShowCmd = new System.Windows.Forms.CheckBox();
             this.btnStopService = new System.Windows.Forms.Button();
+            this.checkBoxStopServiceWhenExit = new System.Windows.Forms.CheckBox();
+            this.checkBoxRenameJREFile = new System.Windows.Forms.CheckBox();
+            this.txtJREReName = new System.Windows.Forms.TextBox();
             this.checkGroupBoxTomcat.SuspendLayout();
             this.checkGroupBoxMondrian.SuspendLayout();
             this.SuspendLayout();
@@ -202,11 +205,11 @@
             // checkBoxShowCmd
             // 
             this.checkBoxShowCmd.AutoSize = true;
-            this.checkBoxShowCmd.Location = new System.Drawing.Point(640, 21);
+            this.checkBoxShowCmd.Location = new System.Drawing.Point(21, 241);
             this.checkBoxShowCmd.Name = "checkBoxShowCmd";
-            this.checkBoxShowCmd.Size = new System.Drawing.Size(94, 17);
+            this.checkBoxShowCmd.Size = new System.Drawing.Size(145, 17);
             this.checkBoxShowCmd.TabIndex = 19;
-            this.checkBoxShowCmd.Text = "显示cmd窗口";
+            this.checkBoxShowCmd.Text = "Show Command Window";
             this.checkBoxShowCmd.UseVisualStyleBackColor = true;
             // 
             // btnStopService
@@ -221,17 +224,51 @@
             this.btnStopService.UseVisualStyleBackColor = true;
             this.btnStopService.Click += new System.EventHandler(this.btnStopService_Click);
             // 
+            // checkBoxStopServiceWhenExit
+            // 
+            this.checkBoxStopServiceWhenExit.AutoSize = true;
+            this.checkBoxStopServiceWhenExit.Checked = true;
+            this.checkBoxStopServiceWhenExit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxStopServiceWhenExit.Location = new System.Drawing.Point(21, 264);
+            this.checkBoxStopServiceWhenExit.Name = "checkBoxStopServiceWhenExit";
+            this.checkBoxStopServiceWhenExit.Size = new System.Drawing.Size(235, 17);
+            this.checkBoxStopServiceWhenExit.TabIndex = 20;
+            this.checkBoxStopServiceWhenExit.Text = "Stop Mondrian Service When Exit This From";
+            this.checkBoxStopServiceWhenExit.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxRenameJREFile
+            // 
+            this.checkBoxRenameJREFile.AutoSize = true;
+            this.checkBoxRenameJREFile.Checked = true;
+            this.checkBoxRenameJREFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxRenameJREFile.Location = new System.Drawing.Point(21, 218);
+            this.checkBoxRenameJREFile.Name = "checkBoxRenameJREFile";
+            this.checkBoxRenameJREFile.Size = new System.Drawing.Size(150, 17);
+            this.checkBoxRenameJREFile.TabIndex = 20;
+            this.checkBoxRenameJREFile.Text = "Rename JRE Execute File";
+            this.checkBoxRenameJREFile.UseVisualStyleBackColor = true;
+            // 
+            // txtJREReName
+            // 
+            this.txtJREReName.Location = new System.Drawing.Point(172, 215);
+            this.txtJREReName.Name = "txtJREReName";
+            this.txtJREReName.Size = new System.Drawing.Size(132, 20);
+            this.txtJREReName.TabIndex = 21;
+            // 
             // MondrianServiceCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtJREReName);
+            this.Controls.Add(this.checkBoxRenameJREFile);
+            this.Controls.Add(this.checkBoxStopServiceWhenExit);
             this.Controls.Add(this.checkBoxShowCmd);
             this.Controls.Add(this.checkGroupBoxMondrian);
             this.Controls.Add(this.checkGroupBoxTomcat);
             this.Controls.Add(this.btnStopService);
             this.Controls.Add(this.btnStart);
             this.Name = "MondrianServiceCtrl";
-            this.Size = new System.Drawing.Size(734, 232);
+            this.Size = new System.Drawing.Size(738, 294);
             this.Load += new System.EventHandler(this.MondrianServiceCtrl_Load);
             this.checkGroupBoxTomcat.ResumeLayout(false);
             this.checkGroupBoxTomcat.PerformLayout();
@@ -261,5 +298,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox checkBoxShowCmd;
         private System.Windows.Forms.Button btnStopService;
+        private System.Windows.Forms.CheckBox checkBoxStopServiceWhenExit;
+        private System.Windows.Forms.CheckBox checkBoxRenameJREFile;
+        private System.Windows.Forms.TextBox txtJREReName;
     }
 }
