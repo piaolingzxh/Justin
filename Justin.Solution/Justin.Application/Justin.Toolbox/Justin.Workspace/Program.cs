@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Justin.Log;
 
 namespace Justin.Workspace
 {
@@ -25,8 +26,14 @@ namespace Justin.Workspace
             {
                 wk = new Workbench();
             }
-
-            Application.Run(wk);
+            try
+            {
+                Application.Run(wk);
+            }
+            catch (Exception ex)
+            {
+                JLog.Default.Write(LogMode.Error, ex);
+            }
         }
     }
 }

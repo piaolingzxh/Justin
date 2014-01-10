@@ -48,6 +48,9 @@
       <HintPath>..\..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Data.ConnectionUI">
+      <HintPath>..\..\..\Common\Library\Microsoft.Data.ConnectionUI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog">
       <HintPath>..\..\..\Common\Library\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
       <Private>True</Private>
