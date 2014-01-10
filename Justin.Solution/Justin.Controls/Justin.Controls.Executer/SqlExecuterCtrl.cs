@@ -14,7 +14,6 @@ using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.FormUI;
 using Justin.FrameWork.WinForm.Helper;
 using Justin.FrameWork.WinForm.Models;
-using Justin.Log;
 
 namespace Justin.Controls.Executer
 {
@@ -30,17 +29,13 @@ namespace Justin.Controls.Executer
                     string sql = sr.ReadToEnd();
                     if (string.IsNullOrEmpty(sql))
                     {
-                        using (new JStopWatch("ms").Start(LogMode.Warn, "自定义开始", "自定义结束"))
-                        {
-
-                            txtSQLPreview.Text = sql;
-                            //设定光标所在位置 
-                            txtSQLPreview.BoxPart.SelectionStart = txtSQLPreview.BoxPart.TextLength - 1;
-                            //滚动到当前光标处    
-                            txtSQLPreview.BoxPart.ScrollToCaret();
-                        }
+                        txtSQLPreview.Text = sql;
+                        //设定光标所在位置 
+                        txtSQLPreview.BoxPart.SelectionStart = txtSQLPreview.BoxPart.TextLength - 1;
+                        //滚动到当前光标处    
+                        txtSQLPreview.BoxPart.ScrollToCaret();
                     }
-                    this.ShowMessage(string.Format("文件{0}加载完，共{1}行", txtSQLFileName.Text, txtSQLPreview.BoxPart.Lines.Count()));
+                    this.ShowMessage("文件{0}加载完，共{1}行", txtSQLFileName.Text, txtSQLPreview.BoxPart.Lines.Count());
                 }
             };
             this.SaveAction = (fileName) =>
@@ -130,7 +125,6 @@ namespace Justin.Controls.Executer
                 }
                 catch (Exception ex)
                 {
-                    JLog.Default.Write(LogMode.Error, ex);
                     this.ShowMessage(ex.Message.ToString(), ex.ToString());
                 }
             });
@@ -151,7 +145,6 @@ namespace Justin.Controls.Executer
                     }
                     catch (Exception ex)
                     {
-                        JLog.Default.Write(LogMode.Error, ex);
                         this.ShowMessage(ex.Message.ToString(), sql.ToString() + Environment.NewLine + ex.ToString());
                     }
 
@@ -194,7 +187,6 @@ namespace Justin.Controls.Executer
                                 if (sqlLineCount > Constants.SqlLineSize)
                                 {
                                     SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, builder.ToString(), null);
-                                    JLog.Default.Write(LogMode.Info, builder.ToString());
                                     builder.Clear();
                                     sqlLineCount = 0;
                                 }
@@ -212,7 +204,6 @@ namespace Justin.Controls.Executer
                 }
                 catch (Exception ex)
                 {
-                    JLog.Default.Write(LogMode.Error, ex);
                     this.ShowMessage(ex.Message.ToString(), ex.ToString());
                 }
             });
@@ -297,7 +288,7 @@ namespace Justin.Controls.Executer
                 argument = string.Format(argumentFormat, server, catalog, user, password, txtSQLFileName.Text);
             }
 
-            this.ShowMessage(string.Format("[{0}]", argument));
+            this.ShowMessage("[{0}]", argument);
             this.ShowMessage("命令执行中。。。。（请等待完成提示。。。。）");
 
             Process p = new Process();
@@ -323,7 +314,7 @@ namespace Justin.Controls.Executer
         void p_Exited(object sender, EventArgs e)
         {
             TimeSpan ts = DateTime.Now - start;
-            this.ShowMessage(String.Format("命令执行完毕。。。。,耗时{0}秒", ts.TotalSeconds));
+            this.ShowMessage("命令执行完毕。。。。,耗时{0}秒", ts.TotalSeconds);
         }
 
         void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)

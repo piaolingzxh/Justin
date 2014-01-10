@@ -52,7 +52,8 @@ namespace Justin.Toolbox
 
         private void JCodeCompiler_Load(object sender, EventArgs e)
         {
-            this.LoadFile(this.FileName);
+            if (!string.IsNullOrEmpty(this.FileName))
+                this.LoadFile(this.FileName);
         }
 
         #region override

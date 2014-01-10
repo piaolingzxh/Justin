@@ -163,10 +163,6 @@
       <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
       <Name>Justin.FrameWork</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Justin.Log\Justin.Log.csproj">
-      <Project>{fb90c580-4e99-4921-b352-7704032ae2f7}</Project>
-      <Name>Justin.Log</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

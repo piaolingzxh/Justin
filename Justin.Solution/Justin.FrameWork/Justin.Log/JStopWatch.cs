@@ -18,7 +18,7 @@ namespace Justin.Log
         {
             if (!string.IsNullOrWhiteSpace(startFormat))
             {
-                JLog.Default.Write(logMode, string.Format(startFormat, args));
+                JLog.Default.Write(logMode, startFormat, args);
             }
             Stopper stopper = new Stopper(this, Format, logMode, endFormat, args);
             return stopper;

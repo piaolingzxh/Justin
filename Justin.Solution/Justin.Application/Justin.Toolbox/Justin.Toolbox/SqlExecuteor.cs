@@ -12,7 +12,6 @@ using Justin.Core;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.Models;
-using Justin.Log;
 
 namespace Justin.Toolbox
 {

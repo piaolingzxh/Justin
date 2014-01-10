@@ -76,7 +76,7 @@ namespace Justin.Controls.TestDataGenerator
                 if (result == DialogResult.OK)
                 {
                     TableSetting.SaveSettings(this.FileName);
-                    this.ShowMessage(string.Format("表【{0}】配置保存成功!", TableSetting.TableName));
+                    this.ShowMessage("表【{0}】配置保存成功!", TableSetting.TableName);
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace Justin.Controls.TestDataGenerator
                     tabControl1.SelectedIndex = 1;
                 }
                 tvDst.SelectedNode.ForeColor = Color.Green;
-                this.ShowMessage(string.Format("表【{0}】字段【{1}】配置信息保存成功!", tableName, fieldName));
+                this.ShowMessage("表【{0}】字段【{1}】配置信息保存成功!", tableName, fieldName);
                 TableSetting.Modified = true;
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace Justin.Controls.TestDataGenerator
                 TableSetting.AfterSQL = txtAfterSQL.Text;
                 TableSetting.Modified = true;
             }
-            this.ShowMessage(string.Format("表【{0}】Table配置信息保存成功!", TableSetting.TableName));
+            this.ShowMessage("表【{0}】Table配置信息保存成功!", TableSetting.TableName);
         }
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
@@ -152,11 +152,11 @@ namespace Justin.Controls.TestDataGenerator
                 try
                 {
                     TableSetting.Process(this.ConnStr);
-                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName));
+                    this.ShowMessage("表【{0}】SQL【{1}】生成成功!", TableSetting.TableName, fileName);
                 }
                 catch (Exception ex)
                 {
-                    this.ShowMessage(string.Format("表【{0}】SQL【{1}】生成失败:{2}!", TableSetting.TableName, fileName, ex.ToString()));
+                    this.ShowMessage("表【{0}】SQL【{1}】生成失败:{2}!", TableSetting.TableName, fileName, ex.ToString());
                 }
             });
         }
@@ -172,7 +172,7 @@ namespace Justin.Controls.TestDataGenerator
                     SqlHelper.ExecuteNonQuery(this.ConnStr, CommandType.Text, sql, null);
 
                 }
-                this.ShowMessage(string.Format("表【{0}】SQL【{1}】执行成功!", TableSetting.TableName, fileName));
+                this.ShowMessage("表【{0}】SQL【{1}】执行成功!", TableSetting.TableName, fileName);
             });
         }
 

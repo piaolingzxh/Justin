@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Justin.FrameWork.Helper;
 
 namespace Justin.ConsoleTest
@@ -20,7 +21,10 @@ namespace Justin.ConsoleTest
         static void Main(string[] args)
         {
             Process p = GetProcessByPort(8894);
-            Console.WriteLine("");
+            p.Kill();
+            Thread.Sleep(500);
+            var x = p.HasExited;
+            Console.WriteLine(x);
         }
 
         public static Process GetProcessByPort(int port)

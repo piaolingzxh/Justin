@@ -98,7 +98,7 @@ namespace Justin.Toolbox
                 {
 
                     this.tableConfigCtrl1.TableSetting.SaveSettings(this.FileName);
-                    this.ShowMessage(string.Format("表【{0}】配置保存成功!", this.tableConfigCtrl1.TableSetting.TableName));
+                    this.ShowMessage("表【{0}】配置保存成功!", this.tableConfigCtrl1.TableSetting.TableName);
                 }
             }
             else

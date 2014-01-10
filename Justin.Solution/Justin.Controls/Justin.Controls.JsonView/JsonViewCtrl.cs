@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
-using System.IO;
-using Newtonsoft.Json;
 using ICSharpCode.TextEditor.Document;
-using System.Threading;
-using Justin.Log;
 using Justin.FrameWork.Settings;
-using Justin.FrameWork.WinForm.Models;
 using Justin.FrameWork.WinForm.FormUI;
+using Justin.FrameWork.WinForm.Models;
+using Newtonsoft.Json;
 
 namespace Justin.Controls.JsonView
 {
-    public partial class JsonViewCtrl : JUserControl,IFile
+    public partial class JsonViewCtrl : JUserControl, IFile
     {
         private PluginsManager _pluginsManager = new PluginsManager();
         public JsonViewCtrl()
@@ -345,6 +344,6 @@ namespace Justin.Controls.JsonView
         {
             get { return ".json"; }
         }
- 
+
     }
 }

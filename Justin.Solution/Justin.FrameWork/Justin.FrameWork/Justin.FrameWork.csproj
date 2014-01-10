@@ -64,6 +64,7 @@
     <Compile Include="Entities\CDATA.cs" />
     <Compile Include="Entities\SQLDialect.cs" />
     <Compile Include="Entities\SerializableDictionary~.cs" />
+    <Compile Include="Extensions\ExceptionEx.cs" />
     <Compile Include="Extensions\IEnumerableEx.cs" />
     <Compile Include="Entities\BindingCollection~.cs" />
     <Compile Include="Extensions\CellSetEx.cs" />

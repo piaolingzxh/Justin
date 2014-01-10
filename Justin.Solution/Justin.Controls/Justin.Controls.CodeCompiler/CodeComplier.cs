@@ -13,7 +13,7 @@ using Justin.FrameWork.WinForm.Utility;
 namespace Justin.Controls.CodeCompiler
 {
     public delegate void ComplierMsgReceivehandler(string msg);
-    
+
 
     #region 其他
     public enum NetDialect
@@ -21,7 +21,7 @@ namespace Justin.Controls.CodeCompiler
         CSharp,
         VB,
     }
-    
+
 
     public enum Target
     {

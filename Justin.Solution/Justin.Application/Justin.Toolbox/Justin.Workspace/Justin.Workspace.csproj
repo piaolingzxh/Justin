@@ -124,28 +124,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
-      <Project>{f1ba0a66-6d68-4142-83d8-c96a81a6862e}</Project>
-      <Name>Justin.FrameWork.WinForm</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
-      <Project>{d4a91b29-5a36-41a6-8fe4-c1076cd96bd3}</Project>
-      <Name>Justin.FrameWork</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.Log\Justin.Log.csproj">
-      <Project>{fb90c580-4e99-4921-b352-7704032ae2f7}</Project>
-      <Name>Justin.Log</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
-      <Project>{2fa07381-d81f-4ba2-a9de-f084529d835c}</Project>
-      <Name>Justin.Core</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ico\20120917647.ico" />
     <Content Include="ico\201304081625 %281%29.ico" />
     <Content Include="ico\201304083561.ico" />
@@ -197,7 +175,24 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
+      <Project>{F1BA0A66-6D68-4142-83D8-C96A81A6862E}</Project>
+      <Name>Justin.FrameWork.WinForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.Log\Justin.Log.csproj">
+      <Project>{FB90C580-4E99-4921-B352-7704032AE2F7}</Project>
+      <Name>Justin.Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
+      <Project>{2FA07381-D81F-4BA2-A9DE-F084529D835C}</Project>
+      <Name>Justin.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

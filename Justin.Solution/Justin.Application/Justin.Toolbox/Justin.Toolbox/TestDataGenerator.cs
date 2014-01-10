@@ -19,7 +19,6 @@ using Justin.Controls.TestDataGenerator.Utility;
 using Justin.Core;
 using Justin.FrameWork.Helper;
 using Justin.FrameWork.Settings;
-using Justin.Log;
 using Justin.Toolbox;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -108,7 +107,7 @@ namespace Justin.Toolbox
                 string fileName = TableConfigCtrl.GetFullFileName(dbTable.TableName, TableConfigCtrl.configFileExtensions);
                 JTable table = SerializeHelper.XmlDeserializeFromFile<JTable>(fileName);
                 ShowConfigTableForm(table);
-                this.ShowMessage(string.Format("已加载表【{0}】的配置文件[{1}]", dbTable.TableName, fileName));
+                this.ShowMessage("已加载表【{0}】的配置文件[{1}]", dbTable.TableName, fileName);
             }
         }
 
@@ -121,7 +120,7 @@ namespace Justin.Toolbox
                 {
                     JTable table = new JTable(dbTable, this.ConnStr);
                     ShowConfigTableForm(table);
-                    this.ShowMessage(string.Format("已翻译表【{0}】为配置文件", dbTable.TableName));
+                    this.ShowMessage("已翻译表【{0}】为配置文件", dbTable.TableName);
                 }
             });
         }
@@ -199,7 +198,7 @@ namespace Justin.Toolbox
                     }
 
                     tvSource.Nodes.Add(tableNode);
-                    this.ShowMessage(string.Format("已加载表【{0}】信息", dbTable.TableName));
+                    this.ShowMessage("已加载表【{0}】信息", dbTable.TableName);
                 }
             });
         }

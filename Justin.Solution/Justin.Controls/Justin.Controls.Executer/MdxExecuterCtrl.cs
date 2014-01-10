@@ -181,16 +181,16 @@ namespace Justin.Controls.Executer
             }
             catch (AdomdException aex)
             {
-                this.ShowMessage(string.Format("Mdx查询出错{0},", aex.ToString()));
+                this.ShowMessage("Mdx查询出错{0},", aex.ToString());
             }
             catch (Exception ex)
             {
-                this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
+                this.ShowMessage("Mdx查询出错{0},", ex.ToString());
             }
             finally
             {
                 watch.Stop();
-                this.ShowMessage(string.Format("查询耗时{0}毫秒,", watch.ElapsedMilliseconds));
+                this.ShowMessage("查询耗时{0}毫秒,", watch.ElapsedMilliseconds);
             }
         }
         private void btnExecuteDataSet_Click(object sender, EventArgs e)
@@ -212,12 +212,12 @@ namespace Justin.Controls.Executer
             }
             catch (Exception ex)
             {
-                this.ShowMessage(string.Format("Mdx查询出错{0},", ex.ToString()));
+                this.ShowMessage("Mdx查询出错{0},", ex.ToString());
             }
             finally
             {
                 watch.Stop();
-                this.ShowMessage(string.Format("查询耗时{0}毫秒,", watch.ElapsedMilliseconds));
+                this.ShowMessage("查询耗时{0}毫秒,", watch.ElapsedMilliseconds);
             }
         }
 

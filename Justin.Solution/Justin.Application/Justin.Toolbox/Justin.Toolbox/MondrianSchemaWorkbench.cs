@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using Justin.Core;
 using Justin.FrameWork.Helper;
-using Justin.FrameWork.WinForm.FormUI.SharpCodeTextEditor;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.WinForm.FormUI.PropertyGrid;
-using Justin.Core;
+using Justin.FrameWork.WinForm.FormUI.SharpCodeTextEditor;
 using Justin.FrameWork.WinForm.Models;
 
 namespace Justin.Toolbox
@@ -26,8 +26,8 @@ namespace Justin.Toolbox
             InitializeComponent();
             this.schemaViewerCtrl1.FileChanged += this.OnFileChanged;
             this.LoadAction = (fileName) => { this.schemaViewerCtrl1.LoadFile(fileName); };
-            this.SaveAction = (fileName) => { this.schemaViewerCtrl1.SaveFile(fileName,this.Extension); };
-     
+            this.SaveAction = (fileName) => { this.schemaViewerCtrl1.SaveFile(fileName, this.Extension); };
+
         }
         public MondrianSchemaWorkbench(string[] args)
             : this()
@@ -67,7 +67,8 @@ namespace Justin.Toolbox
 
         private void MondrianSchemaWorkbench_Load(object sender, EventArgs e)
         {
-            this.LoadFile(this.FileName);
+            if (!string.IsNullOrEmpty(this.FileName))
+                this.LoadFile(this.FileName);
         }
     }
 

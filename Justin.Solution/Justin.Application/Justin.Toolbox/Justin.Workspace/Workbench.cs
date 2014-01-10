@@ -591,7 +591,7 @@ namespace Justin.Workspace
             }
             if (type == null)
             {
-                this.ShowMessage(string.Format("工具{0}找不到入口函数", typeStr));
+                this.ShowMessage("工具{0}找不到入口函数", typeStr);
                 return null;
             }
             object obj = null;
@@ -661,7 +661,7 @@ namespace Justin.Workspace
         {
 
             string addinFileFullName = Path.Combine(Application.StartupPath, fileNameOfAddin);
-            this.ShowMessage(string.Format("addin【{0}】", addinFileFullName));
+            this.ShowMessage("addin【{0}】", addinFileFullName);
 
             if (File.Exists(addinFileFullName))
             {

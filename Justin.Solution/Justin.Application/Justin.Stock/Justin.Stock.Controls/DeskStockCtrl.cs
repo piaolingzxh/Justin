@@ -314,7 +314,7 @@ namespace Justin.Stock.Controls
         {
             Color color = Color.Black, up = Color.Red, down = Color.Green;
 
-            if (!Constants.Setting.ShowWarn || stock.PriceNow == 0) return color;
+            if (!Constants.Setting.ShowWarn || stock.PriceNow == 0 || !stock.Warn) return color;
 
             if ((stock.WarnPrice_Max != 0 && stock.PriceNow > stock.WarnPrice_Max)
                 || ((stock.WarnPercent_Max != 0 && stock.SurgedRange > stock.WarnPercent_Max)))

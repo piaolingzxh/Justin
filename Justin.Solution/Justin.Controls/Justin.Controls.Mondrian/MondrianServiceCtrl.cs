@@ -11,6 +11,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Justin.FrameWork.Services;
 using Justin.FrameWork.WinForm.FormUI;
 
 namespace Justin.Controls.Mondrian
@@ -23,7 +24,6 @@ namespace Justin.Controls.Mondrian
         }
         TomcatService tomcat = new TomcatService();
         MondrianService mondrian = new MondrianService();
-        //txtJREExecuteFileName
 
         private string JREExecuteFilePath
         {
@@ -101,7 +101,7 @@ namespace Justin.Controls.Mondrian
                 }
             }
 
-            this.ShowMessage("服务启动中。。。");
+            this.ShowMessage("开始启动服务。。。");
             if (checkGroupBoxMondrian.Checked)
             {
                 mondrian.Sync(this.ConnStr, this.txtMondrianRootPath.Text);
@@ -109,10 +109,12 @@ namespace Justin.Controls.Mondrian
             }
             string args = "";
             StopService();
-            if (PortInUse(int.Parse(txtPort.Text)))
+            this.ShowMessage("启动服务中。。。");
+
+            Process portProcess = GetProcessByPort(int.Parse(this.txtPort.Text));
+            if (portProcess != null)
             {
-                Process portProcess = GetProcessByPort(int.Parse(this.txtPort.Text));
-                this.ShowMessage(string.Format("tomcat的端口号:{0}已经被进程Id:{1} Name:{2}占用。请重新指定", txtPort.Text, portProcess.Id, portProcess.ProcessName));
+                this.ShowMessage("tomcat的端口号:{0}已经被进程Id:{1} Name:{2}占用。请重新指定", txtPort.Text, portProcess.Id, portProcess.ProcessName);
                 return;
             }
 
@@ -121,8 +123,14 @@ namespace Justin.Controls.Mondrian
             if (!checkBoxShowCmd.Checked)
             {
                 Process p = new Process();
-                p.OutputDataReceived += new DataReceivedEventHandler((tSender, ee) => { this.ShowMessage(ee.Data); });
-                p.ErrorDataReceived += new DataReceivedEventHandler((tSender, ee) => { this.ShowMessage(ee.Data); });
+                p.OutputDataReceived += new DataReceivedEventHandler((tSender, ee) =>
+                {
+                    this.ShowMessage(ee.Data);
+                });
+                p.ErrorDataReceived += new DataReceivedEventHandler((tSender, ee) =>
+                {
+                    MessageSvc.Default.Write(MessageLevel.Error, ee.Data);
+                });
                 p.Exited += new EventHandler((tSender, ee) => { this.ShowMessage("mondrian服务已停止。。。"); });
                 p.EnableRaisingEvents = true;
 

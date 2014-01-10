@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Justin.FrameWork.Services;
 using Justin.FrameWork.WinForm.Utility;
-using Justin.Log;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Justin.Core
@@ -21,48 +21,44 @@ namespace Justin.Core
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
 
-            if (LogService.Instance.MessageReceived == null)
+            if (MessageSvc.Default.MessageReceived == null)
             {
-                LogService.Instance.MessageReceived += MessageReceived;
+                MessageSvc.Default.MessageReceived += MessageReceived;
             }
         }
         private static OutPutWindow win = new OutPutWindow();
         public static OutPutWindow Instance { get { return win; } }
 
-        public delegate void AppendTextCallback(MessageReceivedEventArgs e);
 
-        public void ProcessMessageObj(MessageReceivedEventArgs e)
+        public void ProcessMessageObj(MessageEventArgs e)
         {
             if (this.txtMessage.InvokeRequired)
             {
-                AppendTextCallback d = new AppendTextCallback(ProcessMessageObj);
+                Action<MessageEventArgs> d = new Action<MessageEventArgs>(ProcessMessageObj);
                 this.txtMessage.Invoke(d, e);
             }
             else
             {
-                if (e.Exception != null)
+                if (e.Message != null && !string.IsNullOrEmpty(e.Message.Trim()))
                 {
-                    ShowMessage(e.Exception, e.Native);
-                    JLog.Default.Write(LogMode.Error, e.Exception);
-                }
-                else
-                {
-                    ShowMessage(e.ShortMsg, e.DetailMsg, e.Native);
-                    string msg = !string.IsNullOrEmpty(e.DetailMsg) ? e.DetailMsg : e.ShortMsg;
-                    JLog.Default.Write(LogMode.Info, msg);
+                    this.txtMessage.AppendText(e.Message);
+                    this.txtMessage.AppendText(Environment.NewLine);
+                    if (e.Level.Equals(MessageLevel.Error))
+                    {
+                        this.txtError.AppendText(e.Message);
+                        this.txtError.AppendText(Environment.NewLine);
+                    }
                 }
             }
-
-        }
-
-        private void OutPutWindow_FormClosing(object sender, FormClosingEventArgs e)
-        {
 
         }
 
         private void clearScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.txtMessage.Clear();
+            RichTextBox txtBox = contextMenuStrip1.SourceControl as RichTextBox;
+            if (txtBox != null)
+                txtBox.Clear();
+
         }
 
 
@@ -71,36 +67,12 @@ namespace Justin.Core
             this.txtMessage.Clear();
         }
 
-        public void MessageReceived(object sender, MessageReceivedEventArgs e)
+        public void MessageReceived(object sender, MessageEventArgs e)
         {
-            if (e.Exception != null)
+            if (e.Message != null && !string.IsNullOrEmpty(e.Message.Trim()))
             {
                 ProcessMessageObj(e);
             }
-            else
-            {
-                ProcessMessageObj(e);
-            }
-        }
-
-        protected void ShowMessage(string shortMsg, string detailMsg = "", bool native = false)
-        {
-            string msg = !string.IsNullOrEmpty(detailMsg) ? detailMsg : shortMsg;
-            this.txtMessage.AppendText(msg);
-            this.txtMessage.AppendText(Environment.NewLine);
-        }
-
-        public void ShowMessage(Exception ex, bool native)
-        {
-            StringBuilder sb = new StringBuilder();
-            Exception tempex = ex;
-            sb.AppendLine(ex.ToString());
-            while (ex.InnerException != null)
-            {
-                sb.AppendLine(ex.InnerException.Message);
-                ex = ex.InnerException;
-            }
-            ShowMessage(ex.Message, sb.ToString(), native);
         }
     }
 }

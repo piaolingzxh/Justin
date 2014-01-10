@@ -43,31 +43,6 @@
     <Reference Include="AssociationManager">
       <HintPath>..\..\..\Common\Library\AssociationManager.dll</HintPath>
     </Reference>
-    <Reference Include="Justin.Controls.CodeCompiler">
-      <HintPath>..\..\..\Release\Justin.Controls.CodeCompiler.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.Controls.CodeSnippet">
-      <HintPath>..\..\..\Release\Justin.Controls.CodeSnippet.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.Controls.Executer">
-      <HintPath>..\..\..\Release\Justin.Controls.Executer.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.Controls.JsonView">
-      <HintPath>..\..\..\Release\Justin.Controls.JsonView.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.FrameWork">
-      <HintPath>..\..\..\Release\Justin.FrameWork.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Justin.FrameWork.WinForm">
-      <HintPath>..\..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Justin.Log, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d146da2c886820c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Release\Justin.Log.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
@@ -75,7 +50,7 @@
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog">
       <HintPath>..\..\..\Common\Library\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
       <HintPath>..\..\..\Common\Library\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
@@ -274,26 +249,53 @@
     <Content Include="images\zhineng2.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CodeCompiler\Justin.Controls.CodeCompiler.csproj">
+      <Project>{6941552A-4FD4-4F07-98E2-F8A10FCC0086}</Project>
+      <Name>Justin.Controls.CodeCompiler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CodeSnippet\Justin.Controls.CodeSnippet.csproj">
+      <Project>{BCE992B5-1055-4531-A1C6-E15209D27270}</Project>
+      <Name>Justin.Controls.CodeSnippet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.CubeView\Justin.Controls.CubeView.csproj">
       <Project>{2BF9EEF8-B336-4EA8-B562-9F5F3068B79D}</Project>
       <Name>Justin.Controls.CubeView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.Executer\Justin.Controls.Executer.csproj">
+      <Project>{6EE7E46D-DC3A-45AB-A696-18E1C7489748}</Project>
+      <Name>Justin.Controls.Executer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.JsonView\Justin.Controls.JsonView.csproj">
+      <Project>{BB49DE23-C34D-4457-9F25-34CA6277813D}</Project>
+      <Name>Justin.Controls.JsonView</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.Mondrian\Justin.Controls.Mondrian.csproj">
       <Project>{D6701E81-57AA-4348-8AE7-7BB2BB94C826}</Project>
       <Name>Justin.Controls.Mondrian</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.TestDataGenerator\Justin.Controls.TestDataGenerator.csproj">
-      <Project>{c8130a39-3c8c-40c5-9955-c1bc871ad981}</Project>
+      <Project>{C8130A39-3C8C-40C5-9955-C1BC871AD981}</Project>
       <Name>Justin.Controls.TestDataGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.TextEditor\Justin.Controls.TextEditor.csproj">
-      <Project>{8e9d5fd9-41a8-4d2e-b239-2d64f7ea7684}</Project>
+      <Project>{8E9D5FD9-41A8-4D2E-B239-2D64F7EA7684}</Project>
       <Name>Justin.Controls.TextEditor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.Controls\Justin.Controls.WordView\Justin.Controls.WordView.csproj">
+      <Project>{69463078-58BF-47A8-9464-FB3C3B1AF449}</Project>
+      <Name>Justin.Controls.WordView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
+      <Project>{F1BA0A66-6D68-4142-83D8-C96A81A6862E}</Project>
+      <Name>Justin.FrameWork.WinForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
-      <Project>{2fa07381-d81f-4ba2-a9de-f084529d835c}</Project>
+      <Project>{2FA07381-D81F-4BA2-A9DE-F084529D835C}</Project>
       <Name>Justin.Core</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

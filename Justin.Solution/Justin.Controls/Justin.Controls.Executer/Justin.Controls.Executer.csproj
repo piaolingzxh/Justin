@@ -35,18 +35,6 @@
       <HintPath>..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Justin.FrameWork, Version=1.0.0.0, Culture=neutral, PublicKeyToken=48d83e4bfa0cc209, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.FrameWork.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.FrameWork.WinForm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b54556de27525ede, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.FrameWork.WinForm.dll</HintPath>
-    </Reference>
-    <Reference Include="Justin.Log, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d146da2c886820c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Release\Justin.Log.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
@@ -106,6 +94,16 @@
     <Content Include="Images\open.png" />
     <Content Include="Images\save.png" />
     <Content Include="Images\zhineng.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
+      <Project>{F1BA0A66-6D68-4142-83D8-C96A81A6862E}</Project>
+      <Name>Justin.FrameWork.WinForm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
+      <Project>{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}</Project>
+      <Name>Justin.FrameWork</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

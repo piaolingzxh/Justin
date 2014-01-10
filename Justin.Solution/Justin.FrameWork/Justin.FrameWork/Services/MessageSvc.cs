@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Justin.FrameWork.Extensions;
 
 namespace Justin.FrameWork.Services
 {
@@ -28,17 +29,15 @@ namespace Justin.FrameWork.Services
         {
             if (this.MessageReceived == null) return;
 
-            MessageEventArgs msgArgs = new MessageEventArgs(level, ex.ToString());
+            MessageEventArgs msgArgs = new MessageEventArgs(level, ex.GetAllMessage());
             this.MessageReceived(null, msgArgs);
         }
         public void Write(MessageLevel level, Exception ex, string messageFormat, params object[] args)
         {
             if (this.MessageReceived == null) return;
 
-            string exMessage = ex.InnerException != null ? ex.InnerException.ToString() : ex.ToString();
             string msg = args == null || args.Count() < 1 ? messageFormat : string.Format(messageFormat, args);
-
-            MessageEventArgs msgArgs = new MessageEventArgs(level, msg + string.Format("\r\n异常信息：{0}", exMessage));
+            MessageEventArgs msgArgs = new MessageEventArgs(level, msg + string.Format("\r\n异常信息：{0}", ex.GetAllMessage()));
             this.MessageReceived(null, msgArgs);
 
         }

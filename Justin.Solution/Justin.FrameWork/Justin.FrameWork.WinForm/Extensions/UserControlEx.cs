@@ -3,34 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Justin.Log;
+using Justin.FrameWork.Services;
 
 namespace System.Windows.Forms
 {
     public static class UserControlEx
     {
-        public static void ShowMessage(this UserControl instance, Exception ex, bool native = false)
-        {
-            if (LogService.Instance.MessageReceived != null)
-            {
-                foreach (MessageReceivedEventHandler tempEvent in LogService.Instance.MessageReceived.GetInvocationList())
-                {
-                    tempEvent(null, new MessageReceivedEventArgs(ex, native));
-                }
-            }
-        }
 
-        public static void ShowMessage(this UserControl instance, string msg, string detailMsg = "", bool native = false)
+        public static void ShowMessage(this UserControl instance, Exception ex)
         {
-            if (LogService.Instance.MessageReceived != null && !string.IsNullOrEmpty(msg))
-            {
-                foreach (MessageReceivedEventHandler tempEvent in LogService.Instance.MessageReceived.GetInvocationList())
-                {
-                    tempEvent(null, new MessageReceivedEventArgs(msg, detailMsg, native));
-                }
-            }
-        }
+            //if (MessageSvc.Default.MessageReceived != null)
+            //{
+            //    foreach (MessageEventHandler tempEvent in MessageSvc.Default.MessageReceived.GetInvocationList())
+            //    {
+            //        tempEvent(null, new MessageEventArgs(MessageLevel.Error, ex.GetAllMessage()));
+            //    }
+            //}
 
+            MessageSvc.Default.Write(MessageLevel.Error, ex);
+        }
+        public static void ShowMessage(this UserControl instance, Exception ex, string messageFormat, params object[] args)
+        {
+            MessageSvc.Default.Write(MessageLevel.Error, ex, messageFormat, args);
+        }
+        public static void ShowMessage(this UserControl instance, string messageFormat, params object[] args)
+        {
+            //if (MessageSvc.Default.MessageReceived != null)
+            //{
+            //    foreach (MessageEventHandler tempEvent in MessageSvc.Default.MessageReceived.GetInvocationList())
+            //    {
+            //        tempEvent(null, new MessageEventArgs(MessageLevel.Info, msg));
+            //    }
+            //}
+
+            MessageSvc.Default.Write(MessageLevel.Info, messageFormat, args);
+        }
 
         public static void ShowTips(this UserControl instance, ToolTip tips)
         {

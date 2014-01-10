@@ -132,7 +132,7 @@ namespace Justin.Core
         {
             if (string.IsNullOrEmpty(this.FileName) || !File.Exists(this.FileName))
             {
-                this.ShowMessage(string.Format("文件【{0}】不存在", this.FileName));
+                this.ShowMessage("文件【{0}】不存在", this.FileName);
             }
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
             psi.Arguments = "/e,/select," + this.FileName;
@@ -277,7 +277,7 @@ namespace Justin.Core
         {
             if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
             {
-                this.ShowMessage(string.Format("文件[{0}]不存在", fileName));
+                this.ShowMessage("文件[{0}]不存在", fileName);
                 return;
             }
             if (LoadAction != null)

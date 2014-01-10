@@ -26,8 +26,6 @@ namespace Justin.Toolbox
             this.LoadAction = (fileName) => { this.mdxExecuterCtrl1.LoadFile(fileName); };
             this.SaveAction = (fileName) => { this.mdxExecuterCtrl1.SaveFile(fileName, this.Extension); };
             this.FormClosing += MdxExecutor_FormClosing;
-
-
         }
 
         void MdxExecutor_FormClosing(object sender, FormClosingEventArgs e)

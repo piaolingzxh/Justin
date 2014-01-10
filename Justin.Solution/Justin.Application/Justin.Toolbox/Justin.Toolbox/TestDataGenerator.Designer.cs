@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestDataGenerator));
             this.btnDataSourceChoose = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -38,14 +39,14 @@
             this.tvAllTables = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tvSource = new System.Windows.Forms.TreeView();
-            this.tvSourceMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.tvSourceMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TranslateMenuItemOfTVSource = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMenuItemOfTVSource = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrepareDBTables = new System.Windows.Forms.Button();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabConfigPage = new System.Windows.Forms.TabPage();
-            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();

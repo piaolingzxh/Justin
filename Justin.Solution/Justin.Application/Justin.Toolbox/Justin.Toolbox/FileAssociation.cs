@@ -9,10 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AssociationManager;
-using Microsoft.Win32;
-using Justin.Core;
 using Justin.Controls.TestDataGenerator.Entities;
 using Justin.Controls.TestDataGenerator.Utility;
+using Justin.Core;
+using Microsoft.Win32;
 
 
 namespace Justin.Toolbox
@@ -23,7 +23,7 @@ namespace Justin.Toolbox
         {
             InitializeComponent();
         }
-         
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -56,7 +56,7 @@ namespace Justin.Toolbox
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex.Message, ex.ToString());
+                this.ShowMessage(ex.Message);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Justin.Toolbox
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex.Message, ex.ToString());
+                this.ShowMessage(ex.Message);
             }
         }
     }
