@@ -42,7 +42,6 @@ namespace Justin.Workspace
         public Workbench()
         {
             InitializeComponent();
-            MessageSvc.Default.MessageReceived += MessageReceived;
             m_deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
         }
         //根据保存文件加载子窗体信息
@@ -731,19 +730,6 @@ namespace Justin.Workspace
             form.ShowStatus = !form.ShowStatus;
         }
 
-        public void MessageReceived(object sender, MessageEventArgs e)
-        {
-            if (e.Message != null && !string.IsNullOrEmpty(e.Message.Trim()))
-            {
-                ProcessMessageObj(e);
-            }
-        }
-        public void ProcessMessageObj(MessageEventArgs e)
-        {
-            if (e.Message != null && !string.IsNullOrEmpty(e.Message.Trim()))
-            {
-                JLog.Default.Write(LogMode.Info, e.Message);
-            }
-        }
+        
     }
 }

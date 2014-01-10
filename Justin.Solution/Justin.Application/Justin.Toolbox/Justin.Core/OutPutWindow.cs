@@ -19,12 +19,7 @@ namespace Justin.Core
         private OutPutWindow()
         {
             InitializeComponent();
-            Control.CheckForIllegalCrossThreadCalls = false;
-
-            if (MessageSvc.Default.MessageReceived == null)
-            {
-                MessageSvc.Default.MessageReceived += MessageReceived;
-            }
+            Control.CheckForIllegalCrossThreadCalls = false;            
         }
         private static OutPutWindow win = new OutPutWindow();
         public static OutPutWindow Instance { get { return win; } }
@@ -64,9 +59,7 @@ namespace Justin.Core
 
         private void OutPutWindow_Load(object sender, EventArgs e)
         {
-            this.txtMessage.Clear();
         }
-
         public void MessageReceived(object sender, MessageEventArgs e)
         {
             if (e.Message != null && !string.IsNullOrEmpty(e.Message.Trim()))

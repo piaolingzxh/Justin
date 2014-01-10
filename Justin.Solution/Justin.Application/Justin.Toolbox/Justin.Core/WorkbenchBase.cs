@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Justin.FrameWork.Services;
 
 namespace Justin.Core
 {
@@ -15,11 +16,9 @@ namespace Justin.Core
         public WorkbenchBase()
         {
             InitializeComponent();
-
-           
         }
 
-        public OutPutWindow OutPutWin ;
+        public OutPutWindow OutPutWin;
         public virtual DockPanel DockPanel { get { return null; } }
 
         #region 关闭子窗体

@@ -33,10 +33,13 @@ namespace Justin.Toolbox
             JSetting.SetUseAppSetting("TableConfigFolder", "TableConfigFolder");
         }
 
-        public TestDataGenerator(string connStr)
+        public TestDataGenerator(string[] args)
             : this()
         {
-            this.ConnStr = connStr;
+            if (args != null)
+            {
+                this.ConnStr = args[0];
+            }
         }
 
         #region 功能函数

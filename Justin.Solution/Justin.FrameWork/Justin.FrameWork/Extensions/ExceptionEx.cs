@@ -9,13 +9,14 @@ namespace Justin.FrameWork.Extensions
     {
         public static string GetAllMessage(this Exception instance)
         {
-            if (instance == null) return "";
+            Exception ex = instance;
+            if (ex == null) return "";
             StringBuilder sb = new StringBuilder();
 
-            while (instance != null)
+            while (ex != null)
             {
-                sb.Append(instance.Message).AppendLine();
-                instance = instance.InnerException;
+                sb.Append(ex.Message).AppendLine();
+                ex = ex.InnerException;
             }
 
             return sb.ToString() + instance.ToString();
