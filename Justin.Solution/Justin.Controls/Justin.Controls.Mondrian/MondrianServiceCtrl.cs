@@ -112,7 +112,7 @@ namespace Justin.Controls.Mondrian
             this.ShowMessage("启动服务中。。。");
 
             Process portProcess = GetProcessByPort(int.Parse(this.txtPort.Text));
-            if (portProcess != null)
+            if (portProcess != null && portProcess.Id != 0)
             {
                 this.ShowMessage("tomcat的端口号:{0}已经被进程Id:{1} Name:{2}占用。请重新指定", txtPort.Text, portProcess.Id, portProcess.ProcessName);
                 return;

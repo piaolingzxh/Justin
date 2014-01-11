@@ -387,7 +387,8 @@ namespace Justin.Controls.Executer
 
         private void gvMdxresult_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            ShowCellInfo(e.RowIndex, e.ColumnIndex);
+            if (e.RowIndex >= 0)
+                ShowCellInfo(e.RowIndex, e.ColumnIndex);
         }
 
 

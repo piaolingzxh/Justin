@@ -554,7 +554,7 @@ namespace Justin.Controls.CubeView
         }
         private void tvCubeInfo_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.Copy);
+            DoDragDrop(e.Item, DragDropEffects.All);
         }
 
         //Treeview 菜单
