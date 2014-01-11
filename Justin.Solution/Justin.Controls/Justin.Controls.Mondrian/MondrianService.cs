@@ -42,16 +42,16 @@ namespace Justin.Controls.Mondrian
                     }
                 }
             }
-            XmlElement contextEl = (serverXML.GetElementsByTagName("Context")[0] as XmlElement);
+            //XmlElement contextEl = (serverXML.GetElementsByTagName("Context")[0] as XmlElement);
             bool docBaseChanged = false;
-            if (contextEl != null)
-            {
-                if (contextEl.Attributes["docBase"].Value != _appName)
-                {
-                    contextEl.SetAttribute("docBase", _appName);
-                    docBaseChanged = true;
-                }
-            }
+            //if (contextEl != null)
+            //{
+            //    if (contextEl.Attributes["docBase"].Value != _appName)
+            //    {
+            //        contextEl.SetAttribute("docBase", _appName);
+            //        docBaseChanged = true;
+            //    }
+            //}
             if (docBaseChanged || portChanged)
                 SaveXML(tomcatServerConfigFileName, serverXML);
         }

@@ -97,7 +97,7 @@ namespace Justin.Controls.Mondrian
                 }
                 if (!File.Exists(this.JREExecuteFilePath))
                 {
-                    File.Copy(this.checkBoxRenameJREFile.Text, this.JREExecuteFilePath);
+                    File.Copy(this.txtJREExecuteFileName.Text, this.JREExecuteFilePath);
                 }
             }
 
@@ -119,6 +119,8 @@ namespace Justin.Controls.Mondrian
             }
 
             tomcat.Start(txtTomcatRootPath.Text, this.JREExecuteFilePath, int.Parse(txtPort.Text), out args);
+
+            this.ShowMessage(args);
 
             if (!checkBoxShowCmd.Checked)
             {
@@ -160,15 +162,8 @@ namespace Justin.Controls.Mondrian
         }
         private void txtTomcatRootPath_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtJREExecuteFileName.Text))
-            {
-                txtJREExecuteFileName.Text = Path.Combine(txtTomcatRootPath.Text, @"tools\jre\bin\java.exe");
-            }
-
-            if (string.IsNullOrEmpty(txtMondrianRootPath.Text))
-            {
-                txtMondrianRootPath.Text = Path.Combine(txtTomcatRootPath.Text, @"webapps\mondrian"); ;
-            }
+            txtJREExecuteFileName.Text = Path.Combine(txtTomcatRootPath.Text, @"tools\jre\bin\java.exe");
+            txtMondrianRootPath.Text = Path.Combine(txtTomcatRootPath.Text, @"webapps\mondrian"); ;
         }
         private void linkLabelDeafultLocation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
