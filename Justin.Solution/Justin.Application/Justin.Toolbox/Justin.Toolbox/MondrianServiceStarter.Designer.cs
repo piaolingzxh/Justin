@@ -28,17 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MondrianServiceStarter));
             this.mondrianServiceCtrl1 = new Justin.Controls.Mondrian.MondrianServiceCtrl();
             this.SuspendLayout();
             // 
             // mondrianServiceCtrl1
             // 
-            this.mondrianServiceCtrl1.ConnStr = null;
+            this.mondrianServiceCtrl1.ConnStr = "Provider=sqloledb;Data Source=192.168.130.111;Initial Catalog=gtp_zxh;User Id=sa;" +
+    "Password=bisa;";
             this.mondrianServiceCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mondrianServiceCtrl1.FileName = null;
             this.mondrianServiceCtrl1.Location = new System.Drawing.Point(0, 0);
             this.mondrianServiceCtrl1.Name = "mondrianServiceCtrl1";
-            this.mondrianServiceCtrl1.Size = new System.Drawing.Size(575, 233);
+            this.mondrianServiceCtrl1.Size = new System.Drawing.Size(575, 211);
+            this.mondrianServiceCtrl1.StopServiceWhenExitForm = true;
             this.mondrianServiceCtrl1.TabIndex = 0;
             // 
             // MondrianServiceStarter
@@ -47,6 +50,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(575, 233);
             this.Controls.Add(this.mondrianServiceCtrl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MondrianServiceStarter";
             this.ShowStatus = true;
             this.Text = "MondrianServiceStarter";

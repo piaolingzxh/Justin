@@ -43,6 +43,9 @@
     <Reference Include="AssociationManager">
       <HintPath>..\..\..\Common\Library\AssociationManager.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.TextEditor">
+      <HintPath>..\..\..\Common\Library\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AnalysisServices.AdomdClient, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Common\Library\Microsoft.AnalysisServices.AdomdClient.dll</HintPath>
@@ -179,7 +182,6 @@
     <Content Include="images\ArrowDown.bmp" />
     <Content Include="images\ArrowUp.bmp" />
     <None Include="images\back.png" />
-    <Content Include="images\back_48.jpg" />
     <Content Include="images\Bitmap.ico" />
     <Content Include="images\BlankIcon.ico" />
     <Content Include="images\CalMeasure.png" />
@@ -207,10 +209,8 @@
     <Content Include="images\fk.png" />
     <Content Include="images\Form.ico" />
     <None Include="images\forward.png" />
-    <Content Include="images\qian.png" />
-    <Content Include="images\后退.png" />
+    <Content Include="images\mserver.ico" />
     <None Include="images\help.png" />
-    <Content Include="images\forward_48.jpg" />
     <Content Include="images\GTP_date.png" />
     <Content Include="images\GTP_number.png" />
     <Content Include="images\GTP_wait.png" />
@@ -291,14 +291,17 @@
     <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj">
       <Project>{F1BA0A66-6D68-4142-83D8-C96A81A6862E}</Project>
       <Name>Justin.FrameWork.WinForm</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj">
       <Project>{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}</Project>
       <Name>Justin.FrameWork</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Justin.Core\Justin.Core.csproj">
       <Project>{2FA07381-D81F-4BA2-A9DE-F084529D835C}</Project>
       <Name>Justin.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
