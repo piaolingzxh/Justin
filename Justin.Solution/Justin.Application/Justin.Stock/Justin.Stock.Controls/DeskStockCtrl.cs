@@ -61,7 +61,8 @@ namespace Justin.Stock.Controls
 成交量/额:{6}手/{7}万元
 买：          卖：
 {15}
-{16}
+代码：{16}  板块：{17}
+{18}
 时间：{8}
 当前：{10}";
 
@@ -160,6 +161,8 @@ namespace Justin.Stock.Controls
                          , rtStock.TurnOver
                          , fiveDeal
                          , rtStock.Code
+                         , rtStock.CategroyDesc
+                         , rtStock.Description
                         );
 
                     tip.SetToolTip(stockLabel, stockTips);
