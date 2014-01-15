@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
+using EnvDTE;
+using EnvDTE80;
 using Justin.Stock.Service.Models;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -36,6 +41,7 @@ namespace Justin.Justin_Stock_VsAddin
     [Guid(GuidList.guidJustin_Stock_VsAddinPkgString)]
     public sealed class Justin_Stock_VsAddinPackage : Package
     {
+        DTE2 dte;
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -88,7 +94,7 @@ namespace Justin.Justin_Stock_VsAddin
             {
                 // Create the command for the menu item.
                 CommandID menuCommandID = new CommandID(GuidList.guidJustin_Stock_VsAddinCmdSet, (int)PkgCmdIDList.cmdidShowHideWarn);
-                MenuCommand menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
+                MenuCommand menuItem = new MenuCommand(slnExplUIHierarchyExample, menuCommandID);
                 mcs.AddCommand(menuItem);
                 // Create the command for the tool window
                 CommandID toolwndCommandID = new CommandID(GuidList.guidJustin_Stock_VsAddinCmdSet, (int)PkgCmdIDList.cmdidShowStockWindow);
@@ -99,6 +105,8 @@ namespace Justin.Justin_Stock_VsAddin
                 MenuCommand showHideWindowMenuItem = new MenuCommand(ShowHideWindowMenuItemCallback, showHideWindowCmdId);
                 mcs.AddCommand(showHideWindowMenuItem);
             }
+
+            dte = GetService(typeof(DTE)) as DTE2;
         }
         #endregion
 
@@ -173,6 +181,125 @@ namespace Justin.Justin_Stock_VsAddin
                 }
 
             }
+        }
+
+        public void slnExplUIHierarchyExample(object sender, EventArgs e)
+        {
+            //UIHierarchyItem UIH = dte.ToolWindows.SolutionExplorer.UIHierarchyItems.Item(1);
+            //string fileName = dte.ActiveDocument.FullName;
+            //bool found = false;
+            //EnumUIHierarchyItems(UIH.UIHierarchyItems
+            //    , (item) =>
+            //    {
+            //        if (item.Object is ProjectItem)
+            //        {
+            //            ProjectItem pItem = item.Object as ProjectItem;
+            //            if (pItem.Properties != null)
+            //            {
+            //                object FullPath = pItem.Properties.Item("FullPath").Value;
+            //                if (FullPath != null && FullPath.ToString().Equals(fileName))
+            //                {
+
+            //                    WriteOutput(string.Format("FullName:{0},Kind:{1},{2}", pItem.Document.FullName, pItem.Kind, Environment.NewLine));
+            //                    return true;
+            //                }
+            //            }
+            //        }
+            //        return false;
+            //    }
+            //, ref found);
+            WriteOutput("Location Ready");
+            dte.ExecuteCommand("View.TrackActivityinSolutionExplorer", "true");
+            dte.ExecuteCommand("View.TrackActivityinSolutionExplorer", "false");
+
+            WriteOutput("Location Success");
+
+        }
+
+
+        private OutputWindowPane _outputWindowPane;
+        internal void WriteOutput(string msg, bool clear = false, bool hide = false, string paneName = "Studio")
+        {
+            if (_outputWindowPane == null)
+            {
+                _outputWindowPane = GetOutputWindow(hide, paneName);
+            }
+            if (clear)
+                _outputWindowPane.Clear();
+
+            _outputWindowPane.OutputString(msg);
+        }
+
+        internal OutputWindowPane GetOutputWindow(bool hide = true, string paneName = "Studio")
+        {
+            EnvDTE.Window win = dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
+            //if (autoHide)
+            //{
+            //    //设置窗体为停靠状态
+            //    //try
+            //    //{
+            //    //    win.LinkedWindowFrame.IsFloating = false;
+            //    //}
+            //    //catch { }
+            //    win.IsFloating = false;
+            //    //设置窗体为自动隐藏,只有窗体为停靠状态，才可以设置自动隐藏属性
+            //    win.AutoHides = true;
+            //}
+            win.Visible = !hide;
+
+            OutputWindow outWin = (OutputWindow)win.Object;
+            OutputWindowPane pane;
+            try
+            {
+                if (ContainsPane(outWin.OutputWindowPanes, paneName))
+                    pane = outWin.OutputWindowPanes.Item(paneName);
+                else
+                    pane = outWin.OutputWindowPanes.Add(paneName);
+            }
+            catch (Exception)
+            {
+                pane = outWin.OutputWindowPanes.Add(paneName);
+            }
+            if (!hide)
+                pane.Activate();
+            return pane;
+        }
+        private bool ContainsPane(OutputWindowPanes outputWindowPanes, string paneName)
+        {
+            IEnumerator enumerator = outputWindowPanes.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                if (string.Compare(((OutputWindowPane)enumerator.Current).Name, paneName, true) == 0)
+                    return true;
+            }
+
+            return false;
+        }
+
+
+        private void EnumUIHierarchyItems(UIHierarchyItems items, Func<UIHierarchyItem, bool> func, ref bool skip)
+        {
+            if (skip) return;
+
+            if (items != null && items.Count > 0)
+            {
+
+                foreach (UIHierarchyItem item in items)
+                {
+                    bool result = func(item);
+                    if (result)
+                    {
+                        skip = true;
+                        break;
+                    }
+                    else
+                    {
+                        EnumUIHierarchyItems(item.UIHierarchyItems, func, ref skip);
+                    }
+
+                }
+            }
+            return;
         }
     }
 }

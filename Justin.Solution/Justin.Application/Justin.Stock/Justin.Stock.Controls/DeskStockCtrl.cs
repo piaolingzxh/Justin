@@ -17,28 +17,20 @@ using Justin.Stock.Service.Models;
 
 namespace Justin.Stock.Controls
 {
-    delegate void FormInvoke(FormInvokArgument argument);
-
     public partial class DeskStockCtrl : UserControl
     {
+        MyStock myStock;
         public DeskStockCtrl()
         {
             InitializeComponent();
         }
 
-        #region 只打开一次的Form
-
-        MyStock myStock = new MyStock();
-
-        #endregion
-
         private void DeskStockCtrl_Load(object sender, EventArgs e)
         {
+            myStock = MyStock.Instance;
             var dal = new StockDAL();
             StockService.QuerySumInvestFunc = dal.GetSumInvest;
             StockService.GetAllMyStockFunc = dal.getAllMyStock;
-            StockService.AddEvent(Display);
-
             StockService.AddEvent(Display);
         }
 
@@ -179,7 +171,7 @@ namespace Justin.Stock.Controls
 
                 Label columnNamesLabel = GetNewlabel(true);
 
-                columnNamesLabel.Click += new EventHandler(stockLabel_Click);
+                columnNamesLabel.Click += new EventHandler((label, args) => { EnableDisableAutoHide(); });
                 columnNamesLabel.Text = string.Format(Constants.Setting.DeskDisplayFormat
                                                , "Name".PadLeft(6, ' ')                                                     //简称
                                                , "Now¥".PadLeft(6, ' ')                                                 //当前价格
@@ -222,7 +214,6 @@ namespace Justin.Stock.Controls
 
                 Label summaryLabel = GetNewlabel();
 
-                summaryLabel.Click += new EventHandler(stockLabel_Click);
                 summaryLabel.Text = summaryMsg;
                 tip.SetToolTip(summaryLabel, summaryMsgTips);
                 tableLayoutPanel1.Controls.Add(summaryLabel, 0, rowIndex++);
@@ -250,7 +241,7 @@ namespace Justin.Stock.Controls
 
                 if (this.InvokeRequired == true)
                 {
-                    this.Invoke(new FormInvoke(ShowStockInDesk), argument);
+                    this.Invoke(new Action<FormInvokArgument>(ShowStockInDesk), argument);
                 }
                 else
                 {
@@ -267,15 +258,15 @@ namespace Justin.Stock.Controls
 
 
         }
-        private void stockLabel_Click(object sender, EventArgs ee)
+
+        private Label GetNewlabel(bool bold = false)
         {
-            var form = this.FindForm();
-            if (form is AutoAnchorForm)
-            {
-                var autoHideForm = form as AutoAnchorForm;
-                autoHideToolStripMenuItem.Checked = !autoHideToolStripMenuItem.Checked;
-                autoHideForm.EnableAutoAnchor = autoHideToolStripMenuItem.Checked;
-            };
+            Label stockLabel = new Label();
+            stockLabel.ContextMenuStrip = deskMenu;
+            stockLabel.Width = 200;
+            stockLabel.Font = new Font("Consolas", 8F, bold ? FontStyle.Bold : FontStyle.Regular);
+            stockLabel.Dock = DockStyle.Fill;
+            return stockLabel;
         }
         private void ShowStockInDesk(FormInvokArgument argument)
         {
@@ -301,7 +292,7 @@ namespace Justin.Stock.Controls
             #endregion
             this.ResumeLayout();
 
-            #region 抛出股票总盈亏汇总和警告信息给容器，以便显示到标题上
+            #region 抛出股票总盈亏汇总和警告信息给容器，以便显示到标题上   summaryMsg+
 
             string message = string.Format("{0}  {1}", tableLayoutPanel1.Tag.ToString(), argument.Message);
             this.Text = message;
@@ -339,6 +330,8 @@ namespace Justin.Stock.Controls
         }
 
         #endregion
+
+
 
         #region 右键菜单
 
@@ -413,11 +406,6 @@ namespace Justin.Stock.Controls
         /// </summary>
         public static Action<string> DisplaySummaryMessageAction { get; set; }
 
-
-        public void AddDisplayHandler()
-        {
-
-        }
         public void RemoveDisplayHandler()
         {
             StockService.RemoveEvent(Display);
@@ -430,15 +418,17 @@ namespace Justin.Stock.Controls
 
         #endregion
 
-        private Label GetNewlabel(bool bold = false)
+        private void EnableDisableAutoHide()
         {
-            Label stockLabel = new Label();
-            stockLabel.ContextMenuStrip = deskMenu;
-            stockLabel.Width = 200;
-            stockLabel.Font = new Font("Consolas", 8F, bold ? FontStyle.Bold : FontStyle.Regular);
-            stockLabel.Dock = DockStyle.Fill;
-            return stockLabel;
+            var form = this.FindForm();
+            if (form is AutoAnchorForm)
+            {
+                var autoHideForm = form as AutoAnchorForm;
+                autoHideToolStripMenuItem.Checked = !autoHideToolStripMenuItem.Checked;
+                autoHideForm.EnableAutoAnchor = autoHideToolStripMenuItem.Checked;
+            };
         }
+
 
         private void topMostToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -449,15 +439,14 @@ namespace Justin.Stock.Controls
 
         private void autoHideToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = this.FindForm();
-            if (form is AutoAnchorForm)
-            {
-                var autoHideForm = form as AutoAnchorForm;
-                autoHideToolStripMenuItem.Checked = !autoHideToolStripMenuItem.Checked;
-                autoHideForm.EnableAutoAnchor = autoHideToolStripMenuItem.Checked;
-            }
+            EnableDisableAutoHide();
         }
 
+
+        public void ShowMyStock(int selectedTabIndex)
+        {
+            myStock.Show(selectedTabIndex);
+        }
 
     }
 }

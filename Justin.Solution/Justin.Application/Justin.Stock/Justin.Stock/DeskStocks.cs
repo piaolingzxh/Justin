@@ -26,12 +26,9 @@ namespace Justin.Stock
     {
         #region 私有变量
 
-
         string fileName;
         bool forceClose = false;
-
-        bool IsShow = false;//当前是否显示窗体
-        MyStock myStock = null; //实时监控
+        bool IsShow = false;//当前是否显示窗体     
 
         #endregion
 
@@ -56,7 +53,7 @@ namespace Justin.Stock
 
             DeskStockCtrl.DisplaySummaryMessageAction += ShowTotal;
             //StockService.Start();
-            myStock = new MyStock();
+
             SetVisibleCore(false);
 
         }
@@ -93,15 +90,15 @@ namespace Justin.Stock
         }
         private void MonitorMenuItem_Click(object sender, EventArgs e)
         {
-            myStock.Show(0);
+            deskStockCtrl1.ShowMyStock(0);
         }
         private void personalMenuItem_Click(object sender, EventArgs e)
         {
-            myStock.Show(1);
+            deskStockCtrl1.ShowMyStock(1);
         }
         private void settingMenuItem_Click(object sender, EventArgs e)
         {
-            myStock.Show(3);
+            deskStockCtrl1.ShowMyStock(3);
         }
         private void inScreenMenuItem_Click(object sender, EventArgs e)
         {
@@ -281,8 +278,6 @@ namespace Justin.Stock
             deskStockCtrl1.RemoveDisplayHandler();
             deskStockCtrl1.CloseChildrenForm();
             hotkeyHelper.UnregisterHotkeys();
-            myStock.Close(true);
-            this.Dispose();
             Application.Exit();
         }
 

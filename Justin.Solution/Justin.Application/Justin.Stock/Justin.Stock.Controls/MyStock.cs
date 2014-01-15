@@ -25,10 +25,21 @@ namespace Justin.Stock.Controls
         string CurrentStockCode { get; set; }
         StockDAL stockDAL = new StockDAL();
 
-        public MyStock()
+        private MyStock()
         {
             InitializeComponent();
             this.MouseWheel += new MouseEventHandler(MyStock_MouseWheel);
+        }
+        private static MyStock _instance;
+        public static MyStock Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new MyStock();
+
+                return _instance;
+            }
         }
 
         private static object syncdgvMonitorStocks = new Object();
@@ -43,9 +54,10 @@ namespace Justin.Stock.Controls
             {
                 item.MouseWheel += new MouseEventHandler(MyStock_MouseWheel);
             }
-            this.Opacity = 0.1;
 
             #endregion
+
+            StockService.AddEvent(ShowMyStockInfoChanged);
 
             dgvMonitorStocks.AutoGenerateColumns = false;
             dgvStocksetting.AutoGenerateColumns = false;
@@ -54,9 +66,10 @@ namespace Justin.Stock.Controls
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
         {
-            StockService.RemoveEvent(ShowMyStockInfoChanged);
+
             if (!forceClose)
             {
+                StockService.RemoveEvent(ShowMyStockInfoChanged);
                 e.Cancel = true;
                 this.Hide();
             }
@@ -152,7 +165,7 @@ namespace Justin.Stock.Controls
             string shortName = row.Cells["InShort"].Value.ToString();
             string description = row.Cells["Description"].Value.ToString();
 
-            stockDAL.InsertStock(code, no, name, shortName,description, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
+            stockDAL.InsertStock(code, no, name, shortName, description, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
             RefreshPersonalStockSetting();
             StockService.ResetMyStock();
 
@@ -177,7 +190,6 @@ namespace Justin.Stock.Controls
         {
             if (e.RowIndex >= 0)
             {
-                //dgvStocksetting.ClearSelection();
                 dgvStocksetting.Rows[e.RowIndex].Selected = true;
                 if (e.Button == MouseButtons.Right)
                 {
@@ -196,24 +208,6 @@ namespace Justin.Stock.Controls
         }
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //foreach (DataGridViewRow row in dgvStocksetting.SelectedRows)
-            //{
-            //    string code = row.Cells["StockCode"].Value.ToString();
-            //    string name = row.Cells["StockName"].Value.ToString();
-            //    string inShort = row.Cells["StockInShort"].Value.ToString();
-            //    decimal warnprice_Min = row.Cells["WarnPrice_Min"].Value.Value<decimal>();
-            //    decimal warnprice_Max = row.Cells["WarnPrice_Max"].Value.Value<decimal>();
-            //    decimal warnpercent_Min = row.Cells["WarnPercent_Min"].Value.Value<decimal>();
-            //    decimal warnpercent_Max = row.Cells["WarnPercent_Max"].Value.Value<decimal>();
-            //    decimal buyPrice = row.Cells["BuyPrice"].Value.Value<decimal>();
-            //    int buyCount = row.Cells["BuyCount"].Value.Value<int>();
-            //    bool showInFolatWindow = row.Cells["ShowInFolatWindow"].Value.Value<bool>();
-            //    int order = row.Cells["Order"].Value.Value<int>();
-            //    string profitOrLossHistory = row.Cells["profitOrLossHistory"].Value.Value<string>();
-
-            //    stockDAL.UpdateStock(code, name, inShort, warnprice_Min, warnprice_Max, warnpercent_Min, warnpercent_Max, buyPrice, buyCount, showInFolatWindow, order, profitOrLossHistory);
-            //}
-
             try
             {
                 DataTable table = dgvStocksetting.DataSource as DataTable;
@@ -348,12 +342,7 @@ namespace Justin.Stock.Controls
                 if (stocks == null)
                     stocks = StockService.MyStock;
                 stocks = stocks.OrderByDescending(row => row.Order);
-                //List<StockInfo> list = new List<StockInfo>();
-                //var groups = stocks.GroupBy(row => row.BuyCount > 0);
-                //foreach (var item in groups)
-                //{
-                //    list.AddRange(item.OrderBy(row => row.SurgedRange).ToList());
-                //}
+
                 dgvMonitorStocks.DataSource = new BindingCollection<StockInfo>(stocks.ToList());
                 if (!string.IsNullOrEmpty(CurrentStockCode))
                 {
@@ -367,38 +356,9 @@ namespace Justin.Stock.Controls
         }
         private void ShowChart(ChartType chartType, bool inner = false)
         {
-            //DataGridView dgv = contextMenuSourceGridView;
-            //if (dgv == null)
-            //{
-            //    dgv = dgvMonitorStocks;
-            //}
-            //string codeColumnName = "S_Code";
-
-            //if (dgv.Name == dgvQueryResultStocks.Name)
-            //{
-            //    codeColumnName = "Code";
-            //}
-            //else if (dgv.Name == dgvMonitorStocks.Name)
-            //{
-            //    codeColumnName = "S_Code";
-            //}
-            //else if (dgv.Name == dgvStocksetting.Name)
-            //{
-            //    codeColumnName = "StockCode";
-
-            //}
-            //else
-            //{
-            //    throw new NotSupportedException();
-            //}
-
-            //if (dgv != null && dgv.SelectedRows != null && dgv.SelectedRows.Count > 0)
-            //{
-            //var row = dgv.SelectedRows[0];
-
             if (!string.IsNullOrEmpty(CurrentStockCode))
             {
-                string code = CurrentStockCode; //row.Cells[codeColumnName].Value.ToString();
+                string code = CurrentStockCode;
                 if (inner)
                 {
                     stockChartCtrl.Show(code, chartType);
@@ -417,17 +377,18 @@ namespace Justin.Stock.Controls
 
         public void Show(int tabIndex = 0)
         {
+            base.Show();
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.WindowState = FormWindowState.Normal;
             }
-            StockService.AddEvent(ShowMyStockInfoChanged);
-            tabControl1.SelectedIndex = tabIndex;
-            base.Show();
+            if (tabControl1.SelectedIndex != tabIndex)
+            {
+                tabControl1.SelectedIndex = tabIndex;
+            }
         }
         public new void Hide()
         {
-            StockService.RemoveEvent(ShowMyStockInfoChanged);
             base.Hide();
         }
         public void Close(bool force = false)

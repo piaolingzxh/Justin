@@ -44,11 +44,15 @@ namespace Justin.Stock.Service.Models
                 stockCodes = stockCodes.Remove(stockCodes.Length - 1);
                 url = "http://qt.gtimg.cn/r=" + rd.NextDouble() + "q=" + stockCodes;
                 request = WebRequest.Create(url);
+                request.Timeout = 500;
                 rs = request.GetResponse();
                 StreamReader reader = new StreamReader(rs.GetResponseStream(), Encoding.GetEncoding("gb2312"));
                 string stockMsg = reader.ReadToEnd();
                 reader.Close();
+                reader.Dispose();
                 rs.Close();
+                rs = null;
+                request = null;
 
                 string[] stockItemString = stockMsg.Split(';');
                 foreach (var item in stockItemString)
