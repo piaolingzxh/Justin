@@ -200,10 +200,6 @@
             this.btnPreviewSQLFile.UseVisualStyleBackColor = true;
             this.btnPreviewSQLFile.Click += new System.EventHandler(this.btnPreviewSQLFile_Click);
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog1";
-            // 
             // splitContainerMain
             // 
             this.splitContainerMain.CollapsePanel = Justin.FrameWork.WinForm.FormUI.SplitContainerEx.CollapsePanel.Panel2;
