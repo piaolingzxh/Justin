@@ -30,7 +30,9 @@ namespace Justin.Toolbox
 
         void MdxExecutor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.mdxExecuterCtrl1.SaveFile(this.FileName, this.Extension);
+            bool save = JSetting.ReadAppSetting<bool>("SaveFileWhenExit");
+            if (save)
+                this.mdxExecuterCtrl1.SaveFile(this.FileName, this.Extension);
         }
         /// <summary>
         ///     

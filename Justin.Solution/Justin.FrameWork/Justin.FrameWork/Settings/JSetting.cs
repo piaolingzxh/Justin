@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using Justin.FrameWork.Extensions;
 
 namespace Justin.FrameWork.Settings
 {
@@ -35,7 +36,7 @@ namespace Justin.FrameWork.Settings
             {
                 try
                 {
-                    t = (T)Settings[key.ToLower()];
+                    t = Settings[key.ToLower()].Value<T>();
                 }
                 catch { }
             }
@@ -51,6 +52,10 @@ namespace Justin.FrameWork.Settings
             SetUseAppSetting(appSettingKey, appSettingKey);
             return Get(appSettingKey);
         }
-
+        public static T ReadAppSetting<T>(string appSettingKey)
+        {
+            SetUseAppSetting(appSettingKey, appSettingKey);
+            return Get<T>(appSettingKey);
+        }
     }
 }
