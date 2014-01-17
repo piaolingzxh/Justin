@@ -66,7 +66,8 @@ namespace Justin.Stock.Controls
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            if (e.CloseReason == CloseReason.ApplicationExitCall)
+                forceClose = true;
             if (!forceClose)
             {
                 StockService.RemoveEvent(ShowMyStockInfoChanged);

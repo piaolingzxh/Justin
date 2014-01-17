@@ -12,12 +12,12 @@ using System.Text;
 using System.Windows.Forms;
 using Justin.Core;
 using Justin.FrameWork.Helper;
+using Justin.FrameWork.Services;
 using Justin.FrameWork.Settings;
 using Justin.FrameWork.Utility;
+using Justin.Log;
 using Justin.Workspace;
 using WeifenLuo.WinFormsUI.Docking;
-using Justin.FrameWork.Services;
-using Justin.Log;
 
 namespace Justin.Workspace
 {
@@ -299,13 +299,14 @@ namespace Justin.Workspace
             forceClose = true;
             if (sender == exitToolStripMenuItem || sender == exitToolStripMenuItem1)
             {
-                this.Close();
+                SaveLoayout();
+                Application.Exit();
             }
             else if (sender == exitWithoutSavingLayoutToolStripMenuItem)
             {
                 m_bSaveLayout = false;
-                this.Close();
-                m_bSaveLayout = true;
+                SaveLoayout();
+                Application.Exit();
             }
 
         }
@@ -479,7 +480,6 @@ namespace Justin.Workspace
 
         #region 动态菜单
 
-        string fileNameOfAddin = "Justin.Toolbox.addin";
         protected AddinConfig addinConfig;
 
         protected void DynamicMenuGenerate()
@@ -633,27 +633,14 @@ namespace Justin.Workspace
 
         private void WorkspaceBase_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!forceClose)
+            if (!forceClose && notifyIcon1.Visible)   //没有强制关闭，则隐藏(这个时候，必须能看见通知区域图标)
             {
-                if (notifyIcon1.Visible)
-                {
-                    e.Cancel = true;
-                    this.Hide();
-                }
-                else if (m_bSaveLayout && !specialFile)
-                {
-                    string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-                    dockPanel.SaveAsXml(configFile);
-                }
+                e.Cancel = true;
+                this.Hide();
             }
             else
             {
-
-                if (m_bSaveLayout && !specialFile)
-                {
-                    string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-                    dockPanel.SaveAsXml(configFile);
-                }
+                Application.Exit();
             }
         }
 
@@ -661,15 +648,17 @@ namespace Justin.Workspace
 
         private void Workbench_Load(object sender, EventArgs e)
         {
+            m_bSaveLayout = JSetting.ReadAppSetting<bool>("SaveWindowLayout");
+            notifyIcon1.Visible = JSetting.ReadAppSetting<bool>("ShowInNotifyArea");
 
-            string addinFileFullName = Path.Combine(Application.StartupPath, fileNameOfAddin);
-            this.ShowMessage("addin【{0}】", addinFileFullName);
 
-            if (File.Exists(addinFileFullName))
+            this.ShowMessage("addin【{0}】", AddinFileName);
+
+            if (File.Exists(AddinFileName))
             {
                 try
                 {
-                    addinConfig = SerializeHelper.XmlDeserializeFromFile<AddinConfig>(addinFileFullName);
+                    addinConfig = SerializeHelper.XmlDeserializeFromFile<AddinConfig>(AddinFileName);
 
                     if (addinConfig != null && addinConfig.Tools != null)
                     {
@@ -708,12 +697,7 @@ namespace Justin.Workspace
             }
             OutPutWin = OutPutWindow.Instance;
             OutPutWin.Show(dockPanel, DockState.DockBottom);
-            string showInNotifyAreaString = JSetting.ReadAppSetting("ShowInNotifyArea");
-            bool showNotify = false;
-            if (showInNotifyAreaString != null && bool.TryParse(showInNotifyAreaString, out showNotify))
-            {
-            }
-            notifyIcon1.Visible = showNotify;
+
             dockPanel.ShowDocumentIcon = true;
 
             DynamicMenuGenerate();
@@ -730,6 +714,47 @@ namespace Justin.Workspace
             form.ShowStatus = !form.ShowStatus;
         }
 
-        
+        string fileNameOfAddin = "Justin.Toolbox.addin";
+
+        private string AddinFileName
+        {
+            get
+            {
+                return Path.Combine(Application.StartupPath, fileNameOfAddin);
+            }
+        }
+
+        private string LayoutFileName
+        {
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            }
+        }
+
+        //public new void Close(bool force = false)
+        //{
+        //    base.Close();
+        //}
+
+
+        public void SaveLoayout()
+        {
+            if (specialFile) m_bSaveLayout = false;
+
+            if (m_bSaveLayout)
+            {
+                dockPanel.SaveAsXml(LayoutFileName);
+            }
+            else
+            {
+                if (File.Exists(LayoutFileName))
+                {
+                    File.Delete(LayoutFileName);
+                }
+            }
+        }
+
+
     }
 }

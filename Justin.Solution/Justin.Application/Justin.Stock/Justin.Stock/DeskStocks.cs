@@ -63,15 +63,17 @@ namespace Justin.Stock
         }
         private void DeskStocks_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (e.CloseReason == CloseReason.ApplicationExitCall) forceClose = true;
+
             if (!forceClose)
             {
                 e.Cancel = true;
                 this.Hide();
             }
-            else
-            {
-                CloseMe();
-            }
+            //else
+            //{
+            //    CloseMe();
+            //}
         }
 
         #endregion
@@ -114,7 +116,7 @@ namespace Justin.Stock
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
             forceClose = true;
-            this.Close();
+            Application.Exit();
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -278,7 +280,6 @@ namespace Justin.Stock
             deskStockCtrl1.RemoveDisplayHandler();
             deskStockCtrl1.CloseChildrenForm();
             hotkeyHelper.UnregisterHotkeys();
-            Application.Exit();
         }
 
 
