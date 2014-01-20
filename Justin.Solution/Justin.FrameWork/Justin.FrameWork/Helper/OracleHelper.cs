@@ -320,7 +320,6 @@ namespace Justin.FrameWork.Helper
             cmd.Connection = connection;
             cmd.CommandText = cmdText;
             cmd.CommandType = cmdType;
-            cmd.CommandText = CommandTimeout;
             //Bind it to the transaction if it exists
             if (trans != null)
                 cmd.Transaction = trans;
