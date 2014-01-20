@@ -1,24 +1,25 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
-using System.Configuration;
-using System.Collections;
-using System.Data.SQLite;
-using System.Data;
 
 namespace Justin.FrameWork.Helper
 {
-   /// <summary>
+    /// <summary>
     /// Sqlite访问数据库帮助类
-   /// </summary>
+    /// </summary>
     public abstract class SqliteHelper
     {
 
         public static string ConnStr;//"Data Source=myDBName;Version=3;Pooling=true;Max Pool Size=100;"
-       
+        public static int CommandTimeout = 600;
+
         private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
-         
+
         public static int ExecuteNonQuery(string connectionString, CommandType cmdType, string cmdText, params SQLiteParameter[] commandParameters)
         {
 
@@ -49,13 +50,13 @@ namespace Justin.FrameWork.Helper
             return val;
         }
 
-        public static  SQLiteDataReader ExecuteReader(SQLiteConnection conn, CommandType cmdType, string cmdText, params SQLiteParameter[] commandParameters)
+        public static SQLiteDataReader ExecuteReader(SQLiteConnection conn, CommandType cmdType, string cmdText, params SQLiteParameter[] commandParameters)
         {
             SQLiteCommand cmd = new SQLiteCommand();
             try
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
-                 SQLiteDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                SQLiteDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 cmd.Parameters.Clear();
                 return rdr;
             }
@@ -105,7 +106,7 @@ namespace Justin.FrameWork.Helper
         {
             SQLiteConnection conn = new SQLiteConnection(connectionString);
             SQLiteCommand cmd = new SQLiteCommand();
-            
+
             try
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
@@ -150,6 +151,7 @@ namespace Justin.FrameWork.Helper
                 conn.Open();
             cmd.Connection = conn;
             cmd.CommandText = cmdText;
+            cmd.CommandTimeout = CommandTimeout;
             if (trans != null)
                 cmd.Transaction = trans;
             cmd.CommandType = cmdType;

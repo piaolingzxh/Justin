@@ -12,6 +12,7 @@ namespace Justin.FrameWork.Helper
     public class OleDbHelper
     {
         #region OleDb Operation
+        public static int CommandTimeout = 600;
 
         public static OleDbConnection GetOleDbConnection(string oledbConnectionString)
         {
@@ -91,7 +92,7 @@ namespace Justin.FrameWork.Helper
                 connection.Open();
             OleDbCommand cmd = connection.CreateCommand();
             cmd.CommandText = cmdText;
-            cmd.CommandTimeout = 600;
+            cmd.CommandTimeout = CommandTimeout;
             if (trans != null)
                 cmd.Transaction = trans;
             cmd.CommandType = CommandType.Text;

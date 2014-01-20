@@ -14,7 +14,7 @@ namespace Justin.FrameWork.Helper
         public static string ConnectionString = "Provider=MSOLAP;Initial Catalog=analysis;Data Source=TPLAB-432.grandsoft.com.cn;Mode=Read";
         //"Data Source=zhangxh-a;Catalog=analysis;ConnectTo=9.0;Integrated Security=SSPI";
         //"Provider=MSOLAP;Initial Catalog=GBMS ;Data Source=D:\CompanyCode\CN.cub_Oct1.cub;Mode=Read"
-
+        public static int CommandTimeout = 120;
         public static int ExecuteNonQuery(AdomdConnection conn, string CommandText)
         {
             try
@@ -130,7 +130,10 @@ namespace Justin.FrameWork.Helper
             DataTable dt = null;
             try
             {
-                AdomdDataAdapter da = new AdomdDataAdapter(CommandText, conn);
+                AdomdCommand command = new AdomdCommand();
+                SetCommand(conn, command, CommandText);
+                AdomdDataAdapter da = new AdomdDataAdapter(command);
+
                 dt = new DataTable();
                 da.Fill(dt);
             }
@@ -153,6 +156,7 @@ namespace Justin.FrameWork.Helper
             command.Connection = connection;
             command.CommandText = CommandText;
             command.CommandType = CommandType.Text;
+            command.CommandTimeout = CommandTimeout;
         }
     }
 }

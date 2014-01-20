@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Configuration;
-using System.Collections;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace Justin.FrameWork.Helper
 {
@@ -19,6 +19,8 @@ namespace Justin.FrameWork.Helper
         /// 如"data source=.;initial catalog=PrivilegeDB;integrated security=True;multipleactiveresultsets=True;"
         /// </summary>
         public static string ConnStr = "";
+        public static int CommandTimeout = 600;
+
         private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
 
         public static int ExecuteNonQuery(string connectionString, CommandType cmdType, string cmdText, params SqlParameter[] commandParameters)
@@ -151,7 +153,7 @@ namespace Justin.FrameWork.Helper
                 connection.Open();
             cmd.Connection = connection;
             cmd.CommandText = cmdText;
-            cmd.CommandTimeout = 600;
+            cmd.CommandTimeout = CommandTimeout;
             if (trans != null)
                 cmd.Transaction = trans;
             cmd.CommandType = cmdType;

@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.Data;
-using System.Collections;
 using Justin.FrameWork.Extensions;
 using Oracle.DataAccess.Client;
 
@@ -12,6 +12,7 @@ namespace Justin.FrameWork.Helper
 
         // Read the connection strings from the configuration file
         public static readonly string ConnStr;//"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.80.204)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)));User Id=IIC_DC_NC;Password=iic*dctabs201b;min pool size=4;max pool size=4";
+        public static int CommandTimeout = 600;
 
         //Create a hashtable for the parameter cached
         private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
@@ -316,7 +317,7 @@ namespace Justin.FrameWork.Helper
             cmd.Connection = connection;
             cmd.CommandText = cmdText;
             cmd.CommandType = cmdType;
-
+            cmd.CommandTimeout = CommandTimeout;
             //Bind it to the transaction if it exists
             if (trans != null)
                 cmd.Transaction = trans;

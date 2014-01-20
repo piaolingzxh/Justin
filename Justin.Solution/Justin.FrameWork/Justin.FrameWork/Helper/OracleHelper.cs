@@ -1,8 +1,8 @@
 using System;
+using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Data.OracleClient;
-using System.Collections;
 using Justin.FrameWork.Extensions;
 namespace Justin.FrameWork.Helper
 {
@@ -15,6 +15,7 @@ namespace Justin.FrameWork.Helper
 
         // Read the connection strings from the configuration file
         public static readonly string ConnStr;//"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.80.204)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)));User Id=IIC_DC_NC;Password=iic*dctabs201b;min pool size=4;max pool size=4";
+        public static int CommandTimeout = 600;
 
         //Create a hashtable for the parameter cached
         private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
@@ -252,19 +253,19 @@ namespace Justin.FrameWork.Helper
         }
         public static DataTable ExecuteDataTable(OracleConnection connection, CommandType cmdType, string cmdText, params OracleParameter[] commandParameters)
         {
-               OracleCommand cmd = new OracleCommand();
-                PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
-                OracleDataAdapter MyAdapter = new OracleDataAdapter();
-                MyAdapter.SelectCommand = cmd;
-                DataSet ds = new DataSet();
-                MyAdapter.Fill(ds);
-                cmd.Parameters.Clear();
-                DataTable table = ds.Tables[0];
-                ds.Dispose();
+            OracleCommand cmd = new OracleCommand();
+            PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
+            OracleDataAdapter MyAdapter = new OracleDataAdapter();
+            MyAdapter.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            MyAdapter.Fill(ds);
+            cmd.Parameters.Clear();
+            DataTable table = ds.Tables[0];
+            ds.Dispose();
 
-                return table;
+            return table;
         }
-       
+
 
 
         /// <summary>
@@ -319,7 +320,7 @@ namespace Justin.FrameWork.Helper
             cmd.Connection = connection;
             cmd.CommandText = cmdText;
             cmd.CommandType = cmdType;
-
+            cmd.CommandText = CommandTimeout;
             //Bind it to the transaction if it exists
             if (trans != null)
                 cmd.Transaction = trans;
