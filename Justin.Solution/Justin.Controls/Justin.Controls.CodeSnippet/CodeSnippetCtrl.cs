@@ -36,6 +36,8 @@ namespace Justin.Controls.CodeSnippet
 
         private void CodeViewCtrl_Load(object sender, EventArgs e)
         {
+            this.ShowToolTips(new ToolTip());
+
             if (string.IsNullOrEmpty(JSetting.Get<String>("CodeSnippet")))
                 return;
             txtFolder.Text = JSetting.Get<String>("CodeSnippet");

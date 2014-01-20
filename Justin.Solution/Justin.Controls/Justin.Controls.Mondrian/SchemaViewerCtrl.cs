@@ -50,6 +50,8 @@ namespace Justin.Controls.Mondrian
 
         private void SchemaViewerCtrl_Load(object sender, EventArgs e)
         {
+            this.ShowToolTips(new ToolTip());
+
             ObjectDescriptionProvider provider = new ObjectDescriptionProvider();
             TypeDescriptor.AddProvider(provider, typeof(Table));
             txtSchemaXML.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("XML");
@@ -154,40 +156,32 @@ namespace Justin.Controls.Mondrian
             if (!_highlightGroups.ContainsKey(_editor))
                 _highlightGroups[_editor] = new HighlightGroup(_editor);
             HighlightGroup group = _highlightGroups[_editor];
+            group.ClearMarkers();
 
-            if (string.IsNullOrEmpty(txtLookFor.Text))
-                // Clear highlights
-                group.ClearMarkers();
-            else
+            TextEditorSearcher _search = new TextEditorSearcher();
+            _search.LookFor = txtLookFor.Text;
+            _search.MatchCase = false;
+            _search.MatchWholeWordOnly = false;
+            _search.Document = _editor.Document;
+
+            bool looped = false;
+            int offset = 0, count = 0;
+            for (; ; )
             {
-                TextEditorSearcher _search = new TextEditorSearcher();
-                _search.LookFor = txtLookFor.Text;
-                _search.MatchCase = false;
-                _search.MatchWholeWordOnly = false;
-                _search.Document = _editor.Document;
+                TextRange range = _search.FindNext(offset, false, out looped);
+                if (range == null || looped)
+                    break;
+                offset = range.Offset + range.Length;
+                count++;
 
-                bool looped = false;
-                int offset = 0, count = 0;
-                for (; ; )
-                {
-                    TextRange range = _search.FindNext(offset, false, out looped);
-                    if (range == null || looped)
-                        break;
-                    offset = range.Offset + range.Length;
-                    count++;
-
-                    TextMarker m = new TextMarker(range.Offset, range.Length,
-                            TextMarkerType.SolidBlock, Color.Yellow, Color.Black);
-                    group.AddMarker(m);
-                }
-                if (count == 0)
-                    MessageBox.Show("没有找到你要查找的内容", "提示");
-                else
-                {
-                    //Close();
-                }
-                Folding();
+                TextMarker m = new TextMarker(range.Offset, range.Length, TextMarkerType.SolidBlock, Color.Yellow, Color.Black);
+                group.AddMarker(m);
             }
+            if (count == 0)
+                MessageBox.Show("没有找到你要查找的内容", "提示");
+
+            Folding();
+
         }
 
         private void btnSave_Click(object sender, EventArgs e)

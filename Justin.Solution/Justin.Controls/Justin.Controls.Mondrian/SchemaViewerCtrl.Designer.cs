@@ -115,6 +115,7 @@
             this.txtFileName.Name = "txtFileName";
             this.txtFileName.Size = new System.Drawing.Size(219, 23);
             this.txtFileName.TabIndex = 1;
+            this.txtFileName.Tag = "Schema 路径";
             this.txtFileName.Text = "";
             // 
             // treeViewSchema
@@ -200,6 +201,7 @@
             this.txtLookFor.Name = "txtLookFor";
             this.txtLookFor.Size = new System.Drawing.Size(164, 23);
             this.txtLookFor.TabIndex = 6;
+            this.txtLookFor.Tag = "查询的字符串";
             this.txtLookFor.Text = "";
             // 
             // txtDstFileName
@@ -209,17 +211,18 @@
             this.txtDstFileName.Name = "txtDstFileName";
             this.txtDstFileName.Size = new System.Drawing.Size(164, 23);
             this.txtDstFileName.TabIndex = 8;
+            this.txtDstFileName.Tag = "将要保存的文件名";
             this.txtDstFileName.Text = "";
             // 
             // txtSchemaXML
             // 
             this.txtSchemaXML.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSchemaXML.IsReadOnly = false;
             this.txtSchemaXML.Location = new System.Drawing.Point(3, 38);
             this.txtSchemaXML.Name = "txtSchemaXML";
             this.txtSchemaXML.ShowEOLMarkers = true;
             this.txtSchemaXML.ShowSpaces = true;
             this.txtSchemaXML.ShowTabs = true;
-            this.txtSchemaXML.ShowVRuler = true;
             this.txtSchemaXML.Size = new System.Drawing.Size(440, 252);
             this.txtSchemaXML.TabIndex = 0;
             // 

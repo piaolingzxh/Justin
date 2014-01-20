@@ -64,8 +64,7 @@ namespace Justin.Controls.TestDataGenerator
                 File.AppendAllText(fileName, sqlBuilder.ToString());
             };
 
-            ToolTip tips = new ToolTip();
-            this.SetToolTipsForButton(tips);
+            this.ShowToolTips(new ToolTip());
         }
         private void TableConfigCtrl_FormClosing(object sender, FormClosingEventArgs e)
         {

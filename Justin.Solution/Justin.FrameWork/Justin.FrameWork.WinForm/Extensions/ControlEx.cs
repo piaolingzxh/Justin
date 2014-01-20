@@ -10,21 +10,17 @@ namespace System.Windows.Forms
     public static class ControlEx
     {
 
-        public static void SetToolTipsForButton(this Control ctrl, ToolTip tips)
+        public static void ShowToolTips(this Control ctrl, ToolTip tips)
         {
             foreach (Control item in ctrl.Controls)
             {
-                if (item is Button)
+                if ((item is Button || item is TextBox) && item.Tag != null)
                 {
-                    Button btn = item as Button;
-                    if (btn.Tag != null)
-                    {
-                        tips.SetToolTip(btn, btn.Tag.ToJString());
-                    }
+                    tips.SetToolTip(item, item.Tag.ToJString());
                 }
                 else
                 {
-                    SetToolTipsForButton(item, tips);
+                    ShowToolTips(item, tips);
                 }
             }
         }

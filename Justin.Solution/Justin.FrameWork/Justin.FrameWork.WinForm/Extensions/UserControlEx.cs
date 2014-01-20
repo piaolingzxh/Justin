@@ -39,11 +39,11 @@ namespace System.Windows.Forms
             MessageSvc.Default.Write(MessageLevel.Info, messageFormat, args);
         }
 
-        public static void ShowTips(this UserControl instance, ToolTip tips)
+        public static void ShowToolTips(this UserControl instance, ToolTip tips)
         {
             foreach (Control item in instance.Controls)
             {
-                item.SetToolTipsForButton(tips);
+                item.ShowToolTips(tips);
             }
         }
     }

@@ -58,6 +58,8 @@ namespace Justin.Controls.Mondrian
         private void MondrianServiceCtrl_Load(object sender, EventArgs e)
         {
             linkLabelDeafultLocation_LinkClicked(null, null);
+            this.ShowToolTips(new ToolTip());
+
         }
         private void btnStart_Click(object sender, EventArgs e)
         {

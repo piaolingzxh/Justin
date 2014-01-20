@@ -106,6 +106,7 @@
             this.tvServerInfo.ShowNodeToolTips = true;
             this.tvServerInfo.Size = new System.Drawing.Size(173, 395);
             this.tvServerInfo.TabIndex = 2;
+            this.tvServerInfo.Tag = "列出该服务器上的所有Catalog,右击Cube进行操作";
             this.tvServerInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvServerInfo_AfterSelect);
             this.tvServerInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvServerInfo_NodeMouseClick);
             // 
@@ -150,6 +151,7 @@
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(44, 24);
             this.btnConnect.TabIndex = 1;
+            this.btnConnect.Tag = "连接OLAP服务器";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
@@ -377,8 +379,10 @@
             this.tvCubeInfo.Location = new System.Drawing.Point(0, 0);
             this.tvCubeInfo.Name = "tvCubeInfo";
             this.tvCubeInfo.SelectedImageIndex = 0;
+            this.tvCubeInfo.ShowNodeToolTips = true;
             this.tvCubeInfo.Size = new System.Drawing.Size(199, 261);
             this.tvCubeInfo.TabIndex = 0;
+            this.tvCubeInfo.Tag = "列出特定Cube下的指标和维度，右击Cube进行更多操作";
             this.tvCubeInfo.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvCubeInfo_ItemDrag);
             this.tvCubeInfo.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvCubeInfo_AfterSelect);
             this.tvCubeInfo.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvCubeInfo_NodeMouseClick);

@@ -119,6 +119,8 @@ namespace Justin.Controls.CodeCompiler
 
         private void CodeComplierCtrl_Load(object sender, EventArgs e)
         {
+            this.ShowToolTips(new ToolTip());
+
             txtCode.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             txtCode.Encoding = Encoding.GetEncoding("GB2312");
 

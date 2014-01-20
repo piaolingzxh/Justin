@@ -43,6 +43,7 @@ namespace Justin.Controls.CubeView
 
         private void CubeViewCtrl_Load(object sender, EventArgs e)
         {
+            this.ShowToolTips(new ToolTip());
             this.cboxConnStrings.Items.Clear();
             foreach (var item in ConfigurationManager.AppSettings.AllKeys)
             {
@@ -102,6 +103,7 @@ namespace Justin.Controls.CubeView
                 //var catalogs = cos[catalogInfo.Key].Cubes;.Select(r => r.Properties["CATALOG_NAME"].Value.ToString()).Distinct();
                 TreeNode catalogNode = new TreeNode(catalogInfo.Key);
                 catalogNode.Name = catalogInfo.Key;
+                catalogNode.ToolTipText = string.Format("Catalog Name:[{0}]", catalogNode.Name);
                 catalogNode.SelectedImageKey = catalogNode.ImageKey = "Catalog";
                 tvServerInfo.Nodes.Add(catalogNode);
                 BindCatalog(catalogNode, catalogInfo);
@@ -129,7 +131,7 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Cube";
-                tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                tempNode.ToolTipText = string.Format("Cube Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 tempNode.ContextMenuStrip = serverMenu;
                 cubeNodeRoot.Nodes.Add(tempNode);
             }
@@ -146,7 +148,7 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Dim";
-                tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                tempNode.ToolTipText = string.Format("Dimension Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 dimensionNodeRoot.Nodes.Add(tempNode);
             }
         }
@@ -167,6 +169,7 @@ namespace Justin.Controls.CubeView
             }
             catalogNode = tvCubeInfo.Nodes[catalogName];
             catalogNode.Tag = cos[catalogName];
+            catalogNode.ToolTipText = string.Format("Catalog Name:[{0}]", catalogNode.Name);
 
             #endregion
 
@@ -178,6 +181,7 @@ namespace Justin.Controls.CubeView
             CubeDef cubeDef = cos[catalogName].GetCube(cubeName);
             catalogNode.Nodes.Add(cubeDef.Name, cubeDef.Caption, "Cube", "Cube");
             catalogNode.Nodes[cubeDef.Name].Tag = cubeDef;
+            catalogNode.Nodes[cubeDef.Name].ToolTipText = string.Format("Cube Name:[{0}] Caption:[1]", cubeDef.Name, cubeDef.Caption);
 
             #endregion
 
@@ -217,7 +221,7 @@ namespace Justin.Controls.CubeView
                         string expression = expressionProperty == null ? "" : expressionProperty.Value.ToJString();
                         string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
                         tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
-                        tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                        tempNode.ToolTipText = string.Format("Measure Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                         measuresNode.Nodes[group].Nodes.Add(tempNode);
                     }
                 }
@@ -237,7 +241,7 @@ namespace Justin.Controls.CubeView
                     string expression = expressionProperty == null ? "" : expressionProperty.Value.ToJString();
                     string key = string.IsNullOrEmpty(expression) ? "Measure" : "CalMeasure";
                     tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
-                    tempNode.ToolTipText = string.Format("Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
+                    tempNode.ToolTipText = string.Format("Measure Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                     measuresNode.Nodes[0].Nodes.Add(tempNode);
                 }
             }
@@ -266,6 +270,7 @@ namespace Justin.Controls.CubeView
                 tempNode.Name = name;
                 bool visible = item.Properties["DIMENSION_IS_VISIBLE"].Value.Value<bool>(true);
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Dim" : "Dim";
+                tempNode.ToolTipText = string.Format("Dimension Name:[{0}]Caption:[{1}]", item.Name, item.Caption);
                 tempNode.Tag = item;
                 BindHierarchies(tempNode, item.Hierarchies);
                 cubeNode.Nodes.Add(tempNode);
@@ -285,6 +290,7 @@ namespace Justin.Controls.CubeView
                 bool visible = hierarchy.Properties["HIERARCHY_IS_VISIBLE"].Value.Value<bool>(true);
                 string key = hierarchy.Levels.Count > 2 ? "Hie" : "SingleHie";
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? key : "" + key;
+                tempNode.ToolTipText = string.Format("Hierarchy Name:[{0}]Caption:[{1}]", name, caption);
                 BindLevels(tempNode, hierarchy.Levels);
                 dimNode.Nodes.Add(tempNode);
             }
@@ -302,6 +308,8 @@ namespace Justin.Controls.CubeView
                 tempNode.Name = name;
                 bool visible = level.Properties["LEVEL_IS_VISIBLE"].Value.Value<bool>(true);
                 tempNode.SelectedImageKey = tempNode.ImageKey = visible ? "Level" : "Level";
+                tempNode.ToolTipText = string.Format("Level Name:[{0}]Caption:[{1}]", name, caption);
+
                 tempNode.Tag = level;
                 hierarchyNode.Nodes.Add(tempNode);
             }
@@ -352,6 +360,8 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Member";
+                tempNode.ToolTipText = string.Format("Member Name:[{0}]Caption:[{1}]", name, caption);
+
                 tempNode.Tag = new MemberInfo(member);
 
                 root.Nodes.Add(tempNode);
@@ -390,6 +400,8 @@ namespace Justin.Controls.CubeView
                 TreeNode tempNode = new TreeNode(caption);
                 tempNode.Name = name;
                 tempNode.SelectedImageKey = tempNode.ImageKey = "Member";
+                tempNode.ToolTipText = string.Format("Member Name:[{0}]Caption:[{1}]", name, caption);
+
                 tempNode.Tag = member;
 
                 root.Nodes.Add(tempNode);

@@ -98,7 +98,7 @@ namespace Justin.Controls.Executer
             txtMdx.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("TSQL");
             txtMdx.Encoding = Encoding.GetEncoding("GB2312");
 
-            this.SetToolTipsForButton(new ToolTip());
+            this.ShowToolTips(new ToolTip());
             if (string.IsNullOrEmpty(cboxConnStrings.Text))
                 this.cboxConnStrings.Text = JSetting.Get("OLAPConnStr");
 

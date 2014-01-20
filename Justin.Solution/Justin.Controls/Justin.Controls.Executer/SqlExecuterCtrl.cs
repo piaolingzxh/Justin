@@ -239,8 +239,8 @@ namespace Justin.Controls.Executer
 分段SQL开始符：{0}
 分段SQL结束符：{1}
 ", Constants.SQLParagraphStartFlag, Constants.SQLParagraphEndFlag);
-            ToolTip tips = new ToolTip();
-            this.SetToolTipsForButton(tips);
+            this.ShowToolTips(new ToolTip());
+
             #endregion
 
             #region openFileDialog

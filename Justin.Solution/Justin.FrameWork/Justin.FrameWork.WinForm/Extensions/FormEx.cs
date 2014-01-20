@@ -68,11 +68,11 @@ namespace System.Windows.Forms
             MessageSvc.Default.Write(MessageLevel.Info, messageFormat, args);
         }
 
-        public static void ShowTips(this Form instance, ToolTip tips)
+        public static void ShowToolTips(this Form instance, ToolTip tips)
         {
             foreach (Control item in instance.Controls)
             {
-                item.SetToolTipsForButton(tips);
+                item.ShowToolTips(tips);
             }
         }
 

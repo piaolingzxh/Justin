@@ -79,7 +79,7 @@ namespace Justin.Toolbox
         private void fomr1_Load(object sender, EventArgs e)
         {
             ToolTip tips = new ToolTip();
-            this.SetToolTipsForButton(tips);
+            this.ShowToolTips(tips);
         }
 
         #endregion

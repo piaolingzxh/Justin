@@ -148,6 +148,8 @@ namespace Justin.Controls.JsonView
         {
             txtJson.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C#");
             txtJson.Encoding = Encoding.Default;
+            this.ShowToolTips(new ToolTip());
+
         }
 
         public bool FindNext(string text, bool includeSelected)
