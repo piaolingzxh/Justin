@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Justin.FrameWork.Extensions;
 using Justin.FrameWork.Services;
@@ -96,6 +99,7 @@ namespace Justin.Stock.Service.Models
                     RefreshDataBeyondTime = true;
                 }
             }
+            RefreshSilver();
         }
         private static void RefreshCurrentStockDataFromWeb()
         {
@@ -239,6 +243,63 @@ namespace Justin.Stock.Service.Models
             }
             return false;
         }
+
+
+        #region 现货白银
+
+
+        public static Action<SilverInfo> SilverInfoChanged { get; set; }
+
+        private static SilverInfo _silverInfo = new SilverInfo();
+        public static SilverInfo SilverInfo { get { return _silverInfo; } }
+
+
+        private static void RefreshSilver()
+        {
+
+            RefreshSilverData(SilverInfo);
+            if (SilverInfoChanged != null)
+            {
+                SilverInfoChanged(SilverInfo);
+            }
+        }
+
+        private static void RefreshSilverData(SilverInfo silverInfo)
+        {
+            string url = "";
+            try
+            {
+                if (silverInfo == null)
+                    return;
+
+
+                url = "http://data.91jin.com/data.aspx?a=quotation&code=AG&callback=jsonp1390282593069";
+                WebRequest request = WebRequest.Create(url);
+                WebResponse rs = request.GetResponse();
+                StreamReader reader = new StreamReader(rs.GetResponseStream(), Encoding.GetEncoding("gb2312"));
+                string silverMessage = reader.ReadToEnd();
+                reader.Close();
+                rs.Close();
+
+                Regex regex = new Regex("\"UpdateTime\":\"(.*)\",\"SellPrice\":\"(.*)\",\"BuyPrice\":\"(.*)\",\"OpenPrice\":\"(.*)\",\"ClosePrice\":\"(.*)\",\"MaxPrice\":\"(.*)\",\"LastPrice\":\"(.*)\",\"MinPrice\":\"(.*)\"");
+                Match matche = regex.Matches(silverMessage)[0];
+
+                silverInfo.Now = matche.Groups[1].Value.Value<DateTime>();
+                silverInfo.OpenPrice = matche.Groups[4].Value.Value<decimal>();
+                silverInfo.ClosePrice = matche.Groups[5].Value.Value<decimal>();
+                silverInfo.HightPrice = matche.Groups[6].Value.Value<decimal>();
+                silverInfo.PriceNow = matche.Groups[7].Value.Value<decimal>();
+                silverInfo.LowPrice = matche.Groups[8].Value.Value<decimal>();
+
+            }
+            catch (Exception ex)
+            {
+                MessageSvc.Default.Write(MessageLevel.Error, ex, "刷新个股信息失败，网址：{0}", url);
+            }
+        }
+
+
+        #endregion
 
 
 

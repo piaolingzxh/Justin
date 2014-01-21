@@ -32,6 +32,11 @@ namespace Justin.Stock.Controls
             StockService.QuerySumInvestFunc = dal.GetSumInvest;
             StockService.GetAllMyStockFunc = dal.getAllMyStock;
             StockService.AddEvent(Display);
+            //StockService.SilverInfoChanged = SilverInfoChanged;
+        }
+        private void SilverInfoChanged(SilverInfo silverInfo)
+        {
+            //silverInfo
         }
 
         #region 桌面显示和通知功能
@@ -210,6 +215,7 @@ namespace Justin.Stock.Controls
                 int sumProfit = (int)(sumMarketValue + Constants.Setting.Balance - sumInvest);
                 string summaryMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5}", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
 
+                summaryMsg += string.Format(" {0}", StockService.SilverInfo.PriceNow);
                 string summaryMsgTips = string.Format(@"{0}/{1}/{2} {3}/{4}/{5}", "当前盈亏", "总盈亏", "可用余额", "股票资产", "账户总资产", "总投入资产");
 
                 Label summaryLabel = GetNewlabel();

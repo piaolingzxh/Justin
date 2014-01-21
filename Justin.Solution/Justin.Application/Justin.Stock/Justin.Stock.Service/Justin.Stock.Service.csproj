@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\SilverInfo.cs" />
     <Compile Include="Entities\ServiceProvider.cs" />
     <Compile Include="Entities\StockEventArgs.cs" />
     <Compile Include="Entities\StockInfo.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Models\SinaRequest.cs" />
     <Compile Include="Models\TencentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockBaseInfo.cs" />
+    <Compile Include="Entities\StockBaseInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Justin.snk" />
