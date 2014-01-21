@@ -49,6 +49,8 @@
             this.checkBoxAutoStart = new System.Windows.Forms.CheckBox();
             this.btnAutoStart = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBoxEnableStock = new System.Windows.Forms.CheckBox();
+            this.btnEnableStock = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,19 +88,22 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnShowWarn, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkBoxShowWarn, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 2, 9);
+            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 2, 10);
             this.tableLayoutPanel1.Controls.Add(this.checkBoxCheckTime, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnCheckTime, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.txtDBPath, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.btnDBPath, 2, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.checkBoxAutoStart, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.btnAutoStart, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txtDBPath, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.btnDBPath, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxAutoStart, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.btnAutoStart, 2, 6);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxEnableStock, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btnEnableStock, 2, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 10;
+            this.tableLayoutPanel1.RowCount = 11;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -188,9 +193,9 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(317, 273);
+            this.btnRefresh.Location = new System.Drawing.Point(317, 303);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(34, 24);
+            this.btnRefresh.Size = new System.Drawing.Size(34, 1);
             this.btnRefresh.TabIndex = 10;
             this.btnRefresh.Text = "→";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -209,6 +214,7 @@
             // 
             // btnCheckTime
             // 
+            this.btnCheckTime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCheckTime.Location = new System.Drawing.Point(317, 93);
             this.btnCheckTime.Name = "btnCheckTime";
             this.btnCheckTime.Size = new System.Drawing.Size(34, 24);
@@ -221,7 +227,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 120);
+            this.label4.Location = new System.Drawing.Point(3, 150);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(94, 30);
             this.label4.TabIndex = 13;
@@ -231,14 +237,14 @@
             // txtDBPath
             // 
             this.txtDBPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDBPath.Location = new System.Drawing.Point(103, 123);
+            this.txtDBPath.Location = new System.Drawing.Point(103, 153);
             this.txtDBPath.Name = "txtDBPath";
             this.txtDBPath.Size = new System.Drawing.Size(208, 20);
             this.txtDBPath.TabIndex = 14;
             // 
             // btnDBPath
             // 
-            this.btnDBPath.Location = new System.Drawing.Point(317, 123);
+            this.btnDBPath.Location = new System.Drawing.Point(317, 153);
             this.btnDBPath.Name = "btnDBPath";
             this.btnDBPath.Size = new System.Drawing.Size(34, 24);
             this.btnDBPath.TabIndex = 10;
@@ -250,7 +256,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 150);
+            this.label5.Location = new System.Drawing.Point(3, 180);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(94, 30);
             this.label5.TabIndex = 15;
@@ -261,7 +267,7 @@
             // 
             this.checkBoxAutoStart.AutoSize = true;
             this.checkBoxAutoStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBoxAutoStart.Location = new System.Drawing.Point(103, 153);
+            this.checkBoxAutoStart.Location = new System.Drawing.Point(103, 183);
             this.checkBoxAutoStart.Name = "checkBoxAutoStart";
             this.checkBoxAutoStart.Size = new System.Drawing.Size(208, 24);
             this.checkBoxAutoStart.TabIndex = 16;
@@ -270,13 +276,35 @@
             // 
             // btnAutoStart
             // 
-            this.btnAutoStart.Location = new System.Drawing.Point(317, 153);
+            this.btnAutoStart.Location = new System.Drawing.Point(317, 183);
             this.btnAutoStart.Name = "btnAutoStart";
             this.btnAutoStart.Size = new System.Drawing.Size(34, 23);
             this.btnAutoStart.TabIndex = 17;
             this.btnAutoStart.Text = "→";
             this.btnAutoStart.UseVisualStyleBackColor = true;
             this.btnAutoStart.Click += new System.EventHandler(this.btnAutoStart_Click);
+            // 
+            // checkBoxEnableStock
+            // 
+            this.checkBoxEnableStock.AutoSize = true;
+            this.checkBoxEnableStock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkBoxEnableStock.Location = new System.Drawing.Point(103, 123);
+            this.checkBoxEnableStock.Name = "checkBoxEnableStock";
+            this.checkBoxEnableStock.Size = new System.Drawing.Size(208, 24);
+            this.checkBoxEnableStock.TabIndex = 11;
+            this.checkBoxEnableStock.Text = "启用股票";
+            this.checkBoxEnableStock.UseVisualStyleBackColor = true;
+            // 
+            // btnEnableStock
+            // 
+            this.btnEnableStock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnEnableStock.Location = new System.Drawing.Point(317, 123);
+            this.btnEnableStock.Name = "btnEnableStock";
+            this.btnEnableStock.Size = new System.Drawing.Size(34, 24);
+            this.btnEnableStock.TabIndex = 12;
+            this.btnEnableStock.Text = "→";
+            this.btnEnableStock.UseVisualStyleBackColor = true;
+            this.btnEnableStock.Click += new System.EventHandler(this.btnEnableStock_Click);
             // 
             // SystemSettingCtrl
             // 
@@ -314,5 +342,7 @@
         private System.Windows.Forms.CheckBox checkBoxAutoStart;
         private System.Windows.Forms.Button btnAutoStart;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkBoxEnableStock;
+        private System.Windows.Forms.Button btnEnableStock;
     }
 }

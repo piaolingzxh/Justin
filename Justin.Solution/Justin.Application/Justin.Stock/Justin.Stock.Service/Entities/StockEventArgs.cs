@@ -5,13 +5,10 @@ using System.Text;
 
 namespace Justin.Stock.Service.Entities
 {
-    public class StockEventArgs : EventArgs
+    public class DataEventArgs : EventArgs
     {
-        public IEnumerable<StockInfo> Stocks { get; private set; }
-        public StockEventArgs(IEnumerable<StockInfo> stocks)
-        {
-            this.Stocks = stocks;
-        }
+        public List<StockInfo> Stocks { get; set; }
+        //public SilverInfo SilverInfo { get; set; }
 
     }
 }

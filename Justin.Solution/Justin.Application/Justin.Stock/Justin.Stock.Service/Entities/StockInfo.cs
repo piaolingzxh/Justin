@@ -7,6 +7,8 @@ namespace Justin.Stock.Service.Entities
 {
     public class StockInfo : StockBaseInfo
     {
+      
+
         #region 非实时数据
 
         public decimal WarnPrice_Min { get; set; }

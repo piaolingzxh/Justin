@@ -57,11 +57,11 @@ namespace Justin.Stock.Controls
 
             #endregion
 
-            StockService.AddEvent(ShowMyStockInfoChanged);
+            DataService.AddEvent(ShowMyStockInfoChanged);
 
             dgvMonitorStocks.AutoGenerateColumns = false;
             dgvStocksetting.AutoGenerateColumns = false;
-            BindMyStocks(StockService.MyStock);
+            BindMyStocks(DataService.MyStock);
         }
 
         private void MyStock_FormClosing(object sender, FormClosingEventArgs e)
@@ -70,7 +70,7 @@ namespace Justin.Stock.Controls
                 forceClose = true;
             if (!forceClose)
             {
-                StockService.RemoveEvent(ShowMyStockInfoChanged);
+                DataService.RemoveEvent(ShowMyStockInfoChanged);
                 e.Cancel = true;
                 this.Hide();
             }
@@ -166,9 +166,9 @@ namespace Justin.Stock.Controls
             string shortName = row.Cells["InShort"].Value.ToString();
             string description = row.Cells["Description"].Value.ToJString();
 
-            stockDAL.InsertStock(code, no, name, shortName, description, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
+            stockDAL.InsertStock(code, no, name, shortName, description, DataService.MyStock.Min(r => r.Order) - (decimal)0.01);
             RefreshPersonalStockSetting();
-            StockService.ResetMyStock();
+            DataService.ResetMyStock();
 
         }
         private void 删除自选ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace Justin.Stock.Controls
 
             stockDAL.DeleteStock(code);
             RefreshPersonalStockSetting();
-            StockService.ResetMyStock();
+            DataService.ResetMyStock();
         }
 
         //自选个股设置部分dgvStocksetting
@@ -215,7 +215,7 @@ namespace Justin.Stock.Controls
                 if (table != null)
                 {
                     stockDAL.UpdateByDataSet(table);
-                    StockService.ResetMyStock();
+                    DataService.ResetMyStock();
                 }
             }
             catch (Exception ex)
@@ -263,7 +263,7 @@ namespace Justin.Stock.Controls
 
         private void btnUpdateStockInfo_Click(object sender, EventArgs e)
         {
-            var list = StockService.AllStocks;
+            var list = DataService.AllStocks;
             stockDAL.ResetAllStocks(list);
 
         }
@@ -320,7 +320,7 @@ namespace Justin.Stock.Controls
         #region  辅助函数
 
         long i = 0;
-        private void ShowMyStockInfoChanged(object sender, StockEventArgs e)
+        private void ShowMyStockInfoChanged(object sender, DataEventArgs e)
         {
             if (i % 3 == 0)
             {
@@ -341,7 +341,7 @@ namespace Justin.Stock.Controls
             lock (syncdgvMonitorStocks)
             {
                 if (stocks == null)
-                    stocks = StockService.MyStock;
+                    stocks = DataService.MyStock;
                 stocks = stocks.OrderByDescending(row => row.Order);
 
                 dgvMonitorStocks.DataSource = new BindingCollection<StockInfo>(stocks.ToList());
@@ -471,7 +471,7 @@ namespace Justin.Stock.Controls
                 {
                     bool success = stockDAL.UpdateCheckHistory(table);
                     if (success)
-                        StockService.ResetSumInvest();
+                        DataService.ResetStockSumInvest();
 
                 }
             }

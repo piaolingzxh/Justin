@@ -18,7 +18,7 @@ namespace Justin.Stock.Service.Models
         private int BufferSize = 64;
         public void RefreshStockData(List<StockInfo> stocks)
         {
-            stocks = stocks.OrderByDescending(row => row.ShowInFolatWindow).ToList();
+            stocks = stocks.Where(r => !r.IsSilver).OrderByDescending(row => row.ShowInFolatWindow).ToList();
             int requestTimes = stocks.Count % BufferSize == 0 ? stocks.Count / BufferSize : stocks.Count / BufferSize + 1;
 
             for (int i = 0; i < requestTimes; i++)

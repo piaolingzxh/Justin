@@ -205,15 +205,15 @@ namespace Justin.Stock
             }
             else if (hotkeyID == stopOrStartServicekey)
             {
-                if (StockService.IsRunning)
+                if (DataService.IsRunning)
                 {
-                    StockService.Stop();
+                    DataService.Stop();
                     this.EnableAutoAnchor = true;
                     this.Hide();
                 }
                 else
                 {
-                    StockService.ReStart();
+                    DataService.ReStart();
                     this.EnableAutoAnchor = false;
                     this.Show();
                 }
@@ -260,9 +260,9 @@ namespace Justin.Stock
                 this.WindowState = FormWindowState.Normal;
             }
             this.Activate();
-            if (!StockService.IsRunning)
+            if (!DataService.IsRunning)
             {
-                StockService.Start();
+                DataService.Start();
             }
         }
 
@@ -276,7 +276,7 @@ namespace Justin.Stock
 
         private void CloseMe()
         {
-            StockService.Stop();
+            DataService.Stop();
             deskStockCtrl1.RemoveDisplayHandler();
             deskStockCtrl1.CloseChildrenForm();
             hotkeyHelper.UnregisterHotkeys();

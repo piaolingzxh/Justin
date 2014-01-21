@@ -57,7 +57,7 @@
     <Compile Include="Entities\StockEventArgs.cs" />
     <Compile Include="Entities\StockInfo.cs" />
     <Compile Include="Models\RequestFactory.cs" />
-    <Compile Include="Models\StockService.cs" />
+    <Compile Include="Models\DataService.cs" />
     <Compile Include="Models\EastMoneyRequest.cs" />
     <Compile Include="Models\IRequest.cs" />
     <Compile Include="Models\SinaRequest.cs" />

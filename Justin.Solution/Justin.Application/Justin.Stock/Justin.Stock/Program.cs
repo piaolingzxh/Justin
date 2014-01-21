@@ -87,7 +87,7 @@ namespace Justin.Stock
             {
                 setting.DeskDisplayFormat = Constants.DefaultDeskDisplayFormat;
             }
-            StockService.CheckTime = setting.CheckTime;
+            DataService.CheckStockTime = setting.CheckTime;
             if (setting.StartPosition == null || (setting.StartPosition.Top == 0 && setting.StartPosition.Left == 0 && setting.StartPosition.Width == 0 && setting.StartPosition.Height == 0))
             {
                 setting.StartPosition = new StartPosition()

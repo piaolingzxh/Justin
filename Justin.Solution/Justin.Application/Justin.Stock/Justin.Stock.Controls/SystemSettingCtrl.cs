@@ -38,6 +38,7 @@ namespace Justin.Stock.Controls
             checkBoxCheckTime.Checked = Constants.Setting.CheckTime;
             checkBoxAutoStart.Checked = AutoStart.Current.EnabledThroughRegistry;
             txtDBPath.Text = Constants.Setting.DBPath;
+            checkBoxEnableStock.Checked = DataService.EnableStock;
 
         }
         private void btnBalance_Click(object sender, EventArgs e)
@@ -67,7 +68,7 @@ namespace Justin.Stock.Controls
 
         private void btnCheckTime_Click(object sender, EventArgs e)
         {
-            StockService.CheckTime = Constants.Setting.CheckTime = checkBoxCheckTime.Checked;
+            DataService.CheckStockTime = Constants.Setting.CheckTime = checkBoxCheckTime.Checked;
         }
 
         private void btnDBPath_Click(object sender, EventArgs e)
@@ -103,6 +104,11 @@ namespace Justin.Stock.Controls
                 Constants.Setting.DBPath = Path.GetFileName(Constants.DefaultDBPath);
             }
             xmlDoc.Save(Constants.SettingFilePath);
+        }
+
+        private void btnEnableStock_Click(object sender, EventArgs e)
+        {
+            DataService.EnableStock = checkBoxEnableStock.Checked;
         }
     }
 }

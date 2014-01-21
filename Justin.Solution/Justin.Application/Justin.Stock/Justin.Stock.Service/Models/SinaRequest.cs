@@ -17,7 +17,7 @@ namespace Justin.Stock.Service.Models
             string url = "";
             try
             {
-                List<StockInfo> StockDatas = stocks;
+                List<StockInfo> StockDatas = stocks.Where(r => !r.IsSilver).ToList();
                 string stockCodes = "";
                 foreach (var item in StockDatas)
                 {

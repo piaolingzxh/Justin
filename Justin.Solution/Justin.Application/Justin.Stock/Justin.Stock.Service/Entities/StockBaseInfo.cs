@@ -57,6 +57,8 @@ namespace Justin.Stock.Service.Entities
 
         public string Description { get; set; }
 
+        public bool IsSilver { get { return this.Code.StartsWith("by", StringComparison.CurrentCultureIgnoreCase); } }
+
 
     }
 }

@@ -29,22 +29,25 @@ namespace Justin.Stock.Controls
         {
             myStock = MyStock.Instance;
             var dal = new StockDAL();
-            StockService.QuerySumInvestFunc = dal.GetSumInvest;
-            StockService.GetAllMyStockFunc = dal.getAllMyStock;
-            StockService.AddEvent(Display);
+            DataService.QuerySumInvestFunc = dal.GetSumInvest;
+            DataService.GetAllMyStockFunc = dal.getAllMyStock;
+            DataService.AddEvent(Display);
             //StockService.SilverInfoChanged = SilverInfoChanged;
         }
-        private void SilverInfoChanged(SilverInfo silverInfo)
+        private void SilverInfoChanged(StockInfo silverInfo)
         {
             //silverInfo
         }
 
         #region 桌面显示和通知功能
 
-        private void Display(object sender, StockEventArgs e)
+        private void Display(object sender, DataEventArgs e)
         {
 
             IEnumerable<StockInfo> stockList = e.Stocks;
+            if (!DataService.EnableStock)
+                stockList = stockList.Where(r => r.IsSilver);
+
             try
             {
                 #region format
@@ -107,7 +110,7 @@ namespace Justin.Stock.Controls
 
                 foreach (var rtStock in stocks)
                 {
-                    Label stockLabel = this.GetNewlabel(rtStock.Order == -1);
+                    Label stockLabel = this.GetNewlabel(rtStock.Order >= -1 && rtStock.Order <= 1);
                     stockLabel.ForeColor = GetWarnColor(rtStock);
 
                     #region 股票桌面信息
@@ -208,14 +211,14 @@ namespace Justin.Stock.Controls
                 #endregion
 
                 #region 总盈亏信息
-                int sumInvest = (int)StockService.SumInvest;
+                int sumInvest = (int)DataService.StockSumInvest;
                 int sumMarketValue = (int)stockList.Sum(row => row.MarketValue);
                 int accountMoney = (int)(sumMarketValue + Constants.Setting.Balance);
                 int currentProfit = (int)stockList.Sum(row => row.CurrentProfit);
                 int sumProfit = (int)(sumMarketValue + Constants.Setting.Balance - sumInvest);
                 string summaryMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5}", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
 
-                summaryMsg += string.Format(" {0}", StockService.SilverInfo.PriceNow);
+                summaryMsg += string.Format(" {0}", e.Stocks.Where(r => r.IsSilver).FirstOrDefault().PriceNow);
                 string summaryMsgTips = string.Format(@"{0}/{1}/{2} {3}/{4}/{5}", "当前盈亏", "总盈亏", "可用余额", "股票资产", "账户总资产", "总投入资产");
 
                 Label summaryLabel = GetNewlabel();
@@ -235,8 +238,6 @@ namespace Justin.Stock.Controls
                 #endregion
 
                 tableLayoutPanel1.ResumeLayout();
-
-
 
                 #region 实时显示股票警告信息到桌面标题
 
@@ -337,8 +338,6 @@ namespace Justin.Stock.Controls
 
         #endregion
 
-
-
         #region 右键菜单
 
         Label stockLabel;
@@ -414,7 +413,7 @@ namespace Justin.Stock.Controls
 
         public void RemoveDisplayHandler()
         {
-            StockService.RemoveEvent(Display);
+            DataService.RemoveEvent(Display);
         }
 
         public void CloseChildrenForm()
