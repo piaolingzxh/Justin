@@ -164,7 +164,7 @@ namespace Justin.Stock.Controls
             string no = row.Cells["No"].Value.ToString();
             string name = row.Cells["_Name"].Value.ToString();
             string shortName = row.Cells["InShort"].Value.ToString();
-            string description = row.Cells["Description"].Value.ToString();
+            string description = row.Cells["Description"].Value.ToJString();
 
             stockDAL.InsertStock(code, no, name, shortName, description, StockService.MyStock.Min(r => r.Order) - (decimal)0.01);
             RefreshPersonalStockSetting();
