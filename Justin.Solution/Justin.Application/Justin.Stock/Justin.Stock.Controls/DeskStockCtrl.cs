@@ -211,29 +211,18 @@ namespace Justin.Stock.Controls
                 #endregion
 
                 #region 总盈亏信息
-                int sumInvest = (int)DataService.StockSumInvest;
-                int sumMarketValue = (int)stockList.Sum(row => row.MarketValue);
-                int accountMoney = (int)(sumMarketValue + Constants.Setting.Balance);
-                int currentProfit = (int)stockList.Sum(row => row.CurrentProfit);
-                int sumProfit = (int)(sumMarketValue + Constants.Setting.Balance - sumInvest);
-                string summaryMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5}", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
 
-                summaryMsg += string.Format(" {0}", e.Stocks.Where(r => r.IsSilver).FirstOrDefault().PriceNow);
-                string summaryMsgTips = string.Format(@"{0}/{1}/{2} {3}/{4}/{5}", "当前盈亏", "总盈亏", "可用余额", "股票资产", "账户总资产", "总投入资产");
+                string[] summaryInfo = new string[] { "", "" };
+                if (DataService.EnableStock)
+                    summaryInfo = GetStockSummaryMessage(stockList);
+                string summaryMessage = string.Format("{0} {1}", summaryInfo[0], e.Stocks.FirstOrDefault(r => r.IsSilver).PriceNow);
 
                 Label summaryLabel = GetNewlabel();
 
-                summaryLabel.Text = summaryMsg;
-                tip.SetToolTip(summaryLabel, summaryMsgTips);
+                tableLayoutPanel1.Tag = summaryLabel.Text = summaryMessage;
+                if (!DataService.EnableStock) summaryLabel.Text = "";
+                tip.SetToolTip(summaryLabel, summaryInfo[1]);
                 tableLayoutPanel1.Controls.Add(summaryLabel, 0, rowIndex++);
-
-                //总成本=所有股票总成本+当前余额
-                //decimal sumCost = stockList.Sum(row => row.SumCost) + Constants.Setting.Balance;//成本
-                //总市值=所有股票当前市值+当前余额
-                //decimal sumCurrentPrice = stockList.Sum(row => row.MarketValue) + Constants.Setting.Balance;//市值
-                //decimal sumProfitOrLoss = stockList.Sum(row => row.SumProfit);
-
-                tableLayoutPanel1.Tag = summaryMsg;
 
                 #endregion
 
@@ -266,6 +255,19 @@ namespace Justin.Stock.Controls
 
         }
 
+        private string[] GetStockSummaryMessage(IEnumerable<StockInfo> stockList)
+        {
+            int sumInvest = (int)DataService.StockSumInvest;
+            int sumMarketValue = (int)stockList.Sum(row => row.MarketValue);
+            int accountMoney = (int)(sumMarketValue + Constants.Setting.Balance);
+            int currentProfit = (int)stockList.Sum(row => row.CurrentProfit);
+            int sumProfit = (int)(sumMarketValue + Constants.Setting.Balance - sumInvest);
+            string stockMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5}", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
+
+            string summaryMsgTips = string.Format(@"{0}/{1}/{2} {3}/{4}/{5}", "当前盈亏", "总盈亏", "可用余额", "股票资产", "账户总资产", "总投入资产");
+
+            return new String[] { stockMsg, summaryMsgTips };
+        }
         private Label GetNewlabel(bool bold = false)
         {
             Label stockLabel = new Label();
