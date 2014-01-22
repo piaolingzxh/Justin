@@ -215,7 +215,7 @@ namespace Justin.Stock.Controls
                 string[] summaryInfo = new string[] { "", "" };
                 if (DataService.EnableStock)
                     summaryInfo = GetStockSummaryMessage(stockList);
-                string summaryMessage = string.Format("{0} {1}", summaryInfo[0], e.Stocks.FirstOrDefault(r => r.IsSilver).PriceNow);
+                string summaryMessage = string.Format("{0}{1}", summaryInfo[0], e.Stocks.FirstOrDefault(r => r.IsSilver).PriceNow);
 
                 Label summaryLabel = GetNewlabel();
 
@@ -262,7 +262,7 @@ namespace Justin.Stock.Controls
             int accountMoney = (int)(sumMarketValue + Constants.Setting.Balance);
             int currentProfit = (int)stockList.Sum(row => row.CurrentProfit);
             int sumProfit = (int)(sumMarketValue + Constants.Setting.Balance - sumInvest);
-            string stockMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5}", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
+            string stockMsg = string.Format("{0}/{1}/{2} {3}/{4}/{5} ", currentProfit, sumProfit, (int)Constants.Setting.Balance, (int)sumMarketValue, accountMoney, (int)sumInvest);
 
             string summaryMsgTips = string.Format(@"{0}/{1}/{2} {3}/{4}/{5}", "当前盈亏", "总盈亏", "可用余额", "股票资产", "账户总资产", "总投入资产");
 
