@@ -48,9 +48,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.checkBoxAutoStart = new System.Windows.Forms.CheckBox();
             this.btnAutoStart = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBoxEnableStock = new System.Windows.Forms.CheckBox();
             this.btnEnableStock = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,7 +88,6 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnShowWarn, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkBoxShowWarn, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 2, 10);
             this.tableLayoutPanel1.Controls.Add(this.checkBoxCheckTime, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnCheckTime, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 5);
@@ -99,6 +98,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnAutoStart, 2, 6);
             this.tableLayoutPanel1.Controls.Add(this.checkBoxEnableStock, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.btnEnableStock, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 2, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -193,9 +193,10 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(317, 303);
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRefresh.Location = new System.Drawing.Point(317, 213);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(34, 1);
+            this.btnRefresh.Size = new System.Drawing.Size(34, 24);
             this.btnRefresh.TabIndex = 10;
             this.btnRefresh.Text = "→";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -244,6 +245,7 @@
             // 
             // btnDBPath
             // 
+            this.btnDBPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDBPath.Location = new System.Drawing.Point(317, 153);
             this.btnDBPath.Name = "btnDBPath";
             this.btnDBPath.Size = new System.Drawing.Size(34, 24);
@@ -276,9 +278,10 @@
             // 
             // btnAutoStart
             // 
+            this.btnAutoStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnAutoStart.Location = new System.Drawing.Point(317, 183);
             this.btnAutoStart.Name = "btnAutoStart";
-            this.btnAutoStart.Size = new System.Drawing.Size(34, 23);
+            this.btnAutoStart.Size = new System.Drawing.Size(34, 24);
             this.btnAutoStart.TabIndex = 17;
             this.btnAutoStart.Text = "→";
             this.btnAutoStart.UseVisualStyleBackColor = true;
