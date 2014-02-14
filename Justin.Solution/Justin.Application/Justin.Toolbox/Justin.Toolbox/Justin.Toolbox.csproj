@@ -173,6 +173,12 @@
     <Compile Include="TestDataGenerator.Designer.cs">
       <DependentUpon>TestDataGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="XMLForAnalysisTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XMLForAnalysisTool.Designer.cs">
+      <DependentUpon>XMLForAnalysisTool.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Common\Library\AStyle.exe">
@@ -351,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestDataGenerator.resx">
       <DependentUpon>TestDataGenerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XMLForAnalysisTool.resx">
+      <DependentUpon>XMLForAnalysisTool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

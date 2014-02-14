@@ -9,6 +9,7 @@
       <MenuItem Type="Splitor" IsFile="false" />
       <MenuItem Type="Menu" Name="MondrianSchemaWorkbench" Text="MondrianSchemaWorkbench" IsFile="false" Class="Justin.Toolbox.MondrianSchemaWorkbench,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="MondrianService" Text="MondrianService" IsFile="false" Class="Justin.Toolbox.MondrianServiceStarter,,Justin.Toolbox" />
+      <MenuItem Type="Menu" Name="XMLForAnalysisTool" Text="XML for Analysis Tool" IsFile="false" Class="Justin.Toolbox.XMLForAnalysisTool,,Justin.Toolbox" />
       <MenuItem Type="Menu" Name="CubeViewer" Text="CubeViewer" IsFile="false" Class="Justin.Toolbox.CubeViewer,,Justin.Toolbox" />
       <MenuItem Type="Splitor" IsFile="false" />
       <MenuItem Type="Menu" Name="JsonViewer" Text="JsonViewer" IsFile="false" Class="Justin.Toolbox.JsonViewer,,Justin.Toolbox" />
