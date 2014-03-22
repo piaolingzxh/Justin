@@ -100,12 +100,12 @@
             // txtJson
             // 
             this.txtJson.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtJson.IsReadOnly = false;
             this.txtJson.Location = new System.Drawing.Point(0, 0);
             this.txtJson.Name = "txtJson";
             this.txtJson.ShowEOLMarkers = true;
             this.txtJson.ShowSpaces = true;
             this.txtJson.ShowTabs = true;
-            this.txtJson.ShowVRuler = true;
             this.txtJson.Size = new System.Drawing.Size(240, 411);
             this.txtJson.TabIndex = 1;
             this.txtJson.Text = resources.GetString("txtJson.Text");

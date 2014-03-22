@@ -2,6 +2,10 @@
   "name": "Float Advertisement Killer",
   "description": "Float Advertisement Killer.",
   "version": "1.1",
+  "icons": {
+      "128": "kill_128.png",
+      "16": "kill_16.png"
+   },
   "background": {
     "scripts": ["background.js"]
   },
@@ -10,7 +14,7 @@
   ],
   "browser_action": {
       "default_title": "Float Advertisement Killer",
-      "default_icon": "print_16x16.png"
+      "default_icon": "kill_16.png"
   },
   "manifest_version": 2
 }
