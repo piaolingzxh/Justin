@@ -573,7 +573,13 @@ namespace Justin.Controls.CubeView
         private void generateSampleMdxTabPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TreeNode cubeNode = GetCubeNodeOfCubeInfoTree(tvCubeInfo.SelectedNode);
-            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, cos[cubeNode.Parent.Name].ConnectionString, GenerateSampleMdx());
+            string mdx = "";
+            try
+            {
+                mdx = GenerateSampleMdx();
+            }
+            catch { }
+            tabControlMdxEditorCollection.SelectedTab = AddMdxEditorTabPage(cubeNode.Text, cos[cubeNode.Parent.Name].ConnectionString, mdx);
         }
         private void closeCurrentCubeToolStripMenuItem_Click(object sender, EventArgs e)
         {

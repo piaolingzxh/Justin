@@ -171,6 +171,8 @@ namespace Justin.Controls.Executer
                     mdx = txtMdx.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
                 }
                 CellSet cst = MdxHelper.ExecuteCellSet(Connection, mdx);
+                watch.Stop();
+                this.ShowMessage("查询耗时{0}毫秒,", watch.ElapsedMilliseconds);
                 gvMdxresult.Tag = cst;
                 lastUseFormattedValue = sender == this.btnExecuteWithFormatted;
                 //DataTable dt = cst.ToDataTable2(lastUseFormattedValue);
@@ -189,8 +191,7 @@ namespace Justin.Controls.Executer
             }
             finally
             {
-                watch.Stop();
-                this.ShowMessage("查询耗时{0}毫秒,", watch.ElapsedMilliseconds);
+
             }
         }
         private void btnExecuteDataSet_Click(object sender, EventArgs e)
@@ -207,6 +208,8 @@ namespace Justin.Controls.Executer
                 }
 
                 DataTable dt = MdxHelper.ExecuteDataTable(Connection, mdx);
+                watch.Stop();
+                this.ShowMessage("查询耗时{0}毫秒,", watch.ElapsedMilliseconds);
                 gvMdxresult.DataSource = dt;
                 ShowResult(gvMdxresult);
             }
@@ -216,8 +219,7 @@ namespace Justin.Controls.Executer
             }
             finally
             {
-                watch.Stop();
-                this.ShowMessage("查询耗时{0}毫秒,", watch.ElapsedMilliseconds);
+
             }
         }
 

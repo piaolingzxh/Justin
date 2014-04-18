@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork.WinForm", "..\..\Justin.FrameWork\Justin.FrameWork.WinForm\Justin.FrameWork.WinForm.csproj", "{F1BA0A66-6D68-4142-83D8-C96A81A6862E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3} = {D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Justin.FrameWork", "..\..\Justin.FrameWork\Justin.FrameWork\Justin.FrameWork.csproj", "{D4A91B29-5A36-41A6-8FE4-C1076CD96BD3}"
 EndProject
