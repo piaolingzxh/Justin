@@ -1,0 +1,14 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "include_globs": [  ],
+      "js": [ "userscript.user.js" ],
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ],
+   "converted_from_user_script": true,
+   "description": "some description",
+   "manifest_version": 2,
+   "name": "userscript",
+   "permissions": [ "tabs", "notifications", "http://*/*"],
+   "version": "1.0"
+}

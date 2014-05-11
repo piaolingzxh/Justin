@@ -1,0 +1,249 @@
+<html>
+<head>
+    <style>
+        .chart
+        {
+            text-indent: 15px;
+            font: 12px/1.5 arial,\5b8b\4f53;
+            color: #4b4b4b;
+        }
+        .lianxiren
+        {
+            z-index: 111113;
+            position: fixed;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            border: 1px solid #c4c4c4;
+            bottom: 0;
+            cursor: pointer;
+            height: 15px;
+            width: 200px;
+        }
+        .chartBox
+        {
+            z-index: 111113;
+            position: fixed;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            border: 1px solid #c4c4c4;
+            bottom: 17px;
+            height: 500px;
+            width: 652px;
+        }
+        .chartTitle
+        {
+            text-indent: 0em;
+            border: 1px solid #c4c4c4;
+        }
+        .chartWindow
+        {
+            float: left;
+            width: 450px;
+            height: 100%;
+        }
+        .chartNav
+        {
+            float: right;
+            width: 200px;
+            height: 100%;
+            overflow: scroll;
+            border: 1px solid #c4c4c4;
+        }
+        .chartHistory
+        {
+            float: left;
+            border: 1px solid #c4c4c4;
+            height: 300px;
+            width: 100%;
+            overflow: scroll;
+        }
+        .chartAssistant
+        {
+            height: 20px;
+            border: 1px solid #c4c4c4;
+            width: 100%;
+            float: left;
+            position: relative;
+        }
+        .chartArea
+        {
+            float: left;
+            height: 100%;
+            border: 1px solid #c4c4c4;
+            position: relative;
+            width: 100%;
+        }
+        .friend-desc
+        {
+            font-weight: bold;
+            font-size: 12px;
+            font-family: Verdana, Arial, '宋体';
+            text-indent: 0em;
+            color: Blue;
+        }
+        .msg-title
+        {
+            text-indent: 0em;
+            font: 12px/1.6 'tahoma' , 'arial' , '\5b8b\4f53' !important;
+            text-decoration: none;
+            color: Blue;
+        }
+        .msg-item-content
+        {
+            word-break: break-all;
+            display: inline-block;
+            color: #50555c;
+            padding: 7px;
+            background: #f1ffe0;
+            border: 1px solid #d1efac;
+        }
+        
+        .msg-time
+        {
+            color: silver;
+        }
+        .nav-item
+        {
+            float: left;
+            margin: 0;
+            position: relative;
+            border: 1px solid #d1efac;
+            width: 100%;
+        }
+        .nav-item-detail
+        {
+            float: right;
+            position: fixed;
+            right: 10px;
+            margin: 0;
+            width: 50px;
+        }
+        .nav-item-content
+        {
+            float: left;
+            margin: 0;
+            width: 100px;
+        }
+        .nav-item-pic
+        {
+            float: left;
+            margin: 0;
+        }
+        .nav-item-name
+        {
+            text-indent: 0em;
+            
+            text-align: left;
+            
+        }
+        .nav-item-desc
+        {
+            text-decoration: none;
+            text-align: left;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart">
+        <div class="chartBox">
+            <div class="chartTitle">
+                聊天窗口
+            </div>
+            <div class="chartWindow">
+                <div class="friend-desc">
+                    张三 30岁 北京 昌平, 174厘米, 未婚, 本科, 2000～5000元, 已经购车, 已购住房, 籍贯北京, 家乡河南
+                </div>
+                <div class="chartHistory">
+                    <div class="imjs-msg-list">
+                        <div class="msg-item">
+                            <div class="msg-title">
+                                张三 <span class="msg-left-time">2012.2.4 13:54</span><br />
+                            </div>
+                            <div class="msg-item-content">
+                                我喜欢看书,我在业余时间最大的消遣是看书，小球类运动，偶尔跑步。爸爸是医生，妈妈是小学老师，已离退，在家我是老大，弟弟妹妹已成家，有点压力，所以我来了，父母都是本份人，靠着一点工资，以及互相支援，我们仨读完大学，目前做IT外包，是一名网络工程师，自由职业。如果我有了她，我愿意努力提高生活质量，并且也在努力中。我憧憬的生活是Money够花，亲朋健康，生活快乐！我希望未来的另一半最好是恬淡安静的女生，真心希望在这里能遇到她。长城上是13年初的照片，西装照是最近的。虽然是生活照，也很普通，还是要说一下照片和现实是不一样的，照片只能说明我能达到的程度。祝所有单着的朋友在新年里都能找到对的人！
+                            </div>
+                        </div>
+                        <div class="msg-item">
+                            <div class="msg-title">
+                                张三 <span class="msg-left-time">2012.2.4 13:54</span><br />
+                            </div>
+                            <div class="msg-item-content">
+                                我喜欢看书,我在业余时间最大的消遣是看书，小球类运动，偶尔跑步。爸爸是医生，妈妈是小学老师，已离退，在家我是老大，弟弟妹妹已成家，有点压力，所以我来了，父母都是本份人，靠着一点工资，以及互相支援，我们仨读完大学，目前做IT外包，是一名网络工程师，自由职业。如果我有了她，我愿意努力提高生活质量，并且也在努力中。我憧憬的生活是Money够花，亲朋健康，生活快乐！我希望未来的另一半最好是恬淡安静的女生，真心希望在这里能遇到她。长城上是13年初的照片，西装照是最近的。虽然是生活照，也很普通，还是要说一下照片和现实是不一样的，照片只能说明我能达到的程度。祝所有单着的朋友在新年里都能找到对的人！
+                            </div>
+                        </div>
+                        <div class="msg-item">
+                            <div class="msg-title">
+                                张三 <span class="msg-left-time">2012.2.4 13:54</span><br />
+                            </div>
+                            <div class="msg-item-content">
+                                我喜欢看书,我在业余时间最大的消遣是看书，小球类运动，偶尔跑步。爸爸是医生，妈妈是小学老师，已离退，在家我是老大，弟弟妹妹已成家，有点压力，所以我来了，父母都是本份人，靠着一点工资，以及互相支援，我们仨读完大学，目前做IT外包，是一名网络工程师，自由职业。如果我有了她，我愿意努力提高生活质量，并且也在努力中。我憧憬的生活是Money够花，亲朋健康，生活快乐！我希望未来的另一半最好是恬淡安静的女生，真心希望在这里能遇到她。长城上是13年初的照片，西装照是最近的。虽然是生活照，也很普通，还是要说一下照片和现实是不一样的，照片只能说明我能达到的程度。祝所有单着的朋友在新年里都能找到对的人！
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chartAssistant">
+                </div>
+                <div class="chartArea">
+                </div>
+            </div>
+            <div class="chartNav">
+                <div class="nav-item">
+                    <div class="nav-item-detail">
+                        <a href="http://love.ganji.com/209634157.htm" target="_blank" title="http://love.ganji.com/209634157.htm">
+                            详情</a></div>
+                    <img class="nav-item-pic" src="http://image.ganjistatic1.com/gjfs06/M07/A3/A0/wKhzVVNbbuPPeQqUAAAJ6Quz908093_30-30_7-5.jpg">
+                    <a class="nav-item-name" href="javascript:" title="王茜">王茜</a><span class="imjs-msg-new-count"></span><br />
+                    <a href="javascript:" class="nav-item-desc" title="18岁，160cm，北京">18岁，160cm，北京</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-item-detail">
+                        <a href="http://love.ganji.com/209634157.htm" target="_blank" title="http://love.ganji.com/209634157.htm">
+                            详情</a></div>
+                    <img class="nav-item-pic" src="http://image.ganjistatic1.com/gjfs06/M07/A3/A0/wKhzVVNbbuPPeQqUAAAJ6Quz908093_30-30_7-5.jpg">
+                    <a class="nav-item-name" href="javascript:" title="王茜">王茜</a><span class="imjs-msg-new-count"></span><br />
+                    <a href="javascript:" class="nav-item-desc" title="18岁，160cm，北京">18岁，160cm，北京</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-item-detail">
+                        <a href="http://love.ganji.com/209634157.htm" target="_blank" title="http://love.ganji.com/209634157.htm">
+                            详情</a></div>
+                    <img class="nav-item-pic" src="http://image.ganjistatic1.com/gjfs06/M07/A3/A0/wKhzVVNbbuPPeQqUAAAJ6Quz908093_30-30_7-5.jpg">
+                    <a class="nav-item-name" href="javascript:" title="王茜">王茜</a><span class="imjs-msg-new-count"></span><br />
+                    <a href="javascript:" class="nav-item-desc" title="18岁，160cm，北京">18岁，160cm，北京</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-item-detail">
+                        <a href="http://love.ganji.com/209634157.htm" target="_blank" title="http://love.ganji.com/209634157.htm">
+                            详情</a></div>
+                    <img class="nav-item-pic" src="http://image.ganjistatic1.com/gjfs06/M07/A3/A0/wKhzVVNbbuPPeQqUAAAJ6Quz908093_30-30_7-5.jpg">
+                    <a class="nav-item-name" href="javascript:" title="王茜">王茜</a><span class="imjs-msg-new-count"></span><br />
+                    <a href="javascript:" class="nav-item-desc" title="18岁，160cm，北京">18岁，160cm，北京</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-item-detail">
+                        <a href="http://love.ganji.com/209634157.htm" target="_blank" title="http://love.ganji.com/209634157.htm">
+                            详情</a></div>
+                    <img class="nav-item-pic" src="http://image.ganjistatic1.com/gjfs06/M07/A3/A0/wKhzVVNbbuPPeQqUAAAJ6Quz908093_30-30_7-5.jpg">
+                    <a class="nav-item-name" href="javascript:" title="王茜">王茜</a><span class="imjs-msg-new-count"></span><br />
+                    <a href="javascript:" class="nav-item-desc" title="18岁，160cm，北京">18岁，160cm，北京</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-item-detail">
+                        <a href="http://love.ganji.com/209634157.htm" target="_blank" title="http://love.ganji.com/209634157.htm">
+                            详情</a></div>
+                    <img class="nav-item-pic" src="http://image.ganjistatic1.com/gjfs06/M07/A3/A0/wKhzVVNbbuPPeQqUAAAJ6Quz908093_30-30_7-5.jpg">
+                    <a class="nav-item-name" href="javascript:" title="王茜">王茜</a><span class="imjs-msg-new-count"></span><br />
+                    <a href="javascript:" class="nav-item-desc" title="18岁，160cm，北京">18岁，160cm，北京</a>
+                </div>
+            </div>
+            <div class="lianxiren" onclick="showChartBox()">
+                <span>联系人[ <span class="fc-green">0</span> / <em>0</em> ]</span>
+            </div>
+        </div>
+</body>
+</html>
