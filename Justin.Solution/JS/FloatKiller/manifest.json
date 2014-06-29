@@ -7,7 +7,7 @@
       "16": "kill_16.png"
    },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js","removeFloatObjFun.js"]
   },
   "permissions": [
     "tabs", "http://*/*", "https://*/*"

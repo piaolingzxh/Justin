@@ -15,5 +15,61 @@ namespace Justin.FormTest
         {
             InitializeComponent();
         }
+        private static object syncObject = new Object();
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (checkBox1.Checked)
+                {
+                    Test();
+                }
+                else
+                {
+                    Test1();
+                }
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText(ex.ToString() + Environment.NewLine);
+            }
+        }
+
+        public void Test()
+        {
+            try
+            {
+                lock (syncObject)
+                {
+                    int x = 10;
+                    int y = 0;
+                    int z = x / y;
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+        public void Test1()
+        {
+            lock (syncObject)
+            {
+                try
+                {
+
+                    int x = 10;
+                    int y = 0;
+                    int z = x / y;
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+        }
     }
 }
