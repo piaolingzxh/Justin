@@ -170,6 +170,7 @@
     <Content Include="Justin.Workspace.rct" />
     <Content Include="ico\tool-pro.ico" />
     <Content Include="ico\tool.ico" />
+    <Content Include="readme.txt" />
     <None Include="Justin.Toolbox.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

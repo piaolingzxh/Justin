@@ -27,7 +27,7 @@ namespace Justin.Controls.Executer
                 using (StreamReader sr = new StreamReader(txtSQLFileName.Text, Encoding.Default))
                 {
                     string sql = sr.ReadToEnd();
-                    if (string.IsNullOrEmpty(sql))
+                    if (!string.IsNullOrEmpty(sql))
                     {
                         txtSQLPreview.Text = sql;
                         //设定光标所在位置 
