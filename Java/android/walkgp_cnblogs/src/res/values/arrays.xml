@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<!-- 浏览模式 -->
+    <string-array name="array_config_read_mode_entries">
+        <item>@string/config_pic_mode</item>
+        <item>@string/config_text_mode</item>
+    </string-array>
+    <string-array name="array_config_read_mode_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    
+    <string-array name="font_size">
+        <item>SMALLEST</item>
+        <item>SMALLER</item>
+        <item>NORMAL</item>
+        <item>LARGER</item>
+        <item>LARGEST</item>
+    </string-array>
+</resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+	android:background="@color/black"
+	android:layout_height="fill_parent"
+    >
+    <LinearLayout
+    	android:orientation="vertical"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent">
+    	<FrameLayout 
+    		android:id="@android:id/tabcontent"
+    		android:layout_width="fill_parent"
+    		android:layout_height="0.0dip"
+    		android:layout_weight="1.0"/>
+    	<TabWidget 
+    		android:id="@android:id/tabs"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="0.0"
+    		android:visibility="gone"/>
+    	<RadioGroup
+    		android:id="@+id/main_tab"
+    		android:background="@drawable/maintab_toolbar_bg"
+    		android:orientation="horizontal"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:gravity="center_vertical"
+    		android:layout_gravity="bottom">
+    		<RadioButton
+                android:id="@+id/TabBlog"
+                style="@style/main_tab_bottom"
+                android:layout_marginTop="2.0dip"
+                android:drawableTop="@drawable/icon_1_n"
+                android:freezesText="true"
+                android:tag="Blogs"
+                android:text="@string/main_home" />
+
+    		<RadioButton
+    		    android:id="@+id/TabNews"
+    		    style="@style/main_tab_bottom"
+    		    android:layout_marginTop="2.0dip"
+    		    android:drawableTop="@drawable/icon_7_n"
+    		    android:tag="News"
+    		    android:text="@string/main_news" />
+
+    		<RadioButton
+    		    android:id="@+id/TabSearch"
+    		    style="@style/main_tab_bottom"
+    		    android:layout_marginTop="2.0dip"
+    		    android:drawableTop="@drawable/icon_4_n"
+    		    android:tag="Search"
+    		    android:text="@string/main_search" />
+
+    		<RadioButton
+    		    android:id="@+id/TabRss"
+    		    style="@style/main_tab_bottom"
+    		    android:layout_marginTop="2.0dip"
+    		    android:drawableTop="@drawable/icon_8_n"
+    		    android:tag="RSS"
+    		    android:text="@string/main_rss" />
+
+    		<RadioButton
+    		    android:id="@+id/TabMore"
+    		    style="@style/main_tab_bottom"
+    		    android:layout_marginTop="2.0dip"
+    		    android:drawableTop="@drawable/icon_5_n"
+    		    android:tag="More"
+    		    android:text="@string/main_more" />
+
+    	</RadioGroup>
+    </LinearLayout>
+</TabHost>
+	
