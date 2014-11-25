@@ -1,8 +1,7 @@
 package com.cnblogs.android;
-
+import com.cnblogs.android.utility.PreferencesHelper;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.Intent; 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -16,21 +15,13 @@ import android.webkit.WebSettings.TextSize;
  * 
  */
 public class BaseActivity extends Activity {
-
-	SharedPreferences settings;
-	TextSize textSize =TextSize.SMALLEST;
+ 
+	TextSize textSize = TextSize.SMALLEST;
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		settings = getSharedPreferences(getString(R.string.preferences_key), 0);
-
-		String fontSize = settings.getString(
-				SettingActivity.CONFIG_FONT_SIZE_OPTION_KEY, "SMALLEST");
-		textSize = Enum.valueOf(TextSize.class, fontSize.toString());
-		
-		if (!SettingActivity.getIsAutoHorizontal(this))
+		if (!PreferencesHelper.getIsAutoHorizontal())
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		else
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
@@ -43,6 +34,7 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		textSize = PreferencesHelper.getStoredTextSize();
 	}
 
 	/**
