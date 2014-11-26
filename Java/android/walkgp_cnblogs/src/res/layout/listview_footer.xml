@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:padding="10dip" >
-
-	<ProgressBar android:id="@+id/list_footer_progress"
-		android:indeterminate="true" android:layout_width="wrap_content"
+	android:id="@+id/list_footer"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:padding="10dip" >
+	<ProgressBar
+		android:id="@+id/list_footer_progress"
+		style="?android:attr/progressBarStyleSmall"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginRight="10dip"
-		android:visibility="gone" android:layout_centerVertical="true"
-		style="?android:attr/progressBarStyleSmall" >
+		android:layout_marginRight="10dp"
+		android:indeterminate="true" >
 	</ProgressBar>
-
 	<TextView
-	    android:id="@+id/tvFooterMore"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	    android:text="@string/pull_to_refresh_more_label"
-	    android:textColor="@color/black" >
-
+		android:id="@+id/tvFooterMore"
+		android:layout_width="85dp"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="0dp"
+		android:gravity="left"
+		android:text="@string/pull_to_refresh_more_label"
+		android:textColor="@color/black" >
 	</TextView>
-</LinearLayout> 
+</LinearLayout>

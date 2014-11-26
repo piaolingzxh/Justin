@@ -51,20 +51,20 @@ import com.cnblogs.android.dal.BlogDalHelper;
  */
 public class BlogActivity extends BaseMainActivity {
 
-	int pageIndex = 1;// 页码
+	int currentPageIndex = 1;// 页码
 
 	ListView listView;
 	private BlogListAdapter adapter;// 数据源
 	List<Blog> listBlog = new ArrayList<Blog>();
-
 	ProgressBar blogBody_progressBar;// 主题ListView加载框
+
 	ImageButton blog_refresh_btn;// 刷新按钮
 	ProgressBar blog_progress_bar;// 加载按钮
 
 	private LinearLayout viewFooter;// footer view
-	TextView tvFooterMore;// 底部更多显示
-	ProgressBar list_footer_progress;// 底部进度条
-
+	/*
+	 * TextView tvFooterMore;// 底部更多显示 ProgressBar list_footer_progress;// 底部进度条
+	 */
 	Resources res;// 资源
 	private int lastItem;
 	BlogDalHelper dbHelper;
@@ -127,7 +127,7 @@ public class BlogActivity extends BaseMainActivity {
 		listView = (ListView) findViewById(R.id.blog_list);
 		blogBody_progressBar = (ProgressBar) findViewById(R.id.blogList_progressBar);
 		blogBody_progressBar.setVisibility(View.VISIBLE);
-
+		// 顶部工具啦
 		blog_refresh_btn = (ImageButton) findViewById(R.id.blog_refresh_btn);
 		blog_progress_bar = (ProgressBar) findViewById(R.id.blog_progressBar);
 		// 底部view
@@ -144,7 +144,7 @@ public class BlogActivity extends BaseMainActivity {
 		// 刷新
 		blog_refresh_btn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				new PageTask(1).execute();
+				new PageTask(-2).execute();
 			}
 		});
 		// 上拉刷新
@@ -162,10 +162,9 @@ public class BlogActivity extends BaseMainActivity {
 			 */
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if (lastItem >= adapter.getCount() - 1
+				if (lastItem >= adapter.getCount()
 						&& scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
-					pageIndex = pageIndex + 1;
-					new PageTask(pageIndex).execute();
+					new PageTask(currentPageIndex + 1).execute();
 				}
 			}
 
@@ -376,6 +375,9 @@ public class BlogActivity extends BaseMainActivity {
 			if (requestPageIndex <= 0) {
 				requestPageIndex = 1;
 			}
+			if (curPageIndex == -2) {
+				requestPageIndex = currentPageIndex;
+			}
 
 			// 优先读取本地数据
 			List<Blog> listBlogLocal = dbHelper.GetBlogListByPage(
@@ -398,6 +400,8 @@ public class BlogActivity extends BaseMainActivity {
 			}
 
 			switch (curPageIndex) {
+			case -2:// 刷新当前请求页数据 将新增数据添加列表尾端
+				return additionalBlogs;
 			case -1:// 下拉刷新 将新增数据插入列表
 				return additionalBlogs;
 			case 0:// 首次加载 列表Clear后，将返回数据填充列表
@@ -408,9 +412,6 @@ public class BlogActivity extends BaseMainActivity {
 					isDataFromLocal = true;
 					return listBlogLocal;
 				}
-
-			case 1:// 刷新当前请求页数据 将新增数据添加列表尾端
-				return additionalBlogs;
 
 			default:// 加载更多数据 将新增数据添加列表尾端 当前页加1
 				return additionalBlogs;
@@ -425,7 +426,9 @@ public class BlogActivity extends BaseMainActivity {
 		/**
 		 * 加载内容
 		 */
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
 		 */
 		@Override
@@ -438,24 +441,17 @@ public class BlogActivity extends BaseMainActivity {
 			blogBody_progressBar.setVisibility(View.GONE);
 			blog_progress_bar.setVisibility(View.GONE);
 			blog_refresh_btn.setVisibility(View.VISIBLE);
-			boolean isConnecting = NetHelper
-					.networkIsAvailable(getApplicationContext());
-			// 网络不可用并且本地没有保存数据
+
 			if (result == null || result.size() == 0) {// 没有新数据
 				((PullToRefreshListView) listView).onRefreshComplete();
-				String tips = "";
-				if (!isConnecting) {
-					tips = "本地无数据,如需加载请联网";
-					// listView.removeFooterView(viewFooter);
-				} else {
 
-					if (curPageIndex > 1) {
-						tips = "已经没有更多数据了。";
-					} else if (curPageIndex == -1) {
-						tips = "最近无更新。";
-					}
-				} 
-				if (tips != "")
+				String tips = "";
+				if (curPageIndex > 1) {
+					tips = "已经没有更多数据了。";
+				} else if (curPageIndex == -1) {
+					tips = "最近无更新。";
+				}
+				if (tips.length() != 0)
 					Toast.makeText(getApplicationContext(), tips,
 							Toast.LENGTH_SHORT).show();
 				return;
@@ -479,28 +475,25 @@ public class BlogActivity extends BaseMainActivity {
 
 			boolean refresh = true;
 			switch (curPageIndex) {
+			case -2:// 刷新当前页
+				adapter.AddMoreData(result);
+				refresh = false;
+				break;
 			case -1:// 加载最新的
 				adapter.InsertData(result);
 				break;
 			case 0:// 首次加载
 				adapter.GetData().clear();
 				adapter.AddMoreData(result);
-
-				((PullToRefreshListView) listView).SetDataRow(adapter.GetData()
-						.size());
-
-				break;
-			case 1:// 刷新当前页
-				adapter.AddMoreData(result);
-				((PullToRefreshListView) listView).SetDataRow(adapter.GetData()
-						.size());
 				break;
 			default:// 加载下一页
 				adapter.AddMoreData(result);
+				currentPageIndex = currentPageIndex + 1;
 				refresh = false;
 				break;
 			}
-
+			((PullToRefreshListView) listView).SetDataRow(adapter.GetData()
+					.size());
 			if (refresh)
 				((PullToRefreshListView) listView).onRefreshComplete();
 		}
@@ -515,7 +508,9 @@ public class BlogActivity extends BaseMainActivity {
 			blog_progress_bar.setVisibility(View.VISIBLE);
 			blog_refresh_btn.setVisibility(View.GONE);
 
-			// if (curPageIndex > 1) {// 底部控件，刷新时不做处理
+			/*	View frooter=findViewById(R.id.list_footer);*/
+
+			/* if (curPageIndex > 1) {// 底部控件，刷新时不做处理
 			TextView tvFooterMore = (TextView) findViewById(R.id.tvFooterMore);
 			if (null != tvFooterMore) {
 				tvFooterMore.setText(R.string.pull_to_refresh_refreshing_label);
@@ -525,7 +520,7 @@ public class BlogActivity extends BaseMainActivity {
 			if (null != list_footer_progress) {
 				list_footer_progress.setVisibility(View.VISIBLE);
 			}
-			// }
+			 }*/
 		}
 
 		@Override
