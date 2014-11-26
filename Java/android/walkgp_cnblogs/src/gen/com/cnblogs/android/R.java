@@ -63,6 +63,7 @@ containing a value of this type.
         public static final int spots=0x7f010003;
     }
     public static final class color {
+        public static final int Red=0x7f070012;
         public static final int audio_bg_color=0x7f07000b;
         public static final int bg_click_color=0x7f07000e;
         public static final int bg_color=0x7f07000d;
@@ -187,7 +188,7 @@ containing a value of this type.
         public static final int author_blog_button_back=0x7f0c0006;
         public static final int author_blog_count=0x7f0c000e;
         public static final int author_blog_list=0x7f0c000f;
-        public static final int author_blog_offline=0x7f0c00a6;
+        public static final int author_blog_offline=0x7f0c00a4;
         public static final int author_blog_progressBar=0x7f0c0008;
         public static final int author_blog_refresh_btn=0x7f0c0009;
         public static final int author_image_icon=0x7f0c000a;
@@ -210,7 +211,7 @@ containing a value of this type.
         public static final int blog_list=0x7f0c0025;
         public static final int blog_progressBar=0x7f0c0023;
         public static final int blog_refresh_btn=0x7f0c0024;
-        public static final int bookWebview=0x7f0c00a4;
+        public static final int bookWebview=0x7f0c00a2;
         public static final int btnItem=0x7f0c008d;
         public static final int btn_add=0x7f0c007a;
         public static final int btn_back=0x7f0c0021;
@@ -228,7 +229,6 @@ containing a value of this type.
         public static final int comment_list=0x7f0c0030;
         public static final int comment_user_name=0x7f0c0033;
         public static final int comment_user_url=0x7f0c0034;
-        public static final int editText1=0x7f0c00a0;
         public static final int etUrl=0x7f0c003a;
         public static final int frameLayout=0x7f0c007c;
         public static final int icon_downloaded=0x7f0c002d;
@@ -241,25 +241,25 @@ containing a value of this type.
         public static final int list_footer_progress=0x7f0c0041;
         public static final int list_image_arrow=0x7f0c0011;
         public static final int main_tab=0x7f0c0043;
-        public static final int menu_blog_add_fav=0x7f0c00a8;
-        public static final int menu_blog_author=0x7f0c00aa;
-        public static final int menu_blog_back=0x7f0c00a7;
-        public static final int menu_blog_browser=0x7f0c00ab;
-        public static final int menu_blog_comment=0x7f0c00a9;
-        public static final int menu_blog_share=0x7f0c00ac;
-        public static final int menu_blog_view=0x7f0c00ad;
-        public static final int menu_main_about=0x7f0c00b1;
-        public static final int menu_main_config=0x7f0c00b0;
-        public static final int menu_main_fav=0x7f0c00af;
-        public static final int menu_main_offline=0x7f0c00ae;
-        public static final int menu_news_back=0x7f0c00b4;
-        public static final int menu_news_browser=0x7f0c00b8;
-        public static final int menu_news_comment=0x7f0c00b7;
-        public static final int menu_news_fontsize=0x7f0c00b5;
-        public static final int menu_news_refresh=0x7f0c00b6;
-        public static final int menu_news_share=0x7f0c00b9;
-        public static final int menu_unfav=0x7f0c00b2;
-        public static final int menu_unrss=0x7f0c00b3;
+        public static final int menu_blog_add_fav=0x7f0c00a6;
+        public static final int menu_blog_author=0x7f0c00a8;
+        public static final int menu_blog_back=0x7f0c00a5;
+        public static final int menu_blog_browser=0x7f0c00a9;
+        public static final int menu_blog_comment=0x7f0c00a7;
+        public static final int menu_blog_share=0x7f0c00aa;
+        public static final int menu_blog_view=0x7f0c00ab;
+        public static final int menu_main_about=0x7f0c00af;
+        public static final int menu_main_config=0x7f0c00ae;
+        public static final int menu_main_fav=0x7f0c00ad;
+        public static final int menu_main_offline=0x7f0c00ac;
+        public static final int menu_news_back=0x7f0c00b2;
+        public static final int menu_news_browser=0x7f0c00b6;
+        public static final int menu_news_comment=0x7f0c00b5;
+        public static final int menu_news_fontsize=0x7f0c00b3;
+        public static final int menu_news_refresh=0x7f0c00b4;
+        public static final int menu_news_share=0x7f0c00b7;
+        public static final int menu_unfav=0x7f0c00b0;
+        public static final int menu_unrss=0x7f0c00b1;
         public static final int more_tools_desc=0x7f0c004d;
         public static final int more_tools_icon=0x7f0c004b;
         public static final int more_tools_list=0x7f0c004a;
@@ -290,7 +290,6 @@ containing a value of this type.
         public static final int notify_download_done=0x7f0c006a;
         public static final int notify_text_title=0x7f0c006c;
         public static final int order_list=0x7f0c006f;
-        public static final int progressBar1=0x7f0c009f;
         public static final int progressBlock=0x7f0c006b;
         public static final int pull_to_refresh_header=0x7f0c0071;
         public static final int pull_to_refresh_image=0x7f0c0073;
@@ -356,11 +355,11 @@ containing a value of this type.
         public static final int txtAuthor=0x7f0c0007;
         public static final int txtNoData=0x7f0c0053;
         public static final int txtSearch=0x7f0c008f;
-        public static final int txtWebTitle=0x7f0c00a2;
+        public static final int txtWebTitle=0x7f0c00a0;
         public static final int user_list_image_arrow=0x7f0c0092;
-        public static final int web_button_back=0x7f0c00a1;
-        public static final int web_progressBar=0x7f0c00a5;
-        public static final int web_refresh_btn=0x7f0c00a3;
+        public static final int web_button_back=0x7f0c009f;
+        public static final int web_progressBar=0x7f0c00a3;
+        public static final int web_refresh_btn=0x7f0c00a1;
     }
     public static final class layout {
         public static final int about_layout=0x7f030000;
@@ -403,8 +402,7 @@ containing a value of this type.
         public static final int search_list_item=0x7f030025;
         public static final int splash=0x7f030026;
         public static final int top_header=0x7f030027;
-        public static final int tt=0x7f030028;
-        public static final int web_layout=0x7f030029;
+        public static final int web_layout=0x7f030028;
     }
     public static final class menu {
         public static final int author_blog_menu=0x7f0b0000;

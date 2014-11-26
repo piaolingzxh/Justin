@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,9 +63,7 @@ public class BlogActivity extends BaseMainActivity {
 	ProgressBar blog_progress_bar;// 加载按钮
 
 	private LinearLayout viewFooter;// footer view
-	/*
-	 * TextView tvFooterMore;// 底部更多显示 ProgressBar list_footer_progress;// 底部进度条
-	 */
+
 	Resources res;// 资源
 	private int lastItem;
 	BlogDalHelper dbHelper;
@@ -314,7 +313,7 @@ public class BlogActivity extends BaseMainActivity {
 	 * 
 	 */
 	public class UpdateListViewReceiver extends BroadcastReceiver {
-		@SuppressLint("ResourceAsColor")
+	 
 		@Override
 		public void onReceive(Context content, Intent intent) {
 
@@ -336,7 +335,7 @@ public class BlogActivity extends BaseMainActivity {
 					for (int j = 0, size = blogIdArr.length; j < size; j++) {
 						if (blogId == blogIdArr[j]) {
 							icoDown.setVisibility(View.VISIBLE);// 已经离线
-							tvTitle.setTextColor(R.color.gray);// 已读
+							tvTitle.setTextColor(Color.BLUE);// 已读
 						}
 					}
 
@@ -434,9 +433,9 @@ public class BlogActivity extends BaseMainActivity {
 		@Override
 		protected void onPostExecute(List<Blog> result) {
 
-			Toast.makeText(getApplicationContext(),
-					"加载第" + String.valueOf(requestPageIndex) + "页",
-					Toast.LENGTH_SHORT).show();
+			/*	Toast.makeText(getApplicationContext(),
+						"加载第" + String.valueOf(requestPageIndex) + "页",
+						Toast.LENGTH_SHORT).show();*/
 			// 右上角
 			blogBody_progressBar.setVisibility(View.GONE);
 			blog_progress_bar.setVisibility(View.GONE);
@@ -444,12 +443,15 @@ public class BlogActivity extends BaseMainActivity {
 
 			if (result == null || result.size() == 0) {// 没有新数据
 				((PullToRefreshListView) listView).onRefreshComplete();
-
+				boolean isNetworkAvailable = NetHelper
+						.networkIsAvailable(getApplicationContext());
 				String tips = "";
 				if (curPageIndex > 1) {
 					tips = "已经没有更多数据了。";
 				} else if (curPageIndex == -1) {
 					tips = "最近无更新。";
+				} else if (curPageIndex == 0) {
+					tips = isNetworkAvailable ? "本地无缓存。" : "请检查网络";
 				}
 				if (tips.length() != 0)
 					Toast.makeText(getApplicationContext(), tips,
@@ -508,19 +510,6 @@ public class BlogActivity extends BaseMainActivity {
 			blog_progress_bar.setVisibility(View.VISIBLE);
 			blog_refresh_btn.setVisibility(View.GONE);
 
-			/*	View frooter=findViewById(R.id.list_footer);*/
-
-			/* if (curPageIndex > 1) {// 底部控件，刷新时不做处理
-			TextView tvFooterMore = (TextView) findViewById(R.id.tvFooterMore);
-			if (null != tvFooterMore) {
-				tvFooterMore.setText(R.string.pull_to_refresh_refreshing_label);
-				tvFooterMore.setVisibility(View.VISIBLE);
-			}
-			ProgressBar list_footer_progress = (ProgressBar) findViewById(R.id.list_footer_progress);
-			if (null != list_footer_progress) {
-				list_footer_progress.setVisibility(View.VISIBLE);
-			}
-			 }*/
 		}
 
 		@Override
