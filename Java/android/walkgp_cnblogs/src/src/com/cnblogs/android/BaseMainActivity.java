@@ -43,7 +43,6 @@ public class BaseMainActivity extends BaseActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && IsShowQuitHints) {//ºóÍË
 			AppUtil.QuitHintDialog(this);
-
 			return true;
 		}else if(keyCode==KeyEvent.KEYCODE_SEARCH){//ËÑË÷
 			Intent intent = new Intent(BaseMainActivity.this,SearchActivity.class);

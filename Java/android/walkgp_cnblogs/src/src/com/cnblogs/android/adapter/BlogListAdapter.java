@@ -38,12 +38,12 @@ public class BlogListAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder viewHolder = null;
+		BlogViewHolder viewHolder = null;
 		Blog entity = list.get(position);
 		if (convertView != null && convertView.getId() == R.id.blog_list) {
-			viewHolder = (ViewHolder) convertView.getTag();
+			viewHolder = (BlogViewHolder) convertView.getTag();
 		} else {
-			viewHolder = new ViewHolder();
+			viewHolder = new BlogViewHolder();
 			convertView = mInflater.inflate(R.layout.blog_list_item, null);
 
 			viewHolder.text_title = (TextView) convertView
@@ -73,6 +73,7 @@ public class BlogListAdapter extends BaseAdapter {
 			viewHolder.text_user_name=(TextView)convertView.findViewById(R.id.recommend_user_name);
 			viewHolder.icon_downloaded=(ImageView)convertView.findViewById(R.id.icon_downloaded);
 		}
+		viewHolder.blog=entity;
 		if(entity.GetAvator()!=null){
 			String tag = entity.GetAvator();
 			if (tag.contains("?")) {// ½Ø¶Ï?ºóµÄ×Ö·û´®£¬±ÜÃâÎÞÐ§Í¼Æ¬
@@ -190,7 +191,7 @@ public class BlogListAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-	public class ViewHolder {
+	public class BlogViewHolder {
 		TextView text_title;
 		TextView text_desc;
 		ImageView imageIcon;
@@ -205,5 +206,6 @@ public class BlogListAdapter extends BaseAdapter {
 		TextView text_blog_id;
 		TextView text_user_name;
 		ImageView icon_downloaded;
+		public Blog blog;
 	}
 }

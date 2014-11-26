@@ -1,14 +1,9 @@
 package com.cnblogs.android;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-
 import com.cnblogs.android.utility.PreferencesHelper;
-
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.CompoundButton;
@@ -28,19 +23,14 @@ public class MainActivity extends TabActivity implements
 
 	private TabHost tabHost;
 	Hashtable<String, RadioButton> radios = new Hashtable<String, RadioButton>();
-	/*
-	 * private Intent intentBlog;// Blog private Intent intentNews;// News
-	 * private Intent intentSearch;// search private Intent intentRss;// RSS
-	 * private Intent intentMore;// More
-	 */
+
 	private RadioButton rbBlog;
 	private RadioButton rbNews;
 	private RadioButton rbRss;
 	private RadioButton rbSearch;
 	private RadioButton rbMore;
 
-	public String whichTab = "";// 当前选中Tab
-
+	/* public String whichTab = ""; */
 	Resources res;// 资源
 
 	@Override
@@ -50,7 +40,7 @@ public class MainActivity extends TabActivity implements
 		res = this.getResources();
 		InitialRadios();
 		InitialTab();
-		InitialSelectedTab();		 
+		InitialSelectedTab();
 	}
 
 	/**
@@ -107,13 +97,13 @@ public class MainActivity extends TabActivity implements
 	 */
 	private void InitialSelectedTab() {
 
-		whichTab = PreferencesHelper.getStroedTabName(rbBlog.getTag()
+		String selectTab = PreferencesHelper.getStroedTabName(rbBlog.getTag()
 				.toString());
-		if (!radios.containsKey(whichTab)) {
-			whichTab = rbBlog.getTag().toString();
+		if (!radios.containsKey(selectTab)) {
+			selectTab = rbBlog.getTag().toString();
 		}
 
-		radios.get(whichTab).setChecked(true);
+		radios.get(selectTab).setChecked(true);
 	}
 
 	private TabHost.TabSpec buildTabSpec(String tag, int resLabel, int resIcon,
@@ -131,14 +121,12 @@ public class MainActivity extends TabActivity implements
 		}
 		RadioButton checkedButton = (RadioButton) findViewById(buttonView
 				.getId());
-		whichTab=checkedButton.getTag().toString();
-		tabHost.setCurrentTabByTag(whichTab);
-
+		tabHost.setCurrentTabByTag(checkedButton.getTag().toString());
 	}
 
 	// 存储关闭时的tab
 	protected void onDestroy() {
-		PreferencesHelper.setStoredTabName(whichTab);
+		PreferencesHelper.setStoredTabName(tabHost.getCurrentTabTag());
 		super.onDestroy();
 	}
 
