@@ -1,0 +1,198 @@
+<string>
+<p><span style="font-size: 13px;">　　 卷积其实是图像处理中最基本的操作，我们常见的一些算法比如：均值模糊、高斯模糊、锐化、Sobel、拉普拉斯、prewitt边缘检测等等一些和领域相关的算法，都可以通过卷积算法实现。只不过由于这些算法的卷积矩阵的特殊性，一般不会直接实现它，而是通过一些优化的手段让计算量变小。但是有些情况下卷积矩阵的元素值无甚规律或者有特殊要求，无法通过常规手段优化，这个时候只能通过原始的方式实现。因此，如何快速的实现图像的任意卷积矩阵操作也有必要做适当的研究。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; 目前，通过友人共享或自己搜索找到的一片关于任意核算法优化的文章有：&nbsp;Reshufﬂing: A Fast Algorithm for Filtering&nbsp;with Arbitrary Kernels，改文章称能够提高原始程序速度的40%左右，但是原始的程序是如何写的也还不明白。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; 在matlab中有几个函数都与图像卷积有关，比如imfilter就可以实现卷积，或者 conv2也行，他们的速度都是相当快的，比如3000*3000的灰度图，卷积矩阵大小为15*15，在I5的CPU上运行时间只要170ms左右，相当的给力。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; 在Celery的博客中，也提到了他的优化后的conv2和matlab相当甚至快于matlab，详见<a href="http://blog.csdn.net/celerychen2009/article/details/38852105" target="_blank">http://blog.csdn.net/celerychen2009/article/details/38852105</a>。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; 由于matlab的代码中使用到了IPL库进行加速，目前我写的Conv2函数还无法做到和其相当，对于任何核速度约为matlab的一半。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; 简单的记录下我在做卷积过程中用到的优化吧。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; 原始的卷积的实现需要四重循环，简单的表达如下：</span></p>
+ <div class="cnblogs_code">
+ <pre><span style="font-size: 13px;"><span style="color: #0000ff;">for</span> (Y = <span style="color: #800080;">0</span>; Y &lt; Height; Y++<span style="color: #000000;">)
+ {
+ </span><span style="color: #0000ff;">for</span> (X = <span style="color: #800080;">0</span>; X &lt; Width; X++<span style="color: #000000;">)
+ {
+ Index </span>=<span style="color: #000000;"> .....;
+ Sum </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+ </span><span style="color: #0000ff;">for</span> (XX = <span style="color: #800080;">0</span>; XX &lt; ConvW; XX++<span style="color: #000000;">)
+ {
+ </span><span style="color: #0000ff;">for</span> (YY = <span style="color: #800080;">0</span>; YY &lt; ConvH; YY++<span style="color: #000000;">)
+ {
+ Index1 </span>=<span style="color: #000000;"> ..... ;
+ Index2 </span>=<span style="color: #000000;"> ..... ;
+ Sum </span>+= Conv[Index1] *<span style="color: #000000;"> Pixel[Index2];
+ }
+ }
+ Dest[Index] </span>= Sum /<span style="color: #000000;"> Weight;
+ }
+ }</span></span></pre>
+ </div>
+ <p><span style="font-size: 13px;">　　当卷积矩阵较大时，计算量将会很大，而且由于程序中的内存访问很频繁，cache miss现象比较严重，因此效率极为低下。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;我的优化方法主要包括以下几个方面：&nbsp;</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;一：使用SSE进行乘法计算，由于SSE可以一次性进行4个单精度浮点数的计算，因此可以有明显的速度提升。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;二：通过适当的处理方式，对每个取样点周边的卷积矩阵内的元素进行集中，使得每移动一个像素点不会需要从内存中进行大量的搜索工作。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;具体来说实现过程如下：</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1、为了使用SSE的优势，首先将卷积矩阵进行调整，调整卷积矩阵一行的元素个数，使其为不小于原始值的4的整数倍，并且让新的卷积矩阵的内存布局符合SSE相关函数的16字节对齐的要求。</span></p>
+ <p><span style="font-size: 13px;">　　实现代码如下：</span></p>
+ <div class="cnblogs_code">
+ <pre><span style="font-size: 13px;"><span style="color: #0000ff;">float</span> *Conv16 = (<span style="color: #0000ff;">float</span> *)_mm_malloc(PadConvLine * ConvH * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>), <span style="color: #800080;">16</span>); <span style="color: #008000;">//</span><span style="color: #008000;"> 保存16字节对齐的卷积矩阵，以方便使用SSE</span>
+ 
+ <span style="color: #0000ff;">for</span>(Y = <span style="color: #800080;">0</span>; Y &lt; ConvH; Y++<span style="color: #000000;">) 
+ {
+ memcpy (Conv16 </span>+ Y * PadConvLine, Conv-&gt;Data.F + Y * ConvW , ConvW * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>)); <span style="color: #008000;">//</span><span style="color: #008000;"> 复制卷积矩阵的数据</span>
+ memset(Conv16 + Y * PadConvLine + ConvW, <span style="color: #800080;">0</span>, (PadConvLine - ConvW) * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>)); <span style="color: #008000;">//</span><span style="color: #008000;"> 把冗余部分的卷积数据设置为0</span>
+ }</span></pre>
+ </div>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; 其中PadConvLine = Pad4(ConvW) 以及Pad4的原型为：&nbsp;#define Pad4(bits) (((bits) + 3) / 4 * 4)；</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp;</span><span style="font-size: 13px;"> 注意_mm_malloc函数分配的内存中的值是随机值，对于扩展的部分一定要填充0，否则就会破坏卷积的结果。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; 那么如果我们也同时获得了需要被卷积的部分数据的话（卷积核肯定和卷积矩阵一样大小，且也应该是16字节对齐的），可以用如下的SSE的代码进行乘法计算：</span></p>
+ <div class="cnblogs_code">
+ <pre><span style="color: #0000ff;">float</span> MultiplySSE(<span style="color: #0000ff;">float</span> *Kernel, <span style="color: #0000ff;">float</span> *Conv, <span style="color: #0000ff;">int</span><span style="color: #000000;"> Length)
+ {
+ </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> Block; 
+ </span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">float</span> *Data; <span style="color: #008000;">//</span><span style="color: #008000;"> 将SSE变量上的多个数值合并时所用指针.</span>
+ <span style="color: #0000ff;">float</span> Sum = <span style="color: #800080;">0</span><span style="color: #000000;">;
+ </span><span style="color: #0000ff;">if</span> (Length &gt; <span style="color: #800080;">16</span>) <span style="color: #008000;">//</span><span style="color: #008000;"> 可以进行四次SSE计算，测试表明，这个还是快些的 </span>
+ <span style="color: #000000;"> {
+ </span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> BlockWidth = <span style="color: #800080;">4</span> * <span style="color: #800080;">4</span>; <span style="color: #008000;">//</span><span style="color: #008000;"> 块宽. SSE寄存器能一次处理4个float，然后循环展开4次.</span>
+ Block = Length / BlockWidth; <span style="color: #008000;">//</span><span style="color: #008000;"> 块数. </span>
+ <span style="color: #0000ff;">float</span> *KernelP = Kernel, *ConvP = Conv; <span style="color: #008000;">//</span><span style="color: #008000;"> SSE批量处理时所用的指针.</span>
+ <span style="color: #000000;"> 
+ __m128 Sum0 </span>= _mm_setzero_ps(); <span style="color: #008000;">//</span><span style="color: #008000;"> 求和变量。SSE赋初值0</span>
+ __m128 Sum1 =<span style="color: #000000;"> _mm_setzero_ps();
+ __m128 Sum2 </span>=<span style="color: #000000;"> _mm_setzero_ps();
+ __m128 Sum3 </span>=<span style="color: #000000;"> _mm_setzero_ps();
+ 
+ </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> I = <span style="color: #800080;">0</span>; I &lt; Block; I++<span style="color: #000000;">)
+ {
+ Sum0 </span>= _mm_add_ps(Sum0, _mm_mul_ps(_mm_load_ps(KernelP), _mm_load_ps(ConvP))); <span style="color: #008000;">//</span><span style="color: #008000;"> SSE单精浮点紧缩加法</span>
+ Sum1 = _mm_add_ps(Sum1, _mm_mul_ps(_mm_load_ps(KernelP + <span style="color: #800080;">4</span>), _mm_load_ps(ConvP + <span style="color: #800080;">4</span><span style="color: #000000;">)));
+ Sum2 </span>= _mm_add_ps(Sum2, _mm_mul_ps(_mm_load_ps(KernelP + <span style="color: #800080;">8</span>), _mm_load_ps(ConvP + <span style="color: #800080;">8</span><span style="color: #000000;">)));
+ Sum3 </span>= _mm_add_ps(Sum3, _mm_mul_ps(_mm_load_ps(KernelP + <span style="color: #800080;">12</span>), _mm_load_ps(ConvP + <span style="color: #800080;">12</span><span style="color: #000000;">)));
+ KernelP </span>+=<span style="color: #000000;"> BlockWidth;
+ ConvP </span>+=<span style="color: #000000;"> BlockWidth;
+ }
+ 
+ Sum0 </span>= _mm_add_ps(Sum0, Sum1); <span style="color: #008000;">//</span><span style="color: #008000;"> 两两合并(0~1).</span>
+ Sum2 = _mm_add_ps(Sum2, Sum3); <span style="color: #008000;">//</span><span style="color: #008000;"> 两两合并(2~3).</span>
+ Sum0 = _mm_add_ps(Sum0, Sum2); <span style="color: #008000;">//</span><span style="color: #008000;"> 两两合并(0~2).</span>
+ <span style="color: #000000;">
+ Data </span>= (<span style="color: #0000ff;">const</span> <span style="color: #0000ff;">float</span> *)&amp;<span style="color: #000000;">Sum0;
+ Sum </span>= Data[<span style="color: #800080;">0</span>] + Data[<span style="color: #800080;">1</span>] + Data[<span style="color: #800080;">2</span>] + Data[<span style="color: #800080;">3</span><span style="color: #000000;">];
+ 
+ Length </span>= Length - Block * BlockWidth; <span style="color: #008000;">//</span><span style="color: #008000;"> 剩余数量.</span>
+ <span style="color: #000000;"> }
+ </span><span style="color: #0000ff;">if</span> (Length != <span style="color: #800080;">0</span><span style="color: #000000;">)
+ {
+ </span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> BlockWidth = <span style="color: #800080;">4</span>; <span style="color: #008000;">//</span><span style="color: #008000;"> 程序已经保证了数量必然是4的倍数 </span>
+ Block = Length /<span style="color: #000000;"> BlockWidth; 
+ </span><span style="color: #0000ff;">float</span> *KernelP = Kernel, *ConvP =<span style="color: #000000;"> Conv; 
+ __m128 Sum0 </span>=<span style="color: #000000;"> _mm_setzero_ps(); 
+ 
+ </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> I = <span style="color: #800080;">0</span>; I &lt; Block; I++<span style="color: #000000;">)
+ {
+ Sum0 </span>=<span style="color: #000000;"> _mm_add_ps(Sum0, _mm_mul_ps(_mm_load_ps(KernelP), _mm_load_ps(ConvP))); 
+ KernelP </span>+=<span style="color: #000000;"> BlockWidth;
+ ConvP </span>+=<span style="color: #000000;"> BlockWidth;
+ }
+ 
+ Data </span>= (<span style="color: #0000ff;">const</span> <span style="color: #0000ff;">float</span> *)&amp;<span style="color: #000000;">Sum0;
+ Sum </span>+= Data[<span style="color: #800080;">0</span>] + Data[<span style="color: #800080;">1</span>] + Data[<span style="color: #800080;">2</span>] + Data[<span style="color: #800080;">3</span><span style="color: #000000;">];
+ }
+ </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> Sum;
+ }</span></pre>
+ </div>
+ <p>　　<span style="font-size: 13px;">当卷积矩阵（扩充后）的元素数量大于16时，我们采用了4路并行的SSE乘法实现，我在I3的CPU上测试时，2路SSE和4路SSE已经没有啥大的区别了，而在I5的CPU上则4路还是有较为明显的提高，因此采用4路SSE同时运行。当然1路SSE肯定还是比2路慢。另外，如果元素的数量少于16或者大于16但不能被16整除，那么余下的部分由于先前的扩充，剩余元素数量也肯定是4的倍数，因此可以用单路的SSE实现。 这也是编码上的技巧。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;2、前面提到了需要被卷积的部分数据，这部分如何快速的获取呢。观察最原始的4重循环，其内部的2重即为获取需要被卷积的部分，但是这里其实有很多问题。第一：由于卷积取样时必然有部分取样点的坐标在原始图像的有效范围外，因此必须进行判断，耗时。第二：同样为了使用SSE,也必须把取样的数据放在和扩充的卷积矩阵一样大小的内存中。这里我先贴出我的代码在进行解释具体的实现：</span></p>
+ <div class="cnblogs_code">
+ <pre>IS_RET __stdcall Conv2(TImage *Src, TMatrix *Conv, TImage *<span style="color: #000000;">Dest, EdgeMode Edge)
+ {
+ </span><span style="color: #0000ff;">if</span> (Src == NULL || Dest == NULL || Conv == NULL) <span style="color: #0000ff;">return</span><span style="color: #000000;"> IS_RET_ERR_PARA;
+ </span><span style="color: #0000ff;">if</span> (Src-&gt;Width != Dest-&gt;Width || Src-&gt;Height != Dest-&gt;Height || Src-&gt;BitCount != Dest-&gt;BitCount || Src-&gt;Stride != Dest-&gt;Stride) <span style="color: #0000ff;">return</span><span style="color: #000000;"> IS_RET_ERR_PARA;
+ </span><span style="color: #0000ff;">if</span> (Src-&gt;Scan0 == NULL || Dest-&gt;Scan0 == NULL || Conv-&gt;Data.F == NULL) <span style="color: #0000ff;">return</span><span style="color: #000000;"> IS_RET_ERR_MEM;
+ </span><span style="color: #0000ff;">if</span> (Conv-&gt;Width &lt; <span style="color: #800080;">1</span> || Conv-&gt;Height &lt; <span style="color: #800080;">1</span>) <span style="color: #0000ff;">return</span><span style="color: #000000;"> IS_RET_ERR_PARA;
+ 
+ </span><span style="color: #0000ff;">int</span> Width = Src-&gt;Width, Height = Src-&gt;Height, Stride = Src-&gt;<span style="color: #000000;">Stride;
+ </span><span style="color: #0000ff;">int</span> ConvW = Conv-&gt;Width, ConvH = Conv-&gt;<span style="color: #000000;">Height;
+ unsigned </span><span style="color: #0000ff;">char</span> *PtSrc = Src-&gt;Scan0, *PtDest = Dest-&gt;<span style="color: #000000;">Scan0;
+ 
+ 
+ </span><span style="color: #0000ff;">if</span> (Src-&gt;BitCount == <span style="color: #800080;">24</span><span style="color: #000000;">)
+ {
+ 
+ }
+ </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+ {
+ </span><span style="color: #0000ff;">int</span> Left = ConvW / <span style="color: #800080;">2</span>, Top = ConvH / <span style="color: #800080;">2</span>, Right = ConvW - Left - <span style="color: #800080;">1</span>, Bottom = ConvH - Top - <span style="color: #800080;">1</span>, ExpHeight = Height + ConvH - <span style="color: #800080;">1</span>; <span style="color: #008000;">//</span><span style="color: #008000;"> 注意核中心那个元素不用扩展，比如核的宽度为3，则只要左右各扩展一个像素就可以了</span>
+ <span style="color: #0000ff;">int</span> PadConvLine = Pad4(ConvW), Length = PadConvLine *<span style="color: #000000;"> ConvH;
+ </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> X, Y, IndexD, IndexE, IndexK, ExpStride;
+ </span><span style="color: #0000ff;">float</span> *CurKer, Inv, Sum = <span style="color: #800080;">0</span><span style="color: #000000;">;
+ unsigned </span><span style="color: #0000ff;">char</span> *PtExp, *<span style="color: #000000;">PtDest;
+ 
+ TImage </span>*<span style="color: #000000;">Expand;
+ IS_RET Ret </span>= GetPadImage(Src, &amp;Expand, Left, Right, Top, Bottom, Edge); <span style="color: #008000;">//</span><span style="color: #008000;"> 得到扩展后的数据，可以提速和方便编程，但是多占用一份内存</span>
+ <span style="color: #0000ff;">if</span> (Ret != IS_RET_OK) <span style="color: #0000ff;">return</span><span style="color: #000000;"> Ret;
+ 
+ PtExp </span>= Expand-&gt;Scan0; PtDest = Dest-&gt;Scan0; ExpStride = Expand-&gt;<span style="color: #000000;">Stride;
+ 
+ </span><span style="color: #0000ff;">for</span> (X = <span style="color: #800080;">0</span>; X &lt; ConvH * ConvW; X ++) Sum += Conv-&gt;<span style="color: #000000;">Data.F[X];
+ Inv </span>= (Sum == <span style="color: #800080;">0</span> ? <span style="color: #800080;">1</span>: <span style="color: #800080;">1</span> / Sum); <span style="color: #008000;">//</span><span style="color: #008000;"> 如果卷积举证的和为0，则设置为1</span>
+ 
+ <span style="color: #0000ff;">float</span> *Conv16 = (<span style="color: #0000ff;">float</span> *)_mm_malloc(PadConvLine * ConvH * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>), <span style="color: #800080;">16</span>); <span style="color: #008000;">//</span><span style="color: #008000;"> 保存16字节对齐的卷积矩阵，以方便使用SSE</span>
+ <span style="color: #0000ff;">float</span> *Kernel = (<span style="color: #0000ff;">float</span> *)_mm_malloc(PadConvLine * ExpHeight * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>), <span style="color: #800080;">16</span>); <span style="color: #008000;">//</span><span style="color: #008000;"> 保存16字节对齐的卷积核矩阵，以方便使用SSE</span>
+ 
+ <span style="color: #0000ff;">for</span>(Y = <span style="color: #800080;">0</span>; Y &lt; ConvH; Y++<span style="color: #000000;">) 
+ {
+ memcpy (Conv16 </span>+ Y * PadConvLine, Conv-&gt;Data.F + Y * ConvW , ConvW * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>)); <span style="color: #008000;">//</span><span style="color: #008000;"> 复制卷积矩阵的数据</span>
+ memset(Conv16 + Y * PadConvLine + ConvW, <span style="color: #800080;">0</span>, (PadConvLine - ConvW) * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>)); <span style="color: #008000;">//</span><span style="color: #008000;"> 把冗余部分的卷积数据设置为0</span>
+ <span style="color: #000000;"> }
+ 
+ </span><span style="color: #0000ff;">for</span> (Y = <span style="color: #800080;">0</span>; Y &lt; ExpHeight; Y++<span style="color: #000000;">)
+ {
+ IndexE </span>= Y *<span style="color: #000000;"> ExpStride;
+ CurKer </span>= Kernel + Y * PadConvLine; <span style="color: #008000;">//</span><span style="color: #008000;"> 计算第一列所有像素将要取样的卷积核数据</span>
+ <span style="color: #0000ff;">for</span> (X = <span style="color: #800080;">0</span>; X &lt; ConvW; X++<span style="color: #000000;">)
+ {
+ CurKer[X] </span>= PtExp[IndexE++<span style="color: #000000;">];
+ }
+ }
+ </span><span style="color: #0000ff;">for</span> (X = <span style="color: #800080;">0</span> ; X &lt; Width ; X ++<span style="color: #000000;">)
+ {
+ </span><span style="color: #0000ff;">if</span> (X != <span style="color: #800080;">0</span>) <span style="color: #008000;">//</span><span style="color: #008000;"> 如果不是第一列，需要更新卷积核的数据</span>
+ <span style="color: #000000;"> {
+ memcpy(Kernel, Kernel </span>+ <span style="color: #800080;">1</span>, (PadConvLine * ExpHeight - <span style="color: #800080;">1</span>) * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span>)); <span style="color: #008000;">//</span><span style="color: #008000;"> 往前移动一个数据</span>
+ IndexK = ConvW - <span style="color: #800080;">1</span><span style="color: #000000;"> ;
+ IndexE </span>= IndexK +<span style="color: #000000;"> X;
+ </span><span style="color: #0000ff;">for</span> (Y = <span style="color: #800080;">0</span>; Y &lt; ExpHeight; Y++<span style="color: #000000;">)
+ {
+ Kernel[IndexK] </span>= PtExp[IndexE]; <span style="color: #008000;">//</span><span style="color: #008000;"> 只要刷新下一个元素</span>
+ IndexK +=<span style="color: #000000;"> PadConvLine;
+ IndexE </span>+=<span style="color: #000000;"> ExpStride;
+ }
+ }
+ 
+ CurKer </span>= Kernel; IndexD =<span style="color: #000000;"> X;
+ </span><span style="color: #0000ff;">for</span> (Y = <span style="color: #800080;">0</span>; Y &lt; Height; Y ++) <span style="color: #008000;">//</span><span style="color: #008000;"> 沿列的方向进行更新</span>
+ <span style="color: #000000;"> {
+ PtDest[IndexD] </span>= Clamp((<span style="color: #0000ff;">int</span>)( MultiplySSE(Conv16, CurKer, Length) * Inv + <span style="color: #800080;">0.5</span>)); <span style="color: #008000;">//</span><span style="color: #008000;"> 直接把函数放在这里也没有啥提速的，注意改函数不会被内联的</span>
+ CurKer +=<span style="color: #000000;"> PadConvLine;
+ IndexD </span>+=<span style="color: #000000;"> Stride;
+ }
+ }
+ _mm_free(Conv16);
+ _mm_free(Kernel);
+ FreeImage(Expand);
+ </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> IS_RET_OK;
+ }
+ }</span></pre>
+ </div>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;对于第一个问题，解决的方式很简答，即用空间换时间，新建一副（Width + ConvW - 1, Height + ConvH -1)大小的图像，然后四周的ConvW及ConvH的像素用边缘的值或者边缘镜像的值填充，正中间的则用原来的图复制过来，这样操作后进行取样时不再原图取样，而在这福扩展的图中取样，就避免了坐标判断等if语句的跳转耗时了，上</span><span style="font-size: 13px;">GetPadImage即实现了改功能。</span></p>
+ <p>&nbsp; &nbsp; &nbsp;<span style="font-size: 13px;">第二个问题则需要有一定的实现技巧，我们分配一块PadConvLine * (Height + ConvH - 1) 大小的内存，然后计算原图第一列像素串联起来的需要卷积的部分的数据，这一部分代码如上述44-52行所示。有了这样的数据，如果需要计算第一列的卷积结果，则很简单了，每跳过一列则把被卷积的数据起点增加PadCon</span><span style="font-size: 13px;">vLine个元素，在调用上述MultiplySSE</span><span style="font-size: 13px;">函数获得卷积结果。接着则计算第二列像素的卷积值，此时需要整体更新这一列像素串联起来的需要被卷积的数据，更新也很简单，就是把原来的数据整体向左移动一个像素，这个可以用memcpy快速实现，然后在填充入新进来的那个元素，就ok了，接着就是再次调用MultiplySSE函数，如此重复下去。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;经过编码测试，对于3000*3000的灰度图，15*15的核在I5的CPU上的测试平均结果为360ms,比matlab的慢了一半。</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;最后说明一点，很多人都说用FFT可以快速的实现卷积，并且是O(1)的，我比较同意后半句，但是前面半句是绝对的有问题的，至少在核小于50*50时，FFT实现的卷积不会比直接实现块。要知道FFT的计算量其实是很大的。<br /></span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;</span></p>
+ <p><span style="font-size: 13px;">&nbsp; &nbsp; &nbsp;</span></p>
+ <p><span style="font-size: 12px;">****************************基本上我不提供源代码，但是我会尽量用文字把对应的算法描述清楚或提供参考文档************************</span></p>
+ <p><span style="font-size: 12px;">*************************************因为靠自己的努力和实践写出来的效果才真正是自己的东西，人一定要靠自己*******************</span></p>
+ <p><span style="font-size: 12px;">****************************作者： laviewpbt &nbsp; 时间： 2014.11.27 &nbsp; &nbsp;联系QQ: &nbsp;33184777 转载请保留本行信息**********************</span></p>
+ <p>&nbsp;</p>
+</string>
