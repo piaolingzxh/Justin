@@ -1,7 +1,8 @@
 package com.cnblogs.android;
+
 import com.cnblogs.android.utility.PreferencesHelper;
 import android.app.Activity;
-import android.content.Intent; 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -15,9 +16,10 @@ import android.webkit.WebSettings.TextSize;
  * 
  */
 public class BaseActivity extends Activity {
- 
-	TextSize textSize = TextSize.SMALLEST;
 
+	TextSize textSize = TextSize.SMALLEST;
+	boolean allowFullScreen = true;
+	boolean isAutoLoadImage=true;
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -35,6 +37,8 @@ public class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		textSize = PreferencesHelper.getStoredTextSize();
+		allowFullScreen = PreferencesHelper.getAllowFullScreen();
+		isAutoLoadImage=PreferencesHelper.getIsLoadImageAuto();
 	}
 
 	/**

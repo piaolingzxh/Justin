@@ -218,7 +218,7 @@ public class AppUtil {
 		str=str.replace("&nbsp;&nbsp;", "\t");
 		str=str.replace("&nbsp;", " ");
 		str=str.replace("&#39;","\\");
-		str=str.replace("&quot;", "\\");
+		str=str.replace("&quot;", "\"");
 		str=str.replace("&gt;",">");
 		str=str.replace("&lt;","<");
 		str=str.replace("&amp;", "&");

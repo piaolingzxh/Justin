@@ -10,7 +10,6 @@ import com.cnblogs.android.SettingActivity;
 
 public class PreferencesHelper {
 
-	
 	public static Context MyContext = GlobalAppcation.getInstance();
 	public static Resources Res = MyContext.getResources();
 
@@ -47,4 +46,17 @@ public class PreferencesHelper {
 		return getPreferences().getBoolean(
 				SettingActivity.CONFIG_IS_HORIZONTAL, true);
 	}
+
+	public static boolean getAllowFullScreen() {
+		return getPreferences().getBoolean(
+				Res.getString(R.string.preferences_is_fullscreen), false);
+	}
+
+	public static boolean getIsLoadImageAuto() {
+		String readMode = getPreferences().getString(
+				SettingActivity.CONFIG_READ_MODE_OPTION_KEY, "0");
+
+		return readMode.equalsIgnoreCase("0");
+	}
+
 }

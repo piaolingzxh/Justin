@@ -57,7 +57,7 @@ public class SettingActivity extends PreferenceActivity implements
 	// preference key
 	private static final String CONFIG_ABOUT_OPTION_KEY = "config_about";// 关于
 	private static final String CONFIG_UPDATE_OPTION_KEY = "config_update";// 更新版本
-	private static final String CONFIG_READ_MODE_OPTION_KEY = "config_read_mode";// 阅读模式
+	public static final String CONFIG_READ_MODE_OPTION_KEY = "config_read_mode";// 阅读模式
 	public static final String CONFIG_FONT_SIZE_OPTION_KEY = "config_font_size";// 阅读模式
 	public static final String CONFIG_IS_HORIZONTAL = "config_is_horizontal";// 是否允许横竖屏
 	private static final String CONFIG_CLEAR_CACHE = "config_clear_cache";// 清空缓存

@@ -46,6 +46,11 @@ img
     max-width: 100%;
     height: auto;
 }
+table
+{
+  max-width: 100%;
+    height: auto;
+}
 div.bimg
 {
     text-align: center;

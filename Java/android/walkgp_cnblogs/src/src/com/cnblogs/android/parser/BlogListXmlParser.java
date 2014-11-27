@@ -1,5 +1,6 @@
 package com.cnblogs.android.parser;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import org.xml.sax.SAXException;
@@ -11,6 +12,7 @@ import com.cnblogs.android.entity.*;
 import com.cnblogs.android.utility.AppUtil;
 
 import org.apache.commons.lang.*;
+
 /**
  * Blog返回xml解析器
  * 
@@ -25,7 +27,7 @@ public class BlogListXmlParser extends DefaultHandler {
 	final String ENTRY_PUBLISHED_TAG = "published";// 发表时间标记
 	final String ENTRY_UPDATED_TAG = "updated";// 更新时间标记
 	final String ENTRY_AUTHOR_NAME_TAG = "name";// 发表者名称
-	final String ENTRY_USER_NAME_TAG="blogapp";//作者用户名
+	final String ENTRY_USER_NAME_TAG = "blogapp";// 作者用户名
 	final String ENTRY_AUTHOR_URL_TAG = "uri";// 发表者主页
 	final String ENTRY_LINK_TAG = "link";// 实际链接地址
 	final String ENTRY_DIGG_TAG = "diggs";// 推荐次数
@@ -39,12 +41,14 @@ public class BlogListXmlParser extends DefaultHandler {
 	private Blog entity;// 单个对象
 	private boolean isStartParse;// 开始解析
 	private StringBuilder currentDataBuilder;// 当前取到的值
+
 	/**
 	 * 默认构造函数
 	 */
 	public BlogListXmlParser() {
 		super();
 	}
+
 	/**
 	 * 构造函数
 	 * 
@@ -53,6 +57,7 @@ public class BlogListXmlParser extends DefaultHandler {
 	public BlogListXmlParser(ArrayList<Blog> list) {
 		this.listBlog = list;
 	}
+
 	/**
 	 * 将结果返回
 	 * 
@@ -61,6 +66,7 @@ public class BlogListXmlParser extends DefaultHandler {
 	public ArrayList<Blog> GetBlogList() {
 		return listBlog;
 	}
+
 	/**
 	 * 文档开始时触发
 	 */
@@ -70,6 +76,7 @@ public class BlogListXmlParser extends DefaultHandler {
 		listBlog = new ArrayList<Blog>();
 		currentDataBuilder = new StringBuilder();
 	}
+
 	/**
 	 * 读取并解析XML数据
 	 */
@@ -84,6 +91,7 @@ public class BlogListXmlParser extends DefaultHandler {
 			entity.SetBlogUrl(attributes.getValue(ENTRY_URL_ATTRIBUTE_TAG));
 		}
 	}
+
 	/**
 	 * 读取元素内容
 	 * 
@@ -98,6 +106,7 @@ public class BlogListXmlParser extends DefaultHandler {
 		super.characters(ch, start, length);
 		currentDataBuilder.append(ch, start, length);
 	}
+
 	/**
 	 * 元素结束时触发
 	 */
@@ -111,17 +120,18 @@ public class BlogListXmlParser extends DefaultHandler {
 			// 处理
 			if (localName.equalsIgnoreCase(ENTRY_TITLE_TAG)) {// 标题
 				try {
-					//chars = StringEscapeUtils.unescapeHtml(chars);// 进行编码处理，避免出现&gt;这种html
-					// chars=AppUtil.HtmlToText(chars);
+					chars = AppUtil.HtmlToText(chars);
+					chars = StringEscapeUtils.unescapeHtml(chars);// 进行编码处理，避免出现&gt;这种html
+					
 				} catch (Exception ex) {
 					Log.e("blogXml", "__________解析出错_____________");
 				}
 				entity.SetBlogTitle(chars);
 			} else if (localName.equalsIgnoreCase(ENTRY_SUMMARY_TAG)) {// 摘要
 				try {
-					// chars=URLDecoder.decode(chars);
-					//chars = StringEscapeUtils.unescapeHtml(chars);// 进行编码处理，避免出现&gt;这种html
-					// chars=AppUtil.HtmlToText(chars);
+					//chars = URLDecoder.decode(chars);
+					chars = AppUtil.HtmlToText(chars);
+					chars = StringEscapeUtils.unescapeHtml(chars);// 进行编码处理，避免出现&gt;这种html					 
 				} catch (Exception ex) {
 					Log.e("newsXml", "__________解析出错_____________");
 				}
@@ -155,9 +165,11 @@ public class BlogListXmlParser extends DefaultHandler {
 				isStartParse = false;
 			}
 		}
+		 
 
 		currentDataBuilder.setLength(0);
 	}
+
 	/**
 	 * 文档结束时触发
 	 */
