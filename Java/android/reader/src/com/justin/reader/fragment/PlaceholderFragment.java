@@ -1,6 +1,6 @@
 package com.justin.reader.fragment;
 
-import com.justin.reader.MainActivity;
+import com.justin.reader.activity.MainActivity;
 import com.justin.reader.R;
 import android.app.Activity;
 import android.os.Bundle;

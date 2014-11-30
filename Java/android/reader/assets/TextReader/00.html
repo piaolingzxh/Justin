@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Prettify</title>
+    <link href="prettify.min.css" rel="stylesheet">
+    <script src="prettify.min.js"></script>
+    <style>
+        pre.prettyprint
+        {
+            border: 0;
+            font-family: Courier New !important;
+            font-size: 12px !important;
+           
+        }
+        .wordwrap
+        {
+         	white-space: pre-wrap; 
+        	white-space: -moz-pre-wrap;
+        	white-space: -pre-wrap;
+          	white-space: -o-pre-wrap;
+          	word-wrap: break-all; 
+            word-break: break-all; 
+        }
+        li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 { list-style-type: decimal };
+    </style>      
+</head>
+<body onload="prettyPrint()">
+<pre class="prettyprint linenums wordwrap">
+?namespace Justin.FormTest
+{
+    partial class Form1
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Text = "Form1";
+        }
+
+        #endregion
+    }
+}
+
+</pre>
+</body>
+</html>

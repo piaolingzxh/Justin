@@ -8,63 +8,58 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.justin.reader.R;
 import com.justin.reader.activity.FileBrowserActivity;
 import com.justin.reader.activity.ImageViewerActivity;
 import com.justin.reader.activity.MainActivity;
+import com.justin.reader.controls.FileBrowser;
+import com.justin.reader.controls.OnFileBrowserListener;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
- * must implement the {@link TextReaderFragment.OnFragmentInteractionListener}
- * interface to handle interaction events. Use the
- * {@link TextReaderFragment#newInstance} factory method to create an instance
- * of this fragment.
+ * must implement the
+ * {@link TextReaderForPadFragment.OnFragmentInteractionListener} interface to
+ * handle interaction events. Use the
+ * {@link TextReaderForPadFragment#newInstance} factory method to create an
+ * instance of this fragment.
  * 
  */
-public class TextReaderFragment extends Fragment {
+public class TextReaderForPadFragment extends Fragment implements
+		OnFileBrowserListener {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
 	private static final String ARG_PARAM2 = "param2";
-	private WebView webView;
+
 	// TODO: Rename and change types of parameters
 	private String mParam1;
 	private String mParam2;
+	WebView webView;
 	private boolean showLines = true;
 	private boolean wordwrap = true;
 	private OnFragmentInteractionListener mListener;
+	TextView txtFileName;
+	String fileName;
+	ImageView collapseImage;
 
-	EditText textFileName;
-	Button btn;
-
-	/**
-	 * Use this factory method to create a new instance of this fragment using
-	 * the provided parameters.
-	 * 
-	 * @param param1
-	 *            Parameter 1.
-	 * @param param2
-	 *            Parameter 2.
-	 * @return A new instance of fragment TextReaderFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-
-	public TextReaderFragment() {
+	public TextReaderForPadFragment() {
 		// Required empty public constructor
 	}
 
@@ -75,77 +70,43 @@ public class TextReaderFragment extends Fragment {
 			mParam1 = getArguments().getString(ARG_PARAM1);
 			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
-
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View rootView = inflater.inflate(R.layout.fragment_text_reader,
+		View rootView = inflater.inflate(R.layout.fragment_text_reader_for_pad,
 				container, false);
+		txtFileName = (TextView) rootView.findViewById(R.id.txtfilename);
 
-		webView = (WebView) rootView.findViewById(R.id.webView);
+		fileBrowser = (FileBrowser) rootView.findViewById(R.id.filebrowser);
+		fileBrowser.setOnFileBrowserListener(this);
+
+		webView = (WebView) rootView.findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
-
 		webView.requestFocus();
-		// webView.loadUrl("file:///android_asset/index1.html");// ����html�ļ�
-		/*String testFile = "file:///android_asset/"
-				+ getString(R.string.text_reader_html_assets_folder) + "/"
-				+ "SqlHelper.cs";*/
-		fillWebView("//sdcard/----------/Form1.Designer.cs");
-		textFileName = (EditText) rootView.findViewById(R.id.txtfilename);
 
-		btn = (Button) rootView.findViewById(R.id.btnnavigateto);
-		btn.setOnClickListener(new Button.OnClickListener() {// 创建监听
+		collapseImage = (ImageView) rootView.findViewById(R.id.imagecollapse);
+		collapseImage.setOnClickListener(new ImageView.OnClickListener() {
+
+			@Override
 			public void onClick(View v) {
-
-				try {
-
-					Intent it = new Intent(getActivity(),
-							FileBrowserActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putString("fileName", textFileName.getText()
-							.toString());
-					it.putExtra("bd", bundle);
-					startActivityForResult(it, 10);
-
-				} catch (Exception e) {
-					/*Toast.makeText(ImageViewerActivity.this, e.toString(),
-							Toast.LENGTH_LONG).show();*/
-					Log.e("toBrowser", e.toString());
+				// TODO Auto-generated method stub
+				if (fileBrowser.getVisibility() == View.VISIBLE) {
+					fileBrowser.setVisibility(View.GONE);
+					collapseImage.setImageResource(R.drawable.open);
+				} else {
+					fileBrowser.setVisibility(View.VISIBLE);
+					collapseImage.setImageResource(R.drawable.close);
 				}
-
 			}
+
 		});
-
+		fileName = txtFileName.getText()==null?"":txtFileName.getText().toString();
+		fileBrowser.brower(fileName);
+		fillWebView(fileName);
 		return rootView;
-	}
-
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Toast.makeText(getActivity(), "onActivityResult", Toast.LENGTH_LONG)
-				.show();
-		Context c = this.getActivity();
-		try {
-			if (requestCode == 10) {
-				if (resultCode == 0) {
-
-				} else if (-1 == resultCode) {
-					String temp = "";
-					Bundle bundle = data.getExtras();
-					if (bundle != null) {
-						temp = bundle.getString("fileName");
-					}
-					fillWebView(temp);
-					textFileName.setText(temp);
-					Toast.makeText(getActivity(), temp, Toast.LENGTH_LONG)
-							.show();
-				}
-			}
-		} catch (Exception ex) {
-			Toast.makeText(getActivity(), ex.toString(), Toast.LENGTH_LONG)
-					.show();
-		}
 	}
 
 	// TODO: Rename method, update argument and hook method into UI event
@@ -158,30 +119,14 @@ public class TextReaderFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		/*try {
-			mListener = (OnFragmentInteractionListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement OnFragmentInteractionListener");
-		}*/
-
 		MainActivity main = ((MainActivity) activity);
-		main.onSectionAttached(2);
+		main.onSectionAttached(1);
 	}
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
 		mListener = null;
-	}
-
-	public static TextReaderFragment newInstance(String param1, String param2) {
-		TextReaderFragment fragment = new TextReaderFragment();
-		Bundle args = new Bundle();
-		args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);
-		fragment.setArguments(args);
-		return fragment;
 	}
 
 	/**
@@ -198,8 +143,53 @@ public class TextReaderFragment extends Fragment {
 		public void onFragmentInteraction(Uri uri);
 	}
 
+	FileBrowser fileBrowser;
+
+	@Override
+	public void onFileItemClick(String filename) {
+
+		/*setTitle(filename);
+		Intent intent = new Intent(FileBrowserActivity.this,
+				ImageViewerActivity.class);
+		intent.putExtra("fileName", filename);
+		setResult(RESULT_OK, intent); // intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
+		finish();// 此处一定要调用finish()方法
+		*/
+
+		fillWebView(filename);
+		txtFileName.setText(filename);
+	}
+
+	@Override
+	public void onDirItemClick(String path) {
+		/*setTitle(path);*/
+		txtFileName.setText(path);
+	}
+
+	/*@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.controls_browser);
+		String fileName = getIntent().getBundleExtra("bd")
+				.getString("fileName");
+		fileBrowser = (FileBrowser) findViewById(R.id.filebrowser);
+		fileBrowser.setOnFileBrowserListener(this);
+		fileBrowser.brower(fileName);
+	}*/
+
+	/*@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			if (!fileBrowser.getCanUp())
+				finish();
+			fileBrowser.Up();
+			return true;
+		} else
+			return super.onKeyDown(keyCode, event);
+	}*/
 	private void LoadWebViewContent(WebView webView, String content) {
-		Log.e("error", content);
+
 		webView.loadDataWithBaseURL("file:///android_asset/"
 				+ getString(R.string.text_reader_html_assets_folder) + "/",
 				content, "text/html",
@@ -207,6 +197,7 @@ public class TextReaderFragment extends Fragment {
 	}
 
 	public String readFle(String filelName) {
+		Log.e("error", filelName);
 		String content = "";
 		try {
 			InputStream in = getResources().getAssets().open(
@@ -241,6 +232,12 @@ public class TextReaderFragment extends Fragment {
 	}
 
 	public void fillWebView(String fileName) {
+
+		if (fileName == null || fileName.equals(""))
+			return;
+		File f = new File(fileName);
+		if (!f.exists() || !f.isFile())
+			return;
 		String htmlContent = readFle(getString(R.string.text_reader_html_filename));
 
 		String showLinesTag = getString(R.string.text_reader_html_tag_showlines);
@@ -254,10 +251,17 @@ public class TextReaderFragment extends Fragment {
 				.replace(showLinesTag, showLines ? showLineValue : "")
 				.replace(wordWrapTag, wordwrap ? wordWrapValue : "")
 				.replace(contentTag, ReadTxtFile(fileName));
+		String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
+		if (prefix.toLowerCase().equals("html")
+				|| prefix.toLowerCase().equals("htm")) {
+			htmlContent = StringEscapeUtils.escapeHtml(htmlContent);
+		}
+
 		LoadWebViewContent(webView, htmlContent);
 	}
 
 	public static String ReadTxtFile(String strFilePath) {
+		Log.e("error", strFilePath);
 		String path = strFilePath;
 		String content = ""; // 文件内容字符串
 		// 打开文件

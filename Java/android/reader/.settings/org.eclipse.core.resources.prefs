@@ -1,3 +1,7 @@
 eclipse.preferences.version=1
 encoding//assets/TextReader/index1.html=UTF-8
+encoding//src/com/justin/reader/activity/FileBrowserActivity.java=UTF-8
+encoding//src/com/justin/reader/activity/ImageViewerActivity.java=UTF-8
+encoding//src/com/justin/reader/controls/FileBrowser.java=UTF-8
+encoding//src/com/justin/reader/controls/OnFileBrowserListener.java=UTF-8
 encoding/<project>=UTF-8
