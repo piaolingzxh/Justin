@@ -4,7 +4,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical" >
-	<com.justin.reader.controls.FileBrowser
+	<com.easyreader.android.FileBrowser
 		android:id="@+id/filebrowser"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
