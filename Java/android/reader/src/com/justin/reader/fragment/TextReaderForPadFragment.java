@@ -16,12 +16,14 @@ import com.justin.reader.activity.ImageViewerActivity;
 import com.justin.reader.activity.MainActivity;
 import com.justin.reader.controls.FileBrowser;
 import com.justin.reader.controls.OnFileBrowserListener;
+import com.justin.reader.util.util;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -103,9 +105,10 @@ public class TextReaderForPadFragment extends Fragment implements
 			}
 
 		});
-		fileName = txtFileName.getText()==null?"":txtFileName.getText().toString();
+		fileName = txtFileName.getText() == null ? "" : txtFileName.getText()
+				.toString();
 		fileBrowser.brower(fileName);
-		fillWebView(fileName);
+		util.fillWebView(webView,fileName,showLines,wordwrap);
 		return rootView;
 	}
 
@@ -156,7 +159,7 @@ public class TextReaderForPadFragment extends Fragment implements
 		finish();// 此处一定要调用finish()方法
 		*/
 
-		fillWebView(filename);
+		util.fillWebView(webView,filename,showLines,wordwrap);
 		txtFileName.setText(filename);
 	}
 
@@ -188,107 +191,5 @@ public class TextReaderForPadFragment extends Fragment implements
 		} else
 			return super.onKeyDown(keyCode, event);
 	}*/
-	private void LoadWebViewContent(WebView webView, String content) {
-
-		webView.loadDataWithBaseURL("file:///android_asset/"
-				+ getString(R.string.text_reader_html_assets_folder) + "/",
-				content, "text/html",
-				getString(R.string.text_reader_html_encoding), null);
-	}
-
-	public String readFle(String filelName) {
-		Log.e("error", filelName);
-		String content = "";
-		try {
-			InputStream in = getResources().getAssets().open(
-					getString(R.string.text_reader_html_assets_folder) + "/"
-							+ filelName);
-			byte[] temp = readInputStream(in);
-			content = new String(temp);
-		} catch (Exception e) {
-			Log.e("error", e.toString());
-		}
-		return content;
-	}
-
-	public static byte[] readInputStream(InputStream inStream) {
-
-		ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
-		try {
-			byte[] buffer = new byte[4096];
-			int len = 0;
-
-			while ((len = inStream.read(buffer)) != -1) {
-				outSteam.write(buffer, 0, len);
-			}
-			outSteam.close();
-			inStream.close();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		return outSteam.toByteArray();
-
-	}
-
-	public void fillWebView(String fileName) {
-
-		if (fileName == null || fileName.equals(""))
-			return;
-		File f = new File(fileName);
-		if (!f.exists() || !f.isFile())
-			return;
-		String htmlContent = readFle(getString(R.string.text_reader_html_filename));
-
-		String showLinesTag = getString(R.string.text_reader_html_tag_showlines);
-		String showLineValue = showLinesTag.replace("##", "");
-
-		String wordWrapTag = getString(R.string.text_reader_html_tag_wordwrap);
-		String wordWrapValue = wordWrapTag.replace("##", "");
-		String contentTag = getString(R.string.text_reader_html_tag_content);
-
-		htmlContent = htmlContent
-				.replace(showLinesTag, showLines ? showLineValue : "")
-				.replace(wordWrapTag, wordwrap ? wordWrapValue : "")
-				.replace(contentTag, ReadTxtFile(fileName));
-		String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
-		if (prefix.toLowerCase().equals("html")
-				|| prefix.toLowerCase().equals("htm")) {
-			htmlContent = StringEscapeUtils.escapeHtml(htmlContent);
-		}
-
-		LoadWebViewContent(webView, htmlContent);
-	}
-
-	public static String ReadTxtFile(String strFilePath) {
-		Log.e("error", strFilePath);
-		String path = strFilePath;
-		String content = ""; // 文件内容字符串
-		// 打开文件
-		File file = new File(path);
-		// 如果path是传递过来的参数，可以做一个非目录的判断
-		if (file.isDirectory()) {
-			Log.d("TestFile", "The File doesn't not exist.");
-		} else {
-			try {
-				InputStream instream = new FileInputStream(file);
-				if (instream != null) {
-					InputStreamReader inputreader = new InputStreamReader(
-							instream);
-					BufferedReader buffreader = new BufferedReader(inputreader);
-					String line;
-					// 分行读取
-					while ((line = buffreader.readLine()) != null) {
-						content += line + "\n";
-					}
-					instream.close();
-				}
-			} catch (java.io.FileNotFoundException e) {
-				Log.d("TestFile", "The File doesn't not exist.");
-			} catch (IOException e) {
-				Log.d("TestFile", e.getMessage());
-			}
-		}
-		return content;
-	}
+	
 }
