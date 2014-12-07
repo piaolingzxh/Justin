@@ -40,6 +40,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,9 +50,13 @@
   <ItemGroup>
     <Compile Include="Extensions\BasicTypeEx.cs" />
     <Compile Include="Extensions\RequestEx.cs" />
+    <Compile Include="Helper\SerializeHelper.cs" />
+    <Compile Include="Services\DeleteSolution.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="Helper\CacheHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Service.ashx.cs" />
     <Compile Include="Utility\IdentityScope.cs" />
   </ItemGroup>
   <ItemGroup>

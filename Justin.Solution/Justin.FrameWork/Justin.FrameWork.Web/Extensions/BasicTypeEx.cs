@@ -22,5 +22,35 @@ namespace Justin.FrameWork.Web.Extensions
         }
 
         #endregion
+
+
+        public static int[] GetInts(this String instance)
+        {
+            List<int> listValue = new List<int>();
+            string value = "";
+            foreach (char item in instance)
+            {
+                if (item >= 48 && item <= 58)
+                {
+                    value += item;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(value))
+                        listValue.Add(int.Parse(value));
+                    value = "";
+                }
+            }
+            return listValue.ToArray();
+
+        }
+        public static string PadLeft(this Int32 instance, int totalWidth)
+        {
+            return instance.PadLeft(totalWidth, '0');
+        }
+        public static string PadLeft(this Int32 instance, int totalWidth, char paddingChar)
+        {
+            return instance.ToString().PadLeft(totalWidth, paddingChar);
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Security;
 using Justin.FrameWork.Extensions;
+using System.Globalization;
 namespace Justin.FrameWork.Web.Extensions
 {
     public static class RequestEx
@@ -135,6 +136,72 @@ namespace Justin.FrameWork.Web.Extensions
                 return queryValue.Value<T>();
             }
             throw new Exception("key " + queryKey + " not found");
+        }
+
+        #endregion
+
+
+        #region Request扩展
+
+        public static T GetValue<T>(this HttpRequest request, string key, T defaultValue)
+        {
+            StringComparer sc = StringComparer.Create(CultureInfo.CurrentCulture, true);
+            T result;
+            object o = null;
+            if (request.Form.AllKeys.Contains(key, sc))
+            {
+                o = request.Form[request.GetFormKey(key)];
+            }
+            else if (request.QueryString.AllKeys.Contains(key, sc))
+            {
+                o = request.QueryString[request.GetQueryStringKey(key)];
+            }
+            try
+            {
+                result = (T)Convert.ChangeType(o, typeof(T));
+                return result;
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+        public static T GetValue<T>(this HttpRequest request, string key)
+        {
+            return request.GetValue<T>(key, default(T));
+        }
+        public static string GetFormKey(this HttpRequest request, string key)
+        {
+            StringComparer sc = StringComparer.Create(CultureInfo.CurrentCulture, true);
+
+            if (request.Form.AllKeys.Contains(key, sc))
+            {
+                foreach (string item in request.Form.AllKeys)
+                {
+                    if (string.Compare(item, key, true) == 0)
+                    {
+                        return item;
+                    }
+                }
+
+            }
+            return "";
+        }
+        public static string GetQueryStringKey(this HttpRequest request, string key)
+        {
+            StringComparer sc = StringComparer.Create(CultureInfo.CurrentCulture, true);
+            if (request.QueryString.AllKeys.Contains(key, sc))
+            {
+                foreach (string item in request.QueryString.AllKeys)
+                {
+                    if (string.Compare(item, key, true) == 0)
+                    {
+                        return item;
+                    }
+                }
+
+            }
+            return "";
         }
 
         #endregion
