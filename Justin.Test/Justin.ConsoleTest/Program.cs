@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
+using Justin.FrameWork.Helper;
 
 namespace Justin.ConsoleTest
 {
@@ -22,68 +23,76 @@ namespace Justin.ConsoleTest
     {
         static void Main(string[] args)
         {
-            string s1 = "[BIMetadataTest.Analysis.DeptDim.hieInfo].[2777933194de2b7d&组织]";
+            XmlDocument doc = new XmlDocument();
+            doc.Load(@"E:\temp\cnblogs\cnblogs_category.xml");
+            XmlNode xn = doc.SelectSingleNode("items");
 
-            string s2 = "[BIMetadataTest.Analysis.DeptDim.hieInfo].[2777933194de2b7d&组织].[296f1ed642e35ac2&分类1]";
 
+            foreach (var item in xn.ChildNodes)
+            {
+                XmlElement xe = (XmlElement)item;
+                string id = xe.GetAttribute("id").ToString();
+                string text = xe.GetAttribute("name").ToString();
+                string url = xe.GetAttribute("url").ToString();
+                string tp = xe.GetAttribute("tp").ToString();
+                string pid = xe.GetAttribute("pid").ToString();
 
-            object res = s2.StartsWith(s1);
-
-            Console.Read();
+                File.AppendAllText(@"E:\temp\cnblogs\categroy.text",
+                    String.Format("categories.add(new BlogCategory(\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"));" + Environment.NewLine
+                    , id, text,url,tp,pid));
+            }
+            Console.WriteLine("OK");
         }
 
+        private static string Serialize<T>(T obj, bool removeNamespace = true)
+        {
+            if (obj == null) return null;
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            MemoryStream stream = new MemoryStream();
+            XmlTextWriter xtw = new XmlTextWriter(stream, Encoding.UTF8);
+            xtw.Formatting = Formatting.Indented;
 
+            try
+            {
+                if (removeNamespace)
+                {
+                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                    ns.Add("", "");
+                    serializer.Serialize(stream, obj, ns);
+                }
+                else
+                {
+                    serializer.Serialize(stream, obj);
+                }
+            }
+            catch { return null; }
+            stream.Position = 0;
+            string returnStr = string.Empty;
+            using (StreamReader sr = new StreamReader(stream, Encoding.UTF8))
+            {
+                string line = "";
+                while ((line = sr.ReadLine()) != null)
+                {
+                    returnStr += line + Environment.NewLine;
+                }
+            }
+            return returnStr;
+        }
 
 
     }
-    public static class extensions
+    public class Student
     {
-        #region Obj->T
-
-        /// <summary>
-        /// 1、拆箱：将装箱后的T(任意类型，包括系统定义的值类型和引用类型和自定义的各种类型)，转换为你所想要的T
-        /// 2、类型转换：将一种简单类型转换为另外一种简单类型,例如 将string类型的"123"转换为数字类型的123，
-        /// 简单类型包括；bool、byte、char、decimal、double、float、int、long、sbyte、short、uint、ulong、ushort，类型转换时注意溢出问题
-        /// 转换失败,则抛出异常
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static T Value<T>(this Object instance)
+        public Student() { }
+        public Student(int id)
         {
-            T result = default(T);
-            try
-            {
-                result = (T)Convert.ChangeType(instance, typeof(T));
-            }
-            catch { };
-            return result;
+            this.Id = id;
         }
+        [XmlAttribute()]
+        public int Id { get; set; }
+        [DefaultValue(null)]
+        [XmlAttribute()]
+        public string Birthday { get; set; }
 
-        #endregion
-        #region Obj->T
-
-        /// <summary>
-        /// 1、拆箱：将装箱后的T(任意类型，包括系统定义的值类型和引用类型和自定义的各种类型)，转换为你所想要的T
-        /// 2、类型转换：将一种简单类型转换为另外一种简单类型,例如 将string类型的"123"转换为数字类型的123，
-        /// 简单类型包括；bool、byte、char、decimal、double、float、int、long、sbyte、short、uint、ulong、ushort，类型转换时注意溢出问题
-        /// 转换失败后，不抛出异常，返回默认值
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static T Value<T>(this Object instance, T defaultValue)
-        {
-            T result = defaultValue;
-            try
-            {
-                result = (T)Convert.ChangeType(instance, typeof(T));
-            }
-            catch { }
-            return result;
-
-        }
-
-        #endregion
     }
 }
