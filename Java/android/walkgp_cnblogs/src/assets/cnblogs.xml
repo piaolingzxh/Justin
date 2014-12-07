@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <item url="/" name="首页" id="808" tp="SiteHome" pid="0"></item>
+  <item url="/cate/108698/" name=".NET技术" id="108698" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/beginner/" name=".NET新手区" id="18156" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/aspnet/" name="ASP.NET" id="108699" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/csharp/" name="C#" id="108700" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/winform/" name="WinForm" id="108716" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/silverlight/" name="Silverlight" id="108717" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/wcf/" name="WCF" id="108718" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/clr/" name="CLR" id="108719" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/wpf/" name="WPF" id="108720" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/xna/" name="XNA" id="108728" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/vs2010/" name="Visual Studio" id="108729" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/mvc/" name="ASP.NET MVC" id="108730" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/control/" name="控件开发" id="108738" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/ef/" name="Entity Framework" id="108739" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/winrt_metro/" name="WinRT/Metro" id="108745" tp="SiteCategory" pid="108698"></item>
+  <item url="/cate/2/" name="编程语言" id="2" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/java/" name="Java" id="106876" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/cpp/" name="C++" id="106880" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/php/" name="PHP" id="106882" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/delphi/" name="Delphi" id="106877" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/python/" name="Python" id="108696" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/ruby/" name="Ruby" id="106894" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/c/" name="C" id="108735" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/erlang/" name="Erlang" id="108746" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/go/" name="Go" id="108748" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/swift/" name="Swift" id="108751" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/verilog/" name="Verilog" id="108742" tp="SiteCategory" pid="2"></item>
+  <item url="/cate/108701/" name="软件设计" id="108701" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/design/" name="架构设计" id="106892" tp="SiteCategory" pid="108701"></item>
+  <item url="/cate/108702/" name="面向对象" id="108702" tp="SiteCategory" pid="108701"></item>
+  <item url="/cate/dp/" name="设计模式" id="106884" tp="SiteCategory" pid="108701"></item>
+  <item url="/cate/ddd/" name="领域驱动设计" id="108750" tp="SiteCategory" pid="108701"></item>
+  <item url="/cate/108703/" name="Web前端" id="108703" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/web/" name="Html/Css" id="106883" tp="SiteCategory" pid="108703"></item>
+  <item url="/cate/javascript/" name="JavaScript" id="106893" tp="SiteCategory" pid="108703"></item>
+  <item url="/cate/jquery/" name="jQuery" id="108731" tp="SiteCategory" pid="108703"></item>
+  <item url="/cate/html5/" name="HTML5" id="108737" tp="SiteCategory" pid="108703"></item>
+  <item url="/cate/108704/" name="企业信息化" id="108704" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/sharepoint/" name="SharePoint" id="78111" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/gis/" name="GIS技术" id="50349" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/sap/" name="SAP" id="106878" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/OracleERP/" name="Oracle ERP" id="108732" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/dynamics/" name="Dynamics CRM" id="108734" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/k2/" name="K2 BPM" id="108747" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/infosec/" name="信息安全" id="108749" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/3/" name="企业信息化其他" id="3" tp="SiteCategory" pid="108704"></item>
+  <item url="/cate/108705/" name="手机开发" id="108705" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/android/" name="Android开发" id="108706" tp="SiteCategory" pid="108705"></item>
+  <item url="/cate/ios/" name="iOS开发" id="108707" tp="SiteCategory" pid="108705"></item>
+  <item url="/cate/wp/" name="Windows Phone" id="108736" tp="SiteCategory" pid="108705"></item>
+  <item url="/cate/wm/" name="Windows Mobile" id="108708" tp="SiteCategory" pid="108705"></item>
+  <item url="/cate/mobile/" name="其他手机开发" id="106886" tp="SiteCategory" pid="108705"></item>
+  <item url="/cate/108709/" name="软件工程" id="108709" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/agile/" name="敏捷开发" id="108710" tp="SiteCategory" pid="108709"></item>
+  <item url="/cate/pm/" name="项目与团队管理" id="106891" tp="SiteCategory" pid="108709"></item>
+  <item url="/cate/Engineering/" name="软件工程其他" id="106889" tp="SiteCategory" pid="108709"></item>
+  <item url="/cate/108712/" name="数据库技术" id="108712" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/sqlserver/" name="SQL Server" id="108713" tp="SiteCategory" pid="108712"></item>
+  <item url="/cate/oracle/" name="Oracle" id="108714" tp="SiteCategory" pid="108712"></item>
+  <item url="/cate/mysql/" name="MySQL" id="108715" tp="SiteCategory" pid="108712"></item>
+  <item url="/cate/nosql/" name="NoSQL" id="108743" tp="SiteCategory" pid="108712"></item>
+  <item url="/cate/database/" name="其他数据库" id="106881" tp="SiteCategory" pid="108712"></item>
+  <item url="/cate/108724/" name="操作系统" id="108724" tp="TopSiteCategory" pid="0"></item>
+  <item url="/cate/win7/" name="Windows 7" id="108721" tp="SiteCategory" pid="108724"></item>
+  <item url="/cate/winserver/" name=">Windows Server" id="108725" tp="SiteCategory" pid="108724"></item>
+  <item url="/cate/linux/" name="Linux" id="108726" tp="SiteCategory" pid="108724"></item>
+  <item url="/cate/4/" name="其他分类" id="4" tp="TopSiteCategory" pid="0"></item>
+</items>

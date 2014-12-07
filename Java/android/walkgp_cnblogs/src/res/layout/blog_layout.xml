@@ -11,6 +11,13 @@
         android:layout_height="@dimen/top_bar_height"
         android:background="@drawable/head" >
 
+        <ImageButton
+            android:id="@+id/blog_show_category"
+            style="@style/btn_back_style"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/drawable_btn_refresh" />
+
         <TextView
             android:id="@+id/txtAppTitle"
             style="@style/txt_app_title_style"

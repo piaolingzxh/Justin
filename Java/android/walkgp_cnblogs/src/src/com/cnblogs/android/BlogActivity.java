@@ -59,6 +59,7 @@ public class BlogActivity extends BaseMainActivity {
 	List<Blog> listBlog = new ArrayList<Blog>();
 	ProgressBar blogBody_progressBar;// 主题ListView加载框
 
+	ImageButton blog_show_category;// 显示分类
 	ImageButton blog_refresh_btn;// 刷新按钮
 	ProgressBar blog_progress_bar;// 加载按钮
 
@@ -127,6 +128,7 @@ public class BlogActivity extends BaseMainActivity {
 		blogBody_progressBar = (ProgressBar) findViewById(R.id.blogList_progressBar);
 		blogBody_progressBar.setVisibility(View.VISIBLE);
 		// 顶部工具啦
+		blog_show_category = (ImageButton) findViewById(R.id.blog_show_category);
 		blog_refresh_btn = (ImageButton) findViewById(R.id.blog_refresh_btn);
 		blog_progress_bar = (ProgressBar) findViewById(R.id.blog_progressBar);
 		// 底部view
@@ -144,6 +146,16 @@ public class BlogActivity extends BaseMainActivity {
 		blog_refresh_btn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				new PageTask(-2).execute();
+			}
+		});
+		blog_show_category.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Intent it = new Intent(BlogActivity.this,
+						BlogCategoryActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("category", "");
+				it.putExtras(bundle);
+				startActivityForResult(it, Config.REQUEST_BLOG_CAGEGORY);
 			}
 		});
 		// 上拉刷新
@@ -313,7 +325,7 @@ public class BlogActivity extends BaseMainActivity {
 	 * 
 	 */
 	public class UpdateListViewReceiver extends BroadcastReceiver {
-	 
+
 		@Override
 		public void onReceive(Context content, Intent intent) {
 
@@ -515,5 +527,18 @@ public class BlogActivity extends BaseMainActivity {
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 		}
+	}
+
+	/**
+	 * 复写onActivityResult，这个方法 是要等到SimpleTaskActivity点了提交过后才会执行的
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// 可以根据多个请求代码来作相应的操作
+		if (Config.REQUEST_BLOG_CAGEGORY == resultCode) {
+			String category = data.getExtras().getString(Config.BLOG_CAGEGORY);
+			Toast.makeText(getBaseContext(), category, 1000).show();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }
