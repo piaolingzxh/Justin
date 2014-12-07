@@ -1,130 +1,82 @@
 package com.justin.reader.activity;
 
-import java.util.*;
 import com.justin.reader.R;
-import com.justin.reader.fragment.*;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.content.Context;
-import android.content.res.Configuration;
+import com.justin.reader.controls.FileBrowser;
+import com.justin.reader.controls.OnFileBrowserListener;
+import com.justin.reader.util.util;
+
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-	/**
-	 * Fragment managing the behaviors, interactions and presentation of the
-	 * navigation drawer.
-	 */
-	private NavigationDrawerFragment mNavigationDrawerFragment;
-
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
-	private CharSequence mTitle;
-
-	Hashtable<Integer, Fragment> fragments = new Hashtable<Integer, Fragment>();
-
+public class MainActivity extends Activity implements
+OnFileBrowserListener {  
+	WebView webView;
+	private boolean showLines = true;
+	private boolean wordwrap = true;
+	TextView txtFileName;
+	String fileName;
+	ImageView collapseImage;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	 
+		txtFileName = (TextView) findViewById(R.id.txtfilename);
 
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
+		fileBrowser = (FileBrowser) findViewById(R.id.filebrowser);
+		fileBrowser.setOnFileBrowserListener(this);
 
-		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
-	}
+		webView = (WebView)findViewById(R.id.webView1);
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.requestFocus();
 
-	@Override
-	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
+		collapseImage = (ImageView) findViewById(R.id.imagecollapse);
+		collapseImage.setOnClickListener(new ImageView.OnClickListener() {
 
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fs = fragmentManager.beginTransaction();
-		Fragment fragment;
-		if (fragments.containsKey(position)) {
-			fragment = fragments.get(position);
-		} else {
-			switch (position) {
-			case 0:
-				fragment = new TextReaderForPadFragment();
-				break;
-			case 1:
-				fragment = new TextReaderFragment();
-				break;
-			default:
-				fragment = PlaceholderFragment.newInstance(position + 1);
-				break;
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (fileBrowser.getVisibility() == View.VISIBLE) {
+					fileBrowser.setVisibility(View.GONE);
+					collapseImage.setImageResource(R.drawable.open);
+				} else {
+					fileBrowser.setVisibility(View.VISIBLE);
+					collapseImage.setImageResource(R.drawable.close);
+				}
 			}
-		}
-		fs.replace(R.id.container, fragment).commit();
-	}
 
-	public void onSectionAttached(int number) {
-		switch (number) {
-		case 1:
-			mTitle = getString(R.string.title_section1);
-			break;
-		case 2:
-			mTitle = getString(R.string.title_section2);
-			break;
-		case 3:
-			mTitle = getString(R.string.title_section3);
-			break;
-		}
+		});
+		fileName = txtFileName.getText() == null ? "" : txtFileName.getText()
+				.toString();
+		fileBrowser.brower(fileName);
+		util.fillWebView(webView,fileName,showLines,wordwrap);
 	}
+	FileBrowser fileBrowser;
 
-	public void restoreActionBar() {
-		ActionBar actionBar = getSupportActionBar();
-		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
+	@Override
+	public void onFileItemClick(String filename) {
+
+		/*setTitle(filename);
+		Intent intent = new Intent(FileBrowserActivity.this,
+				ImageViewerActivity.class);
+		intent.putExtra("fileName", filename);
+		setResult(RESULT_OK, intent); // intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
+		finish();// 此处一定要调用finish()方法
+		*/
+
+		util.fillWebView(webView,filename,showLines,wordwrap);
+		txtFileName.setText(filename);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.main, menu);
-			restoreActionBar();
-			return true;
-		}
-		return super.onCreateOptionsMenu(menu);
+	public void onDirItemClick(String path) {
+		/*setTitle(path);*/
+		txtFileName.setText(path);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public boolean isTablet(Context context) {
-		return true;
-		// return (context.getResources().getConfiguration().screenLayout &
-		// Configuration.SCREENLAYOUT_SIZE_MASK) >=
-		// Configuration.SCREENLAYOUT_SIZE_LARGE;
-
-	}
 }
