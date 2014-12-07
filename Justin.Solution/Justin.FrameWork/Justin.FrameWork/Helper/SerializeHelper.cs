@@ -68,8 +68,8 @@ namespace Justin.FrameWork.Helper
                     XmlSerializer serializer = new XmlSerializer(typeof(T));
                     //try
                     //{
-                        var obj = serializer.Deserialize(stream);
-                        return ((T)obj);
+                    var obj = serializer.Deserialize(stream);
+                    return ((T)obj);
                     //}
                     //catch { return default(T); }
                 }
@@ -91,5 +91,44 @@ namespace Justin.FrameWork.Helper
             T t = XmlDeserialize<T>(content);
             return t;
         }
+
+
+        /// <summary>
+        /// XML系列化
+        /// </summary>
+        /// <typeparam name="T">需要序列化对象的类型</typeparam>
+        /// <param name="obj"> 需要序列化的对象</param>
+        /// <returns>Xml Data String</returns>
+        public static string XmlSerialize<T>(T obj)
+        {
+            if (obj == null) return null;
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            MemoryStream stream = new MemoryStream();
+            XmlTextWriter xtw = new XmlTextWriter(stream, Encoding.UTF8);
+            xtw.Formatting = Formatting.Indented;
+            try
+            {
+                serializer.Serialize(stream, obj);
+            }
+            catch { return null; }
+            stream.Position = 0;
+            string returnStr = string.Empty;
+            using (StreamReader sr = new StreamReader(stream, Encoding.UTF8))
+            {
+                string line = "";
+                while ((line = sr.ReadLine()) != null)
+                {
+                    returnStr += line + Environment.NewLine;
+                }
+            }
+            return returnStr;
+        }
+        /// <summary>
+        /// XML反序列化
+        /// </summary>
+        /// <typeparam name="T">反序列化目标类型</typeparam>
+        /// <param name="data">需要反序列化的String</param>
+        /// <returns>得到的反序列化对象</returns>
+         
     }
 }
