@@ -38,6 +38,8 @@ import com.cnblogs.android.adapter.BlogListAdapter.BlogViewHolder;
 import com.cnblogs.android.core.BlogHelper;
 import com.cnblogs.android.core.Config;
 import com.cnblogs.android.entity.Blog;
+import com.cnblogs.android.entity.BlogCategory;
+import com.cnblogs.android.utility.BlogListHtmlParse;
 import com.cnblogs.android.utility.NetHelper;
 import com.cnblogs.android.controls.PullToRefreshListView;
 import com.cnblogs.android.controls.PullToRefreshListView.OnRefreshListener;
@@ -68,6 +70,7 @@ public class BlogActivity extends BaseMainActivity {
 	Resources res;// 资源
 	private int lastItem;
 	BlogDalHelper dbHelper;
+	BlogCategory category;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -376,6 +379,7 @@ public class BlogActivity extends BaseMainActivity {
 
 		public PageTask(int page) {
 			curPageIndex = page;
+
 		}
 
 		protected List<Blog> doInBackground(String... params) {
@@ -392,10 +396,19 @@ public class BlogActivity extends BaseMainActivity {
 
 			// 优先读取本地数据
 			List<Blog> listBlogLocal = dbHelper.GetBlogListByPage(
-					requestPageIndex, Config.BLOG_PAGE_SIZE);
+					category==null?"":category.CategoryId, requestPageIndex,
+					Config.BLOG_PAGE_SIZE);
 			List<Blog> listBlogNet = new ArrayList<Blog>();
 			if (isNetworkAvailable) {
-				listBlogNet.addAll(BlogHelper.GetBlogList(requestPageIndex));
+				if (category == null || category.equals("")) {
+					listBlogNet
+							.addAll(BlogHelper.GetBlogList(requestPageIndex));
+				} else {
+					listBlogNet.addAll(BlogListHtmlParse.getBlogListByCategory(
+							category.CategoryType, category.ParentCategoryId,
+							category.CategoryId, requestPageIndex));
+				}
+
 			}
 
 			List<Blog> newBlogs = isNetworkAvailable ? listBlogNet
@@ -477,7 +490,7 @@ public class BlogActivity extends BaseMainActivity {
 			}
 			// 保存到数据库
 			if (!isDataFromLocal) {
-				dbHelper.SynchronyData2DB(result);
+				//dbHelper.SynchronyData2DB(result);
 			}
 			if (adapter == null) {
 				adapter = new BlogListAdapter(getApplicationContext(),
@@ -536,9 +549,13 @@ public class BlogActivity extends BaseMainActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// 可以根据多个请求代码来作相应的操作
 		if (Config.REQUEST_BLOG_CAGEGORY == resultCode) {
-			String category = data.getExtras().getString(Config.BLOG_CAGEGORY);
-			Toast.makeText(getBaseContext(), category, 1000).show();
+
+			category = (BlogCategory) data
+					.getSerializableExtra(Config.SELECTED_BLOG_CAGEGORY);
+			new PageTask(0).execute();
+			// Toast.makeText(getBaseContext(), category, 1000).show();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 }

@@ -45,7 +45,7 @@ public class Config {
 
 	public static final int BLOG_LIST_BY_AUTHOR_PAGE_SIZE = 10;// 博主文章列表分页
 	public static final String URL_GET_BLOG_LIST_BY_AUTHOR = "http://wcf.open.cnblogs.com/blog/u/{author}/posts/{pageIndex}/{pageSize}";// 博主文章列表
-
+	public static final String URL_GET_BLOGS_BY_CATEGORY = "http://www.cnblogs.com/mvc/AggSite/PostList.aspx?CategoryType={CategoryType}&ParentCategoryId={ParentCategoryId}&CategoryId={CategoryId}&PageIndex={PageIndex}&ItemListActionName=PostList";
 	public static final String LOCAL_PATH = "file:///android_asset/";// 本地html
 	// 新浪微博api
 	public static final String consumerKey = "4216444778";
@@ -68,5 +68,5 @@ public class Config {
 	public static final String URL_RSS_LIST_URL = "http://m.walkingp.com/api/xml/cnblogs_rss_item_{0}.xml";// 备选RSS文件地址
 
 	public static final int REQUEST_BLOG_CAGEGORY = 4;
-	public static final String BLOG_CAGEGORY = "blogcategory";
+	public static final String SELECTED_BLOG_CAGEGORY = "selectedCategory";
 }

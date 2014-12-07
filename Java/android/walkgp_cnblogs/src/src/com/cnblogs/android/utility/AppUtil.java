@@ -45,6 +45,16 @@ public class AppUtil {
 		}
 		return addTime;
 	}
+	public static Date ParseDate2(String str){
+		SimpleDateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd hh:mm"); 
+		Date addTime = null;
+		try {
+			addTime = dateFormat.parse(str);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return addTime;
+	}
 	/**
 	 * 将日期转换为字符串
 	 * @param date

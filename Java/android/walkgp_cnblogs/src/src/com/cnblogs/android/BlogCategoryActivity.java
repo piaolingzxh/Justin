@@ -1,5 +1,6 @@
 package com.cnblogs.android;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.cnblogs.android.core.Config;
+import com.cnblogs.android.entity.BlogCategory;
 import com.cnblogs.android.enums.EnumActivityType;
 import com.cnblogs.android.utility.BlogListHtmlParse;
 import com.cnblogs.android.utility.NetHelper;
@@ -30,12 +32,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.SimpleAdapter.ViewBinder;
 
 public class BlogCategoryActivity extends BaseActivity implements
 		OnItemClickListener {
@@ -43,7 +41,7 @@ public class BlogCategoryActivity extends BaseActivity implements
 	Resources res;
 	ListView listview;
 	ImageButton blog_category_ok;
-	String selectedCategory;
+	BlogCategory selectedCategory;
 	List<BlogCategory> categories;
 
 	@Override
@@ -71,11 +69,10 @@ public class BlogCategoryActivity extends BaseActivity implements
 		blog_category_ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent data = new Intent();
-				selectedCategory = "test";
-				data.putExtra(Config.BLOG_CAGEGORY, selectedCategory);
+				/*Intent data = new Intent();			 
+				data.putExtra(Config.SELECTED_BLOG_CAGEGORY, selectedCategory);
 				setResult(Config.REQUEST_BLOG_CAGEGORY, data);
-				finish();
+				finish();*/
 			}
 		});
 
@@ -86,34 +83,7 @@ public class BlogCategoryActivity extends BaseActivity implements
 		// 设置监听
 		listview.setOnItemClickListener(this);
 
-		String blog_list_html = NetHelper
-				.GetContentFromUrl("http://www.cnblogs.com/mvc/AggSite/PostList.aspx?CategoryType=SiteCategory&ParentCategoryId=108698&CategoryId=108699&PageIndex=7&ItemListActionName=PostList");
-		List<BlogCategory> categories = getCategories();
-		// BlogListHtmlParse.JiexiBlogList(blog_list_html);
-		for (BlogCategory category : categories) {
-
-			String categoryInfoHtml = NetHelper
-					.GetContentFromUrl("http://www.cnblogs.com" + category.URL);
-			BlogListHtmlParse.JiexiCategoryInfo(categoryInfoHtml, category);
-		}
-		StringBuilder sb = new StringBuilder();
-		for (BlogCategory category : categories) {
-
-			String categoryItemString = "<item url=\"{url}\" name=\"{text}\" id=\"{id}\" tp=\"{tp}\" pid=\"{pid}\"></item>";
-			categoryItemString = categoryItemString
-					.replace("{url}", category.URL)
-					.replace("{text}", category.Name)
-					.replace("{id}", category.CategoryId)
-					.replace("{tp}", category.CategoryType)
-					.replace("{pid}", category.ParentCategoryId);
-			sb.append(categoryItemString);
-		}
-		try {
-			BlogListHtmlParse.writeFileSdcard("/sdcard/Android.txt",
-					sb.toString());
-		} catch (Exception e) {
-			Log.e("NetHelper", "______________读取数据失败 " + e.toString());
-		}
+		
 		Log.e("NetHelper", "______________读取数据Over ");
 	}
 
@@ -121,111 +91,90 @@ public class BlogCategoryActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> view, View arg1, int position,
 			long arg3) {
-		selectedCategory = categories.get(position).URL;
-		Intent data = new Intent();
-
-		data.putExtra(Config.BLOG_CAGEGORY, selectedCategory);
-		setResult(Config.REQUEST_BLOG_CAGEGORY, data);
+		selectedCategory = categories.get(position);
+		Intent intent = new Intent();		 
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(Config.SELECTED_BLOG_CAGEGORY, selectedCategory);
+		intent.putExtras(bundle); 
+		setResult(Config.REQUEST_BLOG_CAGEGORY, intent);
 		BlogCategoryActivity.this.finish();
 	}
 
 	public List<BlogCategory> getCategories() {
 		List<BlogCategory> categories = new ArrayList<BlogCategory>();
-		categories.add(new BlogCategory("/", "首页"));
-		categories.add(new BlogCategory("/cate/108698/", ".NET技术"));
-		categories.add(new BlogCategory("/cate/beginner/", ".NET新手区"));
-		categories.add(new BlogCategory("/cate/aspnet/", "ASP.NET"));
-		categories.add(new BlogCategory("/cate/csharp/", "C#"));
-		categories.add(new BlogCategory("/cate/winform/", "WinForm"));
-		categories.add(new BlogCategory("/cate/silverlight/", "Silverlight"));
-		categories.add(new BlogCategory("/cate/wcf/", "WCF"));
-		categories.add(new BlogCategory("/cate/clr/", "CLR"));
-		categories.add(new BlogCategory("/cate/wpf/", "WPF"));
-		categories.add(new BlogCategory("/cate/xna/", "XNA"));
-		categories.add(new BlogCategory("/cate/vs2010/", "Visual Studio"));
-		categories.add(new BlogCategory("/cate/mvc/", "ASP.NET MVC"));
-		categories.add(new BlogCategory("/cate/control/", "控件开发"));
-		categories.add(new BlogCategory("/cate/ef/", "Entity Framework"));
-		categories.add(new BlogCategory("/cate/winrt_metro/", "WinRT/Metro"));
-		categories.add(new BlogCategory("/cate/2/", "编程语言"));
-		categories.add(new BlogCategory("/cate/java/", "Java"));
-		categories.add(new BlogCategory("/cate/cpp/", "C++"));
-		categories.add(new BlogCategory("/cate/php/", "PHP"));
-		categories.add(new BlogCategory("/cate/delphi/", "Delphi"));
-		categories.add(new BlogCategory("/cate/python/", "Python"));
-		categories.add(new BlogCategory("/cate/ruby/", "Ruby"));
-		categories.add(new BlogCategory("/cate/c/", "C"));
-		categories.add(new BlogCategory("/cate/erlang/", "Erlang"));
-		categories.add(new BlogCategory("/cate/go/", "Go"));
-		categories.add(new BlogCategory("/cate/swift/", "Swift"));
-		categories.add(new BlogCategory("/cate/verilog/", "Verilog"));
-		categories.add(new BlogCategory("/cate/108701/", "软件设计"));
-		categories.add(new BlogCategory("/cate/design/", "架构设计"));
-		categories.add(new BlogCategory("/cate/108702/", "面向对象"));
-		categories.add(new BlogCategory("/cate/dp/", "设计模式"));
-		categories.add(new BlogCategory("/cate/ddd/", "领域驱动设计"));
-		categories.add(new BlogCategory("/cate/108703/", "Web前端"));
-		categories.add(new BlogCategory("/cate/web/", "Html/Css"));
-		categories.add(new BlogCategory("/cate/javascript/", "JavaScript"));
-		categories.add(new BlogCategory("/cate/jquery/", "jQuery"));
-		categories.add(new BlogCategory("/cate/html5/", "HTML5"));
-		categories.add(new BlogCategory("/cate/108704/", "企业信息化"));
-		categories.add(new BlogCategory("/cate/sharepoint/", "SharePoint"));
-		categories.add(new BlogCategory("/cate/gis/", "GIS技术"));
-		categories.add(new BlogCategory("/cate/sap/", "SAP"));
-		categories.add(new BlogCategory("/cate/OracleERP/", "Oracle ERP"));
-		categories.add(new BlogCategory("/cate/dynamics/", "Dynamics CRM"));
-		categories.add(new BlogCategory("/cate/k2/", "K2 BPM"));
-		categories.add(new BlogCategory("/cate/infosec/", "信息安全"));
-		categories.add(new BlogCategory("/cate/3/", "企业信息化其他"));
-		categories.add(new BlogCategory("/cate/108705/", "手机开发"));
-		categories.add(new BlogCategory("/cate/android/", "Android开发"));
-		categories.add(new BlogCategory("/cate/ios/", "iOS开发"));
-		categories.add(new BlogCategory("/cate/wp/", "Windows Phone"));
-		categories.add(new BlogCategory("/cate/wm/", "Windows Mobile"));
-		categories.add(new BlogCategory("/cate/mobile/", "其他手机开发"));
-		categories.add(new BlogCategory("/cate/108709/", "软件工程"));
-		categories.add(new BlogCategory("/cate/agile/", "敏捷开发"));
-		categories.add(new BlogCategory("/cate/pm/", "项目与团队管理"));
-		categories.add(new BlogCategory("/cate/Engineering/", "软件工程其他"));
-		categories.add(new BlogCategory("/cate/108712/", "数据库技术"));
-		categories.add(new BlogCategory("/cate/sqlserver/", "SQL Server"));
-		categories.add(new BlogCategory("/cate/oracle/", "Oracle"));
-		categories.add(new BlogCategory("/cate/mysql/", "MySQL"));
-		categories.add(new BlogCategory("/cate/nosql/", "NoSQL"));
-		categories.add(new BlogCategory("/cate/database/", "其他数据库"));
-		categories.add(new BlogCategory("/cate/108724/", "操作系统"));
-		categories.add(new BlogCategory("/cate/win7/", "Windows 7"));
-		categories.add(new BlogCategory("/cate/winserver/", ">Windows Server"));
-		categories.add(new BlogCategory("/cate/linux/", "Linux"));
-		categories.add(new BlogCategory("/cate/4/", "其他分类"));
+		categories.add(new BlogCategory("808","首页","/","SiteHome","0"));
+		categories.add(new BlogCategory("108698",".NET技术","/cate/108698/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("18156",".NET新手区","/cate/beginner/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108699","ASP.NET","/cate/aspnet/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108700","C#","/cate/csharp/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108716","WinForm","/cate/winform/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108717","Silverlight","/cate/silverlight/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108718","WCF","/cate/wcf/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108719","CLR","/cate/clr/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108720","WPF","/cate/wpf/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108728","XNA","/cate/xna/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108729","Visual Studio","/cate/vs2010/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108730","ASP.NET MVC","/cate/mvc/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108738","控件开发","/cate/control/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108739","Entity Framework","/cate/ef/","SiteCategory","108698"));
+		categories.add(new BlogCategory("108745","WinRT/Metro","/cate/winrt_metro/","SiteCategory","108698"));
+		categories.add(new BlogCategory("2","编程语言","/cate/2/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("106876","Java","/cate/java/","SiteCategory","2"));
+		categories.add(new BlogCategory("106880","C++","/cate/cpp/","SiteCategory","2"));
+		categories.add(new BlogCategory("106882","PHP","/cate/php/","SiteCategory","2"));
+		categories.add(new BlogCategory("106877","Delphi","/cate/delphi/","SiteCategory","2"));
+		categories.add(new BlogCategory("108696","Python","/cate/python/","SiteCategory","2"));
+		categories.add(new BlogCategory("106894","Ruby","/cate/ruby/","SiteCategory","2"));
+		categories.add(new BlogCategory("108735","C","/cate/c/","SiteCategory","2"));
+		categories.add(new BlogCategory("108746","Erlang","/cate/erlang/","SiteCategory","2"));
+		categories.add(new BlogCategory("108748","Go","/cate/go/","SiteCategory","2"));
+		categories.add(new BlogCategory("108751","Swift","/cate/swift/","SiteCategory","2"));
+		categories.add(new BlogCategory("108742","Verilog","/cate/verilog/","SiteCategory","2"));
+		categories.add(new BlogCategory("108701","软件设计","/cate/108701/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("106892","架构设计","/cate/design/","SiteCategory","108701"));
+		categories.add(new BlogCategory("108702","面向对象","/cate/108702/","SiteCategory","108701"));
+		categories.add(new BlogCategory("106884","设计模式","/cate/dp/","SiteCategory","108701"));
+		categories.add(new BlogCategory("108750","领域驱动设计","/cate/ddd/","SiteCategory","108701"));
+		categories.add(new BlogCategory("108703","Web前端","/cate/108703/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("106883","Html/Css","/cate/web/","SiteCategory","108703"));
+		categories.add(new BlogCategory("106893","JavaScript","/cate/javascript/","SiteCategory","108703"));
+		categories.add(new BlogCategory("108731","jQuery","/cate/jquery/","SiteCategory","108703"));
+		categories.add(new BlogCategory("108737","HTML5","/cate/html5/","SiteCategory","108703"));
+		categories.add(new BlogCategory("108704","企业信息化","/cate/108704/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("78111","SharePoint","/cate/sharepoint/","SiteCategory","108704"));
+		categories.add(new BlogCategory("50349","GIS技术","/cate/gis/","SiteCategory","108704"));
+		categories.add(new BlogCategory("106878","SAP","/cate/sap/","SiteCategory","108704"));
+		categories.add(new BlogCategory("108732","Oracle ERP","/cate/OracleERP/","SiteCategory","108704"));
+		categories.add(new BlogCategory("108734","Dynamics CRM","/cate/dynamics/","SiteCategory","108704"));
+		categories.add(new BlogCategory("108747","K2 BPM","/cate/k2/","SiteCategory","108704"));
+		categories.add(new BlogCategory("108749","信息安全","/cate/infosec/","SiteCategory","108704"));
+		categories.add(new BlogCategory("3","企业信息化其他","/cate/3/","SiteCategory","108704"));
+		categories.add(new BlogCategory("108705","手机开发","/cate/108705/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("108706","Android开发","/cate/android/","SiteCategory","108705"));
+		categories.add(new BlogCategory("108707","iOS开发","/cate/ios/","SiteCategory","108705"));
+		categories.add(new BlogCategory("108736","Windows Phone","/cate/wp/","SiteCategory","108705"));
+		categories.add(new BlogCategory("108708","Windows Mobile","/cate/wm/","SiteCategory","108705"));
+		categories.add(new BlogCategory("106886","其他手机开发","/cate/mobile/","SiteCategory","108705"));
+		categories.add(new BlogCategory("108709","软件工程","/cate/108709/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("108710","敏捷开发","/cate/agile/","SiteCategory","108709"));
+		categories.add(new BlogCategory("106891","项目与团队管理","/cate/pm/","SiteCategory","108709"));
+		categories.add(new BlogCategory("106889","软件工程其他","/cate/Engineering/","SiteCategory","108709"));
+		categories.add(new BlogCategory("108712","数据库技术","/cate/108712/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("108713","SQL Server","/cate/sqlserver/","SiteCategory","108712"));
+		categories.add(new BlogCategory("108714","Oracle","/cate/oracle/","SiteCategory","108712"));
+		categories.add(new BlogCategory("108715","MySQL","/cate/mysql/","SiteCategory","108712"));
+		categories.add(new BlogCategory("108743","NoSQL","/cate/nosql/","SiteCategory","108712"));
+		categories.add(new BlogCategory("106881","其他数据库","/cate/database/","SiteCategory","108712"));
+		categories.add(new BlogCategory("108724","操作系统","/cate/108724/","TopSiteCategory","0"));
+		categories.add(new BlogCategory("108721","Windows 7","/cate/win7/","SiteCategory","108724"));
+		categories.add(new BlogCategory("108725",">Windows Server","/cate/winserver/","SiteCategory","108724"));
+		categories.add(new BlogCategory("108726","Linux","/cate/linux/","SiteCategory","108724"));
+		categories.add(new BlogCategory("4","其他分类","/cate/4/","TopSiteCategory","0"));
+
 		return categories;
 	}
 
-	public class BlogCategory {
-		public BlogCategory() {
-		}
-
-		public BlogCategory(String url, String name) {
-			URL = url;
-			Name = name;
-		}
-
-		public String URL;
-		public String Name;
-		public int Count;
-		// var aggSiteModel =
-		// {"CategoryType":"SiteHome","ParentCategoryId":0,"CategoryId":808,"PageIndex":1,"ItemListActionName":"PostList"};
-		// var aggSiteModel =
-		// {"CategoryType":"SiteCategory","ParentCategoryId":108705,"CategoryId":108706,"PageIndex":1,"ItemListActionName":"PostList"};
-		// var aggSiteModel =
-		// {"CategoryType":"SiteCategory","ParentCategoryId":108712,"CategoryId":108713,"PageIndex":1,"ItemListActionName":"PostList"};
-
-		public String CategoryType;
-		public String ParentCategoryId;
-		public String CategoryId;
-	}
-
+	
 	public class CategoryAdapter extends BaseAdapter {
 
 		private Context context;

@@ -74,7 +74,7 @@ public class BlogDalHelper {
 	/**
 	 * ·ÖÒ³
 	 */
-	public List<Blog> GetBlogListByPage(int pageIndex, int pageSize) {
+	public List<Blog> GetBlogListByPage(String category,int pageIndex, int pageSize) {
 		String limit = String.valueOf((pageIndex - 1) * pageSize) + ","
 				+ String.valueOf(pageSize);
 		List<Blog> list = GetBlogListByWhere(limit, null, null);

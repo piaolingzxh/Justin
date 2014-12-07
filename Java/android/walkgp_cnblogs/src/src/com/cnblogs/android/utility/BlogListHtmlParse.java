@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.cnblogs.android.BlogCategoryActivity.BlogCategory;
+import android.util.Log;
+
+import com.cnblogs.android.core.Config;
 import com.cnblogs.android.entity.Blog;
+import com.cnblogs.android.entity.BlogCategory;
 
 public class BlogListHtmlParse {
 
@@ -33,27 +36,37 @@ public class BlogListHtmlParse {
 
 		Blog blog = new Blog();
 		try {
-			String blog_regex = "digg_count_(\\d*)\">(\\d*)</span>[\\s\\S]+?href=\"(.*)\"\\s+target=\"_blank\">([\\s\\S]+?)</a></h3>[\\s\\S]+?>([\\s\\S]+?)</p>[\\s\\S]+?href=\"(.*?)\"[\\s\\S]+?\">(.*)</a>([\\s\\S]+?)<span[\\s\\S]+?\\((.*)\\)[\\s\\S]+?\\((.*)\\)";
-
+			String blog_regex = "digg_count_(\\d*)\">(\\d*)</span>[\\s\\S]+?href=\"(.*)\"\\s+target=\"_blank\">([\\s\\S]+?)</a></h3>[\\s\\S]+?>([\\s\\S]+?)</p>[\\s\\S]+?href=\"(.*?)\"[\\s\\S]+?\">(.*)</a>[\\s\\S]+(\\b\\d+.+\\d+.+\\d+\\s+\\d+.\\d+)[\\s\\S]+<span[\\s\\S]+?\\((.*)\\)[\\s\\S]+?\\((.*)\\)";
+			// "digg_count_(blogid)\">(diggnum)</span>[\\s\\S]+?href=\"(blogurl)\"\\s+target=\"_blank\">(blogtitle)</a></h3>[\\s\\S]+?>(blogsummary)</p>[\\s\\S]+?href=\"(blogerurl)\"[\\s\\S]+?\">(blogername)</a>(posttime)<span[\\s\\S]+?\\((comment)\\)[\\s\\S]+?\\((reader)\\)";
 			Pattern blog_pattern = Pattern.compile(blog_regex);
 			Matcher blog_pattern_matcher = blog_pattern.matcher(blog_html);
 			while (blog_pattern_matcher.find()) {
-				String blogid = blog_pattern_matcher.group(1);//
-				String diggnum = blog_pattern_matcher.group(2);//
-				String blogurl = blog_pattern_matcher.group(3);
-				String blogtitle = blog_pattern_matcher.group(4);
-				String blogsummary = blog_pattern_matcher.group(5);//
-				String blogerurl = blog_pattern_matcher.group(6);
-				String blogername = blog_pattern_matcher.group(7);
-				String posttime = blog_pattern_matcher.group(8)
-						.replace("发布于", "").replace(" ", "");
-				String comment = blog_pattern_matcher.group(9);//
-				String read = blog_pattern_matcher.group(10);//
-
-				// blog.SetAddTime(addTime)
+				String blogid = blog_pattern_matcher.group(1).trim();//
+				String diggnum = blog_pattern_matcher.group(2).trim();//
+				String blogurl = blog_pattern_matcher.group(3).trim();
+				String blogtitle = blog_pattern_matcher.group(4).trim();
+				String blogsummary = blog_pattern_matcher.group(5).trim();//
+				String blogerurl = blog_pattern_matcher.group(6).trim();
+				String blogername = blog_pattern_matcher.group(7).trim();
+				String posttime = blog_pattern_matcher.group(8).trim();
+				String comment = blog_pattern_matcher.group(9).trim();//
+				String read = blog_pattern_matcher.group(10).trim();//
+				String avator = "";
+				Matcher imageMatcher = Pattern
+						.compile(
+								"[\\s\\S]+?<img[\\s\\S]+?src=\"(.*?)\"[\\s\\S]+?</a>([\\s\\S]+?)</p>")
+						.matcher(blog_html);
+				if (imageMatcher.find()) {
+					avator = imageMatcher.group(1);
+					blogsummary = imageMatcher.group(2);
+				}
+				try {
+					blog.SetAddTime(AppUtil.ParseDate2(posttime));
+				} catch (Exception ex) {
+				}
 				blog.SetAuthor(blogername);
 				blog.SetAuthorUrl(blogerurl);
-				// blog.SetAvator(avator);
+				blog.SetAvator(avator);
 				// blog.SetBlogContent(content);
 				blog.SetBlogId(Integer.valueOf(blogid));
 				blog.SetBlogTitle(blogtitle);
@@ -82,9 +95,9 @@ public class BlogListHtmlParse {
 		return blog;
 	}
 
-	public static List<Blog> JiexiBlogList(String blog_list_html) {
+	public static ArrayList<Blog> JiexiBlogList(String blog_list_html) {
 
-		List<Blog> blogs = new ArrayList<Blog>();
+		ArrayList<Blog> blogs = new ArrayList<Blog>();
 		String blog_list_regex = "class=\"post_item\">[\\s\\S]+?class=\"post_item_body\"[\\s\\S]+?class=\"post_item_foot\"[\\s\\S]+?class=\"clear\"";
 		Pattern blog_list_pattern = Pattern.compile(blog_list_regex);
 		Matcher blog_list_pattern_matcher = blog_list_pattern
@@ -124,6 +137,59 @@ public class BlogListHtmlParse {
 
 	}
 
+	public static ArrayList<Blog> getBlogListByCategory(String categoryType,
+			String parentCategoryId, String categoryId, int pageIndex) {
+
+		/*"http://www.cnblogs.com/mvc/AggSite/PostList.aspx?
+		CategoryType={CategoryType}
+		&ParentCategoryId={ParentCategoryId}
+		&CategoryId={CategoryId}
+		&PageIndex={PageIndex}
+		&ItemListActionName=PostList"
+		*/
+		String url = Config.URL_GET_BLOGS_BY_CATEGORY
+				.replace("{CategoryType}", categoryType)
+				.replace("{ParentCategoryId}", parentCategoryId)
+				.replace("{CategoryId}", categoryId)
+				.replace("{PageIndex}", String.valueOf(pageIndex));
+
+		String blog_list_html = NetHelper.GetContentFromUrl(url);
+		ArrayList<Blog> list = BlogListHtmlParse.JiexiBlogList(blog_list_html);
+
+		return list;
+	}
+
+	public static void test() {
+
+		/*String blog_list_html = NetHelper
+				.GetContentFromUrl("http://www.cnblogs.com/mvc/AggSite/PostList.aspx?CategoryType=SiteCategory&ParentCategoryId=108698&CategoryId=108699&PageIndex=7&ItemListActionName=PostList");
+		List<BlogCategory> categories = getCategories();
+		// BlogListHtmlParse.JiexiBlogList(blog_list_html);
+		for (BlogCategory category : categories) {
+
+			String categoryInfoHtml = NetHelper
+					.GetContentFromUrl("http://www.cnblogs.com" + category.URL);
+			BlogListHtmlParse.JiexiCategoryInfo(categoryInfoHtml, category);
+		}
+		StringBuilder sb = new StringBuilder();
+		for (BlogCategory category : categories) {
+
+			String categoryItemString = "<item url=\"{url}\" name=\"{text}\" id=\"{id}\" tp=\"{tp}\" pid=\"{pid}\"></item>";
+			categoryItemString = categoryItemString
+					.replace("{url}", category.URL)
+					.replace("{text}", category.Name)
+					.replace("{id}", category.CategoryId)
+					.replace("{tp}", category.CategoryType)
+					.replace("{pid}", category.ParentCategoryId);
+			sb.append(categoryItemString);
+		}
+		try {
+			BlogListHtmlParse.writeFileSdcard("/sdcard/Android.txt",
+					sb.toString());
+		} catch (Exception e) {
+			Log.e("NetHelper", "______________读取数据失败 " + e.toString());
+		}*/
+	}
 	/*class="post_item">
 	<div class="digg">
 	    <div class="diggit" onclick="DiggPost('insus',4072508,31588,1)"> 

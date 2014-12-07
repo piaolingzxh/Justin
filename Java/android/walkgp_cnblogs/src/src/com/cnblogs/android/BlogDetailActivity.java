@@ -2,6 +2,7 @@ package com.cnblogs.android;
 
 import java.io.InputStream;
 
+import com.cnblogs.android.cache.ImageCacher;
 import com.cnblogs.android.core.BlogHelper;
 import com.cnblogs.android.core.Config;
 import com.cnblogs.android.core.FavListHelper;
@@ -14,6 +15,7 @@ import com.cnblogs.android.utility.AppUtil;
 import com.cnblogs.android.utility.NetHelper;
 import com.cnblogs.android.utility.PreferencesHelper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -83,7 +85,7 @@ public class BlogDetailActivity extends BaseActivity implements
 		this.setContentView(R.layout.blog_detail);
 
 		res = this.getResources();
-	 
+
 		InitialData();
 	}
 
@@ -208,7 +210,7 @@ public class BlogDetailActivity extends BaseActivity implements
 			webView.addJavascriptInterface(this, "javatojs");
 			webView.setSelected(true);
 			webView.setScrollBarStyle(0);
-			
+
 			WebSettings webSetting = webView.getSettings();
 			webSetting.setJavaScriptEnabled(true);
 			webSetting.setPluginsEnabled(true);
@@ -218,7 +220,7 @@ public class BlogDetailActivity extends BaseActivity implements
 			webSetting.setTextSize(textSize);
 			webSetting.setCacheMode(WebSettings.LOAD_DEFAULT
 					| WebSettings.LOAD_CACHE_ELSE_NETWORK);
-			
+
 			webView.getSettings().setLoadsImagesAutomatically(isAutoLoadImage);
 			// 双击全屏
 			webView.setOnTouchListener(new OnTouchListener() {
@@ -353,20 +355,23 @@ public class BlogDetailActivity extends BaseActivity implements
 				String _blogContent = BlogHelper.GetBlogById(blog.GetBlogId(),
 						getApplicationContext());
 				// 下载图片（只有本地完整保存图片时才下载）
-				/*
-				 * Context context=getApplicationContext(); BlogDalHelper helper
-				 * = new BlogDalHelper(context); Blog entity =
-				 * helper.GetBlogEntity(blogId); boolean isNetworkAvailable =
-				 * NetHelper.networkIsAvailable(getApplicationContext());
-				 * if(isNetworkAvailable && (entity==null ||
-				 * !entity.GetIsFullText())){ ImageCacher imageCacher=new
-				 * ImageCacher(getApplicationContext());
-				 * imageCacher.DownloadHtmlImage(ImageCacher.EnumImageType.Blog,
-				 * _blogContent);
-				 * 
-				 * _blogContent=ImageCacher.FormatLocalHtmlWithImg(ImageCacher.
-				 * EnumImageType.Blog, _blogContent); }
-				 */
+
+				Context context = getApplicationContext();
+				BlogDalHelper helper = new BlogDalHelper(context);
+				Blog entity = helper.GetBlogEntity(blog.GetBlogId());
+				boolean isNetworkAvailable = NetHelper
+						.networkIsAvailable(getApplicationContext());
+				if (isNetworkAvailable
+						&& (entity == null || !entity.GetIsFullText())) {
+					ImageCacher imageCacher = new ImageCacher(
+							getApplicationContext());
+					imageCacher.DownloadHtmlImage(
+							ImageCacher.EnumImageType.Blog, _blogContent);
+
+					_blogContent = ImageCacher.FormatLocalHtmlWithImg(
+							ImageCacher.EnumImageType.Blog, _blogContent);
+				}
+
 				return _blogContent;
 			} catch (Exception e) {
 				e.printStackTrace();

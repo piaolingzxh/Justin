@@ -11,6 +11,7 @@ import com.cnblogs.android.entity.Blog;
 import com.cnblogs.android.utility.AppUtil;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,20 +71,23 @@ public class BlogListAdapter extends BaseAdapter {
 					.findViewById(R.id.recommend_text_domain);
 			viewHolder.text_blog_id = (TextView) convertView
 					.findViewById(R.id.recommend_text_id);
-			viewHolder.text_user_name=(TextView)convertView.findViewById(R.id.recommend_user_name);
-			viewHolder.icon_downloaded=(ImageView)convertView.findViewById(R.id.icon_downloaded);
+			viewHolder.text_user_name = (TextView) convertView
+					.findViewById(R.id.recommend_user_name);
+			viewHolder.icon_downloaded = (ImageView) convertView
+					.findViewById(R.id.icon_downloaded);
 		}
-		viewHolder.blog=entity;
-		if(entity.GetAvator()!=null){
+		viewHolder.blog = entity;
+		if (entity.GetAvator() != null) {
 			String tag = entity.GetAvator();
 			if (tag.contains("?")) {// 截断?后的字符串，避免无效图片
 				tag = tag.substring(0, tag.indexOf("?"));
 			}
-	
+
 			viewHolder.imageIcon.setTag(tag);
 			Drawable cachedImage = asyncImageLoader.loadDrawable(
 					ImageCacher.EnumImageType.Avatar, tag, new ImageCallback() {
-						public void imageLoaded(Drawable imageDrawable, String tag) {
+						public void imageLoaded(Drawable imageDrawable,
+								String tag) {
 							Log.i("Drawable", tag);
 							ImageView imageViewByTag = (ImageView) listView
 									.findViewWithTag(tag);
@@ -94,13 +98,14 @@ public class BlogListAdapter extends BaseAdapter {
 									imageViewByTag
 											.setImageResource(R.drawable.sample_face);
 								} catch (Exception ex) {
-	
+
 								}
 							}
 						}
 					});
 			// 阅读模式
-			boolean isPicReadMode = SettingActivity.IsPicReadMode(currentContext);
+			boolean isPicReadMode = SettingActivity
+					.IsPicReadMode(currentContext);
 			if (isPicReadMode) {
 				viewHolder.imageIcon.setImageResource(R.drawable.sample_face);
 				if (cachedImage != null) {
@@ -116,7 +121,7 @@ public class BlogListAdapter extends BaseAdapter {
 		boolean isReaded = entity.GetIsReaded();
 		Log.i("title", entity.GetBlogTitle());
 		if (isReaded) {
-			//viewHolder.text_title.setTextColor(R.color.gray);
+			viewHolder.text_title.setTextColor(Color.BLUE);
 		}
 		viewHolder.text_desc.setText(entity.GetSummary());
 		viewHolder.text_diggs.setText(String.valueOf(entity.GetDiggsNum()));
@@ -124,23 +129,31 @@ public class BlogListAdapter extends BaseAdapter {
 		viewHolder.text_comments
 				.setText(String.valueOf(entity.GetCommentNum()));
 		viewHolder.text_view.setText(String.valueOf(entity.GetViewNum()));
-		viewHolder.text_date.setText(AppUtil.ParseDateToString(entity
-				.GetAddTime()));
-		String simpleDateString = AppUtil.DateToChineseString(entity
-				.GetAddTime());
+
+		String simpleDateString = "";
+		try {
+			if (entity.GetAddTime() != null)
+				simpleDateString = 	AppUtil.DateToChineseString(entity.GetAddTime());
+			 
+		} catch (Exception ex) {
+		}
+		viewHolder.text_date.setText(simpleDateString);
+
+	
 		viewHolder.text_formatdate.setText(simpleDateString);
 		viewHolder.text_url.setText(entity.GetBlogUrl());
 		viewHolder.text_domain.setText(entity.GetAuthorUrl());
 		viewHolder.text_blog_id.setText(String.valueOf(entity.GetBlogId()));
 		viewHolder.text_user_name.setText(entity.GetUserName());
-		
-		if(!entity.GetIsFullText()){
+
+		if (!entity.GetIsFullText()) {
 			viewHolder.icon_downloaded.setVisibility(View.GONE);
 		}
 
 		convertView.setTag(viewHolder);
 		return convertView;
 	}
+
 	/**
 	 * 得到数据
 	 * 
@@ -149,6 +162,7 @@ public class BlogListAdapter extends BaseAdapter {
 	public List<Blog> GetData() {
 		return list;
 	}
+
 	/**
 	 * 插入
 	 * 
@@ -158,6 +172,7 @@ public class BlogListAdapter extends BaseAdapter {
 		this.list.addAll(0, list);
 		this.notifyDataSetChanged();
 	}
+
 	/**
 	 * 增加数据
 	 * 
@@ -167,19 +182,22 @@ public class BlogListAdapter extends BaseAdapter {
 		this.list.addAll(list);
 		this.notifyDataSetChanged();
 	}
+
 	/**
 	 * 移除数据
+	 * 
 	 * @param entity
 	 */
-	public void RemoveData(Blog entity){
-		for(int i=0,len=this.list.size();i<len;i++){
-			if(this.list.get(i).GetBlogId()==entity.GetBlogId()){
+	public void RemoveData(Blog entity) {
+		for (int i = 0, len = this.list.size(); i < len; i++) {
+			if (this.list.get(i).GetBlogId() == entity.GetBlogId()) {
 				this.list.remove(i);
 				this.notifyDataSetChanged();
 				break;
 			}
 		}
 	}
+
 	public int getCount() {
 		return list.size();
 	}
@@ -191,6 +209,7 @@ public class BlogListAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+
 	public class BlogViewHolder {
 		TextView text_title;
 		TextView text_desc;
