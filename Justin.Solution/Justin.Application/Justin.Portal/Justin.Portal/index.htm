@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Component/jquery-1.9.1.js" type="text/javascript"></script>
+    <script language="javascript">
+        $(function () {
+            var obj = window;
+            obj.a = 3;
+            obj.b = 7;
+
+        });
+        function add() {
+            var obj = $(this)[0];
+            alert(obj.a + obj.b);
+        }
+        function callTest() {
+
+            var obj = { a: 10, b: 5 };
+            add.call(obj);
+        }
+        function applyTest() {
+
+            var obj = { a: 2, b: 6 };
+            add.apply(obj);
+        }
+
+        function Button1_onclick() {
+            callTest();
+        }
+
+        function Button2_onclick() {
+            applyTest();
+        }
+
+    </script>
+</head>
+<body>
+    <p>
+        <input id="Button1" type="button" value="call" onclick="return Button1_onclick()" /><input
+            id="Button2" type="button" value="apply" onclick="return Button2_onclick()" /></p>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <input id="Button1" type="button" value="动态添加事件到Company图表" onclick="return Button1_onclick()" /><br />
+        当前显示：<div id="message">
+        </div>
+    </div>
+    <div id="bar_company" style="height: 250px; width: 800px; background-color: Lime;">
+    </div>
+    <div id="bar_labors" style="height: 250px; width: 800px; background-color: Gray;">
+    </div>
+    </form>
+    <script src="Component/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="Component/esl.js" type="text/javascript"></script>
+    <script src="Component/echartsadapter.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $('#bar_company').echarts({ query: { cmd: "company", company: 1 }, settings: { chartType: "line"} });
+            $('#bar_labors').echarts({ query: { cmd: "labors", labor: 1 }, settings: { chartType: "bar", onclick: labor_Click} });
+        });
+        function company_Click(param) {
+            var options = $('#bar_company').echarts('options');
+            showClickInfo(param, options);
+        }
+        function labor_Click(param) {
+            var options = $('#bar_labors').echarts('options');
+            showClickInfo(param, options);
+        }
+        function showClickInfo(param, option) {
+            var message = "您点击了：" + option.title.text + "<br/>"
+            + "点击位置：seriesIndex：【" + param.seriesIndex + "】DataIndex：【" + param.dataIndex + "】,<br/>"
+            + "当前点击Series:【" + param.seriesName + "】节点:【" + param.name + "】数据【" + param.data + "】";
+            $('#message').html(message);
+        }
+        function formatCompany(cid) {//格式化X轴显示
+            var labels = $('#bar_company').echarts('labels');
+            if (labels) return labels[cid];
+            return cid;
+        }
+        function Button1_onclick() {
+            $('#bar_company').echarts({ settings: { onclick: company_Click} }); //echarts绘制出来后，手动添加事件
+        }
+        function test() {
+            //使用方法：
+            //1、获取查询的业务参数：$('#mydivid').echarts('query');
+            //2、获取设置参数信息$('#mydivid').echarts('settings')
+            //2、获取echarts的option:$('#mydivid').echarts('options')
+            //3、获取echarts的echart相关对象:$('#mydivid').echarts('echarts') //获取到的对象格式 { echarts: ec, chart: null, config: null };
+            //4、获取echarts的X轴的labels:$('#mydivid').echarts('labels') //获取到的对象格式{1001:'first data',1002:'second data'}
+        }
+    </script>
+</body>
+</html>
